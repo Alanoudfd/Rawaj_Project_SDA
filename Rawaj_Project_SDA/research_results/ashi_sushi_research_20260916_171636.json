@@ -1,0 +1,1609 @@
+{
+  "schema_version": "3.0",
+  "restaurant": {
+    "restaurant_id": 3,
+    "name": "Ashi Sushi",
+    "instagram_username": "ashi_sushi",
+    "instagram_url": "https://www.instagram.com/ashi_sushi/",
+    "email": null,
+    "location": "Jeddah",
+    "category": "Restaurant"
+  },
+  "analysis_metadata": {
+    "status": "complete",
+    "analyzed_at": "2026-09-16T14:09:46.209213+00:00",
+    "source": "instagram",
+    "analysis_version": "3.0"
+  },
+  "profile": {
+    "username": "ashi_sushi",
+    "full_name": "اشي سوشي - Ashi Sushi",
+    "bio": "Japanese House\nSince 2014\nBy Aisha @sukoon.aisha \n-\nالروضة 0126044991 Rawdah \nالصفا 0557741167 Alsafa",
+    "followers": 33117,
+    "following": 1,
+    "posts_count": 1671,
+    "website": "http://ashisushi.carrd.co/",
+    "verified": false,
+    "business_category": "Japanese Restaurant",
+    "is_business": true,
+    "is_private": false
+  },
+  "profile_analysis": {
+    "bio": {
+      "cuisine_identified": true,
+      "cuisine": "Japanese",
+      "location_present": true,
+      "cta_present": false,
+      "value_proposition_present": true
+    },
+    "contact_accessibility": {
+      "website_available": true,
+      "email_available": false,
+      "phone_available": true,
+      "external_link_available": true
+    },
+    "profile_completeness": {
+      "has_clear_business_description": true,
+      "has_location": true,
+      "has_contact_method": true,
+      "has_external_link": true
+    }
+  },
+  "metrics": {
+    "activity": {
+      "content_last_30_days": 2,
+      "content_per_week": 0.47,
+      "days_since_last_content": 6
+    },
+    "engagement": {
+      "average_likes": 2174.46,
+      "median_likes": 102.0,
+      "average_comments": 25.0,
+      "engagement_rate_pct": 6.641,
+      "sample_size": 13
+    },
+    "format_mix": {
+      "video": {
+        "count": 9,
+        "pct": 69.23
+      },
+      "image": {
+        "count": 4,
+        "pct": 30.77
+      }
+    },
+    "content_mix": {
+      "food_product": {
+        "count": 6,
+        "pct": 46.15
+      },
+      "offers_campaigns": {
+        "count": 4,
+        "pct": 30.77
+      },
+      "community_engagement": {
+        "count": 2,
+        "pct": 15.38
+      },
+      "people_staff": {
+        "count": 1,
+        "pct": 7.69
+      }
+    },
+    "cta": {
+      "content_with_cta": 9,
+      "any_cta_pct": 69.23,
+      "cta_intents": {
+        "encourage product consideration": 1,
+        "encourage sushi purchase": 1,
+        "visit or order the lunch offer": 1,
+        "redeem employee discount": 2,
+        "share with an a-name contact": 1,
+        "treat or invite the sender": 1,
+        "attend the event": 1,
+        "invite a dining companion": 1
+      }
+    },
+    "promotion": {
+      "promotional_content": 10,
+      "promotional_content_pct": 76.92,
+      "promotion_intents": {
+        "product promotion": 1,
+        "menu item promotion": 2,
+        "sushi menu promotion": 1,
+        "limited-time lunch bundles": 1,
+        "partner employee discount": 1,
+        "employee discount partnership": 1,
+        "sushi product promotion": 1,
+        "festival appearance announcement": 1,
+        "restaurant visit promotion": 1
+      }
+    },
+    "branding": {
+      "logo_presence_pct": 84.62,
+      "branding_presence_pct": 92.31
+    },
+    "commerce_visibility": {
+      "menu_visible_pct": 7.69,
+      "price_visible_pct": 0.0,
+      "offer_visible_pct": 30.77
+    },
+    "reels": {
+      "reels_detected": 0,
+      "reels_enriched": 0,
+      "reel_content_pct": 0.0,
+      "average_views": null,
+      "median_views": null,
+      "average_duration_seconds": null,
+      "transcript_available_pct": 0.0
+    }
+  },
+  "research_signals": [
+    {
+      "signal_id": "activity_01",
+      "dimension": "posting_activity",
+      "observation": "Observed 2 content items in the last 30 days (0.47 per week in the observed window); days since latest content: 6.",
+      "metric_path": "metrics.activity",
+      "value": {
+        "content_last_30_days": 2,
+        "content_per_week": 0.47,
+        "days_since_last_content": 6
+      },
+      "evidence_content_ids": [],
+      "confidence": 1.0
+    },
+    {
+      "signal_id": "engagement_01",
+      "dimension": "engagement",
+      "observation": "Across 13 items with engagement data, average likes were 2174.46, median likes 102.0, average comments 25.0, and follower-normalized engagement rate was 6.641%.",
+      "metric_path": "metrics.engagement",
+      "value": {
+        "average_likes": 2174.46,
+        "median_likes": 102.0,
+        "average_comments": 25.0,
+        "engagement_rate_pct": 6.641,
+        "sample_size": 13
+      },
+      "evidence_content_ids": [],
+      "confidence": 1.0
+    },
+    {
+      "signal_id": "cta_01",
+      "dimension": "cta_usage",
+      "observation": "CTA detected in 9 analyzed content items (69.23%). Observed intent labels: {'encourage product consideration': 1, 'encourage sushi purchase': 1, 'visit or order the lunch offer': 1, 'redeem employee discount': 2, 'share with an a-name contact': 1, 'treat or invite the sender': 1, 'attend the event': 1, 'invite a dining companion': 1}.",
+      "metric_path": "metrics.cta",
+      "value": {
+        "content_with_cta": 9,
+        "any_cta_pct": 69.23,
+        "cta_intents": {
+          "encourage product consideration": 1,
+          "encourage sushi purchase": 1,
+          "visit or order the lunch offer": 1,
+          "redeem employee discount": 2,
+          "share with an a-name contact": 1,
+          "treat or invite the sender": 1,
+          "attend the event": 1,
+          "invite a dining companion": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3970748907263657816",
+        "3952738830237725810",
+        "3949769344627242236",
+        "3947497889734402212",
+        "3947497060520684763",
+        "3943231045003551494",
+        "3938230413657656335",
+        "3930085181649115934",
+        "3925056682601296956"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "promotion_01",
+      "dimension": "promotional_activity",
+      "observation": "Promotional intent detected in 10 analyzed content items (76.92%). Observed promotion intent labels: {'product promotion': 1, 'menu item promotion': 2, 'sushi menu promotion': 1, 'limited-time lunch bundles': 1, 'partner employee discount': 1, 'employee discount partnership': 1, 'sushi product promotion': 1, 'festival appearance announcement': 1, 'restaurant visit promotion': 1}.",
+      "metric_path": "metrics.promotion",
+      "value": {
+        "promotional_content": 10,
+        "promotional_content_pct": 76.92,
+        "promotion_intents": {
+          "product promotion": 1,
+          "menu item promotion": 2,
+          "sushi menu promotion": 1,
+          "limited-time lunch bundles": 1,
+          "partner employee discount": 1,
+          "employee discount partnership": 1,
+          "sushi product promotion": 1,
+          "festival appearance announcement": 1,
+          "restaurant visit promotion": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3982512037270181196",
+        "3970748907263657816",
+        "3964468143232445192",
+        "3952738830237725810",
+        "3949769344627242236",
+        "3947497889734402212",
+        "3947497060520684763",
+        "3938230413657656335",
+        "3930085181649115934",
+        "3925056682601296956"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "commerce_01",
+      "dimension": "commerce_visibility",
+      "observation": "Within analyzed visuals: menu visible in 7.69%, price visible in 0.0%, and offer messaging visible in 30.77% of items.",
+      "metric_path": "metrics.commerce_visibility",
+      "value": {
+        "menu_visible_pct": 7.69,
+        "price_visible_pct": 0.0,
+        "offer_visible_pct": 30.77
+      },
+      "evidence_content_ids": [
+        "3949769344627242236",
+        "3947497889734402212",
+        "3947497060520684763",
+        "3943231045003551494",
+        "3930085181649115934"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "branding_01",
+      "dimension": "branding_presence",
+      "observation": "Logo was visually detected in 84.62% of analyzed items; recognizable branding was detected in 92.31%.",
+      "metric_path": "metrics.branding",
+      "value": {
+        "logo_presence_pct": 84.62,
+        "branding_presence_pct": 92.31
+      },
+      "evidence_content_ids": [
+        "3982512037270181196",
+        "3970748907263657816",
+        "3964468143232445192",
+        "3952738830237725810",
+        "3949769344627242236",
+        "3947497889734402212",
+        "3947497060520684763",
+        "3943231045003551494",
+        "3939632267772077327",
+        "3938230413657656335",
+        "3930085181649115934",
+        "3925056682601296956"
+      ],
+      "confidence": 0.9
+    }
+  ],
+  "content": [
+    {
+      "content_id": "3982512037270181196",
+      "short_code": "DdEuZj_NNVM",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DdEuZj_NNVM/",
+        "timestamp": "2026-09-09T16:50:08.000Z",
+        "caption": "زوجتك ما تبا منك باقة ورد! تبا منك سوشي من اشي سوشي🍣",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fkix3-1.fna.fbcdn.net/v/t51.82787-15/801580924_18630135799022879_7346761592481575790_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=110&ig_cache_key=Mzk4MjUxMjAzNzI3MDE4MTE5NjE4NjMwMTM1Nzk2MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=SWUw4_BPlYYQ7kNvwG-sI0z&_nc_oc=AdoPHZp-GXdI8086OK59F6rdp9O9lek7iRUX3jdWb-F3BAYslVaU_2perIxX_qkztbAH9Jm-kn0a8UomlvwTUbnI&_nc_ad=z-m&_nc_cid=1700&_nc_zt=23&_nc_ht=instagram.fkix3-1.fna&_nc_gid=bDDXO2jBSNxGLAS_EuwCkA&_nc_ss=7a22e&oh=00_AQLq9GhsR-gFpD1rHsBSwoywsC9r4NBUuFMyGy8288oHzA&oe=6AB0864E"
+        ],
+        "video_url": "https://instagram.fkix3-2.fna.fbcdn.net/o1/v/t2/f2/m86/AQOHq0UoD0rK-Hw_g9Q35zRh4XTSdX1yO3Q-fvV4BJjtVO8y7qc2TcpAaBnWHEwxAZdMxo7w9tSRpL3NQes5SIIDe4n6lxnWzWiWWMY.mp4?_nc_cat=107&_nc_oc=AdqT0esjFRUTKvNSuK3jz_wfpCM-Bon2AK1ELjMGSxaI7enoDha_X2vlr1wsByXoEBebCSZdJEqvUvtSX7E700DE&_nc_sid=5e9851&_nc_ht=instagram.fkix3-2.fna.fbcdn.net&_nc_ohc=-I9LMG5eV9oQ7kNvwEvncUp&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTA1NTc5NTM4NzM3MDc4MywiYXNzZXRfYWdlX2RheXMiOjYsInZpX3VzZWNhc2VfaWQiOjEwMDk5LCJkdXJhdGlvbl9zIjoxMiwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=34dd82472bfa9b44&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9ENzRFMEJBRUVEOTE0RTQ3N0FFQTVDRjY0MUM5MkJBNl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzU1NDVEQTkwRDU5MEEwRDI1Mjc5MUY4QjZEMjczMEE1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACa-tKjQsI_gAxUCKAJDMywXQCnul41P3zsYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=bDDXO2jBSNxGLAS_EuwCkA&_nc_ss=7a22e&_nc_zt=28&oh=00_AQKQe-U34FvFAF_YQKg_w0wKqgFTWocaxLae_baYBxATPw&oe=6AAC7488",
+        "likes": 287,
+        "comments": 7,
+        "views": 4933,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on September 09, 2026.",
+        "music_info": {
+          "artist_name": "Lex Amarni, 2muchmotion",
+          "song_name": "the kill 2",
+          "uses_original_audio": false,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "1181471853615022"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "short-form video (cover image analyzed; no transcript provided)",
+        "content_categories": [
+          "sushi_showcase",
+          "humorous_gifting",
+          "staff_presentation"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "sushi as an alternative gift to flowers",
+          "playful relationship humor",
+          "freshly presented sushi"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "product promotion",
+          "description": "The post promotes Ashi Sushi's sushi as a playful, desirable gift alternative to a bouquet of flowers."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "تبا منك سوشي",
+        "visual_summary": "The cover shows a masked Ashi Sushi staff member in a kitchen holding a plated sushi roll toward the camera and a sign reading \"تبا منك سوشي.\" The ASHI / أشي logo appears at the top right and on the staff member's headwear.",
+        "caption_summary": "In Gulf Arabic, the caption says: \"Your wife doesn’t want a bouquet of flowers from you! She wants sushi from Ashi Sushi,\" framing sushi as a humorous romantic gift.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "humorous_gifting",
+              "product promotion"
+            ],
+            "text": "\"زوجتك ما تبا منك باقة ورد! تبا منك سوشي من اشي سوشي🍣\" presents Ashi Sushi as a preferred alternative to giving flowers."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "sushi_showcase",
+              "staff_presentation",
+              "branding"
+            ],
+            "text": "A staff member presents a plate of sushi in a restaurant kitchen; the ASHI / أشي logo is visible, along with the sign \"تبا منك سوشي.\""
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content type context"
+            ],
+            "text": "The item is supplied as a Video/clips post with 4,933 views, 287 likes, and 7 comments; no Reel transcript or duration is available."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3970748907263657816",
+      "short_code": "Dca7xfduIdY",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Dca7xfduIdY/",
+        "timestamp": "2026-08-24T11:17:36.000Z",
+        "caption": "قد جربت الكريزي كراب؟",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.ftij5-1.fna.fbcdn.net/v/t51.82787-15/778973679_18624562465022879_9125420284834731818_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzk3MDc0ODkwNzI2MzY1NzgxNg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTM1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=kAwAxUUQ9RwQ7kNvwEIFnib&_nc_oc=AdpuIlPYr9ul5UPwpnceWCsJDSV9crzosHYaAwND2H1dsh5UxxRuWECvjcKFmsQg9dKYQfQkPRGkMzmGVzGsE-31&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.ftij5-1.fna&_nc_gid=LX-QRam39OB5fS6eCNJsWA&_nc_ss=7a22e&oh=00_AQLR4UUuSrByx4blekbaMOJLz2J4K5Q6eReDxCbv_e8zVA&oe=6AB073D8"
+        ],
+        "video_url": null,
+        "likes": 53,
+        "comments": 4,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by اشي سوشي - Ashi Sushi on August 24, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "sushi_roll",
+          "menu_item_showcase",
+          "crab"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "Crazy Crab roll",
+          "signature-menu-item",
+          "sushi"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "encourage product consideration",
+          "description": "The caption asks viewers whether they have tried the Crazy Crab, prompting them to consider or discuss the roll."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu item promotion",
+          "description": "The post spotlights Ashi Sushi's Crazy Crab roll as a named menu item; the visual also states it was created by Ashi in 2015."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "ASHI / اشي. كريزي كراب. نحن الأساس! تم ابتكار الرول من قبل اشي سنة 2015.",
+        "visual_summary": "Close-up branded food image of a sushi roll topped with crispy shredded crab-like garnish, orange sauce, and sesame seeds. Ashi's logo appears at the top, with Arabic text naming the Crazy Crab and stating the roll was created by Ashi in 2015.",
+        "caption_summary": "Asks in Arabic: \"Have you tried the Crazy Crab?\"",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "promotion",
+              "content_categories"
+            ],
+            "text": "\"قد جربت الكريزي كراب؟\" translates to \"Have you tried the Crazy Crab?\""
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "promotion",
+              "visual_signals"
+            ],
+            "text": "The image prominently shows a sushi roll and the text \"كريزي كراب\" (Crazy Crab), alongside the Ashi logo and statement that the roll was created by Ashi in 2015."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image, posted as a feed item."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3964468143232445192",
+      "short_code": "DcEnsWIuOsI",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcEnsWIuOsI/",
+        "timestamp": "2026-08-15T19:18:19.000Z",
+        "caption": "وبالتحديد على قارب السوشي من عندنا 😌",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fdsa2-1.fna.fbcdn.net/v/t51.82787-15/773631576_18621230752022879_7310839965363624510_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=105&ig_cache_key=Mzk2NDQ2ODE0MzIzMjQ0NTE5MjE4NjIxMjMwNzQ5MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=B75F26HjbRMQ7kNvwGgHgMg&_nc_oc=Adr0RKEi8vjHsEHMVpfl_6yGKJljTLp883oGiISt_yuv7J3uEb_HKqPFzCKDrgCyMFYgDA5j-6JVYX6t4aSNP0Az&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fdsa2-1.fna&_nc_gid=iLOg1LwV3AiDv5hvsbuJ1Q&_nc_ss=7a22e&oh=00_AQIwBjKaAjuofCxoTGE0UD6fRCg6kVMEafG4gDQrPgALtQ&oe=6AB074C2"
+        ],
+        "video_url": "https://instagram.fdsa2-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQPOAhJM_Jv46dgO7m_32hpSkZ80Gn4pCa5hZt6mJaXKR6Y_5GTkAI16ybSDOIbYJYCHHJVykKa4bWCFweExZ3BGSfTQ_MQ5ls25u9A.mp4?_nc_cat=100&_nc_oc=Adosmk5Uz0HsrLzhfLl_yMx7AldV9GOMmwHtOEeltsX8JGXWwFMUIP2oGgnDfDIJ16NuvA3pTRwc_4Las3h8vxLH&_nc_sid=5e9851&_nc_ht=instagram.fdsa2-1.fna.fbcdn.net&_nc_ohc=eEs1gwwLizUQ7kNvwFfMMO7&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTczNzIwNzQyMDk0NjkyNywiYXNzZXRfYWdlX2RheXMiOjMxLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6NywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=12bb5c77099fc0b7&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9ENjQyN0YzMjlENTBGRUU0M0JGMDAxNEY5RUU2RkZCN192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzFCNDEwRDg0Q0UxNzQ5OTlFMzEzNTBCQ0UyMDBFNDk0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbep9Dz4_6VBhUCKAJDMywXQB92yLQ5WBAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=iLOg1LwV3AiDv5hvsbuJ1Q&_nc_zt=28&_nc_ss=7a22e&oh=00_AQLsnni5fZib5-K_7HxK7smAQt6nEg8pGDnO2RdTyus0Iw&oe=6AAC94CD",
+        "likes": 11857,
+        "comments": 40,
+        "views": 187053,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on August 15, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "39275077498757967"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "short-form video (Reel/clip)",
+        "content_categories": [
+          "sushi_showcase",
+          "food_presentation"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "sushi boat",
+          "shared dining",
+          "sushi invitation"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu item promotion",
+          "description": "The post spotlights Ashi Sushi's sushi boat as a food offering, reinforced by the caption specifying that the invitation is for their sushi boat."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "اعزمك على انك تعزمني على سوشي",
+        "visual_summary": "The supplied video cover shows several sushi rolls arranged in a wooden boat-shaped serving tray. A person uses chopsticks to lift a piece of sushi, and the Ashi/اشي logo appears at the lower left. Overlaid Arabic text reads: \"I’ll invite you so that you invite me for sushi.\"",
+        "caption_summary": "\"وبالتحديد على قارب السوشي من عندنا 😌\" — \"Specifically, [invite me] to our sushi boat 😌.\" The caption directly identifies the featured item as the restaurant's sushi boat.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "sushi_showcase",
+              "food_presentation",
+              "menu item promotion"
+            ],
+            "text": "The cover prominently displays assorted sushi rolls presented in a wooden boat, with chopsticks lifting one piece."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "branding"
+            ],
+            "text": "The Ashi / اشي logo is visible at the lower left of the cover."
+          },
+          {
+            "source": "combined",
+            "supports": [
+              "sushi invitation theme",
+              "menu item promotion"
+            ],
+            "text": "The on-screen text frames sushi as an invitation, while the caption explicitly says the invitation is for 'our sushi boat.'"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content type"
+            ],
+            "text": "The item is supplied as raw_content_type 'Video' and product_type 'clips'; no Reel transcript or duration was provided."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3952738830237725810",
+      "short_code": "Dba8wYKNnRy",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Dba8wYKNnRy/",
+        "timestamp": "2026-07-30T14:54:40.000Z",
+        "caption": "راتبك نزل ؟ أصرفه على اللي يستاهل 🍣💸",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-mad2-1.cdninstagram.com/v/t51.82787-15/761575313_18615540355022879_2561412265279593048_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=111&ig_cache_key=Mzk1MjczODgzMDIzNzcyNTgxMDE4NjE1NTQwMzQ5MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=UJ7YxfB2eJUQ7kNvwHm-uFl&_nc_oc=AdquCz8XXEnpHgLf38RKNCNtBhIYXx5qy3DA-y9KDiE8FJ6ZBMm2nav_nb4q8g8liLo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-mad2-1.cdninstagram.com&_nc_gid=ZDNnqoe3Co01RrVKrUsgSA&_nc_ss=7a22e&oh=00_AQK1z8Z1AlB85HtAJeNesUkbUuyUOvWSVlLxVVb9KddSvg&oe=6AB07B1A"
+        ],
+        "video_url": "https://scontent-mad2-1.cdninstagram.com/o1/v/t2/f2/m86/AQNvrzKmF6itB43ckX9v6Gr222SvQ_JHgqBez_sUCz9RFEq0Q9WYGg8Oj8suN1XH5DNqxAAblRWgyAIecOx_aRoTtlRuLI0Aet-U0V8.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=scontent-mad2-1.cdninstagram.com&_nc_ohc=r_kg8OH-RfYQ7kNvwEGhovM&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTI1NDcwOTc4NjY4Nzc2MCwiYXNzZXRfYWdlX2RheXMiOjQ3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6OCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=f9c40dc65e619215&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC84MDQxMzg1MjdBNkIyREVDQ0VFQUQxMTkwNEFFMzk5Nl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0Q5NDY5ODY5QjU0QjFCNjRCRDFFQjE0MTRFNkJFMUI0X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACag5I2y3Mm6BBUCKAJDMywXQCCqfvnbItEYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=ZDNnqoe3Co01RrVKrUsgSA&_nc_ss=7a22e&_nc_zt=28&oh=00_AQKWFKq0WJb7B8yEs5Yc5-e-jCG37pmVPuNrxLHMHU9nVw&oe=6AAC7148",
+        "likes": 8298,
+        "comments": 55,
+        "views": 74765,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on July 30, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "37274227222222986"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "sushi_showcase",
+          "payday_theme",
+          "restaurant_ambiance"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "payday indulgence",
+          "sushi variety",
+          "dine-in setting"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "encourage sushi purchase",
+          "description": "The caption playfully encourages viewers to spend their newly received salary on sushi."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "sushi menu promotion",
+          "description": "The post promotes Ashi Sushi's sushi offering through an appetizing display tied to a payday-spending message."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "Pov: تم إيداع الراتب (POV: the salary has been deposited); ASHI / اشي",
+        "visual_summary": "The Reel cover shows several varieties of sushi rolls arranged on wooden serving trays in a bright restaurant interior with plants and seating in the background. Ashi Sushi branding appears at the bottom, and an Arabic payday POV overlay is centered over the food.",
+        "caption_summary": "Arabic caption: “Did your salary get deposited? Spend it on what is worth it,” followed by sushi and money emojis.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "payday indulgence",
+              "encourage sushi purchase",
+              "sushi menu promotion"
+            ],
+            "text": "راتبك نزل ؟ أصرفه على اللي يستاهل 🍣💸"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "sushi_showcase",
+              "restaurant_ambiance",
+              "food_product",
+              "branding"
+            ],
+            "text": "The supplied cover prominently displays multiple sushi rolls on wooden trays inside the restaurant, with the ASHI / اشي logo visible."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "payday theme"
+            ],
+            "text": "On-screen text reads: “Pov: تم إيداع الراتب.”"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type",
+              "engagement context"
+            ],
+            "text": "This item is a Video/clips post with 74,765 views, 8,298 likes, and 55 comments; no Reel transcript was supplied."
+          }
+        ],
+        "confidence": 0.93
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3949769344627242236",
+      "short_code": "DbQZkrLO_T8",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbQZkrLO_T8/",
+        "timestamp": "2026-07-26T12:35:21.000Z",
+        "caption": "غداك صار جاهز عند اشي !🍱\n\nعرض شخصين – 89 ريال\nياكيسوبا دجاج + اشي اوكيناوا رول \n+ سلطة اشي كراب + مشروبين\n\nعرض شخص – 69 ريال\nكاتسو كاري + اشيانا رول + مشروب\n\nالروضة والصفا (طلبات داخلية وخارجية)\nالأحد–الأربعاء: 1:00–5:00\nالخميس: 1:30–5:30\nالعرض لفترة محدودة🧡",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fktw1-1.fna.fbcdn.net/v/t51.71878-15/754160400_1227873716094485_1223661614631667490_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=102&_nc_map=urlgen_bucketless&ig_cache_key=Mzk0OTc2OTM0NDYyNzI0MjIzNg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=XLDdL8amiXAQ7kNvwE3xM80&_nc_oc=Adpt747CglF7-YMYw2blVAXTGccsEGOkUkZxWAFRYOJU7YLWhCZryu5VI16Vl26-6Bg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fktw1-1.fna&_nc_gid=QRuxFaj5A-YIhWH16DDvyw&_nc_ss=7a22e&oh=00_AQJHzKijbDAT4sQkwWW6s6pqttBzYrR5NDVkMsaYa_fl1w&oe=6AB08F8A"
+        ],
+        "video_url": "https://instagram.fktw4-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQM_KFzIRGgy_Hrcs9OttyJ7Bu_tJfC9HVwcWEJO5J-97iJjTu-4Qu0c7X7vrFN1mXItT5Q-HmMOZp_lm51dYp55m_GajRIBrymodZ8.mp4?_nc_cat=105&_nc_oc=Ado73vuem9IVPPeikST17q0mYBQaBk8GGzi2Lw6wYToPsSeLCY0wO3qlRLhmVvn8UTg&_nc_sid=5e9851&_nc_ht=instagram.fktw4-1.fna.fbcdn.net&_nc_ohc=YeGezDDzIb8Q7kNvwEm-xCY&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MzMzODY5Mjg3Mjk1OTIwMiwiYXNzZXRfYWdlX2RheXMiOjUyLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=5acbeb0a5d319888&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8yRDQ2NzcxMDJCRkQ3NTJGOTA0NDVEOTUzMUUxNjg4RF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzU5NDQ1OEFEMzEwREFDODlBQ0NEMkQxNzNERjVFMTlEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbE06erwKHuCxUCKAJDMywXQCuIMSbpeNUYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=QRuxFaj5A-YIhWH16DDvyw&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_ss=7a22e&oh=00_AQKg82KSjgZTJ2cL0QZmGeDo_s2W5WZMsHNZni-KzpgRlQ&oe=6AAC6FA6",
+        "likes": 66,
+        "comments": 2,
+        "views": 1540,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on July 26, 2026.",
+        "music_info": {
+          "artist_name": "The 50th Floor",
+          "song_name": "Let It Be Me",
+          "uses_original_audio": false,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "2453525238386743"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "video",
+        "content_categories": [
+          "limited_time_offer",
+          "lunch_bundle",
+          "japanese_food"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "lunch promotion",
+          "individual and two-person meal bundles",
+          "limited-time availability"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "Visit or order the lunch offer",
+          "description": "Audience is encouraged to take advantage of the limited-time lunch offers at the Al Rawdah and Al Safa branches during the stated afternoon hours, for dine-in or takeaway."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "Limited-time lunch bundles",
+          "description": "Promotes two priced lunch sets: a SAR 89 bundle for two and a SAR 69 bundle for one, each with specified Japanese dishes and drinks."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "ASHI / اشي\nعرض الغداء لفترة محدودة!\nيسري العرض في فرعي الروضة والصفا\nطلبات داخلية وخارجية\nمن الأحد للأربعاء 1:00 - 5:00\nالخميس 1:30 - 5:30",
+        "visual_summary": "The cover shows an ASHI-branded restaurant table with plated Japanese-style dishes, including a sushi roll, a noodle dish, and a salad, alongside a drink. Overlay text announces a limited-time lunch offer and its applicable branches and hours.",
+        "caption_summary": "The Arabic caption details a limited-time lunch offer: a SAR 89 set for two with chicken yakisoba, Ashi Okinawa roll, Ashi crab salad, and two drinks; and a SAR 69 individual set with katsu curry, Ashiana roll, and a drink. It specifies dine-in and takeaway availability at Al Rawdah and Al Safa, with Sunday–Wednesday and Thursday time windows.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "The caption states 'عرض شخصين – 89 ريال' and 'عرض شخص – 69 ريال,' lists the included dishes and drinks, specifies Al Rawdah and Al Safa for dine-in/takeaway, provides offer hours, and says 'العرض لفترة محدودة' (the offer is for a limited time)."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "visual_signals",
+              "visual_summary"
+            ],
+            "text": "The supplied cover visibly displays the ASHI logo, Arabic text 'عرض الغداء لفترة محدودة!' (limited-time lunch offer), branch/hours text, and multiple plated food items on a restaurant table."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied metadata identifies the raw content type as Video and product type as clips; no Reel transcript or duration is available."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3947497889734402212",
+      "short_code": "DbIVGp9OSCk",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbIVGp9OSCk/",
+        "timestamp": "2026-07-23T09:21:46.000Z",
+        "caption": "إذا كنت من منسوبي شركة ماتش، لك خصم 10% في اشي!🧡\n\nفقط أبرز بطاقة العمل للاستفادة من العرض.\n في فرعي الروضة والصفا.\nساري حتى يوليو 2027.\n\nIf you’re a MATCH employee, enjoy 10% OFF at Ashi! 🧡\n\nSimply present your employee ID to redeem the offer.\nValid at Al Rawdah & Al Safa branches.\nUntil July 2027.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fykz1-1.fna.fbcdn.net/v/t51.82787-15/753471497_18613216900022879_1421709145136956281_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzk0NzQ5Nzg4OTczNDQwMjIxMg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTM1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=BaG74tOtBDkQ7kNvwGOg893&_nc_oc=AdpuSrALQ132vd2gt5ewdh6qL8IXEKjjCwV4362mDAVe0NFQJViqxFO2McdnMPK8MvZvHQXvgbJ1WOHWdWI8_Y-3&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fykz1-1.fna&_nc_gid=aE72aSvY8UpzVxHf_tCNtA&_nc_ss=7a22e&oh=00_AQJnOL8CnBcDMU78qqXUP9q2vKDlMoxeJ_R0efp4iFCX6Q&oe=6AB07BFE"
+        ],
+        "video_url": null,
+        "likes": 20,
+        "comments": 1,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by اشي سوشي - Ashi Sushi on July 23, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "employee_discount",
+          "partner_promotion",
+          "sushi"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "MATCH employee benefit",
+          "10% discount",
+          "Ashi branch offer"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "Redeem employee discount",
+          "description": "MATCH employees are encouraged to present their employee ID to receive 10% off at Ashi's Al Rawdah and Al Safa branches."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "Partner employee discount",
+          "description": "Ashi promotes a 10% discount for MATCH employees, valid at the Al Rawdah and Al Safa branches until July 2027."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "ماتش MATCH × ASHI اشي؛ خصم 10% حصري لمنسوبي شركة ماتش؛ يشترط مطابقة بطاقة العمل للشخص المستفيد من العرض؛ يسري العرض من يوليو 2026 حتى يوليو 2027؛ في جميع فروع اشي (الروضة، الصفا).",
+        "visual_summary": "Co-branded MATCH and Ashi promotional graphic featuring a plated, sauce-topped sushi item with chopsticks. Arabic text highlights an exclusive 10% discount for MATCH employees, alongside a QR code and validity details.",
+        "caption_summary": "Arabic and English caption announces 10% off at Ashi for MATCH employees who show their employee ID, valid at Al Rawdah and Al Safa through July 2027.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "offer validity",
+              "eligible audience",
+              "branch availability"
+            ],
+            "text": "The caption states that MATCH employees receive 10% off by presenting an employee ID, at Al Rawdah and Al Safa branches, until July 2027."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "offer_visible",
+              "branding_visible",
+              "food_visible",
+              "promotion"
+            ],
+            "text": "The image displays MATCH × ASHI branding, a sushi dish, the Arabic headline for an exclusive 10% employee discount, and terms stating July 2026–July 2027 validity at Rawdah and Safa branches."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied metadata identifies this as an Image feed post; engagement metadata shows 20 likes and 1 comment."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3947497060520684763",
+      "short_code": "DbIU6lsO-zb",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbIU6lsO-zb/",
+        "timestamp": "2026-07-23T09:20:08.000Z",
+        "caption": "إذا كنت من منسوبي شركة إبراق، لك خصم 10% في اشي! 🧡\n\nفقط أبرز بطاقة العمل للاستفادة من العرض.\n في فرعي الروضة والصفا.\nساري حتى يوليو 2027.\n\nIf you’re an Ibraq employee, enjoy 10% OFF at Ashi! 🧡\n\nSimply present your employee ID to redeem the offer.\nValid at Al Rawdah & Al Safa branches.\nUntil July 2027.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fitm4-1.fna.fbcdn.net/v/t51.82787-15/753205966_18613216501022879_1026882133539467643_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=Mzk0NzQ5NzA2MDUyMDY4NDc2Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTM1MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=symj5hMeX-UQ7kNvwE4QgQE&_nc_oc=AdpBDk5P-Uip-ar-A_gMtbT0PHfF_3kgc6lFCXUvJ1YfLfDsQ2-THmbQnAsgaG3xu-5-y7ckVemqhtIQnM5b6UHC&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fitm4-1.fna&_nc_gid=JJ3H81GpfDct6vEHpcQjEg&_nc_ss=7a22e&oh=00_AQKNJr-llFOyB0-FU61YmE8qOW-UZTsCT40RBK4-twgBcA&oe=6AB067E0"
+        ],
+        "video_url": null,
+        "likes": 19,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by اشي سوشي - Ashi Sushi on July 23, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "employee_discount",
+          "brand_partnership",
+          "limited_time_offer"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "Ibraq employee benefit",
+          "10% discount",
+          "branch-specific offer"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "redeem employee discount",
+          "description": "Ibraq employees are encouraged to present their employee ID/card at Ashi to receive the 10% discount."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "employee discount partnership",
+          "description": "Ashi promotes a 10% discount for Ibraq employees at its Al Rawdah and Al Safa branches, valid until July 2027."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "إبراق IBRAQ × ASHI اشي. خصم 10% حصري لمنسوبي شركة إبراق. يشترط مطابقة بطاقة العمل للشخص المستفيد من العرض. يسري العرض من يوليو 2026 حتى يوليو 2027 في جميع فروع اشي (الروضة، الصفا). للاستفسارات والتواصل يرجى مسح رمز الـQR.",
+        "visual_summary": "A co-branded Ibraq × Ashi promotional graphic features both logos, a plated fried chicken-and-rice dish, a prominent Arabic headline announcing an exclusive 10% discount for Ibraq employees, validity and branch details, and a QR code for inquiries.",
+        "caption_summary": "Arabic and English caption announces 10% off at Ashi for Ibraq employees who show their employee ID. It specifies Al Rawdah and Al Safa branches and validity through July 2027.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "content_pillar",
+              "content_categories"
+            ],
+            "text": "The caption states that Ibraq employees receive 10% off at Ashi by presenting an employee ID, at Al Rawdah and Al Safa through July 2027."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "promotion",
+              "visual_signals",
+              "text_in_visual",
+              "content_categories"
+            ],
+            "text": "The image prominently displays Ibraq and Ashi branding, an exclusive 10% employee discount message, a food dish, offer dates, eligible branches, and a QR code."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type",
+              "caption_summary"
+            ],
+            "text": "This is an Instagram feed image post dated July 23, 2026, with 19 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3943231045003551494",
+      "short_code": "Da5K75IuqMG",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Da5K75IuqMG/",
+        "timestamp": "2026-07-17T12:04:09.000Z",
+        "caption": "إذا تعرف أحد يبدأ اسمه بـ A\nأرسله وبيعزمك على سوشي🧡!",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-yyz1-1.cdninstagram.com/v/t51.82787-15/749286787_18611348788022879_3580842307910085373_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=105&ig_cache_key=Mzk0MzIzMTA0NTAwMzU1MTQ5NDE4NjExMzQ4Nzg1MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjExNzkuc2RyLnZpZGVvX2RlZmF1bHRfY292ZXJfZnJhbWUuQzMifQ%3D%3D&_nc_ohc=0myDoEOLWZEQ7kNvwFjhUeo&_nc_oc=AdqtZIZFLGgxtdrEjpSqRex_RZjH8ejhR1-foouDvn5Uv90rmm_hUXbBi3Th7XJKYEY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_gid=j5zW5PgZVS9P9u01nL_mpw&_nc_ss=7a22e&oh=00_AQInkSfePj4gVwM9FQJOcOAtP91-cc8OPw3IKstDVVj2wQ&oe=6AB0791B"
+        ],
+        "video_url": "https://scontent-yyz1-1.cdninstagram.com/o1/v/t2/f2/m86/AQNdIICO7zggHm4Wqh_WUVQW7IepZlQGwXq-ikojKIgOmS3aRBRu4FGHhDXEXWsNNph-_Obgbb2FKHfdUFKMVPrv3hPFGdh_5VeNRQI.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=scontent-yyz1-1.cdninstagram.com&_nc_ohc=JJ6Wy-ITe3cQ7kNvwGoa7fZ&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6Mjc4MDYxMzM1ODU2Nzk4MDIsImFzc2V0X2FnZV9kYXlzIjo2MSwidmlfdXNlY2FzZV9pZCI6MTAwOTksImR1cmF0aW9uX3MiOjksInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=2760825891da3a9e&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC85MTRFREJBN0E1MzFEMTYyQTNFMjNENzE5MzE5NEM4NF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzAwNDZBMUM4RTUyODdDNDRDMUNDN0MxNjNGQjE3Njk1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACb01pyv_-HkYhUCKAJDMywXQCMhysCDEm8YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=j5zW5PgZVS9P9u01nL_mpw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQLWWD6MGzBx7BGse5eWyYj3ZDUNbx7Uj_kXfYUbTSYozg&oe=6AAC84BE",
+        "likes": 2115,
+        "comments": 96,
+        "views": 50174,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on July 17, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "37616941601252364"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "short-form video (Reel/clip)",
+        "content_categories": [
+          "sushi",
+          "share_prompt",
+          "restaurant_dining"
+        ],
+        "content_pillar": "community_engagement",
+        "content_themes": [
+          "name-initial wordplay",
+          "sharing with friends",
+          "sushi invitation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "share with an A-name contact",
+          "description": "The caption encourages viewers to send the post to someone whose name starts with A, suggesting that person should invite them for sushi."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": true,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "ASHI / أشي; الشخص اللي يبدأ اسمه بـ A يعزمك على سوشي",
+        "visual_summary": "The supplied video cover shows a sushi roll on a black rectangular plate at a restaurant table while a gloved hand pipes mayonnaise into the shape of the letter A. Ashi branding appears at the top, with dining chairs, tableware, and a green menu or booklet in the background.",
+        "caption_summary": "Arabic caption: “If you know someone whose name starts with A, send this to them and they’ll treat you to sushi.”",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "community_engagement",
+              "share_prompt",
+              "cta"
+            ],
+            "text": "\"إذا تعرف أحد يبدأ اسمه بـ A أرسله وبيعزمك على سوشي🧡!\" explicitly asks viewers to send the post to a person with an A-name."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "sushi",
+              "food_visible",
+              "branding_visible",
+              "text_in_visual"
+            ],
+            "text": "The cover visibly shows a sushi roll, a mayonnaise letter A being drawn on the plate, ASHI/أشي branding, and the Arabic overlay \"الشخص اللي يبدأ اسمه بـ A يعزمك على سوشي\"."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as raw_content_type \"Video\" with product_type \"clips\"; no Reel transcript or duration is available."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3939632267772077327",
+      "short_code": "DasYqyqOKUP",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DasYqyqOKUP/",
+        "timestamp": "2026-07-12T12:54:12.000Z",
+        "caption": "مشاعرنا فاضت ونحن ننزل البوست..\nولد اشي اللي كان أصغر كاشير في 2017، اليوم صار الممثل القانوني لمطعم اشي\nومع اقتراب 10 سنوات على افتتاح أول فرع، ما نقدر نقول إلا الحمدلله وشكرًا لكل شخص كبر معانا وكان جزء من رحلتنا🧡",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fcdg3-1.fna.fbcdn.net/v/t51.82787-15/743763749_18609875131022879_7756929493304806606_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=MzkzOTYzMjI2Nzc3MjA3NzMyNzE4NjA5ODc1MTI4MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=tMJ0opLKAt0Q7kNvwF56Xoj&_nc_oc=AdrYQoLH3hTCYxZhtG3LGsYuuMkZb87PUIxwVcxZm0jUfFr8w0fEgLUlhF7FgllS6JI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcdg3-1.fna&_nc_gid=7ZV9TvLRuAGZfq19G6MsXg&_nc_ss=7a22e&oh=00_AQIsFgmZ8Snxa5TtGOydnmUTzqjl_XquXb80db8-hYOu8A&oe=6AB08427"
+        ],
+        "video_url": "https://instagram.fcdg3-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQMVpNCnfVCSrWZQcSONsIgPJhzZ1SFD-OtkNhUNP4wt1QAeU5xFt4jlLX0sWLk2m6NcquITPc0J_4IADM8_VZ1nlr0JVfaV7W2vbPE.mp4?_nc_cat=110&_nc_oc=AdpQbeCYsTD3_C-7nM59xdBrshCr6vFTHMTfTdXzpYgn3f_ShdkRg4UjLELJRZ9RyHo&_nc_sid=5e9851&_nc_ht=instagram.fcdg3-1.fna.fbcdn.net&_nc_ohc=Zbgt4OIePmgQ7kNvwHEDCLI&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NDM3ODEwNjc3NTczNTk4NywiYXNzZXRfYWdlX2RheXMiOjY2LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=323a6a405deafdd5&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9DNDRDN0RDQkIxMkEwMTI0QkFFMkJGNzM0OUZBOUFBM192aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzAwNEQ2OTBDOUIyRkZENkY0NzE5RkY3NjlFNTg2MkFEX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbmusCyrffGDxUCKAJDMywXQDQ7peNT988YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=7ZV9TvLRuAGZfq19G6MsXg&_nc_map=urlgen_bucketless&_nc_zt=28&_nc_ss=7a22e&oh=00_AQJL9gF0upk7VtP3jhEhyfavbNC568EBtdevgUTvJhGqCQ&oe=6AAC944F",
+        "likes": 283,
+        "comments": 43,
+        "views": 358,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on July 12, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "29819833171015501"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "video",
+        "content_categories": [
+          "employee_growth",
+          "brand_milestone",
+          "team_story"
+        ],
+        "content_pillar": "people_staff",
+        "content_themes": [
+          "employee journey",
+          "internal promotion",
+          "10-year anniversary",
+          "gratitude"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "كبرنا وكبر اشي.. وطموحنا وشغفنا بيكبروا معاكم. 2017 / 2026. ASHI اشي.",
+        "visual_summary": "The supplied video cover uses Ashi Sushi branding and compares two staff images: an archival 2017 image of a young cashier at the register and a 2026 image of the same person wearing black and giving a thumbs-up while holding a plate of food. The composition frames the post as an employee-growth story across the restaurant's history.",
+        "caption_summary": "The caption says that someone who was the youngest cashier in 2017 is now Ashi Restaurant's legal representative. It expresses gratitude to everyone who has grown with the restaurant as it approaches 10 years since opening its first branch.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "people_staff",
+              "employee_growth",
+              "brand_milestone",
+              "gratitude"
+            ],
+            "text": "\"اللي كان أصغر كاشير في 2017، اليوم صار الممثل القانوني لمطعم اشي\" and \"مع اقتراب 10 سنوات على افتتاح أول فرع... شكرًا لكل شخص كبر معانا\"."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "people_staff",
+              "employee_growth",
+              "branding_visible",
+              "people_visible",
+              "food_visible"
+            ],
+            "text": "The cover visibly contrasts the same employee labeled 2017 and 2026, includes the ASHI logo, and shows him holding a plate of food in the 2026 image."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as raw content type \"Video\" / product type \"clips\"; no Reel transcript or duration is available."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3938230413657656335",
+      "short_code": "DanZ7IRtEwP",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DanZ7IRtEwP/",
+        "timestamp": "2026-07-10T14:29:08.000Z",
+        "caption": "😌اترسلك المقطع؟ اجل لازم تعزمه\n\n They sent you this? Treat them",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-lhr6-2.cdninstagram.com/v/t51.82787-15/744872873_18609221698022879_2560446610086708224_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=105&ig_cache_key=MzkzODIzMDQxMzY1NzY1NjMzNTE4NjA5MjIxNjkyMDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjExNzkuc2RyLnZpZGVvX2RlZmF1bHRfY292ZXJfZnJhbWUuQzMifQ%3D%3D&_nc_ohc=0pZflacsUqIQ7kNvwFZJWqH&_nc_oc=Adp5bgN4NDu7kGaKLWp3hiZN_7SVeLZEg3fiVB7nHakd9gCt9RMvo4u6FpKVoIBGXNxb2bkMUuw2Y-jD1nharUSm&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-lhr6-2.cdninstagram.com&_nc_gid=t4sgVAfoZONPhEjNXBMPWg&_nc_ss=7a22e&oh=00_AQK6bgipMwEyRSuYdj2bwcVLzsU8SBuLYm1vKJSxbokqYA&oe=6AB07A46"
+        ],
+        "video_url": "https://scontent-lhr6-2.cdninstagram.com/o1/v/t2/f2/m86/AQPmlBArTUKsR3N3JdqXFkE4kVvm4ep_kpBe8RIhzPAI_UlbqFy-_ZE6rKJkRWmTOwq_2KTmWLOSig1YpJ_YtjEpVK7FPJPcNU8QKpk.mp4?_nc_cat=105&_nc_sid=5e9851&_nc_ht=scontent-lhr6-2.cdninstagram.com&_nc_ohc=ou79nZFErMwQ7kNvwFQrO8E&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTUyODA0MjE2NTQyODQ0MCwiYXNzZXRfYWdlX2RheXMiOjY3LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTUsIndhdGNoX3RpbWVfcyI6MTQwNTUxLCJ1cmxnZW5fc291cmNlIjoid3d3In0%3D&ccb=17-1&vs=294c418acb7c3032&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9ERTQ3MzE4OEU1RDcxQkUxRDAzM0NCOTUxM0Y0NjlCMV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzYxNDhGQkI3NzhCMUNBM0ZCN0I0N0E2RDQ0NDYxMTgzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACawg8en4e-2BRUCKAJDMywXQC4AAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=t4sgVAfoZONPhEjNXBMPWg&_nc_ss=7a22e&_nc_zt=28&oh=00_AQKRG6beuFXrU2fFFA6VuJErO5L23xVaH8DnPfDGd2wpbQ&oe=6AAC7B56",
+        "likes": 5064,
+        "comments": 61,
+        "views": 35039,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on July 10, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "27418035584528664"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "sushi_showcase",
+          "shareable_food_content"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "treating someone to sushi",
+          "social sharing",
+          "craving appeal"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "treat or invite the sender",
+          "description": "Viewers who receive the clip are encouraged to treat the person who sent it, implicitly by sharing sushi together."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "sushi product promotion",
+          "description": "The Reel promotes Ashi Sushi through an appetizing close-up of sushi, with the brand logo displayed prominently."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "الشخص اللي ارسلك هذا المقطع مشتاقلك ونفسه ياكل سوشي معاك\n(\"The person who sent you this clip misses you and wants to eat sushi with you.\")",
+        "visual_summary": "The cover shows chopsticks lifting a sauce-coated sushi piece above a plated sushi assortment and dipping sauce in a restaurant setting. The ASHI / أشي logo appears above the food, and a hand is visible holding the chopsticks.",
+        "caption_summary": "In Arabic and English, the caption says that if someone sent the viewer this clip, they should treat them.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "sushi_showcase",
+              "promotion",
+              "branding"
+            ],
+            "text": "A close-up sushi serving is the central visual, and the ASHI / أشي logo is overlaid above it."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "treating someone to sushi",
+              "social sharing"
+            ],
+            "text": "\"اترسلك المقطع؟ اجل لازم تعزمه\" / \"They sent you this? Treat them\" encourages treating the person who sent the Reel."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "shareable_food_content",
+              "treating someone to sushi"
+            ],
+            "text": "The Arabic overlay states that the person who sent the clip misses the viewer and wants to eat sushi with them."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as a Video/clips post with 35,039 views, 5,064 likes, and 61 comments."
+          }
+        ],
+        "confidence": 0.94
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3930085181649115934",
+      "short_code": "DaKd6Z1ONse",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaKd6Z1ONse/",
+        "timestamp": "2026-06-29T08:47:24.000Z",
+        "caption": "نشوفكم في فعالية توموداتشي ! 🇯🇵 @tomodachiksa \nمن الخميس إلى السبت (2–4 يوليو)\nفي مركز جده للمعارض 🧡\n\nSee you at the Tomodachi Festival! 🇯🇵\nFrom Thursday to Saturday (July 2–4)\nAt the Jeddah Exhibition Center 🧡",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-atl3-2.cdninstagram.com/v/t51.82787-15/730558684_18605667034022879_7144333159457450452_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=MzkzMDA4NTE4MTY0OTExNTkzNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTY1My5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=x97sRbc13LoQ7kNvwHXjL3U&_nc_oc=AdolB2vkC-KEQV5UPfySNujnJ_EKVpivlbCKutuyhYM0YIkTMNhcx3LVWSLDaRG5hsGzOMiII5CaXnFOHLMxUj1X&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-atl3-2.cdninstagram.com&_nc_gid=-xSg09hNShP-d06Lss9pSQ&_nc_ss=7a22e&oh=00_AQIQOKtIrk0KREzB7qZvKAXtL5jRH4NzOYnoPGtCaebu4Q&oe=6AB06917"
+        ],
+        "video_url": null,
+        "likes": 48,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [
+          "tomodachiksa"
+        ],
+        "alt_text": "Photo by اشي سوشي - Ashi Sushi on June 29, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "event_announcement",
+          "festival_participation",
+          "collaboration"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "Tomodachi Festival",
+          "event participation",
+          "Jeddah Exhibition Center",
+          "Japanese cultural setting"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "attend the event",
+          "description": "The audience is invited to visit Ashi Sushi at the Tomodachi Festival at the Jeddah Exhibition Center from July 2 to 4."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "festival appearance announcement",
+          "description": "The post promotes Ashi Sushi's participation in the Tomodachi Festival, including the event dates and venue."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "[Ashi Sushi logo] × Tomodachi\nموعدنا معكم في مركز جدة للمعارض لتواجدنا بفعالية توموداتشي!\nيسعدنا أن نكون جزءاً من المعرض خلال الفترة من 2 إلى 4 يوليو (الخميس إلى السبت)\nنراكم هناك وبانتظاركم بكل حماس!",
+        "visual_summary": "A bilingual event-announcement graphic is displayed over a Japanese-style interior. It pairs the Ashi Sushi brand mark with the Tomodachi logo and states that the brand will be at the Jeddah Exhibition Center between July 2 and 4.",
+        "caption_summary": "Arabic and English caption announces Ashi Sushi's presence at the Tomodachi Festival, running Thursday through Saturday, July 2–4, at the Jeddah Exhibition Center; it tags @tomodachiksa.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "event_announcement",
+              "festival_participation",
+              "cta",
+              "promotion"
+            ],
+            "text": "نشوفكم في فعالية توموداتشي ... من الخميس إلى السبت (2–4 يوليو) في مركز جده للمعارض / See you at the Tomodachi Festival ... From Thursday to Saturday (July 2–4) At the Jeddah Exhibition Center."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "event_announcement",
+              "collaboration",
+              "branding_visible",
+              "logo_visible",
+              "cta",
+              "promotion"
+            ],
+            "text": "The visual shows Ashi Sushi's logo alongside the Tomodachi logo, and Arabic text says the brand will be present at the event at Jeddah Exhibition Center from July 2 to 4 and invites viewers to see them there."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement_context"
+            ],
+            "text": "Feed image posted June 29, 2026; engagement metadata reports 48 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3925056682601296956",
+      "short_code": "DZ4mkHJuTQ8",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ4mkHJuTQ8/",
+        "timestamp": "2026-06-22T10:14:33.000Z",
+        "caption": "مين أول شخص جا في بالك تروح معاه اشي؟ 🧡",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-fco2-1.cdninstagram.com/v/t51.82787-15/729424303_18603282508022879_5111082126339323563_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=102&ig_cache_key=MzkyNTA1NjY4MjYwMTI5Njk1NjE4NjAzMjgyNTA1MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=MRNb9oohgGAQ7kNvwEsogPm&_nc_oc=AdqB0bRNguwmuLPTQQWhF6jiYyNOgO_kFgMypcoOUKUk15U78dFDC2K1tzCl35TBcxE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-fco2-1.cdninstagram.com&_nc_gid=DlI132yAXP6HgHN7POSQ3A&_nc_ss=7a22e&oh=00_AQIb6HG2MA7mM-_-H6FKi2jD8noBgEFaJjPZUJZtW4ZjZw&oe=6AB08989"
+        ],
+        "video_url": "https://scontent-fco2-1.cdninstagram.com/o1/v/t2/f2/m86/AQNls_b4qNBMu9jCWOMXTlLLi9WNWGK8kL4BwDrtDuRoDHSBkFV5mwhmF4VzAvw2WCj_1O8XqcWGYYFOh0PGO1ULwtQ23Tms8WXKiAU.mp4?_nc_cat=105&_nc_sid=5e9851&_nc_ht=scontent-fco2-1.cdninstagram.com&_nc_ohc=ZTp2p95NY2QQ7kNvwFi9OOF&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTUzOTI5NTM3MTE5NTE0NiwiYXNzZXRfYWdlX2RheXMiOjg2LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTIsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=7a69be4ab28e4c72&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9DRTQ2MTQwQzAyM0NFMTM1RDBDN0Q5OEU0QjdGRDRCNF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzA4NEY0MEYyODJFMDRCOURGODlGMTcyNjJBQTJFRUIxX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaUzO-c5P67BRUCKAJDMywXQCjMzMzMzM0YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=DlI132yAXP6HgHN7POSQ3A&_nc_ss=7a22e&_nc_zt=28&oh=00_AQLNy0fXLB-YAyHUw317_wLd-fKsQ6HBF39bJIyEg4sXwQ&oe=6AAC697E",
+        "likes": 102,
+        "comments": 9,
+        "views": 2058,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on June 22, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "27737220272538224"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "tempura_dish",
+          "shared_dining",
+          "restaurant_visit"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "shrimp tempura",
+          "shared meal invitation",
+          "dining at Ashi Sushi"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "invite a dining companion",
+          "description": "The caption asks viewers who they would want to go to Ashi Sushi with, prompting them to think of or engage around a potential dining companion."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "restaurant visit promotion",
+          "description": "The post pairs an appetizing tempura dish with an invitation to visit Ashi Sushi with someone."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "You, me Ashi?",
+        "visual_summary": "The supplied Reel cover shows a bowl of rice topped with fried shrimp and other tempura, while dark sauce is being poured over it. A person's hand is visible holding the sauce container, and the overlaid text reads, “You, me Ashi?”",
+        "caption_summary": "In Arabic, the caption asks: “Who is the first person that came to your mind to go to Ashi with?”",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "tempura_dish",
+              "branding_visible"
+            ],
+            "text": "The cover prominently shows a prepared tempura-and-rice dish with sauce being poured over it, alongside the text “You, me Ashi?”."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "shared_dining",
+              "restaurant_visit",
+              "cta",
+              "promotion"
+            ],
+            "text": "“مين أول شخص جا في بالك تروح معاه اشي؟ 🧡” asks who the viewer would go to Ashi with."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as a Video with product_type “clips”; no Reel transcript or duration is available."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement_context"
+            ],
+            "text": "Supplied engagement metadata lists 102 likes, 9 comments, and 2,058 views."
+          }
+        ],
+        "confidence": 0.93
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3922951047294207677",
+      "short_code": "DZxHzFdN8a9",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZxHzFdN8a9/",
+        "timestamp": "2026-06-19T12:31:53.000Z",
+        "caption": "⁨\t⁨\tشكرًا لكل شخص شاركنا اشي ماتسوري 🧡\n\nاستمتعنا بفعالية الأوريقامي والأسماء بالخط الياباني، والأهم من هذا كله استمتعنا بوجودكم معنا\n\nبداية الفصل الجديد من اشي كانت أجمل بكم، ونشوفكم قريب في فعاليات ولحظات أجمل بإذن الله⁩⁩",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-gru2-2.cdninstagram.com/v/t51.82787-15/726507805_18602288104022879_3576527327256842599_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=106&ig_cache_key=MzkyMjk1MTA0NzI5NDIwNzY3NzE4NjAyMjg4MDk4MDIyODc5.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=5YGriY4h3pIQ7kNvwF_rWGG&_nc_oc=AdraQvXopF7i9CjOAKXgYwKFb3Yrp0y3rG6xvDV8u0O0co7gtDuQMwLSRzXiaNPjdeI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-gru2-2.cdninstagram.com&_nc_gid=xM3isB6wYXFmXwyBvdw-Cg&_nc_ss=7a22e&oh=00_AQLqAYgUTsKyceHkD0w8O9D5uMh1ZnSq080K5v4U4MuBsg&oe=6AB08724"
+        ],
+        "video_url": "https://scontent-gru1-2.cdninstagram.com/o1/v/t2/f2/m86/AQMb0KFSu51KrOYLT1Bc1TkNVqGvljDc5PwOK-n5ljXVXSxpOB-eB_9EwgACxEtviI48TYkkRAT_pSR3AQtWgJGtz3ctfH-vHkYQVCY.mp4?_nc_cat=110&_nc_sid=5e9851&_nc_ht=scontent-gru1-2.cdninstagram.com&_nc_ohc=UMFcSErDWOEQ7kNvwGqUPBo&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MTcwOTkzMzc2MzYyNTExMiwiYXNzZXRfYWdlX2RheXMiOjg5LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=7c2c17567462bd20&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC8zQTQ5MzQzODBEODg1OUQ2NzgzNzgwMkQyNzMxNUNBNF92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzU3NEQ2QUEzQjM3OTY0NUY5NTc2NTkzOUUyODREODgzX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACawgpCpn8uJBhUCKAJDMywXQDeiDEm6XjUYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=xM3isB6wYXFmXwyBvdw-Cg&_nc_ss=7a22e&_nc_zt=28&oh=00_AQITgbEhH89NtBifHnPtxqlCPs8XzozLHAcnNcTGFrm8Lw&oe=6AAC91E3",
+        "likes": 56,
+        "comments": 7,
+        "views": 718,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by اشي سوشي - Ashi Sushi on June 19, 2026.",
+        "music_info": {
+          "artist_name": "ashi_sushi",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "26808447798857172"
+        }
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "event recap video",
+        "content_categories": [
+          "event_recap",
+          "community_event",
+          "customer_experience"
+        ],
+        "content_pillar": "community_engagement",
+        "content_themes": [
+          "Ishi Matsuri",
+          "Japanese cultural activities",
+          "customer appreciation",
+          "restaurant community gathering"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": "شكرًا لدعمكم لنا من 2014",
+        "visual_summary": "The supplied video cover shows a customer holding a bite of food inside the restaurant. Orange and white lanterns and small lights decorate the space, suggesting an event setting. An Arabic overlay thanks customers for their support since 2014.",
+        "caption_summary": "The caption thanks attendees of Ishi Matsuri, mentions origami and Japanese-calligraphy-name activities, and says the restaurant enjoyed having them for the beginning of Ishi's new chapter. It says more events and moments are coming soon.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "event_recap",
+              "community_event",
+              "customer appreciation"
+            ],
+            "text": "\"شكرًا لكل شخص شاركنا اشي ماتسوري\" and references origami and Japanese-name calligraphy activities."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "community_engagement"
+            ],
+            "text": "The post centers on attendees' presence and thanks them for joining the event."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "people_visible",
+              "food_visible",
+              "event setting"
+            ],
+            "text": "A person is shown holding food in a decorated indoor restaurant space with lanterns."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "customer appreciation"
+            ],
+            "text": "The on-screen Arabic text says: \"شكرًا لدعمكم لنا من 2014\" (Thank you for supporting us since 2014)."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as a Video/clips post; no Reel transcript or duration is available."
+          }
+        ],
+        "confidence": 0.94
+      },
+      "analysis_error": null
+    }
+  ],
+  "analysis_coverage": {
+    "content_requested": 30,
+    "content_scraped": 13,
+    "content_analyzed": 13,
+    "content_failed": 0,
+    "analysis_success_pct": 100.0,
+    "date_range": {
+      "oldest_content": "2026-06-19T12:31:53+00:00",
+      "newest_content": "2026-09-09T16:50:08+00:00"
+    },
+    "multimodal_analysis": true,
+    "reels_detected": 0,
+    "reels_enriched": 0,
+    "reel_transcripts_available": 0
+  },
+  "data_quality": {
+    "status": "complete",
+    "profile_scrape_success": true,
+    "content_scrape_success": true,
+    "multimodal_analysis_completed": true,
+    "reel_enrichment_attempted": true,
+    "reel_enrichment_completed": true,
+    "warnings": [
+      "9 video item(s) were not matched by the Reel scraper; they were analyzed using caption, engagement metadata, and available cover/images."
+    ],
+    "failed_analyses": []
+  }
+}

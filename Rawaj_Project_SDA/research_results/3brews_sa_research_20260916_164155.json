@@ -1,0 +1,3224 @@
+{
+  "schema_version": "3.0",
+  "restaurant": {
+    "restaurant_id": 2,
+    "name": "3Brews",
+    "instagram_username": "3brews.sa",
+    "instagram_url": "https://www.instagram.com/3brews.sa",
+    "email": "reachus@3brew.com",
+    "location": "Jeddah",
+    "category": "Coffee Shop"
+  },
+  "analysis_metadata": {
+    "status": "complete",
+    "analyzed_at": "2026-09-16T13:32:35.218769+00:00",
+    "source": "instagram",
+    "analysis_version": "3.0"
+  },
+  "profile": {
+    "username": "3brews.sa",
+    "full_name": "3Brews",
+    "bio": "Brewing With Passion",
+    "followers": 614,
+    "following": 2,
+    "posts_count": 118,
+    "website": "https://www.tiktok.com/@3brews.sa?_r=1&_t=ZS-974izkYtmI4",
+    "verified": false,
+    "business_category": "Coffee shop",
+    "is_business": true,
+    "is_private": false
+  },
+  "profile_analysis": {
+    "bio": {
+      "cuisine_identified": false,
+      "cuisine": null,
+      "location_present": false,
+      "cta_present": false,
+      "value_proposition_present": true
+    },
+    "contact_accessibility": {
+      "website_available": true,
+      "email_available": true,
+      "phone_available": false,
+      "external_link_available": true
+    },
+    "profile_completeness": {
+      "has_clear_business_description": true,
+      "has_location": true,
+      "has_contact_method": true,
+      "has_external_link": true
+    }
+  },
+  "metrics": {
+    "activity": {
+      "content_last_30_days": 0,
+      "content_per_week": 0.0,
+      "days_since_last_content": 60
+    },
+    "engagement": {
+      "average_likes": 18.25,
+      "median_likes": 14.0,
+      "average_comments": 5.82,
+      "engagement_rate_pct": 3.92,
+      "sample_size": 28
+    },
+    "format_mix": {
+      "image": {
+        "count": 27,
+        "pct": 96.43
+      },
+      "reel": {
+        "count": 1,
+        "pct": 3.57
+      }
+    },
+    "content_mix": {
+      "food_product": {
+        "count": 16,
+        "pct": 57.14
+      },
+      "brand_storytelling": {
+        "count": 5,
+        "pct": 17.86
+      },
+      "offers_campaigns": {
+        "count": 4,
+        "pct": 14.29
+      },
+      "community_engagement": {
+        "count": 2,
+        "pct": 7.14
+      },
+      "educational": {
+        "count": 1,
+        "pct": 3.57
+      }
+    },
+    "cta": {
+      "content_with_cta": 23,
+      "any_cta_pct": 82.14,
+      "cta_intents": {
+        "choose and purchase a tumbler": 1,
+        "visit or order coffee": 1,
+        "visit the café": 4,
+        "visit and experience the coffee": 1,
+        "in-store trial": 1,
+        "try the drink": 1,
+        "visit the restaurant": 1,
+        "visit and try": 1,
+        "encourage takeaway coffee": 1,
+        "stay informed": 1,
+        "visit to try v60": 1,
+        "contact to arrange a graduation celebration": 1,
+        "visit with friends": 1,
+        "encourage coffee purchase": 1,
+        "contest participation": 1,
+        "visit for v60 coffee": 1,
+        "prompt viewers to view the pairing": 1,
+        "try the chocolate drink": 1,
+        "enter the prediction giveaway": 1,
+        "order through a delivery platform": 1
+      }
+    },
+    "promotion": {
+      "promotional_content": 27,
+      "promotional_content_pct": 96.43,
+      "promotion_intents": {
+        "branded thermal tumbler availability": 1,
+        "coffee and delivery availability": 1,
+        "coffee experience promotion": 2,
+        "brand and coffee experience promotion": 2,
+        "beverage promotion": 1,
+        "menu item promotion": 2,
+        "seasonal beverage promotion": 1,
+        "new product launch": 2,
+        "brand lifestyle promotion": 1,
+        "dessert and beverage promotion": 1,
+        "specialty coffee product promotion": 1,
+        "graduation celebration occasion promotion": 1,
+        "menu and café experience promotion": 1,
+        "branded coffee product promotion": 1,
+        "product and brand showcase": 1,
+        "product promotion": 1,
+        "giveaway incentive": 1,
+        "brand and café experience promotion": 1,
+        "promote the v60 coffee experience": 1,
+        "product pairing promotion": 1,
+        "beverage product promotion": 1,
+        "contest prize promotion": 1,
+        "delivery-platform availability announcement": 1
+      }
+    },
+    "branding": {
+      "logo_presence_pct": 100.0,
+      "branding_presence_pct": 100.0
+    },
+    "commerce_visibility": {
+      "menu_visible_pct": 10.71,
+      "price_visible_pct": 10.71,
+      "offer_visible_pct": 10.71
+    },
+    "reels": {
+      "reels_detected": 1,
+      "reels_enriched": 1,
+      "reel_content_pct": 3.57,
+      "average_views": 642.0,
+      "median_views": 642.0,
+      "average_duration_seconds": 8.4,
+      "transcript_available_pct": 100.0
+    }
+  },
+  "research_signals": [
+    {
+      "signal_id": "activity_01",
+      "dimension": "posting_activity",
+      "observation": "Observed 0 content items in the last 30 days (0.0 per week in the observed window); days since latest content: 60.",
+      "metric_path": "metrics.activity",
+      "value": {
+        "content_last_30_days": 0,
+        "content_per_week": 0.0,
+        "days_since_last_content": 60
+      },
+      "evidence_content_ids": [],
+      "confidence": 1.0
+    },
+    {
+      "signal_id": "engagement_01",
+      "dimension": "engagement",
+      "observation": "Across 28 items with engagement data, average likes were 18.25, median likes 14.0, average comments 5.82, and follower-normalized engagement rate was 3.92%.",
+      "metric_path": "metrics.engagement",
+      "value": {
+        "average_likes": 18.25,
+        "median_likes": 14.0,
+        "average_comments": 5.82,
+        "engagement_rate_pct": 3.92,
+        "sample_size": 28
+      },
+      "evidence_content_ids": [],
+      "confidence": 1.0
+    },
+    {
+      "signal_id": "cta_01",
+      "dimension": "cta_usage",
+      "observation": "CTA detected in 23 analyzed content items (82.14%). Observed intent labels: {'choose and purchase a tumbler': 1, 'visit or order coffee': 1, 'visit the café': 4, 'visit and experience the coffee': 1, 'in-store trial': 1, 'try the drink': 1, 'visit the restaurant': 1, 'visit and try': 1, 'encourage takeaway coffee': 1, 'stay informed': 1, 'visit to try v60': 1, 'contact to arrange a graduation celebration': 1, 'visit with friends': 1, 'encourage coffee purchase': 1, 'contest participation': 1, 'visit for v60 coffee': 1, 'prompt viewers to view the pairing': 1, 'try the chocolate drink': 1, 'enter the prediction giveaway': 1, 'order through a delivery platform': 1}.",
+      "metric_path": "metrics.cta",
+      "value": {
+        "content_with_cta": 23,
+        "any_cta_pct": 82.14,
+        "cta_intents": {
+          "choose and purchase a tumbler": 1,
+          "visit or order coffee": 1,
+          "visit the café": 4,
+          "visit and experience the coffee": 1,
+          "in-store trial": 1,
+          "try the drink": 1,
+          "visit the restaurant": 1,
+          "visit and try": 1,
+          "encourage takeaway coffee": 1,
+          "stay informed": 1,
+          "visit to try v60": 1,
+          "contact to arrange a graduation celebration": 1,
+          "visit with friends": 1,
+          "encourage coffee purchase": 1,
+          "contest participation": 1,
+          "visit for v60 coffee": 1,
+          "prompt viewers to view the pairing": 1,
+          "try the chocolate drink": 1,
+          "enter the prediction giveaway": 1,
+          "order through a delivery platform": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3940276493118122953",
+        "3940257478845043207",
+        "3940256863708509488",
+        "3938789611091912420",
+        "3938783002118666217",
+        "3938779867958640152",
+        "3938778917915094565",
+        "3934396198884015747",
+        "3933750853481105558",
+        "3933763541267583605",
+        "3933751558082352376",
+        "3933749044108760214",
+        "3933748142174574801",
+        "3933690635128891283",
+        "3928100187098086814",
+        "3928099205966519951",
+        "3925291723594525726",
+        "3925993127422967256",
+        "3925991458684932347",
+        "3925952185110283199",
+        "3925298092754155924",
+        "3923848276245322543",
+        "3923846605327023079"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "promotion_01",
+      "dimension": "promotional_activity",
+      "observation": "Promotional intent detected in 27 analyzed content items (96.43%). Observed promotion intent labels: {'branded thermal tumbler availability': 1, 'coffee and delivery availability': 1, 'coffee experience promotion': 2, 'brand and coffee experience promotion': 2, 'beverage promotion': 1, 'menu item promotion': 2, 'seasonal beverage promotion': 1, 'new product launch': 2, 'brand lifestyle promotion': 1, 'dessert and beverage promotion': 1, 'specialty coffee product promotion': 1, 'graduation celebration occasion promotion': 1, 'menu and café experience promotion': 1, 'branded coffee product promotion': 1, 'product and brand showcase': 1, 'product promotion': 1, 'giveaway incentive': 1, 'brand and café experience promotion': 1, 'promote the v60 coffee experience': 1, 'product pairing promotion': 1, 'beverage product promotion': 1, 'contest prize promotion': 1, 'delivery-platform availability announcement': 1}.",
+      "metric_path": "metrics.promotion",
+      "value": {
+        "promotional_content": 27,
+        "promotional_content_pct": 96.43,
+        "promotion_intents": {
+          "branded thermal tumbler availability": 1,
+          "coffee and delivery availability": 1,
+          "coffee experience promotion": 2,
+          "brand and coffee experience promotion": 2,
+          "beverage promotion": 1,
+          "menu item promotion": 2,
+          "seasonal beverage promotion": 1,
+          "new product launch": 2,
+          "brand lifestyle promotion": 1,
+          "dessert and beverage promotion": 1,
+          "specialty coffee product promotion": 1,
+          "graduation celebration occasion promotion": 1,
+          "menu and café experience promotion": 1,
+          "branded coffee product promotion": 1,
+          "product and brand showcase": 1,
+          "product promotion": 1,
+          "giveaway incentive": 1,
+          "brand and café experience promotion": 1,
+          "promote the v60 coffee experience": 1,
+          "product pairing promotion": 1,
+          "beverage product promotion": 1,
+          "contest prize promotion": 1,
+          "delivery-platform availability announcement": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3940276493118122953",
+        "3940257478845043207",
+        "3940256863708509488",
+        "3938789611091912420",
+        "3938783002118666217",
+        "3938779867958640152",
+        "3938778917915094565",
+        "3933764732072245654",
+        "3934396198884015747",
+        "3933750853481105558",
+        "3933763541267583605",
+        "3933751558082352376",
+        "3933749044108760214",
+        "3933748142174574801",
+        "3933690635128891283",
+        "3928100187098086814",
+        "3928099205966519951",
+        "3927412113188007015",
+        "3927405784973486450",
+        "3927404467240136194",
+        "3925291723594525726",
+        "3925993127422967256",
+        "3925991458684932347",
+        "3925952185110283199",
+        "3925298092754155924",
+        "3923848276245322543",
+        "3923846605327023079"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "commerce_01",
+      "dimension": "commerce_visibility",
+      "observation": "Within analyzed visuals: menu visible in 10.71%, price visible in 10.71%, and offer messaging visible in 10.71% of items.",
+      "metric_path": "metrics.commerce_visibility",
+      "value": {
+        "menu_visible_pct": 10.71,
+        "price_visible_pct": 10.71,
+        "offer_visible_pct": 10.71
+      },
+      "evidence_content_ids": [
+        "3938789611091912420",
+        "3933690635128891283",
+        "3925291723594525726",
+        "3925993127422967256",
+        "3923848276245322543",
+        "3923846605327023079"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "branding_01",
+      "dimension": "branding_presence",
+      "observation": "Logo was visually detected in 100.0% of analyzed items; recognizable branding was detected in 100.0%.",
+      "metric_path": "metrics.branding",
+      "value": {
+        "logo_presence_pct": 100.0,
+        "branding_presence_pct": 100.0
+      },
+      "evidence_content_ids": [
+        "3940276493118122953",
+        "3940257478845043207",
+        "3940256863708509488",
+        "3938789611091912420",
+        "3938783002118666217",
+        "3938779867958640152",
+        "3938778917915094565",
+        "3933764732072245654",
+        "3934396198884015747",
+        "3933750853481105558",
+        "3933763541267583605",
+        "3933751558082352376",
+        "3933749044108760214",
+        "3933748142174574801",
+        "3933699507902009710",
+        "3933690635128891283",
+        "3928100187098086814",
+        "3928099205966519951",
+        "3927412113188007015",
+        "3927405784973486450",
+        "3927404467240136194",
+        "3925291723594525726",
+        "3925993127422967256",
+        "3925991458684932347",
+        "3925952185110283199",
+        "3925298092754155924",
+        "3923848276245322543",
+        "3923846605327023079"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "reels_01",
+      "dimension": "reel_activity",
+      "observation": "1 of the observed content items were matched as Reels (3.57% of the content window). 1 were enriched; average Reel views: 642.0; transcript availability: 100.0%.",
+      "metric_path": "metrics.reels",
+      "value": {
+        "reels_detected": 1,
+        "reels_enriched": 1,
+        "reel_content_pct": 3.57,
+        "average_views": 642.0,
+        "median_views": 642.0,
+        "average_duration_seconds": 8.4,
+        "transcript_available_pct": 100.0
+      },
+      "evidence_content_ids": [
+        "3925952185110283199"
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "content": [
+    {
+      "content_id": "3940276493118122953",
+      "short_code": "DaurJgRIKvJ",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaurJgRIKvJ/",
+        "timestamp": "2026-07-18T09:00:05.000Z",
+        "caption": "اكتشفوا مجموعة أكواب 3Brews الحرارية ☕✨\n\nحيث يلتقي التصميم الأنيق بالأداء العملي، لتمنحكم تجربة استثنائية في كل رشفة. صُممت بعناية للحفاظ على مشروباتكم الساخنة أو الباردة بدرجة الحرارة المثالية، مع لمسة من الفخامة ترافقكم أينما كنتم.\n\nاختر لونك... وخذ قهوتك معك أينما ذهبت.\n\nمتوفرة الآن في 3Brews. 🤎\n\n#3brews #coffee #jeddah #saudi #tumblr",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-ams2-1.cdninstagram.com/v/t51.82787-15/746164490_17929565427358290_6532742246989303708_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=Mzk0MDI3NjQ5MzExODEyMjk1Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTIwMC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=z-2Y8LzocxIQ7kNvwE7sk_b&_nc_oc=Adpbk9CiZwpghW9CZsE_03ub7SrRlhJUFvN1-JsQPAsRPeUbMuzTBo03omZWC6kh6vE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-ams2-1.cdninstagram.com&_nc_gid=YkvfpIYwhHac-5wKSXM-Vg&_nc_ss=7a22e&oh=00_AQK0KBfDYB-UNwiaeFEbArZhADQ-wzroql0zP7LkXudRDg&oe=6AB08223"
+        ],
+        "video_url": null,
+        "likes": 13,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "coffee",
+          "jeddah",
+          "saudi",
+          "tumblr"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 18, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "branded_merchandise",
+          "drinkware_product"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "thermal coffee tumblers",
+          "product color selection",
+          "on-the-go beverages"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "choose and purchase a tumbler",
+          "description": "The caption encourages viewers to choose a color and notes that the thermal tumblers are now available at 3Brews."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "branded thermal tumbler availability",
+          "description": "The post promotes 3Brews thermal tumblers, highlighting their design, temperature retention for hot or cold drinks, color options, and current availability."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3Brews",
+        "visual_summary": "A product image shows four floating 3Brews-branded insulated tumblers in orange, pink, white, and dark teal against a muted rose background. Each tumbler visibly carries the 3Brews logo.",
+        "caption_summary": "Arabic caption introduces 3Brews thermal tumblers as stylish and practical for keeping hot or cold beverages at an ideal temperature, invites followers to choose a color, and states that they are now available at 3Brews.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "branded_merchandise",
+              "drinkware_product",
+              "branding_visible"
+            ],
+            "text": "Four insulated tumblers are shown in multiple colors, each displaying the 3Brews logo."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "thermal coffee tumblers",
+              "product color selection"
+            ],
+            "text": "The caption describes thermal cups designed to maintain hot or cold drink temperatures, says 'Choose your color,' and states that they are available now at 3Brews."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image, with product type feed."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3940257478845043207",
+      "short_code": "Daum0z2IpIH",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Daum0z2IpIH/",
+        "timestamp": "2026-07-17T07:00:05.000Z",
+        "caption": "مزاجك يبدأ مع أول رشفة. ☕🤎\n\nفي 3Brews، كل كوب يُحضَّر بعناية ليمنحك لحظة من الدفء، ونكهة غنية، وتجربة تستحق أن تعيشها كل يوم.\n\nسواء كنت تبدأ صباحك أو تأخذ استراحة من يومك، قهوتك المفضلة بانتظارك.\n\n📍 زورونا اليوم أو اطلبوا عبر جاهز، هنقرستيشن، وكيتا.\n\n#3brews #coffee #coffeeholic #jeddah #saudiarabiaً",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fgrq1-1.fna.fbcdn.net/v/t51.82787-15/746565125_17929561272358290_1074021534012413062_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ig_cache_key=Mzk0MDI1NzQ3ODg0NTA0MzIwNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=LnedTFlndqsQ7kNvwEfXEcW&_nc_oc=Adq46OaIkSMF-5RerCp5hZCJ8tMYFPrHCsj_l7mpzfxS7vwIJZ0MKxZdVrb6fuhjANc&_nc_ad=z-m&_nc_cid=1207&_nc_zt=23&_nc_ht=instagram.fgrq1-1.fna&_nc_gid=7bd7LXMOdjQLEFNHm17MlQ&_nc_ss=7a22e&oh=00_AQJaH0O0CF5sbH7JSAbwtAi4BfMLp4xHQqOm2xvfwMb9Nw&oe=6AB08745"
+        ],
+        "video_url": null,
+        "likes": 6,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "coffee",
+          "coffeeholic",
+          "jeddah",
+          "saudiarabiaً"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 17, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "branded coffee product image",
+        "content_categories": [
+          "coffee_promotion",
+          "delivery_ordering",
+          "brand_product_showcase"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "first sip",
+          "daily coffee ritual",
+          "carefully selected coffee",
+          "morning and break-time coffee"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit or order coffee",
+          "description": "Audiences are encouraged to visit 3Brews or order through Jahez, HungerStation, or Keeta."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "coffee and delivery availability",
+          "description": "The post promotes 3Brews coffee as a daily drink and highlights its availability through Jahez, HungerStation, and Keeta."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "مزاجك يبدأ مع أول رشفة\nقهوة مختارة بعناية\n3Brews\nBREW. ENJOY. REPEAT.\nمتوفر على\nJahez / HungerStation / keeta",
+        "visual_summary": "A branded 3Brews takeaway coffee cup with a coffee splash and floating coffee beans is centered on a dark brown background. Illustrated coffee-related lifestyle elements include a laptop, books, a person reading, and pour-over equipment; 3Brews and three delivery-platform logos are visible.",
+        "caption_summary": "The Arabic caption presents 3Brews coffee as a carefully prepared, rich and warming daily coffee experience for mornings or breaks, then invites people to visit or order via delivery apps.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "coffee_promotion",
+              "branding_visible",
+              "delivery_ordering"
+            ],
+            "text": "The image prominently shows a 3Brews coffee cup, coffee splash and beans, alongside the 3Brews logo and Jahez, HungerStation, and Keeta logos."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "promotion",
+              "daily coffee ritual"
+            ],
+            "text": "The caption says each cup is prepared carefully for warmth and rich flavor, says the favorite coffee is waiting for mornings or breaks, and states: \"زورونا اليوم أو اطلبوا عبر جاهز، هنقرستيشن، وكيتا.\""
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3940256863708509488",
+      "short_code": "Daumr29I_Uw",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Daumr29I_Uw/",
+        "timestamp": "2026-07-16T09:00:06.000Z",
+        "caption": "كل رشفة... بداية حكاية.\n\nمن أول قطرة إسبرسو إلى آخر رشفة، نصنع قهوتك بعناية وشغف لتمنحك تجربة لا تُنسى. ❤️\n\nاستمتع بمذاق غني، كريما مثالية، وجودة تليق بذوقك... لأن كل كوب في 3Brews يُحضّر بإتقان.\n\n📍 زورونا اليوم في الأندلس مول، جدة.\n\n#3brews #coffee #jeddah #saudi #cafe",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-itm1-1.cdninstagram.com/v/t51.82787-15/744820495_17929561074358290_111611144236068202_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=Mzk0MDI1Njg2MzcwODUwOTQ4OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=lELsg_vDLlcQ7kNvwH_mlbn&_nc_oc=AdrnNy8AjTxu1-0ntsQPCXJnlw-J5XDS5oi6i7r9pBduD6vX1jcfy-B5jMK71y_6-tY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-itm1-1.cdninstagram.com&_nc_gid=VFRbmqOpPfq162JDkMcITg&_nc_ss=7a22e&oh=00_AQIu3Q5z8zTEUvX3cMloOFYJzSXjSgsdyFexCmggEqpVPw&oe=6AB0660D"
+        ],
+        "video_url": null,
+        "likes": 6,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "coffee",
+          "jeddah",
+          "saudi",
+          "cafe"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 16, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "espresso",
+          "coffee_branding",
+          "store_visit"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "espresso preparation",
+          "coffee quality",
+          "branded coffee cup",
+          "Jeddah location"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the café",
+          "description": "The caption encourages audiences to visit 3Brews at Al Andalus Mall in Jeddah today."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "coffee experience promotion",
+          "description": "The post promotes 3Brews coffee by emphasizing rich taste, ideal crema, careful preparation, and quality."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3Brews / 3 بريوز branding appears on the burgundy coffee cup; a QR code is also visible.",
+        "visual_summary": "A close-up image shows espresso flowing from a commercial machine into a burgundy 3Brews branded takeaway cup. The cup features the 3Brews logo, Arabic brand name, coffee-plant illustration, and a QR code.",
+        "caption_summary": "Arabic caption describes every espresso cup as carefully crafted, highlighting rich flavor, ideal crema, and quality. It invites followers to visit the café at Al Andalus Mall in Jeddah.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "espresso",
+              "coffee_branding",
+              "branding_visible",
+              "logo_visible"
+            ],
+            "text": "Espresso is visibly being extracted into a prominently branded 3Brews takeaway cup."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "coffee experience promotion",
+              "coffee quality",
+              "visit the café",
+              "Jeddah location"
+            ],
+            "text": "The caption highlights rich taste, ideal crema, and careful preparation, then says: \"زورونا اليوم في الأندلس مول، جدة\" (Visit us today at Al Andalus Mall, Jeddah)."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image; engagement metadata shows 6 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3938789611091912420",
+      "short_code": "DapZEheIebk",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DapZEheIebk/",
+        "timestamp": "2026-07-15T09:25:05.000Z",
+        "caption": "قهوة تستحق أن تتجاوز حدود الشاشة. ☕✨\n\nفي 3Brews، لا نقدّم مجرد قهوة، بل نصنع تجربة تستحق أن تُعاش.\nابدأ يومك بمذاق استثنائي، ودع كل كوب يروي قصة.\n\n🤎 3Brews... نُحضّرها بشغف.\n\n#3brews #jeddah #coffeetime #coffee #instagram",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-mrs2-2.cdninstagram.com/v/t51.82787-15/745342001_17929224939358290_9174261578256534934_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=MzkzODc4OTYxMTA5MTkxMjQyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTM2NS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=b-n9El-6aUoQ7kNvwEk_kQY&_nc_oc=AdoSIym1oFSwlpTFjr5i4nRfyfPCD5Is-h3KDQ-RGJCc84GYPQcGRQiWoHG8Zat4eo5N3HVyb7TxaxzXKjSM-u9R&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-mrs2-2.cdninstagram.com&_nc_gid=4c6HEiejMnFJW0949Fhk-A&_nc_ss=7a22e&oh=00_AQI-M4JsKG-tlDNgNMRIYvuxQQU2zYSYO5XwhEEhQnsrtQ&oe=6AB05FB4"
+        ],
+        "video_url": null,
+        "likes": 10,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "jeddah",
+          "coffeetime",
+          "coffee",
+          "instagram"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 15, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "coffee_branding",
+          "coffee_experience",
+          "cafe_ambiance"
+        ],
+        "content_pillar": "brand_storytelling",
+        "content_themes": [
+          "coffee as an experience",
+          "brand passion",
+          "beyond-the-screen invitation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "Visit and experience the coffee",
+          "description": "The caption encourages viewers to move beyond the screen and begin their day with 3Brews coffee."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "Brand and coffee experience promotion",
+          "description": "The post promotes 3Brews as a coffee experience made with passion rather than highlighting a specific offer or menu item."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": true,
+          "price_visible": true,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3brews.sa; COFFEE; ESPRESSO 12; AMERICANO 14; LATTE 16; CAPPUCCINO 16; V60 18; COLD BREW 18; 3Brews.",
+        "visual_summary": "A branded, stylized Instagram-within-Instagram visual shows a man in a café holding a steaming 3Brews takeaway coffee cup toward a woman below. The café backdrop includes coffee equipment, pendant lighting, and a visible coffee menu with item prices. The 3Brews logo appears on the cup and profile imagery.",
+        "caption_summary": "Arabic caption says the coffee deserves to go beyond the screen and presents 3Brews as an experience to be lived, inviting people to start their day with an exceptional taste. It closes by saying 3Brews prepares coffee with passion.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "brand_storytelling",
+              "coffee experience",
+              "CTA",
+              "promotion"
+            ],
+            "text": "\"قهوة تستحق أن تتجاوز حدود الشاشة\" and \"لا نقدّم مجرد قهوة، بل نصنع تجربة تستحق أن تُعاش\" frame 3Brews around an experiential coffee identity; \"ابدأ يومك بمذاق استثنائي\" encourages trying it."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "coffee_branding",
+              "cafe_ambiance",
+              "people_visible",
+              "menu_visible",
+              "price_visible"
+            ],
+            "text": "The visual features two people in café settings, a branded 3Brews takeaway cup, café equipment, and a board listing coffee drinks and prices."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type",
+              "engagement context"
+            ],
+            "text": "This is a feed image post; supplied metadata reports 10 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.94
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3938783002118666217",
+      "short_code": "DapXkWYoTfp",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DapXkWYoTfp/",
+        "timestamp": "2026-07-14T09:10:05.000Z",
+        "caption": "💛 نكهة استوائية... وانتعاش لا يُقاوم! 🍹✨\n\nموهيتو الباشن فروت يجمع بين حلاوة الباشن فروت، وحموضة الليمون الطازج، وانتعاش النعناع في مشروب واحد مليء بالحيوية. 🌿🍋\n\nكل رشفة تأخذك إلى أجواء الصيف المنعشة! ❄️☀️\n\n📍 جرّبه اليوم في 3Brews واستمتع بمذاق لا يُنسى.\n\n#3brews #jeddah #refresh #summervibes☀️ #passionfruit",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/744869894_17929222884358290_2141199331927467112_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=MzkzODc4MzAwMjExODY2NjIxNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTEyMi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Rid3na0hsHYQ7kNvwEyl5jN&_nc_oc=AdoZtUMcq8m8yzggqUoYUUjtMi6uKeN9SI_upA9nR_Ir7_dwYCbXqQMxbQHH14UYuRoeokjB6TnKD9TAvEV43Fqx&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=Fargm_ulNc6pW83RUknZPQ&_nc_ss=7a22e&oh=00_AQJ2-biqDxe_i-EtqyKq9gv0uqvz9sWI5_beQ1NZ1T4Dmw&oe=6AB0697C"
+        ],
+        "video_url": null,
+        "likes": 7,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "jeddah",
+          "refresh",
+          "summervibes☀️",
+          "passionfruit"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 14, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image post",
+        "content_categories": [
+          "beverage_showcase",
+          "mojito",
+          "summer_refreshment"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "passion fruit mojito",
+          "tropical flavor",
+          "summer refreshment"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "in-store trial",
+          "description": "Encourages the audience to try the passion fruit mojito at 3Brews today."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "beverage promotion",
+          "description": "Promotes 3Brews' passion fruit mojito by highlighting its passion fruit sweetness, fresh lime acidity, mint, and refreshing summer appeal."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3B logo on the drink cup",
+        "visual_summary": "A close-up product image shows a yellow iced passion fruit drink in a clear branded 3B cup, garnished with mint and lime. Passion fruit halves, whole limes, mint leaves, and ice surround the cup against a bright yellow background.",
+        "caption_summary": "The Arabic caption presents a passion fruit mojito as a tropical, refreshing drink combining passion fruit, fresh lime, and mint, and invites people to try it at 3Brews.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "beverage_showcase",
+              "food_product",
+              "logo_visible",
+              "branding_visible"
+            ],
+            "text": "The image centers on a branded cup containing an iced yellow drink with visible lime, mint, and passion fruit, surrounded by the same ingredients."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "mojito",
+              "passion fruit mojito",
+              "tropical flavor",
+              "summer refreshment",
+              "promotion",
+              "cta"
+            ],
+            "text": "The caption describes 'موهيتو الباشن فروت' with passion fruit, fresh lime, and mint, frames it as summer-refreshing, and says: 'جرّبه اليوم في 3Brews' (Try it today at 3Brews)."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "raw_content_type is Image and product_type is feed."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3938779867958640152",
+      "short_code": "DapW2veIn4Y",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DapW2veIn4Y/",
+        "timestamp": "2026-07-13T09:00:06.000Z",
+        "caption": "💛 نكهة الصيف في كل رشفة! 🌿🥭🍋\n\nموهيتو الباشن فروت المنعش، ممزوج بقطع الليمون الطازج، النعناع، والثلج ليمنحك انتعاشًا لا يُقاوم.\n\nجرّبه اليوم في 3Brews واستمتع بطعم يخطف الإحساس من أول رشفة! ✨\n\n📍 لأن كل لحظة تستحق مشروبًا استثنائيًا.\n\n#passionfruits #refreshments #summertime #3brews #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fmel16-1.fna.fbcdn.net/v/t51.82787-15/743995897_17929222122358290_1408606136955806243_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=MzkzODc3OTg2Nzk1ODY0MDE1Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=qht3FhIItpgQ7kNvwElRtCQ&_nc_oc=AdoBI74v-lakHi0BKBSI-35RjwgNOFQygrOqZ8lrlSEM9f7nAuznOPQK_FfDl1dfih4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fmel16-1.fna&_nc_gid=ahv2EdKps99JxDGYorzQOQ&_nc_ss=7a22e&oh=00_AQIemm1ewnJuh-IsQYV4X77j50NPYuMDhnnQTTwtHuCXIA&oe=6AB059A6"
+        ],
+        "video_url": null,
+        "likes": 6,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "passionfruits",
+          "refreshments",
+          "summertime",
+          "3brews",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 13, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "beverage_showcase",
+          "seasonal_refreshment"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "passion fruit mojito",
+          "summer refreshment",
+          "fresh ingredients"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "try the drink",
+          "description": "The caption encourages viewers to try the passion fruit mojito today at 3Brews."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu item promotion",
+          "description": "The post promotes 3Brews' passion fruit mojito as a refreshing summer beverage."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3B logo on the beverage cup",
+        "visual_summary": "A hand holds a clear branded cup of yellow passion fruit mojito against a bright blue sky. The drink visibly contains lime slices, mint leaves, passion fruit seeds, and ice.",
+        "caption_summary": "Arabic caption presents a refreshing passion fruit mojito made with fresh lime, mint, and ice, framing it as a summer drink and inviting people to try it at 3Brews.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "beverage_showcase",
+              "food_product",
+              "branding"
+            ],
+            "text": "The image centers on a prepared iced yellow drink with visible lime, mint, passion fruit seeds, and a prominent 3B logo on the cup."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "seasonal_refreshment",
+              "promotion",
+              "cta"
+            ],
+            "text": "The caption calls it a 'passion fruit mojito' and describes it as refreshing for summer, then says: 'Try it today at 3Brews.'"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement context"
+            ],
+            "text": "The feed image received 6 likes and 0 comments; no view count is supplied."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3938778917915094565",
+      "short_code": "DapWo6rIG4l",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DapWo6rIG4l/",
+        "timestamp": "2026-07-12T09:00:05.000Z",
+        "caption": "🥭🌿 انتعاش الصيف يبدأ من أول رشفة! ☀️🌊\n\nموهيتو الباشن فروت... مزيج استوائي منعش يجمع بين حلاوة الباشن فروت، وانتعاش النعناع، ولمسة الليمون المنعشة. 🍋✨\n\nخذ استراحة، واستمتع بأجواء الصيف في كل رشفة. 💛\n\n📍 زورونا اليوم واستمتعوا بألذ موهيتو في المدينة!\n\n#mojito #passionfruit #summer #3brews #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-hou1-1.cdninstagram.com/v/t51.82787-15/742461899_17929221774358290_8283555218952833280_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ig_cache_key=MzkzODc3ODkxNzkxNTA5NDU2NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTEyMi5zZHIucmVndWxhcl9waG90by5DMiJ9&_nc_ohc=RhTL0-4xZawQ7kNvwEwfvAh&_nc_oc=Ado7kspZ9meSPVp03Gf2ADVakCQIAFVRkg5IbhwXiF4lzl8Lf-P-c8UYL8MN5mSOJQeSO-n3qPshgwMS9vA2fB6S&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-hou1-1.cdninstagram.com&_nc_gid=uTFqmw6BG5G09ku0Tv8w_A&_nc_ss=7a22e&oh=00_AQIAlY1wsfjzDaiP-Z4vqkURHQH4H7kakje_mgSwDPHdqQ&oe=6AB08745"
+        ],
+        "video_url": null,
+        "likes": 9,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "mojito",
+          "passionfruit",
+          "summer",
+          "3brews",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 12, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image post",
+        "content_categories": [
+          "beverage_showcase",
+          "summer_drink",
+          "passion_fruit_mojito"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "summer refreshment",
+          "tropical flavors",
+          "passion fruit",
+          "mint and lemon"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the restaurant",
+          "description": "The caption invites the audience to visit today and try the mojito."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "seasonal beverage promotion",
+          "description": "The post promotes the passion fruit mojito as a refreshing summer drink, highlighting its passion fruit, mint, and lemon flavors."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3B logo on the drink cup.",
+        "visual_summary": "A branded clear cup of bright yellow passion fruit mojito is shown with ice, mint, lime slices, and visible passion fruit seeds. Passion fruit, lemons, lime wedges, mint, and ice surround the drink on a wooden surface, with a beach and ocean backdrop.",
+        "caption_summary": "Arabic caption presents a passion fruit mojito as a tropical summer refreshment made with sweet passion fruit, mint, and lemon, and invites people to visit and enjoy it.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "beverage_showcase",
+              "summer_drink",
+              "passion_fruit_mojito",
+              "seasonal beverage promotion",
+              "visit the restaurant CTA"
+            ],
+            "text": "The caption calls the drink \"موهيتو الباشن فروت\" and describes passion fruit, mint, and lemon flavors, frames it as summer refreshment, and says \"زورونا اليوم\" (visit us today)."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "beverage_showcase",
+              "branding_visible"
+            ],
+            "text": "The image prominently shows a prepared iced yellow drink with mint, lime, passion fruit, and a visible 3B logo on the cup."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "passion_fruit_mojito",
+              "summer_drink"
+            ],
+            "text": "Hashtags include #mojito, #passionfruit, #summer, #3brews, and #jeddah."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933764732072245654",
+      "short_code": "DaXii6NIDmW",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXii6NIDmW/",
+        "timestamp": "2026-07-11T08:30:02.000Z",
+        "caption": "كل رشفة تحكي حكاية. ☕✨\nحيث تلتقي القهوة الاستثنائية بالأناقة الراقية.\nلحظات تستحق أن تُلتقط... وقهوة تستحق أن تُتذوّق.\n3Brews — لأن لكل لحظة مذاقها الخاص. 🤎",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/732720790_17928051780358290_7485642067327426950_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=MzkzMzc2NDczMjA3MjI0NTY1NA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTIwMC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=JD5dhXDtFg0Q7kNvwG_lESi&_nc_oc=AdoP0w8WbC-WUnne9OHGE_O8uX477x7eO3m2sTBRoZRBmISzz1o-dm7KV202nPYA1-YRhCfHP-cCemoe7xmNO2Dx&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_gid=Px5G_AXZF5Z0KVswCmogTg&_nc_ss=7a22e&oh=00_AQJPPeYwgaxJI_Mtmm9DkW-zMq5epXAvPoKN4CgDKYDGNA&oe=6AB06090"
+        ],
+        "video_url": null,
+        "likes": 13,
+        "comments": 1,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 11, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "coffee_beverages",
+          "cafe_lifestyle",
+          "brand_identity"
+        ],
+        "content_pillar": "brand_storytelling",
+        "content_themes": [
+          "coffee moments",
+          "refined cafe lifestyle",
+          "3Brews branding"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "brand and coffee experience promotion",
+          "description": "The post presents 3Brews coffee as an elegant, moment-specific experience, emphasizing exceptional coffee and refined style rather than a specific offer."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3B; 3Brews; THE DAILY STOIC; RYAN HOLIDAY",
+        "visual_summary": "A café-table lifestyle scene shows a woman taking a mirror-style phone photo behind two 3Brews takeaway coffees: a branded iced coffee and a branded hot cup. Headphones, a book, sunglasses, and a small plant contribute to a polished, relaxed setting; an espresso machine appears in the background.",
+        "caption_summary": "The Arabic caption says every sip tells a story, pairing exceptional coffee with refined elegance and describing coffee as suited to memorable moments. It closes by positioning 3Brews as having a special taste for every moment.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "brand_storytelling",
+              "promotion",
+              "coffee moments"
+            ],
+            "text": "\"كل رشفة تحكي حكاية\" and \"حيث تلتقي القهوة الاستثنائية بالأناقة الراقية\" position 3Brews coffee through an elegant lifestyle and sensory identity; \"لأن لكل لحظة مذاقها الخاص\" links the brand to different moments."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "coffee_beverages",
+              "cafe_lifestyle",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "Two takeaway coffee cups display the 3B/3Brews marks, while a person, headphones, book, sunglasses, café table, and espresso machine frame coffee within a lifestyle setting."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied metadata identifies this as an Image feed post, with 13 likes and 1 comment."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3934396198884015747",
+      "short_code": "DaZyH9gIP6D",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaZyH9gIP6D/",
+        "timestamp": "2026-07-10T08:30:02.000Z",
+        "caption": "☕ أخيرًا... انتهى الانتظار!\n\nوصلت الآن إلى 3Brews أفخر حبوب البن اليمني المختارة خصيصًا لتحضير قهوة V60 بأعلى معايير الجودة، لتمنحكم تجربة قهوة استثنائية في كل رشفة.\n\nنكهة غنية، ورائحة آسرة، وجودة لا تُضاهى.\n\nزورونا اليوم وكونوا من أوائل من يتذوقون قهوتنا اليمنية الفاخرة.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fsyd13-1.fna.fbcdn.net/v/t51.82787-15/731025048_17928197322358290_6231097160892563063_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&_nc_map=urlgen_bucketless&ig_cache_key=MzkzNDM5NjE5ODg4NDAxNTc0Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTA4Ni5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=KFWBKji2PwIQ7kNvwG7hQKE&_nc_oc=Ado-4sSFigdXQkvBmwQroK1rdr6JGtGpbo6-tPUbQNrJXcTQNDQnjVF_M1GPalGZIf_IRm3MVW1fgHgKVYeQpZtC&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fsyd13-1.fna&_nc_gid=t4rjsExewF4312vZKs3TmQ&_nc_ss=7a22e&oh=00_AQKXnCapxkuySg1blL5eUTLbm6q6rXCEQOT_mnGursbsWQ&oe=6AB05292"
+        ],
+        "video_url": null,
+        "likes": 9,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 10, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image feed post",
+        "content_categories": [
+          "coffee_product",
+          "product_launch",
+          "yemeni_coffee"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "new arrival",
+          "premium Yemeni coffee",
+          "V60 brewing"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit and try",
+          "description": "Audiences are encouraged to visit 3Brews today and be among the first to taste the premium Yemeni coffee."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "new product launch",
+          "description": "The post announces the arrival of selected premium Yemeni coffee beans intended for V60 preparation at 3Brews."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews / 3 برووز; Yemen / اليمن; ياسمين، عطري، نوت سوداء، مكسراتي، فوائد عنبة; NET WEIGHT 150 GM",
+        "visual_summary": "A pair of hands holds a white retail coffee bag against a deep burgundy background. The package is branded 3Brews and labeled Yemen/اليمن, with a 150 GM net weight and Arabic tasting-note text.",
+        "caption_summary": "Arabic caption announces that specially selected premium Yemeni coffee beans have arrived at 3Brews for V60 brewing, emphasizing rich flavor, aroma, and quality, and inviting people to visit and taste them.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "new product launch",
+              "premium Yemeni coffee",
+              "V60 brewing",
+              "visit-and-try CTA"
+            ],
+            "text": "وصلت الآن إلى 3Brews أفخر حبوب البن اليمني المختارة خصيصًا لتحضير قهوة V60... زورونا اليوم وكونوا من أوائل من يتذوقون قهوتنا اليمنية الفاخرة."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "coffee product showcase",
+              "branding",
+              "Yemeni coffee identification"
+            ],
+            "text": "The image prominently shows a 3Brews coffee bag labeled 'Yemen / اليمن' and 'NET WEIGHT 150 GM'."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content format",
+              "engagement context"
+            ],
+            "text": "Feed image post dated July 10, 2026; 9 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933750853481105558",
+      "short_code": "DaXfY8woYiW",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXfY8woYiW/",
+        "timestamp": "2026-07-09T08:30:01.000Z",
+        "caption": "☕ كل يوم رائع يبدأ بفنجان مثالي.\nحيث تلتقي القهوة الاستثنائية بالأناقة والبساطة.\nخذ قهوتك المفضلة معك أينما تأخذك الحياة.\n\n3Brews — قهوة تُلهم كل لحظة. 🤍",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fyxd4-1.fna.fbcdn.net/v/t51.82787-15/733543569_17928048126358290_5648896820702217976_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=MzkzMzc1MDg1MzQ4MTEwNTU1OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTA4NS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=VBVqQ1WAS5UQ7kNvwEDuQBW&_nc_oc=AdpMFvFLpvt9H7MHx1SMObjToU7BSQ9vVca--vTHzUdVa0-jUqzb0_NDZ6GS23kAPL5zPbffHZjzAHH9PXG7oevo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fyxd4-1.fna&_nc_gid=Kqzlb4yaHJU9f0AfbUUkog&_nc_ss=7a22e&oh=00_AQJhc2xOe88FzXMSuDUIT0Zoh08i8dkMx9hrWFcfmYn4mQ&oe=6AB058BC"
+        ],
+        "video_url": null,
+        "likes": 11,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 09, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "branded lifestyle coffee image",
+        "content_categories": [
+          "coffee_takeaway",
+          "branded_lifestyle",
+          "on_the_go"
+        ],
+        "content_pillar": "brand_storytelling",
+        "content_themes": [
+          "everyday coffee ritual",
+          "minimal elegance",
+          "coffee on the go"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "encourage takeaway coffee",
+          "description": "Encourages the audience to take their favorite coffee with them wherever life takes them."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "brand lifestyle promotion",
+          "description": "Promotes 3Brews coffee as an elegant, simple companion for everyday moments and travel."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3Brews",
+        "visual_summary": "A navy 3Brews takeaway coffee cup sits in a molded cardboard carrier alongside sunglasses and wireless earbuds, presented in strong sunlight on a muted red surface. The cup prominently displays the 3Brews logo and name.",
+        "caption_summary": "The Arabic caption says every great day begins with a perfect cup, framing 3Brews coffee as exceptional, elegant, simple, and suitable to take anywhere.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "brand_storytelling",
+              "everyday coffee ritual",
+              "minimal elegance",
+              "on_the_go",
+              "cta",
+              "promotion"
+            ],
+            "text": "\"كل يوم رائع يبدأ بفنجان مثالي... حيث تلتقي القهوة الاستثنائية بالأناقة والبساطة... خذ قهوتك المفضلة معك أينما تأخذك الحياة... 3Brews — قهوة تُلهم كل لحظة.\""
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "branded_lifestyle",
+              "coffee_takeaway",
+              "logo_visible",
+              "branding_visible"
+            ],
+            "text": "The image prominently shows a 3Brews-branded takeaway cup styled with sunglasses and earbuds, visually associating the coffee with an on-the-go lifestyle."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is identified as an Instagram feed Image; supplied engagement metadata shows 11 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933763541267583605",
+      "short_code": "DaXiRlLoxJ1",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXiRlLoxJ1/",
+        "timestamp": "2026-07-08T08:30:01.000Z",
+        "caption": "شيء استثنائي في الطريق... ✨\nصُنع بشغف، وصُمم ليبهر.\nترقبوا الإطلاق... فالانتظار أوشك على الانتهاء.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fmad6-1.fna.fbcdn.net/v/t51.82787-15/733529357_17928051660358290_6013523291226290049_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ig_cache_key=MzkzMzc2MzU0MTI2NzU4MzYwNQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQwMy5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=q9Wen4e-iA4Q7kNvwEOHlZ5&_nc_oc=AdqawY2-K60yHJBA73jsv0wVYfTbZCALhX_3De9RfUhI38DboF7DZUq59ydJC9VY1dQ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fmad6-1.fna&_nc_gid=an-8qAZtANcs_OS4_dAYqw&_nc_ss=7a22e&oh=00_AQJjJ0HHjf1J5_MYE7T36JZMNsZZNujutJwe0bpbcJQscQ&oe=6AB06E0D"
+        ],
+        "video_url": null,
+        "likes": 3,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 08, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "product_launch_teaser",
+          "branded_packaging"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "upcoming product",
+          "anticipation",
+          "launch announcement"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "stay informed",
+          "description": "The audience is encouraged to stay tuned for the upcoming product launch."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "new product launch",
+          "description": "The post promotes an unspecified new product that is launching soon."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3B\nNew Product\nLAUNCHING SOON\nSTAY TUNED",
+        "visual_summary": "A dark burgundy product pouch is shown against a matching textured backdrop with plant shadows. The pouch carries a stylized 3B logo and announces a new product launch.",
+        "caption_summary": "Arabic caption announces that something exceptional is coming soon, made with passion and designed to impress, and asks followers to anticipate the launch.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "product_launch_teaser",
+              "new product launch",
+              "stay informed"
+            ],
+            "text": "The pouch text states: \"New Product LAUNCHING SOON\" and \"STAY TUNED.\""
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "upcoming product",
+              "anticipation",
+              "new product launch"
+            ],
+            "text": "\"شيء استثنائي في الطريق...\" and \"ترقبوا الإطلاق... فالانتظار أوشك على الانتهاء.\""
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "branded_packaging"
+            ],
+            "text": "A pouch prominently displays the stylized 3B logo."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "Raw content type is Image; engagement metadata reports 3 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933751558082352376",
+      "short_code": "DaXfjM-I1T4",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXfjM-I1T4/",
+        "timestamp": "2026-07-07T08:30:02.000Z",
+        "caption": "لأن أجمل اللقاءات تبدأ بفنجان قهوة... وتنتهي بقطعة حلى لا تُقاوم. ☕🍰\nزرنا واستمتع بألذ الحلويات وأشهى المشروبات.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-lga3-3.cdninstagram.com/v/t51.82787-15/730348023_17928048189358290_6254193838065362662_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ig_cache_key=MzkzMzc1MTU1ODA4MjM1MjM3Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=1Pvp6ddqzhAQ7kNvwF2lwRo&_nc_oc=Adph00OieJ1kH5qy16KBq-fnV3B9DaGUBIAT24NXAywIdmmyHtdDrSqJAU9pdRbqa5Y&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-lga3-3.cdninstagram.com&_nc_gid=ZAY5UqWI7fq5A7WccmmR2g&_nc_ss=7a22e&oh=00_AQL_5RDP-_ni4pfBCUy2ZB27ZT8L3WCE-5sTxB_38kl5WQ&oe=6AB06677"
+        ],
+        "video_url": null,
+        "likes": 14,
+        "comments": 1,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 07, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "desserts",
+          "coffee_beverages",
+          "social_dining"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "coffee and dessert pairing",
+          "shared café gathering",
+          "sweet treats"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the café",
+          "description": "The caption invites the audience to visit and enjoy the desserts and beverages."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "dessert and beverage promotion",
+          "description": "The post promotes the venue's desserts and coffee-based drinks as part of a social café occasion."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3B logo displayed on both drink cups.",
+        "visual_summary": "Two women are seated in a café-style setting with iced coffee drinks and two plated dessert slices on a table. The cups carry a visible 3B logo; no menu, price, or offer text is shown.",
+        "caption_summary": "The Arabic caption presents coffee and irresistible dessert as part of enjoyable gatherings, then invites people to visit and enjoy the desserts and drinks.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "promotion",
+              "content_themes"
+            ],
+            "text": "\"زرنا واستمتع بألذ الحلويات وأشهى المشروبات\" directly invites viewers to visit and enjoy desserts and drinks."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "visual_signals",
+              "content_themes"
+            ],
+            "text": "The image visibly features two iced coffee drinks, two dessert slices, two people gathered at a table, and 3B branding on the cups."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933749044108760214",
+      "short_code": "DaXe-npopSW",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXe-npopSW/",
+        "timestamp": "2026-07-06T08:30:06.000Z",
+        "caption": "ليست مجرد قهوة... إنها لحظة تُعاش. ☕✨\nكل قطرة تحكي شغف التحضير، وكل رشفة تأخذك إلى عالم من النكهة الغنية.\n\nفي 3Brews، نصنع القهوة بإتقان لنمنحك تجربة لا تُنسى. 🤎\n\n📍 مرّ علينا واستمتع بكوبك المفضل.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fmex12-1.fna.fbcdn.net/v/t51.82787-15/731525271_17928047814358290_2904014026249215340_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=MzkzMzc0OTA0NDEwODc2MDIxNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=LoeGiQ65khgQ7kNvwGoNVyi&_nc_oc=AdoT8L7j5UHpcDbeeunFVt71RZieihVmUXNdtt5ySdFuFjeJUJw6yKyta1wrUDE9XMc&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fmex12-1.fna&_nc_gid=X-OHxs6PoOYDElPy55kU4w&_nc_ss=7a22e&oh=00_AQKOUfgo1UnELdufMaRHh5LHykpHUTx7-UVqtxwl1w37QA&oe=6AB074E3"
+        ],
+        "video_url": null,
+        "likes": 9,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 06, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "coffee_showcase",
+          "brand_experience"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "coffee preparation",
+          "rich flavor",
+          "coffee moment",
+          "brand presentation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the café",
+          "description": "The audience is encouraged to visit 3Brews and enjoy their preferred cup of coffee."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "coffee experience promotion",
+          "description": "The post promotes 3Brews' coffee as a carefully prepared, rich-flavored experience."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews",
+        "visual_summary": "A hand holds a dark blue branded 3Brews cup while coffee is poured into it and spills dramatically over the rim against a warm brown background. The cup prominently displays the 3Brews logo and name.",
+        "caption_summary": "The Arabic caption presents coffee as an immersive moment, emphasizing preparation craftsmanship and rich flavor, then invites people to visit 3Brews for their favorite coffee.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "coffee_showcase",
+              "brand presentation",
+              "logo_visible",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "The image visibly shows coffee being poured into a cup carrying the 3Brews logo and name, with hands visible holding and pouring."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "brand_experience",
+              "coffee preparation",
+              "rich flavor",
+              "cta",
+              "promotion"
+            ],
+            "text": "\"كل قطرة تحكي شغف التحضير، وكل رشفة تأخذك إلى عالم من النكهة الغنية... في 3Brews، نصنع القهوة بإتقان... 📍 مرّ علينا واستمتع بكوبك المفضل.\""
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "Raw content type is Image; engagement metadata reports 9 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933748142174574801",
+      "short_code": "DaXexfqKxjR",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXexfqKxjR/",
+        "timestamp": "2026-07-05T08:30:06.000Z",
+        "caption": "كل كوبٍ استثنائي يبدأ بحبوب استثنائية. 🌱\n\nاستمتع بتجربة حبوب V60 المختصة من 3Brews، المختارة بعناية والمحمصة بإتقان لتمنحك نكهاتها الأصيلة في كل رشفة.\n\nمن النكهات الفاكهية المنعشة إلى الشوكولاتة الغنية... كل كوب يروي قصة.\n\n✨ تحميص طازج\n✨ حبوب مختصة أحادية المنشأ\n✨ تحضير يدوي بإتقان\n\nاكتشف تجربة V60 الحقيقية في 3Brews.\n\n📍 نسعد بزيارتكم.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fvlc10-1.fna.fbcdn.net/v/t51.82787-15/731702803_17928047610358290_4425286081309242312_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=MzkzMzc0ODE0MjE3NDU3NDgwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=BbgyFGZGRuwQ7kNvwFIbkHs&_nc_oc=AdrtoW70Z_IWJKwnaOuccdyvcmirD6UOlTvoXGPZLQAWXiUoJCKR6jPydahq_5jWhc8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fvlc10-1.fna&_nc_gid=aasdIyNYRzX_ONT_b9zFEA&_nc_ss=7a22e&oh=00_AQI9ZX_lOF2V8ku-oYeghDkMqaqM_gdRUGNkSTtzN1sf8A&oe=6AB08612"
+        ],
+        "video_url": null,
+        "likes": 14,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 05, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "specialty_coffee",
+          "coffee_beans",
+          "v60"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "single-origin coffee",
+          "fresh roasting",
+          "manual V60 brewing",
+          "coffee flavor profiles"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit to try V60",
+          "description": "The audience is invited to visit 3Brews and discover its V60 coffee experience."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "specialty coffee product promotion",
+          "description": "The post promotes 3Brews' carefully selected, freshly roasted single-origin coffee beans for V60 preparation, including Colombia Fantastica, Ethiopia Hambella, and Colombia UVA varieties shown in the image."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews; Colombia - Fantastica / فانتاستيكا كولومبيا; Ethiopia Hambella / هامبيلا إثيوبيا; Colombia - UVA / أوفا كولومبيا; NET WEIGHT 150 grams.",
+        "visual_summary": "A hand holds a 3Brews Colombia Fantastica coffee-bean bag above two other branded 150 g bags—Ethiopia Hambella and Colombia UVA—against a deep burgundy studio background.",
+        "caption_summary": "Arabic caption presents 3Brews' specialty V60 beans as carefully selected and expertly roasted, highlighting fresh roasting, single-origin beans, manual preparation, and fruity-to-chocolate flavor notes, then invites visitors to experience V60 at 3Brews.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "specialty_coffee",
+              "coffee_beans",
+              "branding"
+            ],
+            "text": "The image prominently displays three labeled 3Brews coffee-bean packages, with Colombia Fantastica held at the center and Ethiopia Hambella and Colombia UVA beside it."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "v60",
+              "single-origin coffee",
+              "fresh roasting",
+              "promotion"
+            ],
+            "text": "The caption describes specialty V60 beans that are carefully selected, expertly roasted, freshly roasted, and single-origin, with fruity and chocolate flavor notes."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "“اكتشف تجربة V60 الحقيقية في 3Brews. 📍 نسعد بزيارتكم.” invites viewers to discover the V60 experience and visit."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement context"
+            ],
+            "text": "This feed image post received 14 likes and 0 comments; no view count was supplied."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933699507902009710",
+      "short_code": "DaXTtxdoNFu",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXTtxdoNFu/",
+        "timestamp": "2026-07-04T08:25:53.000Z",
+        "caption": "في 3Brews، نستخدم أجود حبوب القهوة المختارة بعناية من أشهر المزارع حول العالم، ونُحضّر كل كوب باحترافية ودقة وعناية فائقة. نُقدّم قهوتنا من القلب، مع اهتمام بأدق التفاصيل لنمنحكم تجربة قهوة استثنائية ترافق لحظاتكم اليومية وتضفي على يومكم مزيدًا من الدفء والبهجة مع كل رشفة.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fcaw5-1.fna.fbcdn.net/v/t51.82787-15/730189078_17928037272358290_8552747777420190231_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=MzkzMzY5OTUwNzkwMjAwOTcxMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3K3Mf-UjIcEQ7kNvwEDd-Tm&_nc_oc=AdpnvFuKkUzotL6qavsuQJdkIAwia1-sqmFuyUtKJ58Uxak75o-6LmzcfBFspx2f6HQ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcaw5-1.fna&_nc_gid=dI3RDNgJGVQOidurIQM7pw&_nc_ss=7a22e&oh=00_AQIcVoskgFnA5W_jYCNbmFYz0zrz-JwyPcdkBwQO_YKunQ&oe=6AB06603"
+        ],
+        "video_url": null,
+        "likes": 14,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 04, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "feed_image",
+        "content_categories": [
+          "coffee_quality",
+          "coffee_sourcing",
+          "barista_craft"
+        ],
+        "content_pillar": "brand_storytelling",
+        "content_themes": [
+          "carefully selected coffee beans",
+          "craftsmanship and precision",
+          "warm daily coffee moments"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "Passion in Every Brew. Crafted with skill. Served with heart. Good coffee • Good mood • Good day. #BrewBetter. 3Brews.",
+        "visual_summary": "A branded 3Brews coffee visual shows a barista in a logo apron holding two portafilters over his eyes, flanked by an espresso machine, branded takeaway cups, and a grinder filled with coffee beans.",
+        "caption_summary": "The Arabic caption says 3Brews carefully selects high-quality beans from renowned farms worldwide and prepares every cup with professionalism, precision, and care to create an exceptional, warm daily coffee experience.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "brand_storytelling",
+              "coffee_quality",
+              "coffee_sourcing",
+              "barista_craft"
+            ],
+            "text": "The caption emphasizes carefully selected premium beans from famous farms worldwide, professional and precise preparation, and a coffee experience delivered with care."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "brand_storytelling",
+              "branding_visible",
+              "logo_visible",
+              "people_visible",
+              "food_visible"
+            ],
+            "text": "The image prominently displays the 3Brews logo on the barista apron, cups, espresso machine, and grinder, alongside coffee beans and espresso equipment."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "brand_storytelling",
+              "coffee_quality",
+              "barista_craft"
+            ],
+            "text": "The visual text states: “Passion in Every Brew,” “Crafted with skill. Served with heart,” and “Good coffee • Good mood • Good day.”"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "This is an Image feed post; supplied engagement metadata shows 14 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3933690635128891283",
+      "short_code": "DaXRsqDI2eT",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaXRsqDI2eT/",
+        "timestamp": "2026-07-04T08:11:10.000Z",
+        "caption": "احتفل بتخرجك في ثري بروز! ☕✨\n\nلكل إنجاز لحظة تستحق الاحتفال. اجمع عائلتك وأصدقاءك واستمتع بأشهى القهوة المختصة والحلويات اللذيذة في أجواء دافئة وأنيقة، لتصنع ذكريات لا تُنسى.\n\n📍 احتفل بنجاحك معنا.\n\nثري بروز – نصنع بشغف.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fper5-1.fna.fbcdn.net/v/t51.82787-15/731438745_17928035583358290_8128726250324062768_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ig_cache_key=MzkzMzY5MDYzNTEyODg5MTI4Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vz9ABA1sQaYQ7kNvwFs61Pb&_nc_oc=AdolCQjbfdpkotu1IjUhikpPSri7QnhHqxl9oosg-R3y_dO2_DOwU40dGKfl7dz7WLE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fper5-1.fna&_nc_gid=C3BV6OXgGHkUB0y8TwHbqQ&_nc_ss=7a22e&oh=00_AQIxN1cNF7DuavypI-g6XyTABrY36lzu8EKYzx0_neYDXw&oe=6AB077A0"
+        ],
+        "video_url": null,
+        "likes": 14,
+        "comments": 1,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on July 04, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "static promotional image",
+        "content_categories": [
+          "graduation_celebration",
+          "event_hosting",
+          "coffee_shop"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "graduation celebrations",
+          "group gatherings",
+          "coffee and desserts",
+          "memory-making"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "contact to arrange a graduation celebration",
+          "description": "The visual asks viewers to contact Three Brews for details about celebrating their graduation there, while the caption invites them to celebrate their success at the café."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "graduation celebration occasion promotion",
+          "description": "Three Brews promotes itself as a venue for graduation gatherings, highlighting specialty coffee, desserts, a warm elegant atmosphere, and celebratory memories."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "ثري بروز – نصنع بشغف. احتفالات التخرج في ثري بروز. احتفل بإنجازك، اجعلها ذكرى لا تُنسى. قهوة رائعة، أجواء مميزة، ذكريات لا تُنسى. المكان المثالي ليومك المميز. طعام لذيذ، قهوة رائعة وأوقات جميلة. الاحتفال في ثري بروز! يرجى التواصل معنا لمزيد من التفاصيل.",
+        "visual_summary": "A burgundy and gold graduation-themed branded graphic shows graduation caps, confetti, books, flowers, and a Three Brews takeaway coffee cup. It promotes holding graduation celebrations at Three Brews and includes a contact prompt for details.",
+        "caption_summary": "The Arabic caption invites graduates to gather family and friends at Three Brews to celebrate their achievement with specialty coffee, desserts, and a warm, elegant atmosphere.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "graduation_celebration",
+              "event_hosting",
+              "promotion",
+              "cta",
+              "branding"
+            ],
+            "text": "The graphic prominently states \"احتفالات التخرج في ثري بروز\" (graduation celebrations at Three Brews) and \"يرجى التواصل معنا لمزيد من التفاصيل\" (please contact us for more details), alongside the Three Brews logo and branded cup."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "coffee_shop",
+              "group_gatherings"
+            ],
+            "text": "The caption says \"احتفل بتخرجك في ثري بروز\" and encourages gathering family and friends for specialty coffee and desserts in a warm, elegant setting."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is identified as an Image feed post; it received 14 likes and 1 comment."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3928100187098086814",
+      "short_code": "DaDak7mIH2e",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaDak7mIH2e/",
+        "timestamp": "2026-06-30T08:30:05.000Z",
+        "caption": "كل لحظة تستحق قهوة... وكل قهوة تستحق 3Brews. ☕🤎\nمن الكرواسون الطازج، إلى الحلويات الغنية، والمشروبات المحضّرة بإتقان... كل تفصيل صُمم ليمنحك تجربة لا تُنسى.\n\n✨ اجمع أصحابك واستمتع بأفضل الأوقات مع نكهات تعشقها.\n\n📍3Brews — Brewing With Passion\n\n#3brews #food #coffee #summervibes☀️ #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-cdg4-2.cdninstagram.com/v/t51.82787-15/727446330_17926692678358290_4745825570909554914_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=MzkyODEwMDE4NzA5ODA4NjgxNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTM4OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=wPBEvDIou-4Q7kNvwFavRjA&_nc_oc=AdowUoLxGzJLKVuwyb4hI2ycwxW-njpGGZRsUxhB_kRJ9CQrsnr06NFamWGwBxORAAM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cdg4-2.cdninstagram.com&_nc_gid=0wNln4mlhgEHlf7pwFYFPw&_nc_ss=7a22e&oh=00_AQLuhqhKON2MJlh5uvJJeZnwYWSCfr943D2OYBYO4Mckqg&oe=6AB066EA"
+        ],
+        "video_url": null,
+        "likes": 24,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "food",
+          "coffee",
+          "summervibes☀️",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 30, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "coffee",
+          "desserts_pastries",
+          "menu_showcase"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "coffee and sweets pairing",
+          "assorted menu items",
+          "branded product presentation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit with friends",
+          "description": "The caption encourages audiences to gather their friends and enjoy time together with flavors they love at 3Brews."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu and café experience promotion",
+          "description": "The post promotes 3Brews’ coffee, fresh croissants, desserts, and prepared drinks as part of its café offering."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3Brews — Brewing With Passion",
+        "visual_summary": "A top-down branded food spread shows iced coffee and black iced coffee alongside desserts and bakery items, including a cocoa-dusted layered cake, chocolate-topped dessert, caramel-drizzled toast with whipped cream, cookies, croissants, and filled pastry rolls. The 3Brews logo appears on cups, napkins, and a card.",
+        "caption_summary": "The Arabic caption says every moment deserves coffee and every coffee deserves 3Brews, highlighting fresh croissants, rich desserts, and carefully prepared drinks. It invites followers to bring friends and enjoy good times, while identifying the brand as 3Brews in Jeddah.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "coffee",
+              "desserts_pastries",
+              "menu_showcase",
+              "branding"
+            ],
+            "text": "The image visibly presents multiple coffee drinks, pastries, desserts, and cookies in a styled 3Brews-branded arrangement."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "coffee and sweets pairing"
+            ],
+            "text": "The caption highlights 'الكرواسون الطازج' (fresh croissants), 'الحلويات الغنية' (rich desserts), and carefully prepared drinks, then says 'اجمع أصحابك' (gather your friends)."
+          },
+          {
+            "source": "combined",
+            "supports": [
+              "brand identification"
+            ],
+            "text": "The caption names 3Brews and the visual repeatedly displays the 3Brews logo and the phrase 'Brewing With Passion'."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "location context"
+            ],
+            "text": "The hashtag #jeddah provides location context for the post."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3928099205966519951",
+      "short_code": "DaDaWp2IN6P",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaDaWp2IN6P/",
+        "timestamp": "2026-06-29T08:30:09.000Z",
+        "caption": "خذ قهوتك... وخلك مستعد ليوم مليان إنجازات. ☀️☕\nمع 3Brews، كل رشفة تعطيك بداية أفضل.\n\n#cofee #summervibes #icecoffee #3brews #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-fra3-1.cdninstagram.com/v/t51.82787-15/727338170_17926692414358290_6346627759079868562_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ig_cache_key=MzkyODA5OTIwNTk2NjUxOTk1MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=2rJj6DaJEysQ7kNvwHdXd_1&_nc_oc=AdrA__vuD5R7_spNOzrVVi_UCf4iTBagvEsi3VvNimfku4QNgQ_Vqy9-Bes8JKFH9VXKjbcgzpJI18GD0CGLG19X&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&_nc_gid=caLTMIfwyk8Gk5zz7nKMuw&_nc_ss=7a22e&oh=00_AQKSaTHuFGxEP85Pf6XE7wOKavGG29Z2ohHmtgVC0qF8Vg&oe=6AB06FFA"
+        ],
+        "video_url": null,
+        "likes": 20,
+        "comments": 1,
+        "views": null,
+        "hashtags": [
+          "cofee",
+          "summervibes",
+          "icecoffee",
+          "3brews",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 29, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "coffee",
+          "brand_product",
+          "summer_lifestyle"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "coffee as a productive-day companion",
+          "on-the-go coffee",
+          "summer mood"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "encourage coffee purchase",
+          "description": "The caption invites the audience to take a coffee from 3Brews as part of starting a productive day."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "branded coffee product promotion",
+          "description": "The post promotes 3Brews coffee through a prominently branded takeaway cup and motivational copy about each sip providing a better start."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews",
+        "visual_summary": "A hand extends a navy 3Brews-branded takeaway coffee cup from beside a car window against a bright blue sky with clouds, presenting coffee as an on-the-go drink.",
+        "caption_summary": "Arabic caption says: “Take your coffee and get ready for a day full of achievements. With 3Brews, every sip gives you a better start.” Hashtags reference coffee, summer vibes, iced coffee, 3Brews, and Jeddah.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "branded coffee product promotion",
+              "on-the-go coffee",
+              "logo_visible",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "The image centers on a takeaway coffee cup bearing the 3Brews name and logo, held outside a car window."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "coffee as a productive-day companion",
+              "encourage coffee purchase",
+              "branded coffee product promotion",
+              "summer mood"
+            ],
+            "text": "“خذ قهوتك... وخلك مستعد ليوم مليان إنجازات... مع 3Brews، كل رشفة تعطيك بداية أفضل.” The hashtags include #summervibes, #icecoffee, and #jeddah."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is identified as an Image feed post; engagement metadata reports 20 likes and 1 comment."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3927412113188007015",
+      "short_code": "DaA-II1Iyxn",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaA-II1Iyxn/",
+        "timestamp": "2026-06-28T08:30:06.000Z",
+        "caption": "مع 3Brews كل طلعة لها طعم أجمل ☕🤎\n\nقهوة مختصة تُحضّر بشغف لترافق أجمل لحظاتك ✨\n\n#3brews #icecoffee #croissant #jeddah #coffee",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/728809627_17926494735358290_7841768569603562166_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=MzkyNzQxMjExMzE4ODAwNzAxNQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQwMy5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=XhwwD0CrR8AQ7kNvwFcSuLb&_nc_oc=Adpd_gfSGKDCNHsTbdjcaEvhH1No5JiVmb4dcX1wNU6eIgNR9zFqkx96nUHyobCK_-k&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=Vq1rJke_VMYCu6wlaI8sQw&_nc_ss=7a22e&oh=00_AQLfbA5YogksW8AxAGfNk4JMx3Fy-J2tJ-iSnY6TX8n0sQ&oe=6AB063AE"
+        ],
+        "video_url": null,
+        "likes": 24,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "icecoffee",
+          "croissant",
+          "jeddah",
+          "coffee"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 28, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "iced_coffee",
+          "pastry",
+          "branded_packaging"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "coffee on the go",
+          "specialty coffee",
+          "coffee and croissant pairing"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "product and brand showcase",
+          "description": "The post promotes 3Brews specialty iced coffee alongside a croissant, with prominent branded cup, bag, and packaging."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews; BREWING WITH PASSION",
+        "visual_summary": "A person in a knitted sweater holds a branded 3Brews iced coffee and a croissant in warm sunlight. A 3Brews paper bag, branded wrapping, and a 3Brews keychain are also visible.",
+        "caption_summary": "The Arabic caption says that every outing tastes better with 3Brews and describes specialty coffee prepared with passion to accompany memorable moments. Hashtags reference iced coffee, croissant, Jeddah, and coffee.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "iced_coffee",
+              "pastry",
+              "branded_packaging",
+              "product and brand showcase",
+              "food_visible",
+              "logo_visible",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "The image visibly centers a cup of iced coffee and croissant, with repeated 3Brews branding on the cup, bag, wrapping, and keychain; a person is holding the items."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "food_product",
+              "specialty coffee",
+              "coffee on the go",
+              "coffee and croissant pairing",
+              "product and brand showcase"
+            ],
+            "text": "\"مع 3Brews كل طلعة لها طعم أجمل\" and \"قهوة مختصة تُحضّر بشغف\" position 3Brews specialty coffee as part of outings; hashtags include #icecoffee and #croissant."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image, with 24 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3927405784973486450",
+      "short_code": "DaA8sDOKKly",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaA8sDOKKly/",
+        "timestamp": "2026-06-27T08:30:05.000Z",
+        "caption": "🧇☕ لحظات السعادة تبدأ من هنا\n\nوافل طازج مع صوص التوت الغني وكوب قهوة محضّر بشغف ليكمل متعتك.\n\n#3brews #waffle #coffee #jeddah #specialtycoffee",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fbio6-1.fna.fbcdn.net/v/t51.82787-15/730907242_17926492752358290_5343660664953956283_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ig_cache_key=MzkyNzQwNTc4NDk3MzQ4NjQ1MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTE0OS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=fk15wA8MsuEQ7kNvwGsUuDK&_nc_oc=Adq5BKMWrYJXq1WMxSXein4yUitTtNk8TWy01MmIIM0_SzHBRm0tja8S18LJaYaHLNg-HV1wYJ70zSI4hCL0YiTz&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fbio6-1.fna&_nc_gid=iZfia4XEvb-JiI9g3wna0g&_nc_ss=7a22e&oh=00_AQJ4oWCbMAmZOylsXqe22GHhbb8L1Hc1p-vK8DsJ0iAH-A&oe=6AB06885"
+        ],
+        "video_url": null,
+        "likes": 20,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "waffle",
+          "coffee",
+          "jeddah",
+          "specialtycoffee"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 27, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "dessert_showcase",
+          "coffee_showcase"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "waffle and coffee pairing",
+          "berry dessert",
+          "specialty coffee"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu item promotion",
+          "description": "The post highlights a fresh waffle with rich berry sauce alongside a passionately prepared coffee as an enjoyable pairing."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3Brews",
+        "visual_summary": "A styled product photograph shows a berry-sauce waffle topped with a scoop of cream or ice cream, paired with a steaming branded 3Brews coffee cup. A lit candle and marble tabletop create a warm café setting.",
+        "caption_summary": "The Arabic caption says that happy moments start here, presenting a fresh waffle with rich berry sauce and a coffee prepared with passion. Hashtags identify 3Brews, waffles, coffee, Jeddah, and specialty coffee.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "dessert_showcase",
+              "coffee_showcase",
+              "branding_visible"
+            ],
+            "text": "The image prominently features a plated waffle with berry sauce and a branded 3Brews coffee cup."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "waffle and coffee pairing",
+              "specialty coffee"
+            ],
+            "text": "\"وافل طازج مع صوص التوت الغني وكوب قهوة محضّر بشغف ليكمل متعتك\" presents the fresh waffle and coffee together."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3927404467240136194",
+      "short_code": "DaA8Y3_IW4C",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DaA8Y3_IW4C/",
+        "timestamp": "2026-06-26T08:30:06.000Z",
+        "caption": "كل لحظة تحلى مع 3Brews ☕✨\nقهوة تُحضّر بشغف، وطعم يخلّي يومك أجمل ❤️\n\n#3brews #coffee #sandwich #specialized #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-icn2-1.cdninstagram.com/v/t51.82787-15/729592398_17926492245358290_2573538619114608996_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ig_cache_key=MzkyNzQwNDQ2NzI0MDEzNjE5NA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTEyMi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Sg4uXvd2f3wQ7kNvwGvc1xs&_nc_oc=AdrsF73yJ96pkHGxFIdKUQQwu0DhKmUSpYgOvNZgEuriChnq63QSd50mEGyXZc6yeI8MLsXQpoaMJa1006jSVH79&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-icn2-1.cdninstagram.com&_nc_gid=HbEQ9oIeJuy7WuyPSlo8PA&_nc_ss=7a22e&oh=00_AQJgWEmPbycTz8_3FpWPew1Hp-7GJTqiY7GAVqSciX0SiA&oe=6AB0837C"
+        ],
+        "video_url": null,
+        "likes": 17,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "coffee",
+          "sandwich",
+          "specialized",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 26, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "coffee",
+          "sandwiches",
+          "branded_products"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "coffee and sandwich pairing",
+          "everyday enjoyment",
+          "specialty coffee"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "product promotion",
+          "description": "The post promotes 3Brews coffee and a sandwich as an enjoyable pairing, associating the products with making the day better."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews",
+        "visual_summary": "A person holds a tray with a branded black 3Brews takeaway coffee cup and a sliced sesame-topped sandwich on a white plate. The 3Brews logo and name are clearly visible on the cup.",
+        "caption_summary": "The Arabic caption says every moment is sweeter with 3Brews, describing coffee prepared with passion and a taste that makes the day better. Hashtags reference coffee, sandwiches, specialty coffee, and Jeddah.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "coffee",
+              "sandwiches",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "The image shows a takeaway coffee cup beside a sliced sandwich, held on a tray by a person; the cup displays the 3Brews logo and name."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "food_product",
+              "coffee and sandwich pairing",
+              "specialty coffee",
+              "product promotion"
+            ],
+            "text": "\"كل لحظة تحلى مع 3Brews\" and \"قهوة تُحضّر بشغف، وطعم يخلّي يومك أجمل\" frame 3Brews coffee positively; hashtags include #coffee, #sandwich, and #specialized."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image, posted as a feed item."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3925291723594525726",
+      "short_code": "DZ5cAaIoewe",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ5cAaIoewe/",
+        "timestamp": "2026-06-25T16:00:07.000Z",
+        "caption": "⚽🔥تحدي توقع نتيجة المباراة بدأ! 🔥⚽\n🇸🇦 السعودية Vs الرأس الأخضر 🇨🇻\n\nعبّر عن حماسك للمباراة وتوقع النتيجة الصحيحة في التعليقات، واحصل على فرصة للفوز بـ **قسيمة بقيمة 100 ريال من  3Brews! ☕🏆\n\nطريقة المشاركة:\n1️⃣ تابع حسابنا الرسمي\n2️⃣ اعمل إعجاب على منشور المسابقة ❤️\n3️⃣ شارك منشور المسابقة\n4️⃣ منشن 3 من أصدقائك في التعليقات 👥\n5️⃣ شارك المنشور في الستوري واذكر حسابنا @3brews.sa 📲\n\n💬 اكتب توقعك للنتيجة في التعليقات!\n\n⏰ **تنتهي التوقعات عند بداية المباراة.\n\n🏆 فقط 10 مشاركين محظوظين ستكون لديهم فرصة للفوز بالقسيمة — لا تفوت الفرصة وسارع بالمشاركة! 🔥\n\nبالتوفيق للجميع! 🤞⚽\nشارك توقعك ولنرى من سيصيب النتيجة الصحيحة! ☕🏆\n\nتطبق الشروط والأحكام (التفاصيل في التعليقات).\n\n#fifa #jeddah #saudiarabiaً #coffee #3brews",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-waw2-2.cdninstagram.com/v/t51.82787-15/728607166_17926007781358290_5413324383006388603_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ig_cache_key=MzkyNTI5MTcyMzU5NDUyNTcyNg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=uPU_6uFQQrAQ7kNvwGjJwm1&_nc_oc=AdpnvqdoE-MFayAlZqx7oQ14FfqC5NBcLuzlPFUaFQ5OeUI_iN7sc3xqVPVW0g0b-nI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-waw2-2.cdninstagram.com&_nc_gid=q_4BIPvNufwp1Cky3qewrw&_nc_ss=7a22e&oh=00_AQKMokReaHKpZ6Z1E5glXS_kD9OHKx1mVgRuutbI-8NjmA&oe=6AB07BC1"
+        ],
+        "video_url": null,
+        "likes": 103,
+        "comments": 121,
+        "views": null,
+        "hashtags": [
+          "fifa",
+          "jeddah",
+          "saudiarabiaً",
+          "coffee",
+          "3brews"
+        ],
+        "mentions": [
+          "3brews.sa"
+        ],
+        "alt_text": "Photo by 3Brews on June 25, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "football_contest",
+          "giveaway",
+          "audience_engagement"
+        ],
+        "content_pillar": "community_engagement",
+        "content_themes": [
+          "Saudi Arabia vs Cape Verde football match",
+          "score prediction contest",
+          "100 SAR 3Brews voucher giveaway"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "contest participation",
+          "description": "Followers are encouraged to predict the match score in the comments and complete participation steps: follow the account, like and share the post, tag three friends, and share it to Stories while mentioning @3brews.sa."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "giveaway incentive",
+          "description": "The post promotes a chance for 10 participants to win a 100 SAR voucher from 3Brews for correctly predicting the Saudi Arabia vs Cape Verde match result."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": true,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "تحدي توقع نتيجة المباراة بدأ! السعودية VS الرأس الأخضر. عبّر عن حماسك للمباراة وتوقع النتيجة الصحيحة في التعليقات، واحصل على فرصة للفوز بقسيمة بقيمة 100 ريال من 3Brews. طريقة المشاركة: تابع حسابنا الرسمي، اعمل إعجاب على منشور المسابقة، شارك المنشور، منشن 3 من أصدقائك في التعليقات، شارك المنشور في الستوري واذكر حسابنا @3brews.sa. اكتب توقعك للنتيجة في التعليقات. فقط 10 مشاركين محظوظين ستكون لديهم فرصة للفوز بالقسيمة، وتنتهي التوقعات عند بداية المباراة.",
+        "visual_summary": "A branded 3Brews football-contest graphic shows Saudi Arabian and Cape Verde players in a stadium setting, with both national flags, the Saudi Arabia vs Cape Verde matchup, and a prominent 100 SAR 3Brews voucher. It lists contest-entry instructions and states that predictions close at match kickoff.",
+        "caption_summary": "The Arabic caption announces a score-prediction contest for Saudi Arabia versus Cape Verde. It offers 10 participants the chance to win a 100 SAR 3Brews voucher, explains the required engagement actions, asks users to post their score prediction in the comments, and says entries close when the match starts; terms and conditions are noted as available in the comments.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "community_engagement",
+              "football_contest",
+              "giveaway",
+              "cta",
+              "promotion"
+            ],
+            "text": "The caption asks users to predict the score in comments and requires following, liking, sharing, tagging three friends, and posting to Stories; it offers 10 participants a chance to win a 100 SAR 3Brews voucher."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "branding_visible",
+              "logo_visible",
+              "offer_visible",
+              "price_visible",
+              "people_visible",
+              "football_contest"
+            ],
+            "text": "The graphic displays the 3Brews logo, Saudi Arabia vs Cape Verde players and flags, a 100 ريال 3Brews voucher, and the contest participation instructions."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "audience_engagement"
+            ],
+            "text": "The feed image has 103 likes and 121 comments, consistent with the post's comment-based score-prediction mechanic."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3925993127422967256",
+      "short_code": "DZ77fLWq73Y",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ77fLWq73Y/",
+        "timestamp": "2026-06-25T08:30:01.000Z",
+        "caption": "ليست مجرد قهوة... إنها عالمٌ كامل داخل كل كوب. ☕✨\n\nوراء كل رشفة حكاية، ووراء كل فنجان شغف، وإتقان، وتجربة لا تُنسى.\n\nفي 3Brews لا نقدّم القهوة فقط، بل نصنع لحظات تُحاكى في كل كوب.\n\nادخل إلى عالم تُختار فيه أفضل الحبوب، ويُحضَّر كل فنجان بعناية، ليمنحك تجربة تستحق أن تعيشها.\n\nنُحضّر بشغف... لأن كل كوب يستحق الأفضل.\n\n📍 زوروا 3Brews واكتشفوا عالمًا من القهوة داخل كل فنجان.\n\n#3brews #specialtycoffee #jeddah #beans #coffee",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-lax3-1.cdninstagram.com/v/t51.82787-15/730543524_17926165227358290_891129101450415169_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzkyNTk5MzEyNzQyMjk2NzI1Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Uek9tfgSoukQ7kNvwHuG8gw&_nc_oc=Ado22qnw-RK4ODiOQnWdCQapGtb0rJpssRmAoE09KdBNFj9Z-dalnIls_cI1c33RnYVq3gPbeoNCsEdqTfH4DRHj&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-lax3-1.cdninstagram.com&_nc_gid=nECpqOCHFXbt4-BoQBGZgQ&_nc_ss=7a22e&oh=00_AQIomuvoVtEo3Un1PTIQ1FfrSjY2Hhh26N7NABAnh5tAng&oe=6AB06FC1"
+        ],
+        "video_url": null,
+        "likes": 18,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "specialtycoffee",
+          "jeddah",
+          "beans",
+          "coffee"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 25, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "branded image post",
+        "content_categories": [
+          "specialty_coffee",
+          "brand_identity",
+          "coffee_shop_experience"
+        ],
+        "content_pillar": "brand_storytelling",
+        "content_themes": [
+          "coffee as an immersive world",
+          "careful bean selection and preparation",
+          "passion for coffee",
+          "3Brews brand experience"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the café",
+          "description": "The caption invites the audience to visit 3Brews and discover its coffee world."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "brand and café experience promotion",
+          "description": "The post promotes 3Brews' specialty-coffee identity and the experience it says is created through carefully selected beans and prepared cups."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": true,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews; BREWING WITH PASSION; بروت لشغفك",
+        "visual_summary": "A stylized branded illustration shows a large blue 3Brews coffee cup against a burgundy background. The cup is shown as a cutaway containing a miniature two-level café interior with a counter, display case, menus, staircase, and a small customer figure. The 3Brews logo appears above and on the cup, alongside the slogan “BREWING WITH PASSION” and Arabic text “بروت لشغفك.”",
+        "caption_summary": "In Arabic, the caption presents each cup as a complete coffee world, emphasizing stories behind every sip, passion, mastery, selected beans, careful preparation, and a memorable 3Brews experience. It asks people to visit 3Brews.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "brand_storytelling",
+              "specialty_coffee",
+              "promotion",
+              "cta"
+            ],
+            "text": "The caption says 3Brews does not merely serve coffee but creates memorable moments, describes selecting the best beans and preparing each cup with care, and says: “زوروا 3Brews واكتشفوا عالمًا من القهوة داخل كل فنجان” (Visit 3Brews and discover a world of coffee in every cup)."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "brand_identity",
+              "coffee_shop_experience",
+              "food_visible",
+              "menu_visible",
+              "logo_visible",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "The image prominently displays the 3Brews logo and name, a coffee-filled cup, and a miniature café interior with menu boards, a service counter, seating, and one customer figure. It also includes the slogans “BREWING WITH PASSION” and “بروت لشغفك.”"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "specialty_coffee",
+              "location_context"
+            ],
+            "text": "Hashtags include #3brews, #specialtycoffee, #jeddah, #beans, and #coffee. Engagement metadata records 18 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3925991458684932347",
+      "short_code": "DZ77G5OIhD7",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ77G5OIhD7/",
+        "timestamp": "2026-06-24T08:30:05.000Z",
+        "caption": "كل فنجان استثنائي يبدأ بقطرة. ☕✨\n\nاكتشف فن تحضير الـ V60، حيث تكشف كل قطرة عن النكهة الحقيقية للقهوة المختصة. دقة في التحضير، شغف في كل خطوة، وتجربة تُصنع بإتقان.\n\nتمهّل... استمتع بكل رشفة، وتذوّق الفرق.\n\nنُحضّر بشغف.\n\n📍 زوروا 3Brews واستمتعوا بتجربة V60 كما يجب أن تكون.\n\n#3brews #v60 #pourover #specialitycoffee #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-muc2-1.cdninstagram.com/v/t51.82787-15/730313331_17926164948358290_2505770717959200410_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzkyNTk5MTQ1ODY4NDkzMjM0Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0OC5zZHIucmVndWxhcl9waG90by5DMiJ9&_nc_ohc=MP654sZLpWoQ7kNvwG7yqMw&_nc_oc=Adr5tm5-JfZW7G7eflEZHe8bmmNP0kK-wFt8qjLLpUS7bLnocoyMUhtAUaLLKBQFvyg&_nc_ad=z-m&_nc_cid=1088&_nc_zt=23&_nc_ht=scontent-muc2-1.cdninstagram.com&_nc_gid=SU_kj1P95eectd-8iu0vBA&_nc_ss=7a22e&oh=00_AQLL2rG9s9v1Mpt-_EeCBfufqpqwy_U6ogacRiC7zHXY_A&oe=6AB056F4"
+        ],
+        "video_url": null,
+        "likes": 16,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brews",
+          "v60",
+          "pourover",
+          "specialitycoffee",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 24, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "branded educational image post",
+        "content_categories": [
+          "specialty_coffee",
+          "v60_brewing",
+          "coffee_education"
+        ],
+        "content_pillar": "educational",
+        "content_themes": [
+          "pour-over coffee",
+          "brewing precision",
+          "coffee craftsmanship"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit for V60 coffee",
+          "description": "The caption invites audiences to visit 3Brews and experience V60 coffee prepared as intended."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "promote the V60 coffee experience",
+          "description": "The post promotes 3Brews' specialty V60 offering by emphasizing its careful preparation, flavor clarity, and crafted experience."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "3Brews. \"V60 – البساطة في أنقى صورها\" / \"V60 – Simplicity in its purest form.\" The visual explains that V60 highlights coffee's clarity and true character, one pour at a time, and says: \"BREWING WITH PASSION.\"",
+        "visual_summary": "A stylized branded graphic on a muted red background shows a large V60 dripper filled with coffee above an oversized navy 3Brews cup. A small illustrated barista climbs a ladder beside the cup, while bilingual Arabic and English copy describes the V60 method. The 3Brews logo appears prominently at the top and on the cup.",
+        "caption_summary": "The Arabic caption describes V60 as a precise, passion-led specialty-coffee brewing method that reveals coffee's true flavor drop by drop. It encourages slowing down to enjoy each sip and invites people to visit 3Brews for the V60 experience.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "educational",
+              "cta",
+              "promotion",
+              "specialty_coffee",
+              "v60_brewing"
+            ],
+            "text": "The caption explains the V60 preparation process as revealing the true flavor of specialty coffee through precision and passion, then says: \"زوروا 3Brews واستمتعوا بتجربة V60 كما يجب أن تكون\" (Visit 3Brews and enjoy the V60 experience as it should be)."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_visible",
+              "logo_visible",
+              "branding_visible",
+              "people_visible",
+              "educational"
+            ],
+            "text": "The graphic visibly features brewed coffee in a V60 dripper, repeated 3Brews branding, an illustrated barista figure, and bilingual explanatory copy about V60's clarity, character, and control over every cup."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "This is a feed Image post. Engagement metadata records 16 likes and 0 comments; no view count is supplied."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3925952185110283199",
+      "short_code": "DZ7yLY2qsO_",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ7yLY2qsO_/",
+        "timestamp": "2026-06-23T16:09:20.000Z",
+        "caption": "🍪☕ كوكيز الفانيلا × القهوة\nلأن كل فنجان قهوة يستحق الرفيق المثالي.\n\n#3brews #coffeetime #vanillacookies #specialtycoffee #jeddah",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.frec1-2.fna.fbcdn.net/v/t51.82787-15/730325795_17926154628358290_3099167098480730500_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=104&ig_cache_key=MzkyNTk1MjE4NTExMDI4MzE5OTE3OTI2MTU0NjIyMzU4Mjkw.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcwNi5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=0def9V96N8IQ7kNvwGVeDtr&_nc_oc=AdqD2liTm5zOKBekBP22xpuyUzruhbV3BEeQ2Nur_QrFM9pta8oC_r3Hs5wXjvDgdpo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.frec1-2.fna&_nc_gid=iw4WNrCR3UvA_XCULelBxw&_nc_ss=7a22e&oh=00_AQJXZFbcnd2r0M9xaLwwGlwrlGS1uHY9pmMv1-GkaZSvDQ&oe=6AB06584"
+        ],
+        "video_url": "https://instagram.frec1-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNJLWpb1XQ3oXc01s11e4MA-JBJZaikrVAwwMdzWBWutkqxpxtlBGPLcC0h4BRDQ3c4xUPCcpq0V6TaHc2dWkXkzlz9F3rT8tyO_kM.mp4?_nc_cat=105&_nc_oc=Adqv_cp1zdxQkbh3nkyQ178AZZwDAQqlAzNiXPR6peuHH9IpS_bu0-BfEHWIkX2zgvM&_nc_sid=5e9851&_nc_ht=instagram.frec1-1.fna.fbcdn.net&_nc_ohc=zTNGkcJvZ4wQ7kNvwFBnE7A&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjM2MTg1MDAxNzU1OTA2OCwiYXNzZXRfYWdlX2RheXMiOjg0LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6OCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=53997f6ee47e8829&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC82NzRCN0UyREE3MTNBOUUyMTdGQzlGOUUzQkE0QzhBMl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzQ3NEQzQzE3RTMxN0YyODc3NTVFMTQ0NjMzQ0U0NEJCX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACa4yPn04YWyCBUCKAJDMywXQCDMzMzMzM0YEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=iw4WNrCR3UvA_XCULelBxw&_nc_ss=7a22e&_nc_zt=28&oh=00_AQJyMCneny7AtoVtojRTe7WTUF45iurdl3MZcFQksseWkA&oe=6AAC7E82",
+        "likes": 34,
+        "comments": 0,
+        "views": 216,
+        "hashtags": [
+          "3brews",
+          "coffeetime",
+          "vanillacookies",
+          "specialtycoffee",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Video by 3Brews on June 23, 2026.",
+        "music_info": {
+          "artist_name": "3brews.sa",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "26937256179308601"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DZ7yLY2qsO_/",
+        "transcript": "Check this out.",
+        "duration_seconds": 8.4,
+        "shares": null,
+        "plays": 642,
+        "views": null,
+        "audio_title": "Original audio",
+        "audio_artist": "3brews.sa",
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "short-form video (Reel)",
+        "content_categories": [
+          "coffee",
+          "cookies",
+          "product_pairing"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "vanilla cookie and coffee pairing",
+          "specialty coffee",
+          "product presentation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "prompt viewers to view the pairing",
+          "description": "The spoken line “Check this out” invites viewers to look at the featured coffee-and-cookie pairing."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "product pairing promotion",
+          "description": "The post promotes 3Brews coffee alongside vanilla cookies as a complementary pairing."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "3Brews (on the coffee cup)",
+        "visual_summary": "The supplied Reel cover shows a steaming branded 3Brews coffee cup beside a large cookie with visible chocolate pieces, against a dark red background.",
+        "caption_summary": "Arabic caption presents vanilla cookies with coffee as the ideal companion for every cup, supported by coffee, vanilla-cookie, specialty-coffee, and Jeddah hashtags.",
+        "transcript_summary": "“Check this out.”",
+        "spoken_topics": [
+          "coffee and cookie pairing"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "coffee",
+              "cookies",
+              "product_pairing",
+              "branding"
+            ],
+            "text": "The cover visibly features a steaming 3Brews-branded coffee cup and a cookie."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "product_pairing",
+              "promotion",
+              "specialty coffee"
+            ],
+            "text": "“كوكيز الفانيلا × القهوة لأن كل فنجان قهوة يستحق الرفيق المثالي.” (Vanilla cookies × coffee; every cup of coffee deserves the perfect companion.)"
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "cta"
+            ],
+            "text": "“Check this out.”"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type",
+              "engagement context"
+            ],
+            "text": "The item is a Video/clips post, 8.4 seconds long, with 34 likes, 0 comments, and 216 views."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3925298092754155924",
+      "short_code": "DZ5ddF4ITmU",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ5ddF4ITmU/",
+        "timestamp": "2026-06-22T18:14:31.000Z",
+        "caption": "☕✨ لحظة من الفخامة… وطعم لا يُنسى 🤎\n\nجرّب مشروبنا الشوكولاتي الغني مع كل تفاصيله المميزة — من أول رشفة إلى آخر لمسة 🍫🤍\n\nA moment of indulgence… a taste you won’t forget 🤎\n\nDive into our rich chocolate creation, crafted to make every sip unforgettable 🍫✨\n\n#3brew #specialtycoffe #coffeeexperience #chocolatelovers #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fssa14-1.fna.fbcdn.net/v/t51.82787-15/726988266_17926009071358290_3704815201830404978_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=MzkyNTI5ODA5Mjc1NDE1NTkyNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=SG5anF1ORjkQ7kNvwGFDWvK&_nc_oc=AdrWsY6vEYanOEwLjHAP-gJUnP_YrYYCJLoClW-Ub2T-7N5DxQZAKj6aUYxiNZGt6nU&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fssa14-1.fna&_nc_gid=94Phf0AQ6hnfPF1FYZvpaw&_nc_ss=7a22e&oh=00_AQIAxcoMZBQKvSVwVELllE_8irJ7cKeHMIoJjeIL0OAwaQ&oe=6AB07B08"
+        ],
+        "video_url": null,
+        "likes": 15,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "3brew",
+          "specialtycoffe",
+          "coffeeexperience",
+          "chocolatelovers",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 22, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "chocolate_beverage",
+          "drink_showcase",
+          "specialty_coffee"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "chocolate indulgence",
+          "rich flavor",
+          "premium beverage presentation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "try the chocolate drink",
+          "description": "The caption invites viewers to try the rich chocolate beverage."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "beverage product promotion",
+          "description": "The post promotes 3Brews' rich chocolate creation as an indulgent, memorable drink."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "طعم الشوكولاتة بأعلى مستوى / CHOCOLATE TASTE AT ITS FINEST / 3 BREWS / BREWING WITH PASSION",
+        "visual_summary": "A styled product image shows a chocolate blended drink in a branded 3Brews cup, topped with whipped cream, chocolate drizzle, and a chocolate cookie. A hand reaches through a torn burgundy backdrop above the drink, while the 3Brews logo and bilingual chocolate-focused messaging appear on the image.",
+        "caption_summary": "In Arabic and English, the caption describes a rich chocolate drink designed to make every sip memorable and invites the audience to try it.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_product",
+              "chocolate_beverage",
+              "branding_visible"
+            ],
+            "text": "The image prominently features a whipped-cream-topped chocolate drink with chocolate drizzle and a cookie in a cup bearing the 3Brews mark; the 3Brews logo is also placed at the bottom."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "premium beverage presentation",
+              "promotion"
+            ],
+            "text": "The bilingual visual copy reads 'طعم الشوكولاتة بأعلى مستوى' and 'CHOCOLATE TASTE AT ITS FINEST.'"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "promotion",
+              "chocolate indulgence"
+            ],
+            "text": "The caption says 'جرّب مشروبنا الشوكولاتي الغني' / 'Dive into our rich chocolate creation,' directly encouraging viewers to try the drink."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "specialty_coffee"
+            ],
+            "text": "Hashtags include #3brew, #specialtycoffe, #coffeeexperience, #chocolatelovers, and #jeddah. Likes: 15; comments: 0."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3923848276245322543",
+      "short_code": "DZ0TzfCIZsv",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ0TzfCIZsv/",
+        "timestamp": "2026-06-20T18:14:11.000Z",
+        "caption": "🇸🇦⚽ توقّع النتيجة واربح! ☕🍫\n\nهل تتوقع نتيجة المباراة؟ 👀\n\nتوقّع نتيجة مباراة السعودية 🇸🇦 × إسبانيا 🇪🇸 في التعليقات، وادخل السحب للفوز بـ قهوة (ساخنة أو باردة) + براوني من 3Brews 🤎\n\n🎁 طريقة المشاركة:\n\n✅ تابع حساب @3Brews\n❤️ اعمل إعجاب لهذا المنشور\n👥 منشن الشخص اللي بتشاهد معه المباراة\n💬 اكتب توقعك للنتيجة في التعليقات\n\n⏰ ينتهي التحدي مع بداية المباراة.\n\n🏆 سيتم اختيار 10 فائزين من أصحاب التوقعات الصحيحة، وسيحصل كل فائز على مشروب واحد (ساخن أو بارد) + براوني.\n\n📍تطبق الشروط والأحكام.\n\nبالتوفيق للجميع! ⚽☕🤎\n\n#fifa #saudiarabia #footballtime #spain #jeddah",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fbfh9-1.fna.fbcdn.net/v/t51.82787-15/726900370_17925666492358290_1096304497582089930_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=MzkyMzg0ODI3NjI0NTMyMjU0Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTM2NS5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=pxeJzTbmCjYQ7kNvwEa1G_r&_nc_oc=AdqKowp9aniKOHK6dT9jOfrwf-yUl58tJKDQt79meAuir2MOgi-yG2zsG5-XXWIPwSY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fbfh9-1.fna&_nc_gid=Kboet_FsVecTwG7qy11e9g&_nc_ss=7a22e&oh=00_AQIQQmdS6Azbd79UrzUVATdg94MtlrLpyS4HKnVjf8ZKfA&oe=6AB07F37"
+        ],
+        "video_url": null,
+        "likes": 50,
+        "comments": 38,
+        "views": null,
+        "hashtags": [
+          "fifa",
+          "saudiarabia",
+          "footballtime",
+          "spain",
+          "jeddah"
+        ],
+        "mentions": [
+          "3Brews"
+        ],
+        "alt_text": "Photo by 3Brews on June 20, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "score_prediction_contest",
+          "football_campaign",
+          "giveaway"
+        ],
+        "content_pillar": "community_engagement",
+        "content_themes": [
+          "Saudi Arabia vs. Spain football match",
+          "match-score prediction",
+          "coffee and brownie prize",
+          "World Cup 2026"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "Enter the prediction giveaway",
+          "description": "Followers are encouraged to follow @3Brews, like the post, tag their match-watching companion, and comment with their Saudi Arabia vs. Spain score prediction before the match begins."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "Contest prize promotion",
+          "description": "The post promotes a chance for 10 correct score predictors to win one hot or cold coffee drink and a brownie from 3Brews."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "توقع نتيجة المباراة: السعودية ضد اسبانيا / أكمل علي مشروب مجاني + حلى / FIFA World Cup 2026 / 3Brews",
+        "visual_summary": "A football-stadium-themed graphic presents Saudi Arabia versus Spain with blank score boxes, Saudi and Spanish flags, and FIFA World Cup 2026 imagery. A branded 3Brews iced coffee and a container of brownie pieces are prominently displayed alongside the message offering a free drink and dessert.",
+        "caption_summary": "3Brews invites users to predict the Saudi Arabia versus Spain match score in the comments. Ten people with correct predictions will be selected to receive a hot or cold coffee and brownie; entry requires following the account, liking the post, tagging a viewing companion, and commenting a prediction before kickoff.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "community_engagement",
+              "cta",
+              "promotion"
+            ],
+            "text": "The caption says: \"توقّع نتيجة مباراة السعودية × إسبانيا في التعليقات، وادخل السحب\" and lists participation steps to follow @3Brews, like, tag someone, and comment a score prediction. It states 10 correct predictors will receive a drink and brownie."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "football_campaign",
+              "offer_visible",
+              "food_visible",
+              "branding_visible"
+            ],
+            "text": "The image shows a Saudi Arabia vs. Spain score-prediction layout in a stadium setting, a FIFA World Cup 2026 mark, and visibly branded 3Brews coffee and brownie products with the Arabic offer text \"مشروب مجاني + حلى\"."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement_context"
+            ],
+            "text": "The feed image post has 50 likes and 38 comments; the caption's requested score predictions are consistent with comments being a contest-entry mechanism."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3923846605327023079",
+      "short_code": "DZ0TbK3o7vn",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DZ0TbK3o7vn/",
+        "timestamp": "2026-06-20T18:10:38.000Z",
+        "caption": "📲 قهوتك وحلاك المفضل صار أقرب لك! ☕🍰\n\nاطلب من 3Brews الآن عبر:\n🟡 HungerStation\n🟢 Keeta\n🔴 Jahez\n\nاستمتع بأشهى القهوة، الحلويات، والمشروبات المميزة، وتوصيل سريع إلى باب بيتك. 🚀\n\nأي منصة بتطلب منها اليوم؟ 👇\n\n#hungerstation #3brews #jeddah #onlinefooddelivery #saudiarabia",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fyyz1-1.fna.fbcdn.net/v/t51.82787-15/726716472_17925665829358290_8519781619600155951_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&_nc_map=urlgen_bucketless&ig_cache_key=MzkyMzg0NjYwNTMyNzAyMzA3OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTI1NC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=SDb4GzQb_AsQ7kNvwEGJOe9&_nc_oc=AdpKhqUKwZ-VSFZmVq71LVnKSjtcNZm5puiJ_SQDJBXDSI8Nz8aQtNaYoomOzD8d_ZBR0OB_nP59JqGVxK9Adxfg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fyyz1-1.fna&_nc_gid=xgrXsVHriHXkcZPcesD4vA&_nc_ss=7a22e&oh=00_AQKX4hM9OQYQTTPYbQ1zbNonEVi-5LXcYoi2b1z7kux_lw&oe=6AB07CEA"
+        ],
+        "video_url": null,
+        "likes": 12,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "hungerstation",
+          "3brews",
+          "jeddah",
+          "onlinefooddelivery",
+          "saudiarabia"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by 3Brews on June 20, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "delivery_availability",
+          "third_party_delivery",
+          "coffee_desserts"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "availability on delivery platforms",
+          "home delivery convenience",
+          "coffee and dessert ordering"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "order through a delivery platform",
+          "description": "The audience is encouraged to order 3Brews through HungerStation, Keeta, or Jahez and to comment which platform they will use."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "delivery-platform availability announcement",
+          "description": "The post promotes 3Brews' availability for delivery via HungerStation, Keeta, and Jahez, highlighting coffee, desserts, drinks, and doorstep delivery."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": true,
+          "price_visible": true,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "We are now on HungerStation, Keeta & Jahez. Your favorites, now closer to you! Delivered to your doorstep. Wide Selection. Fast Delivery. Trusted Quality. The phone display shows 3 Brews items including Molten Cake (﷼24), Tiramisu Cake (﷼24), Kunafa (﷼35), and Iced Latte (﷼15), plus a minimum order of ﷼15 and a 35–50 minute delivery time.",
+        "visual_summary": "A burgundy 3Brews delivery announcement graphic shows hands using a phone with a 3Brews delivery menu, alongside coffee drinks and desserts including a tiramisu-style cake and chocolate dessert. HungerStation, Keeta, and Jahez logos are prominent, with 3Brews branding on the image and drink cups.",
+        "caption_summary": "Arabic caption announces that 3Brews coffee and desserts can now be ordered through HungerStation, Keeta, and Jahez, emphasizing fast home delivery and asking followers which platform they will order from.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "\"اطلب من 3Brews الآن عبر: HungerStation، Keeta، Jahez\" and \"أي منصة بتطلب منها اليوم؟\" explicitly invite ordering through the listed platforms and invite a response."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "promotion",
+              "visual_signals",
+              "content_pillar"
+            ],
+            "text": "The graphic states \"We are now on HungerStation, Keeta & Jahez\" and displays the three delivery-platform logos with a 3Brews ordering screen and doorstep-delivery message."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_visible",
+              "menu_visible",
+              "price_visible",
+              "branding_visible"
+            ],
+            "text": "Coffee and dessert images surround a phone menu displaying named 3Brews items and Saudi-riyal prices; 3Brews logos appear on the graphic, phone listing, and cups."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image in the feed."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    }
+  ],
+  "analysis_coverage": {
+    "content_requested": 30,
+    "content_scraped": 28,
+    "content_analyzed": 28,
+    "content_failed": 0,
+    "analysis_success_pct": 100.0,
+    "date_range": {
+      "oldest_content": "2026-06-20T18:10:38+00:00",
+      "newest_content": "2026-07-18T09:00:05+00:00"
+    },
+    "multimodal_analysis": true,
+    "reels_detected": 1,
+    "reels_enriched": 1,
+    "reel_transcripts_available": 1
+  },
+  "data_quality": {
+    "status": "complete",
+    "profile_scrape_success": true,
+    "content_scrape_success": true,
+    "multimodal_analysis_completed": true,
+    "reel_enrichment_attempted": true,
+    "reel_enrichment_completed": true,
+    "warnings": [
+      "Reel/video visual analysis uses supplied cover/images plus transcript when available; full raw video frames are not analyzed."
+    ],
+    "failed_analyses": []
+  }
+}
