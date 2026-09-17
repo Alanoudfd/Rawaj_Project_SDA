@@ -1,0 +1,1920 @@
+{
+  "schema_version": "3.0",
+  "restaurant": {
+    "restaurant_id": 1,
+    "name": "The Bay Restaurant",
+    "instagram_username": "thebayrestaurant_jed",
+    "instagram_url": "https://www.instagram.com/thebayrestaurant_jed/",
+    "email": null,
+    "location": "Jeedah",
+    "category": "BCafe, Restaurant, Food & Beverage Company"
+  },
+  "analysis_metadata": {
+    "status": "complete",
+    "analyzed_at": "2026-09-16T04:21:29.499497+00:00",
+    "source": "instagram",
+    "analysis_version": "3.0"
+  },
+  "profile": {
+    "username": "thebayrestaurant_jed",
+    "full_name": "•The BAY• 🍃 •ذا باي•",
+    "bio": "Refined Indian Cuisine 🇮🇳 \nBold Flavors, Modern Soul.\n📍The bay, Jeddah",
+    "followers": 20470,
+    "following": 1,
+    "posts_count": 432,
+    "website": "https://linktr.ee/thebayrestaurant_jed?utm_source=linktree_profile_share&ltsid=e5bd1dd7-599f-4005-84d2-9819fd8d0f9e",
+    "verified": false,
+    "business_category": "Restaurant",
+    "is_business": true,
+    "is_private": false
+  },
+  "profile_analysis": {
+    "bio": {
+      "cuisine_identified": true,
+      "cuisine": "Indian",
+      "location_present": true,
+      "cta_present": false,
+      "value_proposition_present": true
+    },
+    "contact_accessibility": {
+      "website_available": true,
+      "email_available": false,
+      "phone_available": false,
+      "external_link_available": true
+    },
+    "profile_completeness": {
+      "has_clear_business_description": true,
+      "has_location": true,
+      "has_contact_method": true,
+      "has_external_link": true
+    }
+  },
+  "metrics": {
+    "activity": {
+      "content_last_30_days": 4,
+      "content_per_week": 0.93,
+      "days_since_last_content": 12
+    },
+    "engagement": {
+      "average_likes": 4.73,
+      "median_likes": 3.0,
+      "average_comments": 0.0,
+      "engagement_rate_pct": 0.023,
+      "sample_size": 15
+    },
+    "format_mix": {
+      "reel": {
+        "count": 4,
+        "pct": 26.67
+      },
+      "image": {
+        "count": 10,
+        "pct": 66.67
+      },
+      "carousel": {
+        "count": 1,
+        "pct": 6.67
+      }
+    },
+    "content_mix": {
+      "staff_feature": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "behind_the_scenes": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "product_promotion": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "sharing_meal": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "delivery": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "chef_spotlight": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "brand_humor": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "humor": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "staff_content": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "restaurant_life": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "food_showcase": {
+        "count": 3,
+        "pct": 20.0
+      },
+      "restaurant_branding": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "indian_cuisine": {
+        "count": 4,
+        "pct": 26.67
+      },
+      "dish_showcase": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "brand_promotion": {
+        "count": 2,
+        "pct": 13.33
+      },
+      "cuisine_identity": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "restaurant_invitation": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "dish_feature": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "indian_fusion": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "beverage_showcase": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "dining_experience": {
+        "count": 2,
+        "pct": 13.33
+      },
+      "restaurant_ambiance": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "bread_preparation": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "menu_item_promotion": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "beverage_feature": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "karak_tea": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "menu_item_feature": {
+        "count": 1,
+        "pct": 6.67
+      },
+      "food_photography": {
+        "count": 1,
+        "pct": 6.67
+      }
+    },
+    "cta": {
+      "content_with_cta": 7,
+      "any_cta_pct": 46.67,
+      "cta_intents": {
+        "order via delivery apps": 1,
+        "swipe carousel": 1,
+        "visit the restaurant": 2,
+        "try the dish today": 1,
+        "encourage comments": 1,
+        "encourage dish trial and response": 1
+      }
+    },
+    "promotion": {
+      "promotional_content": 13,
+      "promotional_content_pct": 86.67,
+      "promotion_intents": {
+        "sharing box promotion": 1,
+        "brand sentiment": 1,
+        "restaurant and cuisine promotion": 1,
+        "dish promotion": 3,
+        "restaurant brand promotion": 1,
+        "menu item promotion": 2,
+        "restaurant experience promotion": 1,
+        "product awareness": 1,
+        "beverage highlighting": 1,
+        "restaurant food promotion": 1
+      }
+    },
+    "branding": {
+      "logo_presence_pct": 93.33,
+      "branding_presence_pct": 93.33
+    },
+    "commerce_visibility": {
+      "menu_visible_pct": 0.0,
+      "price_visible_pct": 0.0,
+      "offer_visible_pct": 0.0
+    },
+    "reels": {
+      "reels_detected": 4,
+      "reels_enriched": 4,
+      "reel_content_pct": 26.67,
+      "average_views": 667.0,
+      "median_views": 425.5,
+      "average_duration_seconds": 11.33,
+      "transcript_available_pct": 100.0
+    }
+  },
+  "research_signals": [
+    {
+      "signal_id": "activity_01",
+      "dimension": "posting_activity",
+      "observation": "Observed 4 content items in the last 30 days (0.93 per week in the observed window); days since latest content: 12.",
+      "metric_path": "metrics.activity",
+      "value": {
+        "content_last_30_days": 4,
+        "content_per_week": 0.93,
+        "days_since_last_content": 12
+      },
+      "evidence_content_ids": [],
+      "confidence": 1.0
+    },
+    {
+      "signal_id": "engagement_01",
+      "dimension": "engagement",
+      "observation": "Across 15 items with engagement data, average likes were 4.73, median likes 3.0, average comments 0.0, and follower-normalized engagement rate was 0.023%.",
+      "metric_path": "metrics.engagement",
+      "value": {
+        "average_likes": 4.73,
+        "median_likes": 3.0,
+        "average_comments": 0.0,
+        "engagement_rate_pct": 0.023,
+        "sample_size": 15
+      },
+      "evidence_content_ids": [],
+      "confidence": 1.0
+    },
+    {
+      "signal_id": "cta_01",
+      "dimension": "cta_usage",
+      "observation": "CTA detected in 7 analyzed content items (46.67%). Observed intent labels: {'order via delivery apps': 1, 'swipe carousel': 1, 'visit the restaurant': 2, 'try the dish today': 1, 'encourage comments': 1, 'encourage dish trial and response': 1}.",
+      "metric_path": "metrics.cta",
+      "value": {
+        "content_with_cta": 7,
+        "any_cta_pct": 46.67,
+        "cta_intents": {
+          "order via delivery apps": 1,
+          "swipe carousel": 1,
+          "visit the restaurant": 2,
+          "try the dish today": 1,
+          "encourage comments": 1,
+          "encourage dish trial and response": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3970867451053448404",
+        "3962901620933273078",
+        "3955712856736126953",
+        "3947733195867478740",
+        "3942595845520870496",
+        "3938378629136974372",
+        "3936143898882164055"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "promotion_01",
+      "dimension": "promotional_activity",
+      "observation": "Promotional intent detected in 13 analyzed content items (86.67%). Observed promotion intent labels: {'sharing box promotion': 1, 'brand sentiment': 1, 'restaurant and cuisine promotion': 1, 'dish promotion': 3, 'restaurant brand promotion': 1, 'menu item promotion': 2, 'restaurant experience promotion': 1, 'product awareness': 1, 'beverage highlighting': 1, 'restaurant food promotion': 1}.",
+      "metric_path": "metrics.promotion",
+      "value": {
+        "promotional_content": 13,
+        "promotional_content_pct": 86.67,
+        "promotion_intents": {
+          "sharing box promotion": 1,
+          "brand sentiment": 1,
+          "restaurant and cuisine promotion": 1,
+          "dish promotion": 3,
+          "restaurant brand promotion": 1,
+          "menu item promotion": 2,
+          "restaurant experience promotion": 1,
+          "product awareness": 1,
+          "beverage highlighting": 1,
+          "restaurant food promotion": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3970867451053448404",
+        "3968029900772993588",
+        "3962901620933273078",
+        "3957941535541038556",
+        "3955712856736126953",
+        "3952792224868333886",
+        "3950529455758471466",
+        "3947733195867478740",
+        "3945568496874692927",
+        "3942595845520870496",
+        "3941219743451623727",
+        "3938378629136974372",
+        "3936143898882164055"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "commerce_01",
+      "dimension": "commerce_visibility",
+      "observation": "Within analyzed visuals: menu visible in 0.0%, price visible in 0.0%, and offer messaging visible in 0.0% of items.",
+      "metric_path": "metrics.commerce_visibility",
+      "value": {
+        "menu_visible_pct": 0.0,
+        "price_visible_pct": 0.0,
+        "offer_visible_pct": 0.0
+      },
+      "evidence_content_ids": [],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "branding_01",
+      "dimension": "branding_presence",
+      "observation": "Logo was visually detected in 93.33% of analyzed items; recognizable branding was detected in 93.33%.",
+      "metric_path": "metrics.branding",
+      "value": {
+        "logo_presence_pct": 93.33,
+        "branding_presence_pct": 93.33
+      },
+      "evidence_content_ids": [
+        "3978191455334274934",
+        "3970867451053448404",
+        "3968029900772993588",
+        "3965800422508275756",
+        "3962901620933273078",
+        "3957941535541038556",
+        "3955712856736126953",
+        "3952792224868333886",
+        "3947733195867478740",
+        "3945568496874692927",
+        "3942595845520870496",
+        "3941219743451623727",
+        "3938378629136974372",
+        "3936143898882164055"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "signal_id": "reels_01",
+      "dimension": "reel_activity",
+      "observation": "4 of the observed content items were matched as Reels (26.67% of the content window). 4 were enriched; average Reel views: 667.0; transcript availability: 100.0%.",
+      "metric_path": "metrics.reels",
+      "value": {
+        "reels_detected": 4,
+        "reels_enriched": 4,
+        "reel_content_pct": 26.67,
+        "average_views": 667.0,
+        "median_views": 425.5,
+        "average_duration_seconds": 11.33,
+        "transcript_available_pct": 100.0
+      },
+      "evidence_content_ids": [
+        "3978191455334274934",
+        "3965800422508275756",
+        "3955712856736126953",
+        "3947733195867478740"
+      ],
+      "confidence": 1.0
+    }
+  ],
+  "content": [
+    {
+      "content_id": "3978191455334274934",
+      "short_code": "Dc1YA0fsZd2",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Dc1YA0fsZd2/",
+        "timestamp": "2026-09-03T17:44:30.000Z",
+        "caption": "No words, just the nod. If you know, you know 😏\n\nما يحتاج كلام.. هزّة رأس تكفي 😏",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-ams2-1.cdninstagram.com/v/t51.71878-15/793141641_2349445085860544_1235328112665911114_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=109&ig_cache_key=Mzk3ODE5MTQ1NTMzNDI3NDkzNDQ4MzM4ODE0MzAxNjI4NDQ%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fbmZyYW1lX2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=LZ5Ajfoli0YQ7kNvwG0_tAr&_nc_oc=AdqVaWdabxbLATt8Cy12ntf_Z_jzB1Xao9JeUPYnJNBoY2Wof1NEQJ2PuwTNwb6FQcqsO97C4y3Dy5Uq1U2hEjrf&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-ams2-1.cdninstagram.com&_nc_gid=WqRQjZ9pQ2jImNgHY80zGQ&_nc_ss=7a22e&oh=00_AQKbxHaJZxkthLLqo0GtrrA7fl5tvlg0ZAMS4rjENDjLyg&oe=6AAFDC54"
+        ],
+        "video_url": "https://scontent-ams2-1.cdninstagram.com/o1/v/t2/f2/m86/AQMsA2lSrZNzx8fbJhBKPZF6X4AQORLqWfU3LQuTn_wqBMexWejJF6xk9U17OSp39vbFlXzr8_6aFnqr1qtwFW-DJvED0wMVA7qwe0U.mp4?_nc_cat=102&_nc_sid=5e9851&_nc_ht=scontent-ams2-1.cdninstagram.com&_nc_ohc=lvijPT8WSfkQ7kNvwHlPR5v&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6NDgzMzg4MDA1MzQ5NjMxNSwiYXNzZXRfYWdlX2RheXMiOjEyLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MywidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=3ee0852f11fa3141&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9EMDQxODIxMzU3MUE3RDBBNkY1RDg0QjVDNTE1NzM4Nl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0YwNDJDNTI3QkE1N0YyOEJDOUUxMzZEMkNEMzc0QUE1X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACb258337JiWERUCKAJDMywXQA0AAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=WqRQjZ9pQ2jImNgHY80zGQ&_nc_zt=28&_nc_ss=7a22e&oh=00_AQIZ3NkGOGYSg0AEECD-HjZ98zMmxSF7HEbA584YO2fYcQ&oe=6AABE9C7",
+        "likes": 10,
+        "comments": 0,
+        "views": 66,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by •The BAY• 🍃 •ذا باي• on September 03, 2026.",
+        "music_info": {
+          "artist_name": "thebayrestaurant_jed",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "26118684924495885"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/Dc1YA0fsZd2/",
+        "transcript": "Wow",
+        "duration_seconds": 3.646667,
+        "shares": null,
+        "plays": 329,
+        "views": null,
+        "audio_title": "Original audio",
+        "audio_artist": "thebayrestaurant_jed",
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "staff_feature",
+          "behind_the_scenes"
+        ],
+        "content_themes": [
+          "chef personality",
+          "kitchen team",
+          "nonverbal reaction"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "The Bay logo and Arabic brand text are visible on a chef uniform.",
+        "visual_summary": "The supplied Reel cover shows a chef in a black, red-trimmed uniform and tall white chef hat, standing in a commercial kitchen alongside partially visible colleagues. The uniform carries The Bay branding.",
+        "caption_summary": "A bilingual English-Arabic caption says that no words are needed and a nod is enough, framing the post as an insider-style, knowing reaction.",
+        "transcript_summary": "The brief supplied transcript says, \"Wow.\"",
+        "spoken_topics": [
+          "brief reaction"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "staff_feature",
+              "behind_the_scenes",
+              "people_visible",
+              "logo_visible",
+              "branding_visible"
+            ],
+            "text": "The cover image shows kitchen staff in chef uniforms in a commercial kitchen, with The Bay logo and Arabic brand text on the central chef's uniform."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "chef personality",
+              "nonverbal reaction",
+              "cta absent",
+              "promotion absent"
+            ],
+            "text": "\"No words, just the nod. If you know, you know 😏 / ما يحتاج كلام.. هزّة رأس تكفي 😏\" presents a knowing, nonverbal reaction without asking viewers to take an action or promoting an offer."
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "brief reaction"
+            ],
+            "text": "The supplied Reel transcript is: \"Wow.\""
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as product_type \"clips\" with a 3.65-second Reel duration."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3970867451053448404",
+      "short_code": "DcbWuh-M5zU",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcbWuh-M5zU/",
+        "timestamp": "2026-08-24T15:11:52.000Z",
+        "caption": "من جمعة الاصحاب او لمة العيلة … بوكس الجمعات يخلي الأجواء أطيب واللمة احلى ✨\nالبوكس يشمل: ٣ ارز برياني، ١ دجاج بالزبدة، ١ دجاج تيكا مسالا، ١ دجاج شت بت، ١ دجاج ٦٥، ٢ سمبوسة بنجابية بالبطاطس، ١ سمبوسة دجاج تيكا مسالا\n\nThe perfect box for your gatherings — Sharing Box from The Bay.\nAvailable on delivery apps.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/783753429_18102308423214876_2861013784542035282_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzk3MDg2NzQ1MTA1MzQ0ODQwNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=t-lKRVpuEwsQ7kNvwFVKWqc&_nc_oc=AdoPp5ZSlxb5cLq_191b8JKg2vO6uZmJRx8CKbEdK3fqbf6WeaI0PbonXRK5m0tgP2o&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_gid=SpPnv8JYP5bVAk6hUodNSg&_nc_ss=7a22e&oh=00_AQJ4fQXvmY8lqVSeBuSp3mMQUh4yaMQYkyLjk0HM380oSw&oe=6AAFFB21"
+        ],
+        "video_url": null,
+        "likes": 5,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on August 24, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "product_promotion",
+          "sharing_meal",
+          "delivery"
+        ],
+        "content_themes": [
+          "group gatherings",
+          "Indian food",
+          "delivery ordering"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "order via delivery apps",
+          "description": "The audience is encouraged to order The Bay's Sharing Box through delivery platforms."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "sharing box promotion",
+          "description": "The post promotes The Bay's Sharing Box as a meal for friends' gatherings and family get-togethers, listing its included dishes."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "بوكس الجمعات / sharing box; THE BAY RESTAURANT; delivery-platform logos for noon Food, Mrsool, Keeta, ToYou, Ninja, Jahez, and HungerStation.",
+        "visual_summary": "A branded The Bay Sharing Box is presented against red draped fabric. The open box contains individual portions of rice, chicken dishes, sauces, and samosas; The Bay logo appears on the box, with delivery-platform logos shown at the bottom.",
+        "caption_summary": "The bilingual caption presents the Sharing Box for friend gatherings or family get-togethers, lists three biryanis, four chicken dishes, and two types of samosas, and states that it is available on delivery apps.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "cta",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "\"بوكس الجمعات\" is described as suitable for friends' gatherings and family get-togethers; the caption lists the box contents and says, \"Available on delivery apps.\""
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "visual_signals",
+              "promotion",
+              "cta"
+            ],
+            "text": "The image shows a food-filled Sharing Box, The Bay Restaurant branding, the text \"sharing box,\" and logos for multiple delivery apps."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and the product type is feed."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3968029900772993588",
+      "short_code": "DcRRivVs-o0",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcRRivVs-o0/",
+        "timestamp": "2026-08-20T17:14:10.000Z",
+        "caption": "Nothing makes a chef happier than hearing ‘this is so good’ 🤩\nأكثر شي يفرّح الشيف لما يسمع: الأكل رهيب",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fsyd14-1.fna.fbcdn.net/v/t51.82787-15/779995586_18101920241214876_7600094162620555246_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=Mzk2ODAyOTkwMDc3Mjk5MzU4OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=pEihKYK5SugQ7kNvwFZp50F&_nc_oc=Adp3UVKr4FpH6_pWJRNI9RRcpEJTevsVAOuz2WklsjuEHkKLIhpaMx6ZafFE3AjJEJw&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fsyd14-1.fna&_nc_gid=KBw0qpkgHl8Fk8bzstbyVQ&_nc_ss=7a22e&oh=00_AQJwAz66T5AmRijqYmmsONg0_KsU3eBDBzjyjdtno9ApQA&oe=6AAFDC06"
+        ],
+        "video_url": null,
+        "likes": 3,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on August 20, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "chef_spotlight",
+          "brand_humor"
+        ],
+        "content_themes": [
+          "chef appreciation",
+          "guest praise",
+          "restaurant personality"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "brand sentiment",
+          "description": "The post associates The Bay restaurant with a chef’s positive reaction to guests praising the food, reinforcing a favorable dining experience rather than promoting a specific item or offer."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "THE BAY RESTAURANT; POV: THE CHEF’S SMILE WHEN HE HEARS YOUR TABLE SAY “THIS IS SO GOOD”",
+        "visual_summary": "A branded static graphic shows a smiling chef in uniform and a tall chef hat, framed against a wood-paneled background. The Bay Restaurant logo appears at the top right, with a POV-style message below the portrait.",
+        "caption_summary": "In English and Arabic, the caption says that hearing diners say the food is very good is what makes a chef happiest.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_type",
+              "content_categories",
+              "content_themes",
+              "visual_signals",
+              "promotion"
+            ],
+            "text": "The image features a smiling chef, The Bay Restaurant logo, and the text: “POV: THE CHEF’S SMILE WHEN HE HEARS YOUR TABLE SAY ‘THIS IS SO GOOD’.”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes",
+              "promotion",
+              "caption_summary"
+            ],
+            "text": "“Nothing makes a chef happier than hearing ‘this is so good’ 🤩 / أكثر شي يفرّح الشيف لما يسمع: الأكل رهيب”"
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is labeled raw_content_type: Image and product_type: feed."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3965800422508275756",
+      "short_code": "DcJWnj5sygs",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcJWnj5sygs/",
+        "timestamp": "2026-08-17T15:27:32.000Z",
+        "caption": "🧍🏻‍♂️الموظف و هو يتفرج على مضاربة الحساب",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-sjc3-1.cdninstagram.com/v/t51.71878-15/776877180_2879374315777190_7165354420581057825_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=105&ig_cache_key=Mzk2NTgwMDQyMjUwODI3NTc1NjIxMDQ5NzI5NDcxMTYxOTI%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fbmZyYW1lX2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=ML-8wJnWf1UQ7kNvwEYJYSK&_nc_oc=AdpRCRgZPDOTtoEypFexaHr6xAQUWcjSJhluuCQ4yZkDj9fyECYcIbv7mBP5jQc2kZU&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-sjc3-1.cdninstagram.com&_nc_gid=82lYvnVh8lZj3sefYrer9w&_nc_ss=7a22e&oh=00_AQKK2f5lqn7rQnjMFRO0KAOKnB9gAIf1ckxKfDzxXIwbkg&oe=6AAFD040"
+        ],
+        "video_url": "https://scontent-sjc6-1.cdninstagram.com/o1/v/t2/f2/m86/AQOpRHFpGaqjdpwD_goqVvwInoNpLhy4xTjxlFPgTTY89E8gayOs5nv9KjXNFr1E4-EczhaaFj-D5fcON1-bQRI-5DPyKiPtwLvD-3g.mp4?_nc_cat=111&_nc_sid=5e9851&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_ohc=W4Hc6vlLzT4Q7kNvwEwwH1_&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjEwNDk3MDY4MDQ0OTc1MiwiYXNzZXRfYWdlX2RheXMiOjI5LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6OCwidXJsZ2VuX3NvdXJjZSI6Ind3dyJ9&ccb=17-1&vs=a3675753f679d86&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9GNzRDRDU3NzBGQzI0ODRFNEE5NDk2QzVGNjdCRjNBMl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzY1NDc1NjE1QkQ4QzhENDkzRTlDNDRDMTVDODNFM0FBX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaw693atZ29BxUCKAJDMywXQCAAAAAAAAAYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=82lYvnVh8lZj3sefYrer9w&_nc_ss=7a22e&_nc_zt=28&oh=00_AQK1qgvA1b8CFUBjprAMiFF78PMKw89QB3LEOXiEQOoVsQ&oe=6AAC0ECC",
+        "likes": 9,
+        "comments": 0,
+        "views": 564,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by •The BAY• 🍃 •ذا باي• on August 17, 2026.",
+        "music_info": {
+          "artist_name": "thebayrestaurant_jed",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "28809940795274327"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DcJWnj5sygs/",
+        "transcript": "Music.",
+        "duration_seconds": 8.021334,
+        "shares": null,
+        "plays": 1488,
+        "views": null,
+        "audio_title": "Original audio",
+        "audio_artist": "thebayrestaurant_jed",
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "humor",
+          "staff_content",
+          "restaurant_life"
+        ],
+        "content_themes": [
+          "employee reaction",
+          "customers arguing over the bill",
+          "relatable restaurant scenario"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "•THE BAY• RESTAURANT / مطعم ذا باي (on the employee uniform; partially visible)",
+        "visual_summary": "The Reel cover shows a masked restaurant employee in uniform looking forward from behind a table, with two blurred people/hands in the foreground suggesting customers seated opposite him. The restaurant logo/name is visible on the employee’s uniform.",
+        "caption_summary": "The Arabic caption says: “The employee while watching an argument over the bill.”",
+        "transcript_summary": "Music only; no spoken dialogue is transcribed.",
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "“🧍🏻‍♂️الموظف و هو يتفرج على مضاربة الحساب” describes an employee watching customers argue over the bill, framing the post as a humorous restaurant situation."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_categories",
+              "visual_signals",
+              "visual_summary"
+            ],
+            "text": "The cover depicts a uniformed, masked employee facing the camera, with blurred diners’ hands in the foreground. The uniform displays •THE BAY• restaurant branding."
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "transcript_summary",
+              "spoken_topics"
+            ],
+            "text": "The supplied transcript is “Music,” with no spoken content."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as a Video/clips post and includes an 8.02-second Reel duration."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3962901620933273078",
+      "short_code": "Db_DgcjjCX2",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Db_DgcjjCX2/",
+        "timestamp": "2026-08-13T15:25:08.000Z",
+        "caption": "Swipe to see the evidence 👀\n\n#اكل_هندي #مطاعم #جدة",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://instagram.fcpq14-1.fna.fbcdn.net/v/t51.82787-15/774361883_18101159072214876_2833560885691486813_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzk2Mjg5OTc4Mjc0ODQyMTY0OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=qO_Erk5AFGoQ7kNvwHGN-UU&_nc_oc=AdoEMXEwphoaMgtMYZ8uGq10XOrG-NqAGqaHIDAPWzJEXg244qgHP0a1ELk3OR0O0ys&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpq14-1.fna&_nc_gid=EacS_ek7ZnrcpjjkDIOqYQ&_nc_ss=7a22e&oh=00_AQLQJK7XL1tYKrpLagocSEosUz6NjnwVVhYkTNT4fdn9Nw&oe=6AAFDD62",
+          "https://instagram.fcpq14-1.fna.fbcdn.net/v/t51.82787-15/774388811_18101159060214876_2608552357472557187_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=Mzk2Mjg5OTc4Mzk4MTY0MDA5Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=TjasEhsKTosQ7kNvwFlu8yF&_nc_oc=AdpfObUblcqCnmZ9uJs3iTetqsLTqtmhqpIJR1aLn4I4Ht8tkapwCrlNlL7JmK2Te6s&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpq14-1.fna&_nc_gid=EacS_ek7ZnrcpjjkDIOqYQ&_nc_ss=7a22e&oh=00_AQLFMJVVBl7YfEdFehDn5vHCdJ8wcXV7Dr4gByzGtRT7sg&oe=6AB0054C",
+          "https://instagram.fcpq14-1.fna.fbcdn.net/v/t51.82787-15/774512215_18101159063214876_1419187597580118475_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=109&ig_cache_key=Mzk2Mjg5OTc4NTExNDAxMzU0Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=akyytQdrjeMQ7kNvwFIcn97&_nc_oc=AdrKmO4bqBMTRslhEc9dGZR7-C1xLazwLCggLFhZ3_hY58sa79_cHA75umr6nHoxAhA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpq14-1.fna&_nc_gid=EacS_ek7ZnrcpjjkDIOqYQ&_nc_ss=7a22e&oh=00_AQLKorbMOpJl25LED3CADCrth5txNVFhdToSiEWb8sZ23w&oe=6AB00690",
+          "https://instagram.fcpq14-1.fna.fbcdn.net/v/t51.82787-15/774362718_18101159090214876_3212294987940210097_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=103&ig_cache_key=Mzk2Mjg5OTc4NjI4ODUxNjg3OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=nlfFB_G9iEwQ7kNvwFbvjEc&_nc_oc=AdpiP5gLLP-6rb84rJmAltAykhapl2Wc1e66NOQzalbBENyA3mhBbXhr-M3twVhCMGA&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpq14-1.fna&_nc_gid=EacS_ek7ZnrcpjjkDIOqYQ&_nc_ss=7a22e&oh=00_AQLGO1m4EuBZrHNFIrI96Drss_HFXlaNy3yrRdDmUuTI3g&oe=6AAFF10E",
+          "https://instagram.fcpq14-1.fna.fbcdn.net/v/t51.82787-15/774514157_18101159087214876_5182325566711694597_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=108&ig_cache_key=Mzk2Mjg5OTc4NzQ1NDM5NjAyNg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=85viU_A1P6MQ7kNvwFY5EJH&_nc_oc=AdqcsnNFhDt6418z3Dk1kodCauaM_g8rDXnzapvei7T7Z87k9xEnMCBPnqMCwQ7hPDg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpq14-1.fna&_nc_gid=EacS_ek7ZnrcpjjkDIOqYQ&_nc_ss=7a22e&oh=00_AQJRY4GgI4AOzVs0aZUweAV10QbupX4rbfx9u80kFGljdQ&oe=6AAFD192",
+          "https://instagram.fcpq14-1.fna.fbcdn.net/v/t51.82787-15/774513593_18101159102214876_4006724366481692144_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=Mzk2Mjg5OTc4NzUyOTk2MDg2MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=tX0-QdBzzMYQ7kNvwGtLuUJ&_nc_oc=Adp8J_TqMa79SrlX9p2NMN-dIZM5pBqlA7zEVB4dHTjr-LsI_1HWxa7pdSZzfj0cHT8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcpq14-1.fna&_nc_gid=EacS_ek7ZnrcpjjkDIOqYQ&_nc_ss=7a22e&oh=00_AQL6LiuY-iONNKoBvolGkCC9KnHnWN1vNDDNRIZeuNuVZA&oe=6AAFF168"
+        ],
+        "video_url": null,
+        "likes": 10,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "اكل_هندي",
+          "مطاعم",
+          "جدة"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on August 13, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel",
+        "content_categories": [
+          "food_showcase",
+          "restaurant_branding",
+          "indian_cuisine"
+        ],
+        "content_themes": [
+          "Indian dishes in Jeddah",
+          "brand claim",
+          "assorted meal presentation"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "swipe carousel",
+          "description": "Audiences are encouraged to swipe through the carousel to view the food images presented as evidence."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "restaurant and cuisine promotion",
+          "description": "The carousel promotes The BAY restaurant's Indian food offering in Jeddah, framing it with a claim about making the best Indian dishes in the city."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "THE BAY RESTAURANT; WANTED; FOR MAKING THE BEST INDIAN DISHES IN JEDDAH.",
+        "visual_summary": "A six-image carousel opens with a vintage wanted-poster-style branded graphic featuring a man and The BAY logo. The remaining images show a spread of Indian-style dishes, including rice served in a copper bowl, a red curry, grilled mixed items, fries, pasta, and a blue drink. One dining-table image includes a person's hand holding the drink.",
+        "caption_summary": "The caption says, \"Swipe to see the evidence 👀\" and uses hashtags for Indian food, restaurants, and Jeddah.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "restaurant_branding",
+              "promotion",
+              "logo_visible",
+              "branding_visible",
+              "people_visible"
+            ],
+            "text": "The opening graphic displays The BAY Restaurant logo and the statement: \"WANTED FOR MAKING THE BEST INDIAN DISHES IN JEDDAH,\" alongside a portrait of a man."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_showcase",
+              "indian_cuisine",
+              "food_visible"
+            ],
+            "text": "The carousel images display rice, a red curry, grilled items, and other plated dishes in restaurant table settings."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "indian_cuisine"
+            ],
+            "text": "\"Swipe to see the evidence 👀\" explicitly prompts swiping; the hashtags include #اكل_هندي (Indian food) and #جدة (Jeddah)."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Sidecar and product type is carousel_container."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement_context"
+            ],
+            "text": "Supplied engagement metadata reports 10 likes, 0 comments, and no views value."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3957941535541038556",
+      "short_code": "DbtbttDsA3c",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbtbttDsA3c/",
+        "timestamp": "2026-08-06T19:10:22.000Z",
+        "caption": "Every detail tells a FLAVOR story!\n\nChicken Jalfrezi, in its finest form.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fyqr2-1.fna.fbcdn.net/v/t51.82787-15/767160276_18100487426214876_7000467002099844621_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=Mzk1Nzk0MTUzNTU0MTAzODU1Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=2rpLcfN0i80Q7kNvwGF5dja&_nc_oc=AdrooUBgIsmVGFkQVeRpyGVhGWjiy3loe6_VufgcsC1inmBJyCz5lGm80gDiyO6Tik4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fyqr2-1.fna&_nc_gid=RyTJPHF06GYpej7tZhYcRA&_nc_ss=7a22e&oh=00_AQIiWt6kQ4YEbImBlOEyzYOSsC17eLfm_KTkcd7Wj92Txw&oe=6AAFFA24"
+        ],
+        "video_url": null,
+        "likes": 1,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on August 06, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "dish_showcase",
+          "indian_cuisine"
+        ],
+        "content_themes": [
+          "chicken jalfrezi",
+          "flavor-focused food photography"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "dish promotion",
+          "description": "The post spotlights Chicken Jalfrezi as a featured menu dish, emphasizing its flavor and presentation."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "THE BAY",
+        "visual_summary": "A close-up food photograph shows a red, saucy chicken dish with visible bell pepper and onion pieces, topped with fresh cilantro and thin ginger strips. The Bay logo is overlaid in the upper-right corner.",
+        "caption_summary": "The caption presents Chicken Jalfrezi as a refined, flavor-forward dish: “Every detail tells a FLAVOR story! Chicken Jalfrezi, in its finest form.”",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories",
+              "content_themes",
+              "promotion"
+            ],
+            "text": "“Chicken Jalfrezi, in its finest form” explicitly identifies and spotlights the dish, while “Every detail tells a FLAVOR story!” frames it around flavor."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "visual_signals",
+              "visual_summary",
+              "promotion"
+            ],
+            "text": "The image is a close-up of a garnished chicken dish, and an overlaid THE BAY logo appears in the upper-right corner."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "engagement context"
+            ],
+            "text": "Supplied engagement metadata shows 1 like, 0 comments, and no view count."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3955712856736126953",
+      "short_code": "Dblg-KLM9fp",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Dblg-KLM9fp/",
+        "timestamp": "2026-08-03T17:30:03.000Z",
+        "caption": "الهند في جدة... مو بس نكهة، ولا لون، هي احساس. ممتد من شارع لشارع، ومن قلب لقلب ...\n\nتعالووا زورونا 🤍\n\n#اكل_هندي #مطاعم #جدة",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-mxp1-1.cdninstagram.com/v/t51.82787-15/764661128_18100186478214876_1893219031792422086_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=106&ig_cache_key=Mzk1NTcxMjg1NjczNjEyNjk1MzE4MTAwMTg2NDY5MjE0ODc2.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjUzMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=SU9tWv0Ow7AQ7kNvwF9FHIk&_nc_oc=Ado9XuzfwOKYV40DTCx10VmqH4dh2ddDUihaURw7HbLr32ykCKOAR3W24B7n7KLdt24D5ov_LentsI8ww00VbGYo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-mxp1-1.cdninstagram.com&_nc_gid=it-o_MZOvIWs_b9ysmNlEQ&_nc_ss=7a22e&oh=00_AQLAxk-U_bQan8f_FneRuD-E1IIJSHy29cwb_PQV738wag&oe=6AAFF21B"
+        ],
+        "video_url": "https://scontent-mxp2-1.cdninstagram.com/o1/v/t2/f2/m86/AQNlUO82K9kDmY15Mz_hNSbX2lxjOv7bJmUdYHdQtzYYkyNu0Z-HitGcNtE2Z_mf4TX1dl2vpIbQdYjGQvCdwykk1Z5dX8MHfHkqvas.mp4?_nc_cat=101&_nc_sid=5e9851&_nc_ht=scontent-mxp2-1.cdninstagram.com&_nc_ohc=ET0S-engQv4Q7kNvwEa7Wx9&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjEyOTIxMTkxNzY2MTEyMSwiYXNzZXRfYWdlX2RheXMiOjQzLCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MjMsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=237c52708fa7f940&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC9GRTRGMUNDQjEzMDA0NzBBQkU4MzBGOENENkU0NjdBOV92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyL0FGNEVGMjZCN0VDQzlGQUUzNUI1Nzc1M0U5NDBEOUJFX2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACaCz4eAuaDIBxUCKAJDMywXQDcIcrAgxJwYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=it-o_MZOvIWs_b9ysmNlEQ&_nc_ss=7a22e&_nc_zt=28&oh=00_AQKVYiiMyJcWxpKuu4COeOPMCzC6B0DuHLHJkNDoQ9jLZQ&oe=6AAC0E46",
+        "likes": 13,
+        "comments": 0,
+        "views": 82,
+        "hashtags": [
+          "اكل_هندي",
+          "مطاعم",
+          "جدة"
+        ],
+        "mentions": [],
+        "alt_text": "Video by •The BAY• 🍃 •ذا باي• on August 03, 2026.",
+        "music_info": {
+          "artist_name": "thebayrestaurant_jed",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "28490507717199386"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/Dblg-KLM9fp/",
+        "transcript": "In the year 2016,",
+        "duration_seconds": 23.040001,
+        "shares": null,
+        "plays": 394,
+        "views": null,
+        "audio_title": "Original audio",
+        "audio_artist": "thebayrestaurant_jed",
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "brand_promotion",
+          "cuisine_identity",
+          "restaurant_invitation"
+        ],
+        "content_themes": [
+          "Indian food culture in Jeddah",
+          "sensory cuisine storytelling",
+          "restaurant brand awareness"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the restaurant",
+          "description": "The caption invites viewers to come visit the restaurant."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "restaurant brand promotion",
+          "description": "The post promotes The Bay Restaurant and its Indian cuisine identity in Jeddah."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "THE BAY RESTAURANT / مطعم ذا باي",
+        "visual_summary": "The supplied Reel cover shows a close-up of mixed whole spices, framed by stone mortar-like surfaces, with The Bay Restaurant’s multicolored leaf logo and bilingual English/Arabic name centered over the image.",
+        "caption_summary": "The Arabic caption describes India in Jeddah as more than flavor or color—an emotion extending from street to street and heart to heart—then invites people to visit. Hashtags identify Indian food, restaurants, and Jeddah.",
+        "transcript_summary": "The available transcript contains only the phrase: \"In the year 2016,\" which does not provide enough context to identify the Reel's full spoken message.",
+        "spoken_topics": [
+          "2016"
+        ],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "cuisine_identity",
+              "restaurant_invitation",
+              "promotion"
+            ],
+            "text": "\"الهند في جدة... مو بس نكهة، ولا لون، هي احساس\" and \"تعالووا زورونا\" frame Indian cuisine/culture in Jeddah and invite viewers to visit."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories"
+            ],
+            "text": "Hashtags: #اكل_هندي #مطاعم #جدة."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_visible",
+              "logo_visible",
+              "branding_visible",
+              "promotion"
+            ],
+            "text": "The cover visibly features whole spices and the centered logo/name \"THE BAY RESTAURANT / مطعم ذا باي.\""
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The item is supplied as product_type \"clips,\" with a 23.04-second duration and 82 views, 13 likes, and 0 comments."
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "spoken_topics"
+            ],
+            "text": "Available transcript: \"In the year 2016,\""
+          }
+        ],
+        "confidence": 0.93
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3952792224868333886",
+      "short_code": "DbbI5XyM_k-",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbbI5XyM_k-/",
+        "timestamp": "2026-07-30T16:39:37.000Z",
+        "caption": "Pasta, but make it Indian.\nBold, spicy, unforgettable.\n\nباستا على الطريقة الهندية.... نكهات قوية، حارة، وما تنساها أبداً.",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fsyd14-1.fna.fbcdn.net/v/t51.82787-15/761545692_18099776624214876_2099202826186535557_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzk1Mjc5MjIyNDg2ODMzMzg4Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=FYV9uvkJ8oEQ7kNvwGs1jbb&_nc_oc=AdrFT1txKbsI8yvG8zATazUt9XuceQocgSwcIznbcX159s0ZiKaEoyen5Ovhpe3ER50oiuPTb9SGjoUuMxEa-KNE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fsyd14-1.fna&_nc_gid=rtTS3FAaYjziX6jH0yApIw&_nc_ss=7a22e&oh=00_AQKTPJrX9sw6EdE4P4wPmHx_3HuA0p_06-O658L4yah3Dg&oe=6AAFEC57"
+        ],
+        "video_url": null,
+        "likes": 5,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 30, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "dish_feature",
+          "indian_fusion"
+        ],
+        "content_themes": [
+          "Indian-style pasta",
+          "bold spicy flavors",
+          "menu item showcase"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "dish promotion",
+          "description": "The post spotlights an Indian-style pasta dish, presenting it as bold, spicy, and memorable."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "مسيالا باستا\nباستا على الطريقة الهندية\n• THE BAY • Restaurant",
+        "visual_summary": "A plated penne pasta dish in a red-orange sauce is shown in close-up, topped with grated cheese and green herbs. The image includes The Bay Restaurant logo and Arabic dish text identifying it as masala pasta / Indian-style pasta.",
+        "caption_summary": "English and Arabic caption describes the pasta as Indian-style, with bold and spicy flavors intended to be unforgettable.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "dish_feature",
+              "food_visible",
+              "branding_visible",
+              "logo_visible"
+            ],
+            "text": "The image prominently shows a plated pasta dish and displays the • THE BAY • Restaurant logo."
+          },
+          {
+            "source": "combined",
+            "supports": [
+              "indian_fusion",
+              "promotion",
+              "content_themes"
+            ],
+            "text": "The visual labels the dish 'مسيالا باستا' and 'باستا على الطريقة الهندية,' while the bilingual caption calls it 'Pasta, but make it Indian' and describes it as bold and spicy."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta_absent"
+            ],
+            "text": "The caption describes the dish and its flavors but does not explicitly ask the audience to order, visit, contact, or take another action."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "Supplied metadata identifies this as an Image feed post; it has 5 likes, 0 comments, and no view count."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3950529455758471466",
+      "short_code": "DbTGZv1M3Eq",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbTGZv1M3Eq/",
+        "timestamp": "2026-07-27T13:43:54.000Z",
+        "caption": "Blue lagoon\nthe perfect refreshing drink!",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-nrt1-2.cdninstagram.com/v/t51.82787-15/758427548_18099455756214876_8856132870209330302_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=Mzk1MDUyOTQ1NTc1ODQ3MTQ2Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=aFuaWtUJRmgQ7kNvwF0lMjh&_nc_oc=Adpol5wbO9PkaJKrVaquDvsSoHJr5kjXX9GH91NCtuIgCwX9LCTo83qeVbXV3qdu5JGAi2x-NsfjoX-M4L928wK4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-nrt1-2.cdninstagram.com&_nc_gid=iMDl-UlcqHSzhfeA9JrRWg&_nc_ss=7a22e&oh=00_AQLuKM_Sj8X5tlHA3hrHQX9YGgTIBfsKYWJfhDHr6xRqzw&oe=6AAFE80E"
+        ],
+        "video_url": null,
+        "likes": 1,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 27, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "beverage_showcase",
+          "dining_experience"
+        ],
+        "content_themes": [
+          "refreshment",
+          "blue_lagoon_drink",
+          "casual_dining"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu item promotion",
+          "description": "The post spotlights the Blue Lagoon as a refreshing drink option."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": null,
+        "visual_summary": "A diner holds a bright blue iced drink garnished with mint and lime at a restaurant table. Other diners and shared food dishes appear in the background.",
+        "caption_summary": "The caption identifies the drink as a Blue Lagoon and describes it as refreshing.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "promotion",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "“Blue lagoon the perfect refreshing drink!” identifies and positively presents the drink."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "food_visible",
+              "people_visible",
+              "visual_summary",
+              "content_categories"
+            ],
+            "text": "The image prominently shows a blue iced drink with lime and mint being held by a diner, with other food and people at the table."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image; engagement metadata records 1 like and 0 comments."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3947733195867478740",
+      "short_code": "DbJKmz3strU",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbJKmz3strU/",
+        "timestamp": "2026-07-23T17:09:43.000Z",
+        "caption": "Not just a meal... A whole experience you walk into!\n\nCome visit us 🫶🏼",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fhnd3-1.fna.fbcdn.net/v/t51.71878-15/753989097_1021080934142947_6409323329954439304_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=110&ig_cache_key=Mzk0NzczMzE5NTg2NzQ3ODc0MDIxMjkwNDEwMDQ2OTkzMDk%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fbmZyYW1lX2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=40inn_q64rEQ7kNvwGfxosp&_nc_oc=AdrI3_U-UWFu9tgnaGXcvwMWZ2oP3DOuwdW3vMtAwvGSsVQVhsYt6FnTgRy3GbDuiy4uIN4spIp3h3lh5ONduuxZ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fhnd3-1.fna&_nc_gid=-pglzvNRFkoHXeo3I-lg8A&_nc_ss=7a22e&oh=00_AQIUgg3wFmq5_WjrCWE5RHwtFDWrZRwYtjWh57trde_ypg&oe=6AAFEDA3"
+        ],
+        "video_url": "https://instagram.fhnd3-1.fna.fbcdn.net/o1/v/t2/f2/m86/AQNZNxj92__yWWg597XrAD_-GuGCANZhGsg4iafoAp8doQ6q9T1BFMcrONSJbXhv9gQOueLzEtyYq1FnqOUL3c2krUtmf-wt4nDC16E.mp4?_nc_cat=100&_nc_oc=AdrZ5tCAPx0VbcRzBypUblVb3gK5MmVv9MpzajMyk04hjzQPmnbTLIaRIRkdzxvh34uj6mlqI7pAlj0NfMN5GDVI&_nc_sid=5e9851&_nc_ht=instagram.fhnd3-1.fna.fbcdn.net&_nc_ohc=IH-l1SG7QUYQ7kNvwGlyzu0&efg=eyJ2ZW5jb2RlX3RhZyI6Inhwdl9wcm9ncmVzc2l2ZS5JTlNUQUdSQU0uQ0xJUFMuQzMuNzIwLmRhc2hfYmFzZWxpbmVfMV92MSIsInhwdl9hc3NldF9pZCI6MjEyOTAzOTc5NDY5OTQzMCwiYXNzZXRfYWdlX2RheXMiOjU0LCJ2aV91c2VjYXNlX2lkIjoxMDA5OSwiZHVyYXRpb25fcyI6MTAsInVybGdlbl9zb3VyY2UiOiJ3d3cifQ%3D%3D&ccb=17-1&vs=a3375ba817dfd442&_nc_vs=HBksFQIYUmlnX3hwdl9yZWVsc19wZXJtYW5lbnRfc3JfcHJvZC84QjQ0RDE1Nzc2RjhEQ0VEQTEzNjdGOEVDQTAwNEFCQl92aWRlb19kYXNoaW5pdC5tcDQVAALIARIAFQIYUWlnX3hwdl9wbGFjZW1lbnRfcGVybWFuZW50X3YyLzI3NEZBNjczQTMzMDg4OThCOTI3REQyNUEyMjFDM0E2X2F1ZGlvX2Rhc2hpbml0Lm1wNBUCAsgBEgAoABgAGwKIB3VzZV9vaWwBMRJwcm9ncmVzc2l2ZV9yZWNpcGUBMRUAACbM8ufKtpbIBxUCKAJDMywXQCUqfvnbItEYEmRhc2hfYmFzZWxpbmVfMV92MREAdf4HZeadAQA&_nc_gid=-pglzvNRFkoHXeo3I-lg8A&_nc_ss=7a22e&_nc_zt=28&oh=00_AQIuN-czLzQ-AcVUHDhvttZCUpEx2nJAQqzXnLWwmfPbnw&oe=6AAC12F1",
+        "likes": 4,
+        "comments": 0,
+        "views": 29,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by •The BAY• 🍃 •ذا باي• on July 23, 2026.",
+        "music_info": {
+          "artist_name": "thebayrestaurant_jed",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "37352690674377841"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DbJKmz3strU/",
+        "transcript": "Chcesz się przyłączyć?",
+        "duration_seconds": 10.622666,
+        "shares": null,
+        "plays": 457,
+        "views": null,
+        "audio_title": "Original audio",
+        "audio_artist": "thebayrestaurant_jed",
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "reel",
+        "content_categories": [
+          "restaurant_ambiance",
+          "brand_promotion"
+        ],
+        "content_themes": [
+          "dining experience",
+          "return visits",
+          "warm interior"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit the restaurant",
+          "description": "The caption invites the audience to come visit the restaurant."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "restaurant experience promotion",
+          "description": "Promotes The Bay as an immersive dining experience and presents it as a place worth returning to."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "Worth Coming Back\nتاقورنا\nTHE BAY\nRESTAURANT",
+        "visual_summary": "The supplied Reel cover shows a warmly lit restaurant counter/interior with dark wood paneling, an amber pendant lamp, shelving, and The Bay logo. Overlaid text says “Worth Coming Back” with Arabic text beneath it.",
+        "caption_summary": "The caption frames the venue as more than a meal—an experience to enter—and asks viewers to visit.",
+        "transcript_summary": "The short supplied transcript says in Polish, “Chcesz się przyłączyć?” (“Do you want to join?”).",
+        "spoken_topics": [
+          "invitation to join"
+        ],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "promotion",
+              "content_themes"
+            ],
+            "text": "“Not just a meal... A whole experience you walk into! Come visit us 🫶🏼”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_categories",
+              "content_themes",
+              "visual_signals",
+              "promotion"
+            ],
+            "text": "The cover depicts a warmly lit restaurant interior and shows the messages “Worth Coming Back” and “تاقورنا,” alongside The Bay restaurant logo."
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "spoken_topics"
+            ],
+            "text": "“Chcesz się przyłączyć?”"
+          }
+        ],
+        "confidence": 0.94
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3945568496874692927",
+      "short_code": "DbBeaS1MCE_",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbBeaS1MCE_/",
+        "timestamp": "2026-07-20T17:27:21.000Z",
+        "caption": "From oven heat to heartwarming bites",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fvlc9-1.fna.fbcdn.net/v/t51.82787-15/752761621_18098764004214876_5445239010225427980_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ig_cache_key=Mzk0NTU2ODQ5Njg3NDY5MjkyNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=E-pbH2wceKAQ7kNvwGl5tlx&_nc_oc=AdoWNDI5MpHYQgfHVXVVVbHfYWHUOSQUqAHqmCmRe-7cyTYuegcBXH0kHpbm-4rqsL8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fvlc9-1.fna&_nc_gid=O_0hVVx0-HHm57MPr5Mnrw&_nc_ss=7a22e&oh=00_AQICTIXQsTzM_ELwAkglz7YgI_1gIK9GyIQtAank0PiEWw&oe=6AAFE601"
+        ],
+        "video_url": null,
+        "likes": 2,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 20, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "feed_image",
+        "content_categories": [
+          "food_showcase",
+          "bread_preparation"
+        ],
+        "content_themes": [
+          "freshly baked bread",
+          "oven-to-table warmth",
+          "restaurant branding"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "product awareness",
+          "description": "The post spotlights freshly baked flatbread in association with The BAY Restaurant branding."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "THE BAY RESTAURANT, with accompanying Arabic branding; partially obscured Arabic text appears near the bottom.",
+        "visual_summary": "A close-up shows a browned flatbread being lifted with metal tongs against an oven-like tiled backdrop. The BAY Restaurant logo and bilingual branding appear in the upper-right corner.",
+        "caption_summary": "The caption frames the item as a warm bite coming directly from oven heat.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "food_showcase",
+              "bread_preparation",
+              "product awareness",
+              "food_visible",
+              "logo_visible",
+              "branding_visible"
+            ],
+            "text": "The image prominently depicts a cooked flatbread held by tongs, with THE BAY Restaurant logo and Arabic branding in the upper-right."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "freshly baked bread",
+              "oven-to-table warmth"
+            ],
+            "text": "“From oven heat to heartwarming bites” links the pictured food to oven preparation and warmth."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed. Engagement metadata shows 2 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.96
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3942595845520870496",
+      "short_code": "Da26ghhM8xg",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Da26ghhM8xg/",
+        "timestamp": "2026-07-16T15:01:13.000Z",
+        "caption": "Mutton Biryani - bold flavors, tender meat and real indian soul.\n\nمتن برياني بطعم يوديك للهند من أول لقمة\nتجربة تستاهل .. جربوه اليوم في ذا باي !",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-icn2-1.cdninstagram.com/v/t51.82787-15/749223688_18098311586214876_8094826872007820781_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=108&ig_cache_key=Mzk0MjU5NTg0NTUyMDg3MDQ5Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=s8BBNXjrVWEQ7kNvwE907nD&_nc_oc=Adrt6txg9_4ttvuLwME-G7tSCuKekEdKAsUShKC8Nxa_opGrIjmOoyWFT7whCWPIYXFSqs97KU8Stisi2F5vvK8Q&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-icn2-1.cdninstagram.com&_nc_gid=f288QsmD7CaYxvcgskHElQ&_nc_ss=7a22e&oh=00_AQJJ7pZHIe3N-5ttr2MZFVfZdr82jOW2v7rn2r-w1uYjTg&oe=6AAFFE85"
+        ],
+        "video_url": null,
+        "likes": 2,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 16, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "menu_item_promotion",
+          "indian_cuisine"
+        ],
+        "content_themes": [
+          "mutton biryani",
+          "flavor and ingredients",
+          "Indian food"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "try the dish today",
+          "description": "The Arabic caption encourages the audience to try the mutton biryani at The Bay today."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "menu item promotion",
+          "description": "The post promotes The Bay's mutton biryani by highlighting its bold flavor, tender mutton, basmati rice, and special spices."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "मटन बिरयानी / MUTTON BIRYANI / TENDER MUTTON LAYERED WITH BASMATI RICE AND THE BAY SPECIAL SPICES / THE BAY RESTAURANT",
+        "visual_summary": "A branded food image shows a serving of mutton biryani in a copper bowl, held by a gloved hand. The dish includes rice, visible pieces of mutton, a bone, and herb garnish. Hindi and English dish text and The Bay Restaurant logo appear over the image.",
+        "caption_summary": "A bilingual English-Arabic caption describes the mutton biryani as bold, tender, and authentically Indian, inviting people to try it at The Bay today.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "menu_item_promotion",
+              "flavor and ingredients",
+              "try the dish today"
+            ],
+            "text": "“Mutton Biryani - bold flavors, tender meat and real indian soul” and “تجربة تستاهل .. جربوه اليوم في ذا باي !” (a worthwhile experience—try it today at The Bay)."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "mutton biryani",
+              "food_visible",
+              "logo_visible",
+              "branding_visible"
+            ],
+            "text": "The image depicts a bowl of biryani with mutton and displays “MUTTON BIRYANI,” the ingredient description, and The Bay Restaurant logo."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "Raw content type is Image; product type is feed. Engagement metadata reports 2 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.99
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3941219743451623727",
+      "short_code": "DayBnmmMLEv",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DayBnmmMLEv/",
+        "timestamp": "2026-07-14T17:27:09.000Z",
+        "caption": "A cup of karak after a meal = PERFECTION!",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fgoa1-1.fna.fbcdn.net/v/t51.82787-15/748134816_18098104529214876_7871689483857889423_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=Mzk0MTIxOTc0MzQ1MTYyMzcyNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Cfs6B-liLaAQ7kNvwHClPNe&_nc_oc=Adqv1J2mo019Sv9YBmMoWP3jehdMBJJnVkj132ES-cJbmitwyvjupDP_y2R4DmYqvak&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fgoa1-1.fna&_nc_gid=786b9l4ZurGPNrhwa085ZQ&_nc_ss=7a22e&oh=00_AQJpPpZcOooFOgmUPtq7q6UBVp7CM2k4aynWMdcxMIrj_g&oe=6AAFF076"
+        ],
+        "video_url": null,
+        "likes": 2,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 14, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image",
+        "content_categories": [
+          "beverage_feature",
+          "karak_tea"
+        ],
+        "content_themes": [
+          "post-meal drink",
+          "tea pour",
+          "warm ambience"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "beverage highlighting",
+          "description": "The post highlights karak tea as an ideal drink after a meal."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "THE BAY TAURUS (with Arabic branding beneath)",
+        "visual_summary": "A close-up image shows tea being poured from a metal kettle into an orange ceramic cup on a table in a warmly lit restaurant interior. The Bay Taurus logo is visible in the upper-right corner.",
+        "caption_summary": "The caption describes having a cup of karak after a meal as “PERFECTION!”",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "karak tea",
+              "post-meal drink",
+              "beverage highlighting"
+            ],
+            "text": "“A cup of karak after a meal = PERFECTION!”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "tea pour",
+              "branding_visible",
+              "logo_visible",
+              "warm ambience"
+            ],
+            "text": "A stream of tea is poured from a kettle into a ceramic cup; The Bay Taurus logo appears in the upper-right over a warm restaurant setting."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "Raw content type is Image; the post has 2 likes and 0 comments."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3938378629136974372",
+      "short_code": "Dan7n8sswIk",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Dan7n8sswIk/",
+        "timestamp": "2026-07-10T19:22:22.000Z",
+        "caption": "الطاولة مليانة نكهات 🇮🇳، بس دايم في طبق يلفت انتباهك أول.\nايش هو؟ 👀",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-mad1-1.cdninstagram.com/v/t51.82787-15/743276336_18097683332214876_1456907400041403902_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=MzkzODM3ODYyOTEzNjk3NDM3Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=t5_ZHDznensQ7kNvwE7qGXa&_nc_oc=Adr4D60R5ugkUKxyazOA7_3QzPWykt3WVPv_F2e7ounZaHwmp7Ld6UCVPIs9QJM97hs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-mad1-1.cdninstagram.com&_nc_gid=tfW5O4T9HwgMn_tEMgquRg&_nc_ss=7a22e&oh=00_AQLAKAaSDK70Oo-uO7zBAPLKQ2YYkBfBawLyd4QuZdK1Dg&oe=6AAFEB0F"
+        ],
+        "video_url": null,
+        "likes": 3,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 10, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "food_showcase",
+          "dining_experience"
+        ],
+        "content_themes": [
+          "Indian cuisine",
+          "shared table spread",
+          "dish preference prompt"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "encourage comments",
+          "description": "Asks viewers which dish catches their attention first, inviting them to respond."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "restaurant food promotion",
+          "description": "Showcases a table spread of Indian-style dishes and drinks associated with The BAY restaurant."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "THE BAY RESTAURANT logo (with Arabic text) appears in the upper-right corner.",
+        "visual_summary": "A warmly lit dining-table scene shows several plated dishes, a copper serving pan of red curry or stew being served by diners, bread, salad, and colorful drinks. Diners' hands are visible, and The BAY restaurant logo is overlaid in the upper-right corner.",
+        "caption_summary": "The Arabic caption says the table is full of Indian flavors and asks which dish attracts the viewer's attention first.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories",
+              "content_themes",
+              "cta"
+            ],
+            "text": "\"الطاولة مليانة نكهات 🇮🇳، بس دايم في طبق يلفت انتباهك أول. ايش هو؟ 👀\" explicitly references Indian flavors and asks viewers which dish stands out first."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_categories",
+              "content_themes",
+              "promotion",
+              "visual_signals"
+            ],
+            "text": "The image visibly presents a multi-dish meal spread, drinks, diners serving food, and a The BAY restaurant logo."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed."
+          }
+        ],
+        "confidence": 0.97
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3936143898882164055",
+      "short_code": "Daf_gV9sUVX",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Daf_gV9sUVX/",
+        "timestamp": "2026-07-07T17:22:21.000Z",
+        "caption": "تكا مسالا\nكلاسيك، ما يختلف عليه اثنين\nجربته؟ ولا باقي؟",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.faru4-2.fna.fbcdn.net/v/t51.82787-15/733813734_18097374878214876_6628863135166853397_n.heic?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=MzkzNjE0Mzg5ODg4MjE2NDA1NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=XiKudKTQw44Q7kNvwGQvbHi&_nc_oc=AdoZZzY9QIw9gK39VDn6cTqvJuiEZYv6a-brvrLAvd7aEofTWuTdC4VE7460qOFlLW4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.faru4-2.fna&_nc_gid=Kj_NLFsMcPRB32YPML2zqg&_nc_ss=7a22e&oh=00_AQKBC_2UppPbGHHaI2LDHew2d9w6ys1CgQ9zZp8pzg5pfw&oe=6AAFDFDD"
+        ],
+        "video_url": null,
+        "likes": 1,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by •The BAY• 🍃 •ذا باي• on July 07, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "image_post",
+        "content_categories": [
+          "menu_item_feature",
+          "food_photography",
+          "indian_cuisine"
+        ],
+        "content_themes": [
+          "tikka masala",
+          "classic dish",
+          "bold Indian flavor"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "encourage dish trial and response",
+          "description": "The caption asks whether the audience has tried tikka masala yet, encouraging them to try it and respond."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "dish promotion",
+          "description": "The post spotlights Tikka Masala, describing grilled chicken in a spiced tomato-cream sauce and emphasizing its rich, smoky, comforting Indian flavor."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "Tikka Masala. Grilled chicken simmered in a spiced tomato-cream sauce—rich, smoky, comforting, and full of bold Indian flavor.",
+        "visual_summary": "A branded food graphic shows a close-up bowl of orange-red tikka masala with chicken pieces, cilantro, and ginger garnish. The dish name and an English description appear on a pale yellow patterned background alongside a leaf-style brand mark.",
+        "caption_summary": "The Arabic caption calls tikka masala a classic that no two people would disagree on and asks followers whether they have tried it yet.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "menu_item_feature",
+              "food_photography",
+              "indian_cuisine",
+              "dish promotion",
+              "food_visible",
+              "logo_visible",
+              "branding_visible"
+            ],
+            "text": "The image names the dish \"Tikka Masala,\" shows the plated curry, describes it as grilled chicken in a spiced tomato-cream sauce with bold Indian flavor, and includes a leaf-style brand mark."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "dish promotion",
+              "classic dish theme"
+            ],
+            "text": "\"تكا مسالا كلاسيك، ما يختلف عليه اثنين جربته؟ ولا باقي؟\" describes tikka masala as a classic and asks whether the audience has tried it."
+          },
+          {
+            "source": "metadata",
+            "supports": [
+              "content_type"
+            ],
+            "text": "The supplied raw content type is Image and product type is feed."
+          }
+        ],
+        "confidence": 0.98
+      },
+      "analysis_error": null
+    }
+  ],
+  "analysis_coverage": {
+    "content_requested": 15,
+    "content_scraped": 15,
+    "content_analyzed": 15,
+    "content_failed": 0,
+    "analysis_success_pct": 100.0,
+    "date_range": {
+      "oldest_content": "2026-07-07T17:22:21+00:00",
+      "newest_content": "2026-09-03T17:44:30+00:00"
+    },
+    "multimodal_analysis": true,
+    "reels_detected": 4,
+    "reels_enriched": 4,
+    "reel_transcripts_available": 4
+  },
+  "data_quality": {
+    "status": "complete",
+    "profile_scrape_success": true,
+    "content_scrape_success": true,
+    "multimodal_analysis_completed": true,
+    "reel_enrichment_attempted": true,
+    "reel_enrichment_completed": true,
+    "warnings": [
+      "Reel/video visual analysis uses supplied cover/images plus transcript when available; full raw video frames are not analyzed."
+    ],
+    "failed_analyses": []
+  }
+}
