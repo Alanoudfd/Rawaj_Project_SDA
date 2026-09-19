@@ -1867,6 +1867,7 @@ class OutreachFollowUpWorkflow:
             qualification_run_id=provenance["qualification_run_id"],
             outreach_message_id=event.outreach_message_id,
             interest_event_id=event.event_id,
+            strategy_start_date=event.clicked_at[:10],
             customer_request="Restaurant selected Interested from Rawaj outreach.",
             research_context=research.model_dump(mode="json"),
             qualification_context=qualification.model_dump(mode="json"),

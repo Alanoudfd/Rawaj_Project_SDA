@@ -7,6 +7,7 @@ from database.models import (
     Restaurant,
     ResearchRun,
     QualificationRun,
+    Strategy,
 )
 
 
@@ -177,7 +178,40 @@ def save_qualification_result(
 
     except Exception:
         db.rollback()
-        raise 
+        raise
+
+
+def save_strategy_result(
+    db: Session,
+    restaurant_id: int,
+    qualification_run_id: int | None,
+    result: dict,
+) -> Strategy:
+    """
+    Save the generated Strategy Agent result.
+
+    The strategy is linked to the restaurant and the QualificationRun
+    that was used to generate it.
+    """
+
+    strategy = Strategy(
+        restaurant_id=restaurant_id,
+        qualification_run_id=qualification_run_id,
+        strategy_data=result,
+        approved=False,
+    )
+
+    try:
+        db.add(strategy)
+        db.commit()
+        db.refresh(strategy)
+
+        return strategy
+
+    except Exception:
+        db.rollback()
+        raise
+
 
 def get_qualification_for_research(
     db: Session,

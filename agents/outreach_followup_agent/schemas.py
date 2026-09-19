@@ -624,6 +624,7 @@ class StrategyRequestHandoff(ContractModel):
     qualification_run_id: int | str
     outreach_message_id: str
     interest_event_id: str
+    strategy_start_date: str | None = None
     customer_request: str = "Restaurant expressed interest in Rawaj."
     research_context: dict[str, Any]
     qualification_context: dict[str, Any]

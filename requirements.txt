@@ -8,3 +8,5 @@ typing-extensions
 openai
 sqlalchemy
 langchain-tavily
+langchain-classic
+tavily-python
