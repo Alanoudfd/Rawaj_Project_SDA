@@ -23,11 +23,13 @@ from database.repository import (
 from agents.qualification_agent.qualification_agent import (
     run_qualification_agent,
 )
+from orchestration.outreach_node import outreach_node
 
 
 # =========================================================
 # STATE
 # =========================================================
+
 
 class AgentState(TypedDict, total=False):
     restaurant_id: int
@@ -38,13 +40,23 @@ class AgentState(TypedDict, total=False):
     qualification_run_id: int
     qualification_result: dict[str, Any]
 
+    # Existing team routing fields.
     next: str
     error: str | None
+
+    # Outreach & Follow-Up result returned to the shared pipeline.
+    outreach_thread_id: str
+    outreach_status: str
+    outreach_action: str
+    outreach_message_id: str
+    outreach_pending_human_approval: bool
+    outreach_errors: list[str]
 
 
 # =========================================================
 # NODES
 # =========================================================
+
 
 def research_node(state: AgentState):
     db = SessionLocal()
@@ -52,7 +64,7 @@ def research_node(state: AgentState):
     try:
         restaurant_id = state["restaurant_id"]
 
-        # 1. Get the restaurant
+        # 1. Get the restaurant.
         restaurant = db.get(
             Restaurant,
             restaurant_id,
@@ -64,18 +76,15 @@ def research_node(state: AgentState):
                 "next": "end",
             }
 
-        # 2. Check if THIS restaurant already has research
+        # 2. Check whether this restaurant already has Research output.
         research_run = get_latest_research(
             db,
             restaurant_id,
         )
 
-        # 3. If there is NO research → run Research Agent
+        # 3. If there is no Research output, run Research Agent and save it once.
         if research_run is None:
-
-            print(
-                f"No research exists for {restaurant.name}."
-            )
+            print(f"No research exists for {restaurant.name}.")
             print("Running Research Agent...")
 
             restaurant_input = RestaurantInfo(
@@ -87,15 +96,14 @@ def research_node(state: AgentState):
             )
 
             research_report = run_research_agent(
-            restaurant=restaurant_input,
-            content_limit=30,
-            lookback_days=90,
-)
+                restaurant=restaurant_input,
+                content_limit=30,
+                lookback_days=90,
+            )
             research_result = research_report.model_dump(
                 mode="json"
             )
 
-            # 4. Save Research Agent result
             research_run = save_research_result(
                 db=db,
                 restaurant_id=restaurant.id,
@@ -103,28 +111,20 @@ def research_node(state: AgentState):
                 content_limit=30,
                 lookback_days=90,
             )
-            # Save directly to database
-            research_run = save_research_result(
-            db=db,
-            restaurant_id=restaurant.id,
-            result=research_result,
-            content_limit=30,
-            lookback_days=90,
-    )
 
             print(
                 f"Research completed and saved. "
                 f"Research Run ID: {research_run.id}"
             )
 
-        # 5. Otherwise use the existing research
+        # 4. Otherwise use the existing Research output.
         else:
             print(
                 f"Research already exists for {restaurant.name}. "
                 f"Using Research Run ID: {research_run.id}"
             )
 
-        # 6. Prepare only the required data for Qualification
+        # 5. Prepare only the required data for Qualification.
         qualification_input = build_qualification_input(
             research_run
         )
@@ -135,9 +135,9 @@ def research_node(state: AgentState):
             "next": "check_qualification",
         }
 
-    except Exception as e:
+    except Exception as error:
         return {
-            "error": str(e),
+            "error": str(error),
             "next": "end",
         }
 
@@ -146,48 +146,33 @@ def research_node(state: AgentState):
 
 
 def check_qualification_node(state: AgentState):
-    """
-    Check whether this exact ResearchRun has already
-    been qualified.
-
-    If yes:
-        reuse the existing QualificationRun.
-
-    If no:
-        send it to the Qualification Agent.
-    """
+    """Reuse the Qualification output for this exact Research run when present."""
 
     db = SessionLocal()
 
     try:
         research_run_id = state["research_run_id"]
 
-        existing_qualification = (
-            get_qualification_for_research(
-                db,
-                research_run_id,
-            )
+        existing_qualification = get_qualification_for_research(
+            db,
+            research_run_id,
         )
 
         if existing_qualification:
-
             return {
-                "qualification_run_id":
-                    existing_qualification.id,
-
-                "qualification_result":
-                    existing_qualification.full_result,
-
-                "next": "end",
+                "qualification_run_id": existing_qualification.id,
+                "qualification_result": existing_qualification.full_result,
+                # Existing qualified data still enters Outreach.
+                "next": "outreach",
             }
 
         return {
             "next": "qualification",
         }
 
-    except Exception as e:
+    except Exception as error:
         return {
-            "error": str(e),
+            "error": str(error),
             "next": "end",
         }
 
@@ -196,51 +181,36 @@ def check_qualification_node(state: AgentState):
 
 
 def qualification_node(state: AgentState):
-    """
-    Run the Qualification Agent only when this ResearchRun
-    has not already been qualified.
-
-    Save the new result to the database.
-    """
+    """Run Qualification only when this Research run has not yet been qualified."""
 
     db = SessionLocal()
 
     try:
         restaurant_id = state["restaurant_id"]
         research_run_id = state["research_run_id"]
+        qualification_input = state["qualification_input"]
 
-        qualification_input = state[
-            "qualification_input"
-        ]
-
-        qualification_result = (
-            run_qualification_agent(
-                qualification_input
-            )
+        qualification_result = run_qualification_agent(
+            qualification_input
         )
 
-        qualification_run = (
-            save_qualification_result(
-                db=db,
-                restaurant_id=restaurant_id,
-                research_run_id=research_run_id,
-                result=qualification_result,
-            )
+        qualification_run = save_qualification_result(
+            db=db,
+            restaurant_id=restaurant_id,
+            research_run_id=research_run_id,
+            result=qualification_result,
         )
 
         return {
-            "qualification_run_id":
-                qualification_run.id,
-
-            "qualification_result":
-                qualification_result,
-
-            "next": "end",
+            "qualification_run_id": qualification_run.id,
+            "qualification_result": qualification_result,
+            # Newly saved Qualification output enters Outreach too.
+            "next": "outreach",
         }
 
-    except Exception as e:
+    except Exception as error:
         return {
-            "error": str(e),
+            "error": str(error),
             "next": "end",
         }
 
@@ -251,6 +221,7 @@ def qualification_node(state: AgentState):
 # =========================================================
 # ROUTING
 # =========================================================
+
 
 def route_after_research(
     state: AgentState,
@@ -264,8 +235,13 @@ def route_after_research(
 def route_after_qualification_check(
     state: AgentState,
 ):
-    if state.get("next") == "qualification":
+    next_node = state.get("next")
+
+    if next_node == "qualification":
         return "qualification"
+
+    if next_node == "outreach":
+        return "outreach"
 
     return "end"
 
@@ -274,8 +250,8 @@ def route_after_qualification_check(
 # GRAPH
 # =========================================================
 
-workflow = StateGraph(AgentState)
 
+workflow = StateGraph(AgentState)
 
 workflow.add_node(
     "research",
@@ -292,6 +268,11 @@ workflow.add_node(
     qualification_node,
 )
 
+workflow.add_node(
+    "outreach",
+    outreach_node,
+)
+
 
 # START → Research
 workflow.add_edge(
@@ -305,32 +286,33 @@ workflow.add_conditional_edges(
     "research",
     route_after_research,
     {
-        "check_qualification":
-            "check_qualification",
-
-        "end":
-            END,
+        "check_qualification": "check_qualification",
+        "end": END,
     },
 )
 
 
-# Check Qualification → Qualification Agent OR END
+# Check Qualification → Qualification Agent, Outreach, OR END
 workflow.add_conditional_edges(
     "check_qualification",
     route_after_qualification_check,
     {
-        "qualification":
-            "qualification",
-
-        "end":
-            END,
+        "qualification": "qualification",
+        "outreach": "outreach",
+        "end": END,
     },
 )
 
 
-# Qualification → END
+# Newly produced Qualification output enters Outreach. The outer graph ends after
+# Outreach safely pauses for Human Approval, rejects an unqualified restaurant,
+# or returns a truthful integration error.
 workflow.add_edge(
     "qualification",
+    "outreach",
+)
+workflow.add_edge(
+    "outreach",
     END,
 )
 
@@ -339,6 +321,7 @@ workflow.add_edge(
 # COMPILE
 # =========================================================
 
+
 graph = workflow.compile()
 
 
@@ -346,16 +329,14 @@ graph = workflow.compile()
 # RUN DATABASE WORKFLOW
 # =========================================================
 
-def run_workflow():
 
+def run_workflow():
     db = SessionLocal()
 
     try:
         restaurants = (
             db.query(Restaurant)
-            .filter(
-                Restaurant.is_active == True
-            )
+            .filter(Restaurant.is_active == True)
             .all()
         )
 
@@ -370,87 +351,57 @@ def run_workflow():
     finally:
         db.close()
 
-
     if not restaurant_jobs:
-        print(
-            "No active restaurants found "
-            "in the database."
-        )
-
+        print("No active restaurants found in the database.")
         return
 
-
-    print(
-        f"\nFound {len(restaurant_jobs)} "
-        f"active restaurant(s).\n"
-    )
-
+    print(f"\nFound {len(restaurant_jobs)} active restaurant(s).\n")
 
     for restaurant in restaurant_jobs:
-
         print("=" * 60)
-
         print(
-            f"Processing: "
-            f"{restaurant['name']} "
+            f"Processing: {restaurant['name']} "
             f"(ID: {restaurant['id']})"
         )
-
         print("=" * 60)
 
-
         initial_state: AgentState = {
-            "restaurant_id":
-                restaurant["id"],
+            "restaurant_id": restaurant["id"],
         }
 
-
-        result = graph.invoke(
-            initial_state
-        )
-
+        result = graph.invoke(initial_state)
 
         if result.get("error"):
-
-            print(
-                f"ERROR: "
-                f"{result['error']}"
-            )
-
+            print(f"ERROR: {result['error']}")
             print()
-
             continue
 
-
-        print(
-            "Research Run ID:",
-            result.get(
-                "research_run_id"
-            ),
-        )
-
+        print("Research Run ID:", result.get("research_run_id"))
         print(
             "Qualification Run ID:",
-            result.get(
-                "qualification_run_id"
-            ),
+            result.get("qualification_run_id"),
         )
 
-
-        qualification_result = (
-            result.get(
-                "qualification_result",
-                {},
-            )
+        qualification_result = result.get(
+            "qualification_result",
+            {},
         )
-
 
         print(
             "Qualification:",
-            qualification_result.get(
-                "qualification"
-            ),
+            qualification_result.get("qualification"),
         )
+        print("Outreach status:", result.get("outreach_status"))
+        print("Outreach action:", result.get("outreach_action"))
+
+        if result.get("outreach_pending_human_approval"):
+            print(
+                "Outreach is paused for Human Approval; "
+                "no email has been sent."
+            )
+
+        if result.get("outreach_errors"):
+            print("Outreach errors:", result["outreach_errors"])
 
         print()
 
@@ -458,6 +409,7 @@ def run_workflow():
 # =========================================================
 # START SYSTEM
 # =========================================================
+
 
 if __name__ == "__main__":
     run_workflow()
