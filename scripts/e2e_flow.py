@@ -246,7 +246,7 @@ try:
     banner("4. strategy_inbox: Strategy Agent (knows the restaurant is interested) -> email 2")
     stage = workflow.run_strategy_stage(application_factory=factory)
     saved = [i for i in stage.get("items", []) if i.get("status") == "STRATEGY_GENERATED_AND_SAVED"]
-    check("strategy generated, passed the guardrails and was saved", len(saved) == 1, str(stage.get("items")))
+    check("strategy generated (draft + Shaimaa's self-reflection) and saved", len(saved) == 1, str(stage.get("items")))
     notifications = stage.get("notifications", [])
     check("email 2 drafted for the client", notifications and isinstance(notifications[0]["notification"], dict), str(notifications)[:200])
 
