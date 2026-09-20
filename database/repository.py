@@ -1,12 +1,13 @@
 from datetime import datetime
 
-from sqlalchemy import or_, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from database.models import (
     Restaurant,
     ResearchRun,
     QualificationRun,
+    Strategy,
 )
 
 
@@ -37,35 +38,47 @@ def get_latest_research(
     lookback_days: int | None = None,
 ) -> ResearchRun | None:
 
-    statement = (
-        select(ResearchRun)
-        .where(
-            ResearchRun.restaurant_id == restaurant_id,
-            ResearchRun.status.in_(("complete", "completed", "partial")),
-        )
-    )
+    filters = [
+        ResearchRun.restaurant_id == restaurant_id,
+        ResearchRun.status.in_(["completed", "complete", "partial"]),
+    ]
+
     if content_limit is not None:
-        statement = statement.where(or_(
-            ResearchRun.content_limit == content_limit,
-            ResearchRun.content_limit.is_(None),
-        ))
+        filters.append(ResearchRun.content_limit == content_limit)
     if lookback_days is not None:
-        statement = statement.where(or_(
-            ResearchRun.lookback_days == lookback_days,
-            ResearchRun.lookback_days.is_(None),
-        ))
+        filters.append(ResearchRun.lookback_days == lookback_days)
+
+    statement = select(ResearchRun).where(*filters)
     statement = statement.order_by(
-        ResearchRun.analyzed_at.desc(),
-        ResearchRun.created_at.desc(),
+        ResearchRun.analyzed_at.desc().nullslast(),
         ResearchRun.id.desc(),
     ).limit(1)
+    match = db.scalar(statement)
+    if match is not None:
+        return match
 
-    return db.scalar(statement)
+    if content_limit is not None and lookback_days is not None:
+        fallback = (
+            select(ResearchRun)
+            .where(
+                ResearchRun.restaurant_id == restaurant_id,
+                ResearchRun.status.in_(["completed", "complete", "partial"]),
+                ResearchRun.content_limit.is_(None),
+                ResearchRun.lookback_days.is_(None),
+            )
+            .order_by(
+                ResearchRun.analyzed_at.desc().nullslast(),
+                ResearchRun.id.desc(),
+            )
+            .limit(1)
+        )
+        return db.scalar(fallback)
+
+    return None
 
 
 def build_qualification_input(
     research_run: ResearchRun,
-    restaurant_context: dict | None = None,
 ) -> dict:
 
     restaurant = research_run.restaurant
@@ -79,13 +92,10 @@ def build_qualification_input(
             "email": restaurant.email,
             "location": restaurant.location,
         },
-        "profile": research_run.profile or {},
-        "profile_analysis": research_run.profile_analysis or {},
-        "metrics": research_run.metrics or {},
-        "research_signals": research_run.research_signals or [],
-        "analysis_coverage": research_run.analysis_coverage or {},
-        "data_quality": research_run.data_quality or {},
-        "restaurant_context": restaurant_context or {},
+        "profile": research_run.profile,
+        "profile_analysis": research_run.profile_analysis,
+        "metrics": research_run.metrics,
+        "research_signals": research_run.research_signals,
     }
 
 
@@ -196,7 +206,40 @@ def save_qualification_result(
 
     except Exception:
         db.rollback()
-        raise 
+        raise
+
+
+def save_strategy_result(
+    db: Session,
+    restaurant_id: int,
+    qualification_run_id: int | None,
+    result: dict,
+) -> Strategy:
+    """
+    Save the generated Strategy Agent result.
+
+    The strategy is linked to the restaurant and the QualificationRun
+    that was used to generate it.
+    """
+
+    strategy = Strategy(
+        restaurant_id=restaurant_id,
+        qualification_run_id=qualification_run_id,
+        strategy_data=result,
+        approved=False,
+    )
+
+    try:
+        db.add(strategy)
+        db.commit()
+        db.refresh(strategy)
+
+        return strategy
+
+    except Exception:
+        db.rollback()
+        raise
+
 
 def get_qualification_for_research(
     db: Session,
@@ -216,7 +259,7 @@ def get_qualification_for_research(
             QualificationRun.research_run_id == research_run_id,
             QualificationRun.status == "completed",
         )
-        .order_by(QualificationRun.created_at.desc(), QualificationRun.id.desc())
+        .order_by(QualificationRun.created_at.desc())
         .limit(1)
     )
 

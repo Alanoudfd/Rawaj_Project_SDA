@@ -12,10 +12,16 @@ from agents.qualification_agent.prompt import build_qualification_prompt
 load_dotenv()
 
 
-llm = ChatOpenAI(
-    model="gpt-5.6-luna",
-    use_responses_api=True
-)
+def _get_llm() -> ChatOpenAI:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OPENAI_API_KEY is missing from the environment.")
+
+    return ChatOpenAI(
+        model="gpt-5.6-luna",
+        use_responses_api=True,
+        api_key=api_key,
+    )
 
 
 def run_qualification_agent(
@@ -31,6 +37,8 @@ def run_qualification_agent(
     tools = [
         search_instagram_benchmark
     ]
+
+    llm = _get_llm()
 
     # Same agent structure
     agent = create_agent(

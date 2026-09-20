@@ -8,5 +8,5 @@ typing-extensions
 openai
 sqlalchemy
 langchain-tavily
-fastapi>=0.115,<1
-uvicorn>=0.30,<1
+langchain-classic
+tavily-python

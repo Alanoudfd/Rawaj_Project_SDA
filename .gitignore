@@ -2,16 +2,24 @@
 .env.*
 !.env.example
 __pycache__/
+**/__pycache__/
 *.py[cod]
+**/*.pyc
 .venv/
 venv/
 .pytest_cache/
 node_modules/
+**/node_modules/
 *.db-journal
 *.db-wal
 *.db-shm
+rawaj.db
+*.log
 
 frontend/dist/
-outputs/frontend-*.png
-outputs/frontend-smoke-results.json
-outputs/rawaj-server*.log
+**/frontend/dist/
+outputs/
+outputs/**/*.png
+outputs/**/*.json
+outputs/**/*.log
+frontend/node_modules/

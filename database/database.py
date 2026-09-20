@@ -1,25 +1,30 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.engine import make_url
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 
+# Always anchor Rawaj's local SQLite database at the repository root.  The
+# outreach notebook runs from a nested directory, so a bare relative URL would
+# otherwise silently create a second, empty `rawaj.db` beside the notebook.
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-load_dotenv(PROJECT_ROOT / ".env")
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", f"sqlite:///{(PROJECT_ROOT / 'rawaj.db').as_posix()}"
-)
+DEFAULT_DATABASE_URL = f"sqlite:///{(PROJECT_ROOT / 'rawaj.db').as_posix()}"
+
+
+def _resolve_database_url(configured_url: str | None) -> str:
+    """Keep the legacy relative local URL compatible and deterministic."""
+    if configured_url in {None, "", "sqlite:///./rawaj.db", "sqlite:///rawaj.db"}:
+        return DEFAULT_DATABASE_URL
+    return configured_url
+
+
+DATABASE_URL = _resolve_database_url(os.getenv("DATABASE_URL"))
 
 
 engine = create_engine(
     DATABASE_URL,
     echo=False,
-    connect_args={"check_same_thread": False, "timeout": 30}
-    if make_url(DATABASE_URL).get_backend_name() == "sqlite"
-    else {},
 )
 
 
