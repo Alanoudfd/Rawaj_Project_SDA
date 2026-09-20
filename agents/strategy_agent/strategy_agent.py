@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_classic.agents import create_react_agent, AgentExecutor
 from langchain_core.prompts import PromptTemplate
-
+from .reflection_prompt import SELF_REFLECTION_PROMPT
 from .prompt import STRATEGY_SYSTEM_PROMPT, AGENCY_SERVICES
 from .tools import web_search, get_upcoming_events
 from database.database import SessionLocal
@@ -169,12 +169,95 @@ strategy_executor = AgentExecutor(
 
 
 # =========================================================
+# ٍREFLECTION 
+# =========================================================
+def reflect_strategy(
+    qualification_data: dict,
+    initial_strategy: dict,
+    strategy_start_date: str,
+) -> dict:
+    """
+    Perform a second LLM call using the same Strategy Agent model
+    to review and correct the Initial Strategy Result.
+    """
+
+    qualification_text = json.dumps(
+        qualification_data,
+        indent=2,
+        ensure_ascii=False,
+    )
+
+    initial_strategy_text = json.dumps(
+        initial_strategy,
+        indent=2,
+        ensure_ascii=False,
+    )
+
+    reflection_input = f"""
+{SELF_REFLECTION_PROMPT}
+
+==================================================
+STRATEGY START DATE
+==================================================
+
+{strategy_start_date}
+
+==================================================
+ALLOWED AGENCY SERVICES
+==================================================
+
+{AGENCY_SERVICES}
+
+==================================================
+QUALIFICATION AGENT OUTPUT
+==================================================
+
+{qualification_text}
+
+==================================================
+INITIAL STRATEGY RESULT
+==================================================
+
+{initial_strategy_text}
+
+==================================================
+TASK
+==================================================
+
+Perform the self-reflection now.
+
+Review your Initial Strategy Result using all reflection questions above.
+
+Return only the required JSON containing:
+
+- passed
+- issues
+- corrected_strategy
+"""
+
+    response = llm.invoke(
+        reflection_input,
+        config={
+            "run_name": "Strategy Self Reflection"
+        },
+    )
+
+    reflection_data = json.loads(response.content)
+
+    if "corrected_strategy" not in reflection_data:
+        raise ValueError(
+            "Self-reflection output is missing corrected_strategy."
+        )
+
+    return reflection_data
+# =========================================================
 # GENERATE STRATEGY
 # =========================================================
 
 def generate_strategy(
     qualification_data: dict,
     strategy_start_date: str,
+    return_evaluation_data: bool = False,
 ):
 
     qualification_text = json.dumps(
@@ -191,7 +274,9 @@ def generate_strategy(
     result = strategy_executor.invoke(
         {
             "input": f"""
-{strategy_instructions}
+            ...
+            
+
 
 
 ==================================================
@@ -227,15 +312,32 @@ improve the strategy.
 
 Do not invent restaurant facts, marketing gaps, offers, products,
 metrics, or agency services.
-"""
-        }
+        """
+    },
+    config={
+        "run_name": "Strategy Generation"
+    },
+)
+
+   
+
+    initial_strategy = json.loads(result["output"])
+
+    reflection_result = reflect_strategy(
+    qualification_data=qualification_data,
+    initial_strategy=initial_strategy,
+    strategy_start_date=strategy_start_date,
     )
 
-    strategy_data = json.loads(
-        result["output"]
-    )
+    final_strategy = reflection_result["corrected_strategy"]
+    if return_evaluation_data:
+       return {
+        "initial_strategy": initial_strategy,
+        "reflection_result": reflection_result,
+        "final_strategy": final_strategy,
+    }
 
-    return strategy_data
+    return final_strategy
 
 
 # =========================================================

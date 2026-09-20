@@ -316,6 +316,12 @@ class Strategy(Base):
         index=True,
     )
 
+    restaurant_name: Mapped[Optional[str]] = mapped_column(
+    String(255),
+    nullable=True,
+   )
+
+
     qualification_run_id: Mapped[Optional[int]] = mapped_column(
         ForeignKey("qualification_runs.id"),
         nullable=True,

@@ -195,10 +195,11 @@ def save_strategy_result(
     """
 
     strategy = Strategy(
-        restaurant_id=restaurant_id,
-        qualification_run_id=qualification_run_id,
-        strategy_data=result,
-        approved=False,
+    restaurant_id=restaurant_id,
+    restaurant_name=result.get("restaurant"),
+    qualification_run_id=qualification_run_id,
+    strategy_data=result,
+    approved=False,
     )
 
     try:
