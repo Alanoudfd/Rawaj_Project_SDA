@@ -32,6 +32,14 @@ class AgentState(TypedDict, total=False):
     next: str
     error: str | None
 
+    # Outreach & Follow-Up result returned to the shared pipeline.
+    outreach_thread_id: str
+    outreach_status: str
+    outreach_action: str
+    outreach_message_id: str
+    outreach_pending_human_approval: bool
+    outreach_errors: list[str]
+
 
 def _stage_error(stage: str, error: Exception) -> dict[str, str]:
     # Provider errors can include URLs or credentials. Do not return or log
@@ -43,6 +51,7 @@ def _stage_error(stage: str, error: Exception) -> dict[str, str]:
 def _open_session(config: RunnableConfig):
     session_factory = config.get("configurable", {}).get("session_factory") or SessionLocal
     return session_factory()
+
 
 
 def research_node(state: AgentState, config: RunnableConfig):
@@ -241,6 +250,7 @@ def run_workflow():
 
     if not restaurant_jobs:
         print("No active restaurants found in the database.")
+        print("No active restaurants found in the database.")
         return
 
     print(f"\nFound {len(restaurant_jobs)} active restaurant(s).\n")
@@ -258,3 +268,4 @@ def run_workflow():
 
 if __name__ == "__main__":
     run_workflow()
+
