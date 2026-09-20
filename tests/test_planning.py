@@ -85,9 +85,19 @@ class PlanningApiTests(unittest.TestCase):
         self.assertIn("nearby office workers", plan["summary"])
         self.assertIn("playful", plan["summary"])
         self.assertEqual(plan["goal"], "Increase morning visits")
-        self.assertEqual(len(plan["tasks"]), 12)
-        self.assertEqual(len({task["id"] for task in plan["tasks"]}), 12)
+        self.assertEqual(len(plan["tasks"]), 13)
+        self.assertEqual(len({task["id"] for task in plan["tasks"]}), 13)
         self.assertEqual(plan["tasks"][-1]["date"], "2028-02-29")
+        type_dates = {"Story": set(), "Post": set(), "Reel": set()}
+        for task in plan["tasks"]:
+            type_dates.setdefault(task["type"], set()).add(task["date"])
+        self.assertIn("2028-02-03", type_dates["Story"])
+        self.assertIn("2028-02-05", type_dates["Post"])
+        self.assertIn("2028-02-08", type_dates["Reel"])
+        self.assertTrue(any(task["title"].lower().startswith("profile") or "profile" in task["title"].lower() for task in plan["tasks"]))
+        profile_tasks = [task for task in plan["tasks"] if "profile" in task["title"].lower() or "profile" in task["objective"].lower()]
+        self.assertTrue(profile_tasks)
+        self.assertEqual(profile_tasks[-1]["date"], "2028-02-29")
         for task in plan["tasks"]:
             self.assertEqual(date.fromisoformat(task["date"]).month, 2)
             self.assertEqual(task["status"], "Planned")
@@ -237,11 +247,11 @@ class PlanningApiTests(unittest.TestCase):
             "objective": "Let guests ask about our current menu",
         })
         self.assertEqual(response.status_code, 201, response.text)
-        self.assertEqual(len(response.json()["tasks"]), 13)
+        self.assertEqual(len(response.json()["tasks"]), 14)
         saved = self.client.get(f"{self.base_url()}/strategy", params={"month": plan["month"]}).json()
         self.assertEqual(saved["tasks"][0]["status"], "Completed")
         self.assertEqual(saved["tasks"][0]["saved_idea"], idea)
-        self.assertEqual(len(saved["tasks"]), 13)
+        self.assertEqual(len(saved["tasks"]), 14)
         response = self.client.patch(f"{self.base_url()}/strategy/tasks/{task['id']}", json={
             "month": plan["month"], "saved_idea": None,
         })

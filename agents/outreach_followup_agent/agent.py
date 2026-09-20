@@ -56,6 +56,7 @@ class RawajOutreachApplication:
         calendar_service: Any | None = None,
         strategy_dispatcher: Any | None = None,
         checkpointer: Any | None = None,
+        access_provider: Any | None = None,
     ) -> "RawajOutreachApplication":
         """Build the real production wiring or inject deterministic test fakes.
 
@@ -80,6 +81,7 @@ class RawajOutreachApplication:
             calendar_service=resolved_calendar,
             strategy_dispatcher=resolved_dispatcher,
             checkpointer=checkpointer,
+            access_provider=access_provider,
         )
         return cls(
             settings=resolved_settings,

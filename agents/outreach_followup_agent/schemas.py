@@ -607,6 +607,8 @@ class ButtonClickEvent(ContractModel):
     status: ButtonEventStatus = ButtonEventStatus.RECEIVED
     idempotency_key: str = Field(default_factory=lambda: new_id("button_key"))
     source_ip_hash: str | None = None
+    # Set by the repository once the event was applied; the canonical record carries it.
+    processed_at: str | None = None
 
 
 # ---------------------------------------------------------------------------

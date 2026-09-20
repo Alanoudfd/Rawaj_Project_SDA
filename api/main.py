@@ -1,5 +1,6 @@
 """FastAPI routes for restaurant data, agent execution, and result retrieval."""
 
+import asyncio
 import logging
 import os
 from contextlib import asynccontextmanager
@@ -18,14 +19,14 @@ from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
 
-from api import planning, services
+from api import agent_strategy, approvals, auth, planning, services
 from api.schemas import (
     AnalyzeRequest, ContextResponse, JobResponse, OutreachDraft,
-    QualificationResponse, ResearchResponse, RestaurantCreate,
+    GapsResponse, QualificationResponse, ResearchResponse, RestaurantCreate,
     RestaurantList, RestaurantResponse, RestaurantUpdate,
 )
-from database.database import Base, engine
-from database.models import AnalysisJob, Restaurant, RestaurantContext
+from database.database import Base, ensure_legacy_database_schema, engine
+from database.models import AnalysisJob, QualificationRun, Restaurant, RestaurantContext
 
 logger = logging.getLogger(__name__)
 RestaurantId = Annotated[int, Path(gt=0)]
@@ -54,12 +55,14 @@ def require_idle(db, restaurant_id):
         raise HTTPException(409, {"message": "Analysis is already running", "job_id": active})
 
 
-def create_app(database_engine=engine, workflow_runner=None, outreach_runner=None):
+def create_app(database_engine=engine, workflow_runner=None, outreach_runner=None, *,
+               outreach_application=None, outreach_application_factory=None, background_stages=()):
     session_factory = sessionmaker(bind=database_engine, autoflush=False, expire_on_commit=False)
     restaurant_write_lock = Lock()
 
     @asynccontextmanager
     async def lifespan(application):
+        ensure_legacy_database_schema(database_engine)
         Base.metadata.create_all(bind=database_engine)
         # This local development API runs in a single server process.
         with session_factory() as db:
@@ -73,13 +76,25 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
                 )
             )
             db.commit()
-        yield
+        # Pipeline stages that run while the API is up (Strategy after "Interested", follow-ups).
+        loops = [asyncio.create_task(services.background_loop(runner, seconds)) for runner, seconds in background_stages]
+        try:
+            yield
+        finally:
+            for loop in loops:
+                loop.cancel()
 
     application = FastAPI(title="Rawaj API", version="1.0.0", lifespan=lifespan)
     application.state.session_factory = session_factory
     application.state.restaurant_write_lock = restaurant_write_lock
     application.state.content_ideas_runner = planning.generate_content_ideas
     application.include_router(planning.router)
+    application.include_router(agent_strategy.router)
+    application.include_router(approvals.router)
+    application.include_router(auth.router)
+    application.state.outreach_lock = Lock()
+    application.state.outreach_application = outreach_application
+    application.state.outreach_application_factory = outreach_application_factory or services.outreach_application
     application.state.workflow_runner = workflow_runner or partial(services.run_workflow, session_factory=session_factory)
     application.state.outreach_runner = outreach_runner or services.generate_draft
     origins = os.getenv(
@@ -90,7 +105,7 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
         CORSMiddleware,
         allow_origins=[value.strip().rstrip("/") for value in origins.split(",") if value.strip()],
         allow_methods=["GET", "POST", "PATCH"],
-        allow_headers=["Content-Type"],
+        allow_headers=["Content-Type", "X-Admin-Token"],
     )
 
     @application.exception_handler(SQLAlchemyError)
@@ -167,6 +182,19 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
             latest_job=JobResponse.model_validate(job) if job else None,
         )
 
+    @application.get("/api/restaurants/{restaurant_id}/gaps", response_model=GapsResponse, tags=["Restaurants"])
+    def get_gaps(restaurant_id: RestaurantId, db: Database):
+        restaurant = require_restaurant(db, restaurant_id)
+        _, qualification, _ = services.context_runs(db, restaurant_id)
+        if qualification is None:
+            # A failed re-run must not hide gaps from an earlier completed qualification.
+            qualification = db.scalar(
+                select(QualificationRun)
+                .where(QualificationRun.restaurant_id == restaurant_id, QualificationRun.status == "completed")
+                .order_by(QualificationRun.created_at.desc(), QualificationRun.id.desc())
+            )
+        return services.gaps_response(restaurant, qualification)
+
     @application.post("/api/restaurants/{restaurant_id}/analyze", response_model=JobResponse, status_code=202, tags=["Agents"])
     def analyze(restaurant_id: RestaurantId, background_tasks: BackgroundTasks, request: Request, db: Database,
                 payload: Annotated[AnalyzeRequest, Body()] = AnalyzeRequest()):
@@ -211,6 +239,9 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
             raise HTTPException(409, "Complete restaurant analysis before generating an outreach draft")
         try:
             draft = request.app.state.outreach_runner({
+                "restaurant_id": restaurant.id,
+                "research_run_id": qualification.research_run_id,
+                "qualification_run_id": qualification.id,
                 "restaurant_name": restaurant.name,
                 "email": restaurant.email,
                 "marketing_gaps": [
@@ -240,4 +271,4 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
     return application
 
 
-app = create_app()
+app = create_app(background_stages=services.default_background_stages())

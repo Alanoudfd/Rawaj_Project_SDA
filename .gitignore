@@ -23,3 +23,7 @@ outputs/**/*.png
 outputs/**/*.json
 outputs/**/*.log
 frontend/node_modules/
+
+# Runtime files created by the Outreach Agent (durable approvals) and the Strategy inbox
+rawaj_outreach_checkpoints.sqlite*
+strategy_handoffs/

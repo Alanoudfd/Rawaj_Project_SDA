@@ -24,6 +24,7 @@ with patch("dotenv.load_dotenv", return_value=False):
         OutreachEvent,
         QualificationRun,
         ResearchRun,
+        Strategy,
     )
 
 
@@ -507,6 +508,89 @@ class RestaurantApiTests(unittest.TestCase):
         result = self.client.get(f"/api/restaurants/{restaurant_id}/context").json()
         self.assertEqual(result["qualification"]["id"], matching_qualification)
         self.assertEqual(result["qualification"]["research_run_id"], latest_research)
+
+    def test_gaps_endpoint_counts_severity_tiers(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.assertEqual(self.client.get("/api/restaurants/999/gaps").status_code, 404)
+        empty = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
+        self.assertEqual(empty["counts"]["total"], 0)
+        self.assertEqual(empty["gaps"], [])
+
+        research_id = self.add_research(restaurant_id)
+        self.add_qualification(restaurant_id, research_id)
+        result = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
+        self.assertEqual(result["restaurant_id"], restaurant_id)
+        self.assertEqual(result["counts"], {"total": 1, "high": 0, "moderate": 1, "low": 0, "strengths": 1, "data_limitations": 0})
+        self.assertEqual(result["strengths"], ["Distinctive menu"])
+        self.assertEqual(result["gaps"][0]["severity"], "Medium")
+        self.assertEqual(result["gaps"][0]["gap"], "Irregular posting")
+
+        # A newer research run without a qualification still shows the last completed gaps.
+        self.add_research(restaurant_id)
+        result = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
+        self.assertEqual(result["counts"]["total"], 1)
+
+    def add_agent_strategy(self, restaurant_id, **extra):
+        data = {
+            "restaurant": "Agent Cafe",
+            "primary_marketing_gaps": [
+                {"gap": "Posting gap", "severity": "High", "highlight": 0.47,
+                 "highlight_label": "posts/week", "key_point": "Too few posts."},
+            ],
+            "thirty_day_target": ["Post twice a week", "  "],
+            "recommended_services": [{"service": "Content Calendar", "why_this_service_fits": "Fixes cadence."}],
+            "thirty_day_plan": [
+                {"day": 2, "focus": "Menu", "action": "Show the menu."},
+                {"day": 1, "focus": "Kickoff", "action": "Audit the profile."},
+                {"day": 1, "focus": "Duplicate", "action": "Ignored."},
+                {"day": "x", "focus": "Bad", "action": "Ignored."},
+            ],
+            "external_trend_support": [],
+            **extra,
+        }
+        with Session(self.engine) as session:
+            strategy = Strategy(restaurant_id=restaurant_id, strategy_data=data)
+            session.add(strategy)
+            session.commit()
+            return strategy.id
+
+    def test_agent_strategy_is_read_dated_and_tracks_completed_days(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.assertEqual(self.client.get("/api/restaurants/999/agent-strategy").status_code, 404)
+        self.assertEqual(self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").status_code, 404)
+
+        # A template plan (no thirty_day_plan) is not an agent strategy.
+        with Session(self.engine) as session:
+            session.add(Strategy(restaurant_id=restaurant_id, strategy_data={"month": "2026-09", "tasks": []}))
+            session.commit()
+        self.assertEqual(self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").status_code, 404)
+
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-25")
+        result = self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
+        self.assertEqual((result["start_date"], result["end_date"]), ("2026-09-25", "2026-09-26"))
+        self.assertEqual([(d["day"], d["date"], d["focus"], d["status"]) for d in result["days"]],
+                         [(1, "2026-09-25", "Kickoff", "Planned"), (2, "2026-09-26", "Menu", "Planned")])
+        self.assertEqual(result["targets"], ["Post twice a week"])
+        self.assertEqual(result["gaps"][0]["highlight"], "0.47")
+        self.assertEqual(result["services"][0]["service"], "Content Calendar")
+
+        url = f"/api/restaurants/{restaurant_id}/agent-strategy/days/2"
+        result = self.client.patch(url, json={"status": "Completed"}).json()
+        self.assertEqual([d["status"] for d in result["days"]], ["Planned", "Completed"])
+        # Persisted, and undoable.
+        again = self.new_client().get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
+        self.assertEqual([d["status"] for d in again["days"]], ["Planned", "Completed"])
+        result = self.client.patch(url, json={"status": "Planned"}).json()
+        self.assertEqual([d["status"] for d in result["days"]], ["Planned", "Planned"])
+
+        self.assertEqual(self.client.patch(url.replace("/2", "/9"), json={"status": "Completed"}).status_code, 404)
+        self.assertEqual(self.client.patch(url, json={"status": "Done"}).status_code, 422)
+
+    def test_agent_strategy_without_start_date_uses_creation_date(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.add_agent_strategy(restaurant_id)
+        result = self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
+        self.assertEqual(result["start_date"], datetime.utcnow().date().isoformat())
 
     def test_outreach_requires_email_and_completed_current_qualification(self):
         restaurant = self.create_restaurant(email=None)

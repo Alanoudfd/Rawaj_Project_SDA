@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 
@@ -26,6 +26,25 @@ engine = create_engine(
     DATABASE_URL,
     echo=False,
 )
+
+
+def ensure_legacy_database_schema(database_engine: object = engine) -> None:
+    """Fill in SQLite columns that were missing from older local databases."""
+    with database_engine.begin() as connection:
+        inspector = inspect(connection)
+        if "restaurant_contexts" not in inspector.get_table_names():
+            return
+        columns = {column["name"] for column in inspector.get_columns("restaurant_contexts")}
+        if "created_at" not in columns:
+            connection.execute(text("ALTER TABLE restaurant_contexts ADD COLUMN created_at DATETIME"))
+        if "updated_at" not in columns:
+            connection.execute(text("ALTER TABLE restaurant_contexts ADD COLUMN updated_at DATETIME"))
+        connection.execute(text(
+            "UPDATE restaurant_contexts SET created_at = CURRENT_TIMESTAMP WHERE created_at IS NULL"
+        ))
+        connection.execute(text(
+            "UPDATE restaurant_contexts SET updated_at = CURRENT_TIMESTAMP WHERE updated_at IS NULL"
+        ))
 
 
 SessionLocal = sessionmaker(

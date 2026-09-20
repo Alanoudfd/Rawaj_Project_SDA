@@ -1,7 +1,10 @@
 """Database helpers and deferred agent calls for the HTTP application."""
 
+import asyncio
 import logging
+import os
 from datetime import datetime
+from functools import lru_cache
 
 from sqlalchemy import select
 
@@ -68,16 +71,131 @@ def context_runs(db, restaurant_id):
     return research, matching_qualification(db, research), job
 
 
+def gaps_response(restaurant, qualification):
+    """Marketing gaps of the current qualification with a count per severity tier."""
+    gaps = []
+    for item in (qualification.marketing_gaps if qualification else None) or []:
+        if isinstance(item, dict) and str(item.get("gap") or "").strip():
+            gaps.append({
+                "gap": str(item["gap"]).strip(),
+                "severity": str(item.get("severity") or "").strip().title(),
+                "priority": item.get("priority") if isinstance(item.get("priority"), int) else None,
+                "evidence": [str(text) for text in item.get("evidence") or []],
+                "recommendation_focus": str(item.get("recommendation_focus") or ""),
+            })
+    gaps.sort(key=lambda item: (item["priority"] is None, item["priority"] or 0))
+    limitations = [str(text) for text in (qualification.data_limitations if qualification else None) or []]
+    strengths = [str(text) for text in (qualification.strengths if qualification else None) or []]
+    severities = [item["severity"] for item in gaps]
+    return {
+        "restaurant_id": restaurant.id,
+        "restaurant_name": restaurant.name,
+        "qualification_id": qualification.id if qualification else None,
+        "created_at": qualification.created_at if qualification else None,
+        "counts": {
+            "total": len(gaps),
+            "high": severities.count("High"),
+            # Some runs label the middle tier "Medium".
+            "moderate": severities.count("Moderate") + severities.count("Medium"),
+            "low": severities.count("Low"),
+            "strengths": len(strengths),
+            "data_limitations": len(limitations),
+        },
+        "gaps": gaps,
+        "strengths": strengths,
+        "data_limitations": limitations,
+    }
+
+
+def _enabled(name, default="true"):
+    return os.getenv(name, default).strip().lower() not in {"0", "false", "no", "off"}
+
+
 def run_workflow(*, session_factory=None, **kwargs):
+    """Research -> Qualification -> Outreach draft (paused for approval). OUTREACH_AUTOSTART=false stops after Qualification."""
     from orchestration.workflow import run_restaurant_workflow
 
-    return run_restaurant_workflow(**kwargs, session_factory=session_factory)
+    return run_restaurant_workflow(
+        **kwargs, session_factory=session_factory, start_outreach=_enabled("OUTREACH_AUTOSTART"),
+    )
+
+
+def outreach_application():
+    """The wired Outreach Agent runtime (email drafting, approval pauses, sending)."""
+    from agents.outreach_followup_agent.agent import RawajOutreachApplication
+    from api import accounts
+
+    return RawajOutreachApplication.create(access_provider=accounts.provision_access)
+
+
+@lru_cache(maxsize=1)
+def shared_outreach_application():
+    """One Outreach runtime for the background stages (the API's own routes create theirs on first use)."""
+    return outreach_application()
 
 
 def generate_draft(outreach_input):
-    from agents.outreach_agent.outreach_agent import run_outreach_agent
+    """POST /outreach/draft: start Outreach for the current qualification and return its email draft.
 
-    return run_outreach_agent(outreach_input)
+    The email is only a draft awaiting human approval (see /api/approvals); nothing is sent here.
+    """
+    result = outreach_application().workflow.start_outreach(
+        restaurant_id=outreach_input["restaurant_id"],
+        research_run_id=outreach_input["research_run_id"],
+        qualification_run_id=outreach_input["qualification_run_id"],
+    )
+    if result.email_draft is None:
+        raise RuntimeError("; ".join(result.errors) or "Outreach did not produce a draft.")
+    return {
+        "subject": result.email_draft.subject,
+        "body": result.email_draft.plain_text_body,
+        "message_type": result.email_draft.message_type.value,
+    }
+
+
+def _seconds(name, default):
+    try:
+        return max(0, int(os.getenv(name, default)))
+    except ValueError:
+        return default
+
+
+def default_background_stages():
+    """(callable, interval seconds) pairs the API runs while it is up. PIPELINE_AUTORUN=false turns them all off.
+
+    Each one invokes the pipeline graph (orchestration/workflow.py) with one event.
+    """
+    if not _enabled("PIPELINE_AUTORUN"):
+        return ()
+    from functools import partial
+
+    from orchestration import workflow
+
+    stages = []
+    if seconds := _seconds("AUTO_APPROVE_POLL_SECONDS", 30):
+        stages.append((partial(workflow.send_reviewed_emails, shared_outreach_application), seconds))
+    if seconds := _seconds("STRATEGY_POLL_SECONDS", 30):
+        stages.append((partial(workflow.run_strategy_stage, application_factory=shared_outreach_application), seconds))
+    if seconds := _seconds("FOLLOWUP_POLL_SECONDS", 3600):
+        stages.append((partial(workflow.run_followups, application_factory=shared_outreach_application), seconds))
+    return tuple(stages)
+
+
+async def background_loop(runner, seconds):
+    """Run a blocking pipeline stage every `seconds` in a worker thread; one failure never stops the loop."""
+    last_error = None
+    while True:
+        try:
+            await asyncio.to_thread(runner)
+            last_error = None
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:
+            message = f"{type(exc).__name__}: {exc}"[:300]
+            if message != last_error:  # a broken setting would otherwise repeat every tick
+                logger.error("Pipeline stage %s failed: %s", getattr(runner, "__name__", runner), message)
+            last_error = message
+        await asyncio.sleep(seconds)
 
 
 def execute_analysis(job_id, session_factory, workflow_runner):

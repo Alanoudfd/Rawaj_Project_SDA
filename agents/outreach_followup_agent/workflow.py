@@ -211,6 +211,9 @@ class OutreachFollowUpWorkflow:
         re.IGNORECASE,
     )
     _URL_IN_MODEL_TEXT = re.compile(r"https?://", re.IGNORECASE)
+    # Everything after this line in a strategy-ready email is written by trusted code, not by the model:
+    # the dashboard link, the client's sign-in details and the privacy note.
+    _TRUSTED_FOOTER_MARKER = "\n\nOpen your strategy here:"
 
     _OUTBOUND_ACTIONS = {
         ActionType.SEND_INITIAL_OUTREACH,
@@ -232,7 +235,11 @@ class OutreachFollowUpWorkflow:
         strategy_dispatcher: Any | None = None,
         checkpointer: Any | None = None,
         now_provider: Callable[[], datetime] | None = None,
+        access_provider: Callable[[int], dict[str, Any] | None] | None = None,
     ) -> None:
+        # Creates the client's dashboard sign-in for the "strategy ready" email. Called only by trusted
+        # code after generation, so the model never sees the username or password.
+        self.access_provider = access_provider
         self.settings = settings
         self.repository = repository
         self.llm = llm
@@ -410,7 +417,7 @@ class OutreachFollowUpWorkflow:
             thread_id=_stable_id("outreach_button", button_event.event_id),
         )
 
-    def receive_strategy_output(
+    def receive_strategy_output( 
         self, output: StrategyOutputHandoff | dict[str, Any]
     ) -> OutreachWorkflowResult:
         """Accept a supplied Strategy Agent output; never generate one locally."""
@@ -1835,12 +1842,36 @@ class OutreachFollowUpWorkflow:
         if action is ActionType.NOTIFY_STRATEGY_READY:
             output = StrategyOutputHandoff.model_validate(state["strategy_output"])
             url = self._validated_dashboard_url(output.dashboard_strategy_url)
-            return (
-                f"{body}\n\nCongratulations — your complimentary Free Trial is ready. "
-                "Your personalized strategy is available in your Rawaj dashboard:\n"
-                f"{url}"
-            )
+            # The model's own text already announces the Free Trial, so the trusted part only points to the link.
+            text = f"{body}{self._TRUSTED_FOOTER_MARKER}\n{url}"
+            return text + self._sign_in_block(state)
         return body
+
+    def _sign_in_block(self, state: OutreachGraphState) -> str:
+        """The client's username, password and sign-in link, or '' when no access provider is wired."""
+
+        if self.access_provider is None:
+            return ""
+        access = self.access_provider(int(state["provenance"]["restaurant_id"]))
+        if not access or not access.get("username"):
+            raise WorkflowSafetyError("The client's dashboard access could not be prepared.")
+        sign_in_url = self._validated_dashboard_url(access.get("login_url"))
+        if not access.get("password"):
+            raise WorkflowSafetyError("The client's dashboard access has no password to send.")
+        block = "\n".join([
+            "", "", "Your Rawaj sign-in:",
+            f"Username: {access['username']}",
+            f"Password: {access['password']}",
+            f"Sign in here: {sign_in_url}",
+            "",
+            "Your privacy: Rawaj never asks you to send passwords, payment details or other sensitive "
+            "information by email or message, and we do not collect any through this email.",
+        ])
+        # The email must carry exactly what the account needs; a partial block would lock the client out.
+        for required in (access["username"], access["password"], sign_in_url):
+            if required not in block:
+                raise WorkflowSafetyError("The sign-in details were not rendered completely.")
+        return block
 
     @staticmethod
     def _validated_dashboard_url(value: str | None) -> str:
@@ -2028,6 +2059,16 @@ class OutreachFollowUpWorkflow:
         text = payload["plain_text_body"]
         for button in draft.buttons:
             text = text.replace(button.url, "[trusted signed response link]")
+
+        # The dashboard link, sign-in details and privacy note are added by trusted code after generation. The
+        # reviewing model judges only the wording the model wrote; the client's password must never reach it.
+        marker = OutreachFollowUpWorkflow._TRUSTED_FOOTER_MARKER
+        if marker in text:
+            text = text.split(marker)[0] + (
+                "\n\n[The system appends the dashboard link, the client's sign-in details and a privacy note "
+                "after review; they are not part of this review.]"
+            )
+        text = re.sub(r"(?im)^(Password:).*$", r"\1 [redacted]", text)
 
         payload["recipient"] = "[redacted recipient]"
         payload["plain_text_body"] = text

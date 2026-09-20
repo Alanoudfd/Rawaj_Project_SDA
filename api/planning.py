@@ -173,30 +173,50 @@ def build_plan(snapshot, signature, month, strategy_id):
          "metric": "Story replies and visit enquiries"},
     ]
     templates = [
-        ("Reel", f"Meet {name}", f"Introduce {name} and its {subject} to {audience}."),
-        ("Post", f"Discover {menu_subject}", f"Show only confirmed items from {name}'s menu; help guests decide what to try."),
         ("Story", "Your coffee moment" if cafe else "Your next meal", f"Ask {audience} what they look for in {'a coffee visit' if cafe else 'a dining visit'} at {name}."),
-        ("Reel", "Behind the coffee" if cafe else "From kitchen to table", f"Show how the team at {name} prepares its actual {'drinks' if cafe else 'dishes'}, in a {tone} tone."),
-        ("Post", f"A closer look at {menu_subject}", f"Explain the appeal of the confirmed menu at {name}" + (f" and its {cuisine} specialty" if cuisine else "") + "."),
+        ("Post", f"Discover {menu_subject}", f"Show only confirmed items from {name}'s menu; help guests decide what to try."),
+        ("Reel", f"Meet {name}", f"Introduce {name} and its {subject} to {audience}."),
         ("Story", f"Ask {name}", f"Invite questions about the real menu and visit experience; support: {goal}."),
-        ("Reel", "A moment at the cafe" if cafe else "A moment around the table", f"Show the real atmosphere of {name} for {audience}; do not imply facilities that have not been confirmed."),
-        ("Post", f"Plan a visit to {name}", (f"Help guests find {name} in {location}." if location else f"Invite guests to contact {name} for confirmed visit details.") + " Use verified location and opening information only."),
+        ("Post", f"A closer look at {menu_subject}", f"Explain the appeal of the confirmed menu at {name}" + (f" and its {cuisine} specialty" if cuisine else "") + "."),
+        ("Reel", "Behind the coffee" if cafe else "From kitchen to table", f"Show how the team at {name} prepares its actual {'drinks' if cafe else 'dishes'}, in a {tone} tone."),
         ("Story", "Coffee conversation" if cafe else "Table conversation", f"Invite {audience} to share their preferences about {menu_subject}; use a {tone} tone."),
-        ("Reel", f"Why try {name}?", f"Connect {menu_subject} with {audience} and the goal: {goal}."),
-        ("Post", "Your next coffee visit" if cafe else "Your next dining visit", f"Invite a return visit to {name} through its real {'coffee offering' if cafe else 'food offering'}; support: {goal}."),
+        ("Post", f"Plan a visit to {name}", (f"Help guests find {name} in {location}." if location else f"Invite guests to contact {name} for confirmed visit details.") + " Use verified location and opening information only."),
+        ("Reel", "A moment at the cafe" if cafe else "A moment around the table", f"Show the real atmosphere of {name} for {audience}; do not imply facilities that have not been confirmed."),
         ("Story", f"Help shape next month at {name}", f"Ask {audience} which confirmed menu items or moments they want to see next month."),
+        ("Post", "Your next coffee visit" if cafe else "Your next dining visit", f"Invite a return visit to {name} through its real {'coffee offering' if cafe else 'food offering'}; support: {goal}."),
+        ("Reel", f"Why try {name}?", f"Connect {menu_subject} with {audience} and the goal: {goal}."),
     ]
     year, month_number = map(int, month.split("-"))
     days_in_month = calendar.monthrange(year, month_number)[1]
+    scheduled_days = {
+        "Story": [3, 11, 18, None],
+        "Post": [5, 13, 21, None],
+        "Reel": [8, 16, 24, None],
+    }
+    type_counts = {"Story": 0, "Post": 0, "Reel": 0}
     tasks = []
     for index, (kind, title, objective) in enumerate(templates):
-        day = 1 + round(index * (days_in_month - 1) / (len(templates) - 1))
+        occurrence = type_counts[kind]
+        preferred = scheduled_days.get(kind, [None])[min(occurrence, len(scheduled_days.get(kind, [None])) - 1)]
+        day = days_in_month if preferred is None else preferred
+        if preferred is not None and day > days_in_month:
+            day = days_in_month
         if gap_focus and index in (3, 6, 9):
             objective += f" Address the analysis priority: {gap_focus}."
         tasks.append(StrategyTask(
             id=f"strategy-{strategy_id}-task-{index + 1:02}", date=f"{month}-{day:02}",
             type=kind, title=title, objective=objective,
         ).model_dump())
+        type_counts[kind] += 1
+
+    profile_day = days_in_month
+    tasks.append(StrategyTask(
+        id=f"strategy-{strategy_id}-task-{len(tasks) + 1:02}",
+        date=f"{month}-{profile_day:02}",
+        type="Story",
+        title="Profile refresh",
+        objective="Review and update the restaurant profile, menu details, offers, and current business information before the next content cycle.",
+    ).model_dump())
     return StrategyResponse(
         id=strategy_id, restaurant_id=restaurant["id"], month=month,
         restaurant_name=name, business_type=business_type, goal=goal, summary=summary,

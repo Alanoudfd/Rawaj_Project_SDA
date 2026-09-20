@@ -131,6 +131,34 @@ class ContextResponse(BaseModel):
     latest_job: JobResponse | None
 
 
+class GapItem(BaseModel):
+    gap: str
+    severity: str
+    priority: int | None = None
+    evidence: list[str] = Field(default_factory=list)
+    recommendation_focus: str = ""
+
+
+class GapCounts(BaseModel):
+    total: int = 0
+    high: int = 0
+    moderate: int = 0
+    low: int = 0
+    strengths: int = 0
+    data_limitations: int = 0
+
+
+class GapsResponse(OutputModel):
+    restaurant_id: int
+    restaurant_name: str
+    qualification_id: int | None
+    created_at: datetime | None
+    counts: GapCounts
+    gaps: list[GapItem]
+    strengths: list[str]
+    data_limitations: list[str]
+
+
 class OutreachDraft(BaseModel):
     subject: str
     body: str

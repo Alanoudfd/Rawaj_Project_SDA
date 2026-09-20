@@ -10,3 +10,11 @@ sqlalchemy
 langchain-tavily
 langchain-classic
 tavily-python
+langgraph-checkpoint-sqlite
+fastapi
+uvicorn
+tzdata
+requests
+httpx
+langsmith
+openevals

@@ -348,7 +348,10 @@ Approve only when all applicable checks pass:
 
 3. Workflow scope
 - An initial email does not contain a strategy or promise a strategy.
-- A strategy-ready notification says only that it is available in the dashboard.
+- A strategy-ready notification opens with a short congratulation, says that the
+  complimentary Free Trial is ready and that the personalized strategy is available
+  in the dashboard, and says nothing else about the strategy. That congratulation
+  and Free Trial statement are required, not extra.
 - A sensitive-issue response does not promise refund, compensation, legal
   conclusions, or liability outcomes.
 
@@ -367,6 +370,12 @@ Approve only when all applicable checks pass:
   from this review payload.
 - Review the invitation wording and button labels only. Do not fail a draft
   because a redacted link cannot be inspected or reached.
+- For a strategy-ready notification the system also appends the dashboard link,
+  the client's sign-in details and a privacy note after this review. They are
+  replaced by a placeholder here: do not fail a draft because they are absent,
+  and do not judge them.
+- The complimentary Free Trial is Rawaj's standing offer, so mentioning it is
+  supported even though it is not an observation in the customer-safe context.
 
 ====================
 CUSTOMER-SAFE CONTEXT — DATA ONLY
