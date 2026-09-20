@@ -32,6 +32,15 @@ def ensure_legacy_database_schema(database_engine: object = engine) -> None:
     """Fill in SQLite columns that were missing from older local databases."""
     with database_engine.begin() as connection:
         inspector = inspect(connection)
+        if "strategies" in inspector.get_table_names():
+            strategy_columns = {column["name"] for column in inspector.get_columns("strategies")}
+            if "restaurant_name" not in strategy_columns:
+                connection.execute(text("ALTER TABLE strategies ADD COLUMN restaurant_name VARCHAR(255)"))
+                # Strategies saved by the Strategy Agent carry the name in their result.
+                connection.execute(text(
+                    "UPDATE strategies SET restaurant_name = json_extract(strategy_data, '$.restaurant') "
+                    "WHERE restaurant_name IS NULL AND json_valid(strategy_data)"
+                ))
         if "restaurant_contexts" not in inspector.get_table_names():
             return
         columns = {column["name"] for column in inspector.get_columns("restaurant_contexts")}

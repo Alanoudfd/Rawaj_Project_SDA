@@ -1,6 +1,5 @@
 import json
 import os
-import re
 from functools import lru_cache
 
 from dotenv import load_dotenv
@@ -8,17 +7,13 @@ from langchain_classic.agents import create_react_agent, AgentExecutor
 from langchain_core.prompts import PromptTemplate
 
 from .llm import build_llm
+from .reflection_prompt import SELF_REFLECTION_PROMPT
 from .prompt import STRATEGY_SYSTEM_PROMPT, AGENCY_SERVICES
-from .reflection import llm_critic, llm_reviser, reflect_and_revise
 from .tools import web_search, get_upcoming_events
 from database.database import SessionLocal
 from database.repository import save_strategy_result
 
 load_dotenv()
-
-
-class StrategyValidationError(ValueError):
-    """The strategy still breaks the output contract after self-reflection; it must not be saved."""
 
 
 # =========================================================
@@ -172,21 +167,89 @@ def get_executor():
     )
 
 
-def _parse_json(text: str) -> dict:
-    """The model's Final Answer as a dict, tolerating markdown fences or a stray sentence around it."""
-    cleaned = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
-    start, end = cleaned.find("{"), cleaned.rfind("}")
-    if start == -1 or end <= start:
-        raise StrategyValidationError("The Strategy Agent did not return a JSON object.")
-    try:
-        return json.loads(cleaned[start:end + 1])
-    except json.JSONDecodeError as error:
-        raise StrategyValidationError(f"The Strategy Agent returned invalid JSON: {error}") from error
-
-
 # =========================================================
-# GENERATE STRATEGY
+# REFLECTION (Shaimaa)
 # =========================================================
+def reflect_strategy(
+    qualification_data: dict,
+    initial_strategy: dict,
+    strategy_start_date: str,
+) -> dict:
+    """
+    Perform a second LLM call using the same Strategy Agent model
+    to review and correct the Initial Strategy Result.
+    """
+
+    qualification_text = json.dumps(
+        qualification_data,
+        indent=2,
+        ensure_ascii=False,
+    )
+
+    initial_strategy_text = json.dumps(
+        initial_strategy,
+        indent=2,
+        ensure_ascii=False,
+    )
+
+    reflection_input = f"""
+{SELF_REFLECTION_PROMPT}
+
+==================================================
+STRATEGY START DATE
+==================================================
+
+{strategy_start_date}
+
+==================================================
+ALLOWED AGENCY SERVICES
+==================================================
+
+{AGENCY_SERVICES}
+
+==================================================
+QUALIFICATION AGENT OUTPUT
+==================================================
+
+{qualification_text}
+
+==================================================
+INITIAL STRATEGY RESULT
+==================================================
+
+{initial_strategy_text}
+
+==================================================
+TASK
+==================================================
+
+Perform the self-reflection now.
+
+Review your Initial Strategy Result using all reflection questions above.
+
+Return only the required JSON containing:
+
+- passed
+- issues
+- corrected_strategy
+"""
+
+    response = get_llm().invoke(
+        reflection_input,
+        config={
+            "run_name": "Strategy Self Reflection"
+        },
+    )
+
+    reflection_data = json.loads(response.text)
+
+    if "corrected_strategy" not in reflection_data:
+        raise ValueError(
+            "Self-reflection output is missing corrected_strategy."
+        )
+
+    return reflection_data
+
 
 def _interest_section(interest: dict | None) -> str:
     """The prompt section telling the agent the restaurant confirmed interest (empty when unknown)."""
@@ -210,12 +273,16 @@ output and do not invent needs, offers or preferences from it.
 """
 
 
-def generate_strategy_with_reflection(
+# =========================================================
+# GENERATE STRATEGY
+# =========================================================
+
+def generate_strategy(
     qualification_data: dict,
     strategy_start_date: str,
+    return_evaluation_data: bool = False,
     interest: dict | None = None,
-) -> dict:
-    """Draft with the ReAct agent, then self-reflect. Returns strategy, draft, rounds, errors, warnings."""
+):
 
     qualification_text = json.dumps(
         qualification_data,
@@ -232,6 +299,7 @@ def generate_strategy_with_reflection(
         {
             "input": f"""
 {strategy_instructions}
+
 
 
 ==================================================
@@ -267,36 +335,32 @@ improve the strategy.
 
 Do not invent restaurant facts, marketing gaps, offers, products,
 metrics, or agency services.
-"""
-        }
+        """
+    },
+    config={
+        "run_name": "Strategy Generation"
+    },
+)
+
+   
+
+    initial_strategy = json.loads(result["output"])
+
+    reflection_result = reflect_strategy(
+    qualification_data=qualification_data,
+    initial_strategy=initial_strategy,
+    strategy_start_date=strategy_start_date,
     )
 
-    draft = _parse_json(result["output"])
+    final_strategy = reflection_result["corrected_strategy"]
+    if return_evaluation_data:
+       return {
+        "initial_strategy": initial_strategy,
+        "reflection_result": reflection_result,
+        "final_strategy": final_strategy,
+    }
 
-    llm = get_llm()
-    return reflect_and_revise(
-        draft,
-        qualification_data,
-        strategy_start_date,
-        critic=llm_critic(llm),
-        reviser=llm_reviser(llm),
-    )
-
-
-def generate_strategy(
-    qualification_data: dict,
-    strategy_start_date: str,
-    interest: dict | None = None,
-):
-    """The final, self-reflected strategy; raises StrategyValidationError if it still breaks the contract."""
-    outcome = generate_strategy_with_reflection(qualification_data, strategy_start_date, interest)
-
-    if outcome["errors"]:
-        raise StrategyValidationError(
-            "The strategy failed validation after self-reflection: " + "; ".join(outcome["errors"])
-        )
-
-    return outcome["strategy"]
+    return final_strategy
 
 
 # =========================================================

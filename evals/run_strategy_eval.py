@@ -19,13 +19,24 @@ DATASET = "rawaj-strategy-agent"
 
 
 def target(inputs: dict) -> dict:
-    from agents.strategy_agent.strategy_agent import StrategyValidationError, generate_strategy_with_reflection
+    """Run the Strategy Agent (ReAct draft, then Shaimaa's self-reflection) and report what the evaluators need."""
+    from agents.strategy_agent.guardrails import check_strategy
+    from agents.strategy_agent.strategy_agent import generate_strategy
 
+    qualification, start = inputs["qualification_context"], inputs["strategy_start_date"]
     try:
-        outcome = generate_strategy_with_reflection(inputs["qualification_context"], inputs["strategy_start_date"])
-    except StrategyValidationError as error:
-        return {"strategy": None, "draft": None, "rounds": [], "errors": [], "warnings": [], "error": str(error)}
-    return {**outcome, "error": None}
+        result = generate_strategy(qualification, start, return_evaluation_data=True)
+    except Exception as error:
+        return {"strategy": None, "draft": None, "rounds": [], "errors": [], "warnings": [], "error": f"{type(error).__name__}: {error}"}
+    final, reflection = result["final_strategy"], result["reflection_result"]
+    return {
+        "strategy": final,
+        "draft": result["initial_strategy"],
+        "rounds": [{"round": 1, "issues": reflection.get("issues", []), "passed": reflection.get("passed")}],
+        # The contract checks are applied to the final strategy here, for scoring; they do not gate saving.
+        **check_strategy(final, qualification, start),
+        "error": None,
+    }
 
 
 def main() -> int:

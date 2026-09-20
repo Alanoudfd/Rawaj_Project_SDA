@@ -184,9 +184,10 @@ try:
 
     from sqlalchemy import text
 
-    from database.database import Base, engine
+    from database.database import Base, engine, ensure_legacy_database_schema
 
     Base.metadata.create_all(engine)
+    ensure_legacy_database_schema(engine)  # adds columns that newer code expects to an older database copy
     with engine.begin() as connection:
         connection.execute(text("update restaurants set email = :e where id = :i"), {"e": TEST_EMAIL, "i": RESTAURANT_ID})
 

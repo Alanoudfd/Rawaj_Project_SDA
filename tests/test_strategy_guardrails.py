@@ -1,18 +1,18 @@
-"""Offline tests for the Strategy Agent guardrails, self-reflection loop and model selection.
+"""Offline tests for the Strategy Agent: guardrail checks, Shaimaa's self-reflection wiring and model selection.
 
-No model or network is used; the critic/reviser and the ReAct executor are replaced by fakes.
+No model or network is used; the ReAct executor and the model are replaced by fakes.
 Run with: python -m unittest tests.test_strategy_guardrails -v
 """
 
-import copy
+import json
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 with patch("dotenv.load_dotenv", return_value=False):
     from agents.strategy_agent import strategy_agent
     from agents.strategy_agent.guardrails import allowed_services, check_strategy
     from agents.strategy_agent.llm import build_llm, parse_spec
-    from agents.strategy_agent.reflection import Critique, reflect_and_revise
 
 QUALIFICATION = {
     "marketing_gaps": [
@@ -102,84 +102,74 @@ class GuardrailTests(unittest.TestCase):
         self.assertTrue(any("tentative event 'Ramadan'" in w for w in result["warnings"]))
 
 
+class FakeExecutor:
+    def __init__(self, output):
+        self.output, self.inputs = output, []
+
+    def invoke(self, payload, config=None):
+        self.inputs.append(payload["input"])
+        return {"output": self.output}
+
+
+class FakeModel:
+    """Answers like a Responses-API model: the text is in .text (.content would be a list of blocks)."""
+
+    def __init__(self, reply):
+        self.reply, self.prompts = reply, []
+
+    def invoke(self, prompt, config=None):
+        self.prompts.append(prompt)
+        return SimpleNamespace(content=[{"type": "text", "text": self.reply}], text=self.reply)
+
+
+REFLECTION_REPLY = json.dumps({"passed": False, "issues": ["Day 3 repeats day 2."], "corrected_strategy": valid_strategy()})
+
+
 class ReflectionTests(unittest.TestCase):
-    def test_a_clean_draft_passes_without_revision(self):
-        calls = []
-        outcome = reflect_and_revise(
-            valid_strategy(), QUALIFICATION, START,
-            critic=lambda s, q, c: Critique(passed=True),
-            reviser=lambda *a: calls.append(a),
-        )
-        self.assertEqual(calls, [])
-        self.assertEqual(len(outcome["rounds"]), 1)
-        self.assertEqual(outcome["errors"], [])
+    def run_generate(self, draft, reflection_reply=REFLECTION_REPLY, **kwargs):
+        executor, model = FakeExecutor(json.dumps(draft)), FakeModel(reflection_reply)
+        with patch.object(strategy_agent, "get_executor", return_value=executor), patch.object(strategy_agent, "get_llm", return_value=model):
+            return strategy_agent.generate_strategy(QUALIFICATION, START, **kwargs), executor, model
 
-    def test_the_reviser_receives_every_issue_and_its_fix_is_rechecked(self):
+    def test_the_final_strategy_is_the_corrected_one(self):
         broken = valid_strategy()
         broken["thirty_day_plan"].pop()
-        seen = []
+        final, _, model = self.run_generate(broken)
+        self.assertEqual(len(final["thirty_day_plan"]), 30)
+        self.assertEqual(len(model.prompts), 1)  # one reflection call
 
-        def reviser(strategy, qualification, issues):
-            seen.append(issues)
-            return valid_strategy()
-
-        critiques = iter([Critique(passed=False, issues=["Day 12 repeats day 11."]), Critique(passed=True)])
-        outcome = reflect_and_revise(
-            broken, QUALIFICATION, START,
-            critic=lambda s, q, c: next(critiques),
-            reviser=reviser,
-        )
-        self.assertEqual(len(seen), 1)
-        self.assertEqual(len(outcome["rounds"]), 2)
-        self.assertTrue(any("plan must contain days 1-30" in i for i in seen[0]))
-        self.assertIn("Day 12 repeats day 11.", seen[0])
-        self.assertEqual(outcome["errors"], [])
-        self.assertEqual(outcome["draft"], broken)
-        self.assertEqual(len(outcome["strategy"]["thirty_day_plan"]), 30)
-
-    def test_rounds_are_capped_and_remaining_errors_are_reported(self):
+    def test_evaluation_data_keeps_the_draft_and_what_reflection_found(self):
         broken = valid_strategy()
         broken["thirty_day_plan"].pop()
-        outcome = reflect_and_revise(
-            broken, QUALIFICATION, START,
-            critic=lambda s, q, c: Critique(passed=False),
-            reviser=lambda s, q, i: copy.deepcopy(broken),
-            max_rounds=2,
+        result, _, _ = self.run_generate(broken, return_evaluation_data=True)
+        self.assertEqual(result["initial_strategy"], broken)
+        self.assertEqual(result["reflection_result"]["issues"], ["Day 3 repeats day 2."])
+        self.assertEqual(len(result["final_strategy"]["thirty_day_plan"]), 30)
+
+    def test_the_reflection_sees_the_draft_the_qualification_and_the_allowed_services(self):
+        _, _, model = self.run_generate(valid_strategy())
+        prompt = model.prompts[0]
+        self.assertIn("Prolonged Posting Inactivity", prompt)  # the qualification report
+        self.assertIn("Social Media Strategy", prompt)          # the allowed agency services
+        self.assertIn(START, prompt)
+
+    def test_the_agent_gets_its_instructions_and_is_told_the_restaurant_is_interested(self):
+        # Regression: the instructions once became "..." and the agent ran without its output format.
+        _, executor, _ = self.run_generate(
+            valid_strategy(), interest={"interested_on": START, "customer_request": "Restaurant selected Interested."},
         )
-        self.assertEqual(len(outcome["rounds"]), 2)
-        self.assertTrue(outcome["errors"])
+        sent = executor.inputs[0]
+        self.assertIn("FINAL ANSWER FORMAT", sent)
+        self.assertIn('clicking "Interested"', sent)
+        self.assertIn(f"Strategy start date: {START}", sent)
 
+    def test_a_reflection_without_a_corrected_strategy_is_an_error(self):
+        with self.assertRaises(ValueError):
+            self.run_generate(valid_strategy(), reflection_reply=json.dumps({"passed": True, "issues": []}))
 
-class GenerateStrategyTests(unittest.TestCase):
-    class FakeExecutor:
-        def __init__(self, output):
-            self.output = output
-
-        def invoke(self, payload):
-            return {"output": self.output}
-
-    def run_generate(self, output, critique=Critique(passed=True)):
-        with patch.object(strategy_agent, "get_executor", return_value=self.FakeExecutor(output)), \
-                patch.object(strategy_agent, "get_llm", return_value=object()), \
-                patch.object(strategy_agent, "llm_critic", return_value=lambda s, q, c: critique), \
-                patch.object(strategy_agent, "llm_reviser", return_value=lambda s, q, i: valid_strategy()):
-            return strategy_agent.generate_strategy(QUALIFICATION, START)
-
-    def test_fenced_json_is_accepted(self):
-        import json
-        result = self.run_generate("```json\n" + json.dumps(valid_strategy()) + "\n```")
-        self.assertEqual(len(result["thirty_day_plan"]), 30)
-
-    def test_a_broken_draft_is_repaired_by_reflection(self):
-        import json
-        broken = valid_strategy()
-        broken["thirty_day_plan"].pop()
-        result = self.run_generate(json.dumps(broken), critique=Critique(passed=False))
-        self.assertEqual(len(result["thirty_day_plan"]), 30)
-
-    def test_output_that_is_not_json_is_rejected(self):
-        with self.assertRaises(strategy_agent.StrategyValidationError):
-            self.run_generate("I could not build a strategy.")
+    def test_reflection_output_that_is_not_json_is_an_error(self):
+        with self.assertRaises(ValueError):  # json.JSONDecodeError is a ValueError
+            self.run_generate(valid_strategy(), reflection_reply="I could not review it.")
 
 
 class ModelSelectionTests(unittest.TestCase):
