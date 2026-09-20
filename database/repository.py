@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import select
+from sqlalchemy import or_, select
 from sqlalchemy.orm import Session
 
 from database.models import (
@@ -33,23 +33,39 @@ def get_restaurant_by_username(
 def get_latest_research(
     db: Session,
     restaurant_id: int,
+    content_limit: int | None = None,
+    lookback_days: int | None = None,
 ) -> ResearchRun | None:
 
     statement = (
         select(ResearchRun)
         .where(
             ResearchRun.restaurant_id == restaurant_id,
-            ResearchRun.status == "complete",
+            ResearchRun.status.in_(("complete", "completed", "partial")),
         )
-        .order_by(ResearchRun.analyzed_at.desc())
-        .limit(1)
     )
+    if content_limit is not None:
+        statement = statement.where(or_(
+            ResearchRun.content_limit == content_limit,
+            ResearchRun.content_limit.is_(None),
+        ))
+    if lookback_days is not None:
+        statement = statement.where(or_(
+            ResearchRun.lookback_days == lookback_days,
+            ResearchRun.lookback_days.is_(None),
+        ))
+    statement = statement.order_by(
+        ResearchRun.analyzed_at.desc(),
+        ResearchRun.created_at.desc(),
+        ResearchRun.id.desc(),
+    ).limit(1)
 
     return db.scalar(statement)
 
 
 def build_qualification_input(
     research_run: ResearchRun,
+    restaurant_context: dict | None = None,
 ) -> dict:
 
     restaurant = research_run.restaurant
@@ -63,10 +79,13 @@ def build_qualification_input(
             "email": restaurant.email,
             "location": restaurant.location,
         },
-        "profile": research_run.profile,
-        "profile_analysis": research_run.profile_analysis,
-        "metrics": research_run.metrics,
-        "research_signals": research_run.research_signals,
+        "profile": research_run.profile or {},
+        "profile_analysis": research_run.profile_analysis or {},
+        "metrics": research_run.metrics or {},
+        "research_signals": research_run.research_signals or [],
+        "analysis_coverage": research_run.analysis_coverage or {},
+        "data_quality": research_run.data_quality or {},
+        "restaurant_context": restaurant_context or {},
     }
 
 
@@ -197,7 +216,7 @@ def get_qualification_for_research(
             QualificationRun.research_run_id == research_run_id,
             QualificationRun.status == "completed",
         )
-        .order_by(QualificationRun.created_at.desc())
+        .order_by(QualificationRun.created_at.desc(), QualificationRun.id.desc())
         .limit(1)
     )
 

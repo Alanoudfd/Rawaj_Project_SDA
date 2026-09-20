@@ -15,6 +15,45 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database.database import Base
 
 
+class RestaurantContext(Base):
+    """Extra frontend context, stored separately to preserve existing tables."""
+
+    __tablename__ = "restaurant_contexts"
+
+    restaurant_id: Mapped[int] = mapped_column(
+        ForeignKey("restaurants.id"), primary_key=True
+    )
+    data: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+
+
+class AnalysisJob(Base):
+    __tablename__ = "analysis_jobs"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True)
+    restaurant_id: Mapped[int] = mapped_column(
+        ForeignKey("restaurants.id"), index=True
+    )
+    # A nullable unique key prevents duplicate active analyses for a restaurant.
+    active_restaurant_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("restaurants.id"), unique=True, nullable=True
+    )
+    status: Mapped[str] = mapped_column(String(20), default="queued")
+    content_limit: Mapped[int] = mapped_column(Integer, default=30)
+    lookback_days: Mapped[int] = mapped_column(Integer, default=90)
+    force_refresh: Mapped[bool] = mapped_column(Boolean, default=False)
+    context: Mapped[dict[str, Any]] = mapped_column(JSON, default=dict)
+    research_run_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("research_runs.id"), nullable=True
+    )
+    qualification_run_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("qualification_runs.id"), nullable=True
+    )
+    error: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    started_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+    finished_at: Mapped[Optional[datetime]] = mapped_column(DateTime, nullable=True)
+
+
 class Restaurant(Base):
     __tablename__ = "restaurants"
 
