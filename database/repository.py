@@ -173,32 +173,40 @@ def save_qualification_result(
     result: dict,
 ) -> QualificationRun:
     """
-    Save the complete Qualification Agent result.
+    Save the complete Qualification Agent result: one row per restaurant, updated in place.
 
-    The qualification is linked to the exact ResearchRun
-    that was used as its evidence.
+    A restaurant that already has a qualification row gets that row rewritten with the new result (and the
+    ResearchRun it was made from); only a restaurant without one gets a new row. The row keeps its id, so
+    everything that points at it (outreach, strategies) keeps pointing at the current result.
     """
 
-    qualification_run = QualificationRun(
-        restaurant_id=restaurant_id,
+    fields = dict(
         research_run_id=research_run_id,
-
         status="completed",
-
         agent=result.get("agent"),
-
         qualification=result.get("qualification"),
         decision_rationale=result.get("decision_rationale"),
-
         marketing_gaps=result.get("marketing_gaps"),
         strengths=result.get("strengths"),
         data_limitations=result.get("data_limitations"),
-
         full_result=result,
+        error_message=None,
+        created_at=datetime.utcnow(),  # the table has no updated_at: this is the time of the latest result
     )
 
     try:
-        db.add(qualification_run)
+        qualification_run = db.scalar(
+            select(QualificationRun)
+            .where(QualificationRun.restaurant_id == restaurant_id)
+            .order_by(QualificationRun.created_at.desc(), QualificationRun.id.desc())
+            .limit(1)
+        )
+        if qualification_run is None:
+            qualification_run = QualificationRun(restaurant_id=restaurant_id, **fields)
+            db.add(qualification_run)
+        else:
+            for name, value in fields.items():
+                setattr(qualification_run, name, value)
         db.commit()
         db.refresh(qualification_run)
 

@@ -3,7 +3,6 @@ from html import escape
 import streamlit as st
 
 from ui.components import current_restaurant, footer, topbar
-from ui.data import BUSINESS
 from ui.icons import icon
 from ui.ideas import chosen_idea_card, fetch_ideas, has_ideas, idea_cards
 from ui.plan import load_or_stop, period_label
@@ -11,12 +10,29 @@ from ui.plan import load_or_stop, period_label
 restaurant = current_restaurant()
 plan = load_or_stop(restaurant)
 PERIOD = period_label(plan)
-BUSINESS = {
-    **BUSINESS,
+context = restaurant.get("context") or {}
+NOT_SET = "Not provided yet"
+
+
+def saved(*names: str) -> str:
+    """The first of these saved context fields that has a value (a list is joined), else a plain 'not provided'."""
+    for name in names:
+        value = context.get(name)
+        text = ", ".join(str(v) for v in value if v) if isinstance(value, (list, tuple)) else str(value or "").strip()
+        if text:
+            return text
+    return NOT_SET
+
+
+BUSINESS = {  # everything here is read from the restaurant saved in the database
     "name": plan["restaurant_name"] or restaurant["name"],
-    "city": restaurant.get("location") or BUSINESS["city"],
-    "type": str((restaurant.get("context") or {}).get("business_type") or BUSINESS["type"]).title(),
+    "city": restaurant.get("location") or NOT_SET,
+    "type": saved("business_type").title() if saved("business_type") != NOT_SET else "",
+    "around": saved("signature_items", "cuisine"),
+    "voice": saved("tone", "brand_tone"),
+    "language": saved("language"),
 }
+WHERE = " · ".join(part for part in (BUSINESS["type"], BUSINESS["city"]) if part)
 tasks = {t["id"]: t for t in plan["tasks"]}
 task_ids = list(tasks)
 if st.session_state.get("selected_task") not in tasks:
@@ -28,7 +44,7 @@ topbar("Content Creation")
 ctx, month = st.columns([3, 1.3], vertical_alignment="center")
 ctx.markdown(
     f'<div class="ctx-row">{icon("utensils", 15)}<b>{escape(BUSINESS["name"])}</b>'
-    f'&nbsp;·&nbsp;{escape(BUSINESS["type"])}</div>',
+    f'{"&nbsp;·&nbsp;" + escape(BUSINESS["type"]) if BUSINESS["type"] else ""}</div>',
     unsafe_allow_html=True,
 )
 with month:
@@ -49,7 +65,7 @@ st.markdown(
         <p>Content that sounds like you, looks like your business, and gives people a reason to stop scrolling.</p>
       </div>
       <div class="brand-chip">{icon('utensils', 22)}
-        <div><b>{escape(BUSINESS['name'])}</b><span>{escape(BUSINESS['type'])} · {escape(BUSINESS['city'])}</span></div>
+        <div><b>{escape(BUSINESS['name'])}</b><span>{escape(WHERE)}</span></div>
       </div>
     </div>
     <div class="strip" style="margin-top:1rem;">

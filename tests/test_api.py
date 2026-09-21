@@ -530,6 +530,45 @@ class RestaurantApiTests(unittest.TestCase):
         result = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
         self.assertEqual(result["counts"]["total"], 1)
 
+    def test_gaps_endpoint_returns_the_saved_description_rationale_and_confidence(self):
+        restaurant_id = self.create_restaurant()["id"]
+        research_id = self.add_research(restaurant_id)
+        gap = {
+            "gap": "Extended Posting Inactivity", "severity": "High", "priority": 1, "status": "Confirmed", "confidence": "High",
+            "description": "The account shows a prolonged lack of recent publishing.",
+            "rationale": "No content for 60 days.\n\nThis limits visibility.",
+            "evidence": ["content_per_week: 0.0", "Images: 27 of 28 items, or 96.43%"], "recommendation_focus": "Publishing activity",
+        }
+        with Session(self.engine) as session:
+            session.add(QualificationRun(
+                restaurant_id=restaurant_id, research_run_id=research_id, status="completed", qualification="Qualified",
+                marketing_gaps=[gap], strengths=[], data_limitations=[], full_result={"marketing_gaps": [gap]},
+            ))
+            session.commit()
+        shown = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()["gaps"][0]
+        self.assertEqual(shown["description"], gap["description"])
+        self.assertEqual(shown["rationale"], gap["rationale"])  # paragraphs kept
+        self.assertEqual(shown["confidence"], "High")
+        self.assertEqual(shown["evidence"], gap["evidence"])  # the API sends what is saved; the page decides how to show it
+
+    def test_gaps_are_read_from_full_result_and_fall_back_to_the_columns(self):
+        restaurant_id = self.create_restaurant()["id"]
+        research_id = self.add_research(restaurant_id)
+        in_full = {"gap": "From full_result", "severity": "High", "priority": 1, "evidence": ["Images: 27 of 28 items"]}
+        in_column = {"gap": "From the column", "severity": "Low", "priority": 1, "evidence": []}
+        with Session(self.engine) as session:
+            session.add(QualificationRun(
+                restaurant_id=restaurant_id, research_run_id=research_id, status="completed", qualification="Qualified",
+                marketing_gaps=[in_column], strengths=["column strength"], data_limitations=["column limit"],
+                full_result={"marketing_gaps": [in_full], "strengths": ["full strength"]},  # no data_limitations here
+            ))
+            session.commit()
+        shown = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
+        self.assertEqual([g["gap"] for g in shown["gaps"]], ["From full_result"])
+        self.assertEqual(shown["gaps"][0]["evidence"], ["Images: 27 of 28 items"])
+        self.assertEqual(shown["strengths"], ["full strength"])
+        self.assertEqual(shown["data_limitations"], ["column limit"])  # missing in full_result -> its column
+
     def add_agent_strategy(self, restaurant_id, **extra):
         data = {
             "restaurant": "Agent Cafe",

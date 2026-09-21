@@ -205,6 +205,72 @@ header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecor
 .card-sub { font-size: 12px; color: var(--muted); margin: .2rem 0 0; }
 @media (max-width: 900px) { .notes { grid-template-columns: 1fr; } }
 
+/* strengths & data limitations as short cards */
+.ins-head { display: flex; align-items: center; gap: .8rem; margin-bottom: .5rem; }
+.ins-head .badge {
+  flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+}
+.ins-head.good .badge { background: var(--low-bg); color: var(--low); }
+.ins-head.limit .badge { background: var(--mod-bg); color: var(--mod); }
+.ins-head b { font: 600 15px var(--head); display: block; }
+.ins-head small { font-size: 11.5px; color: var(--muted); }
+.ins-head .count { margin-left: auto; font: 600 30px var(--head); }
+.ins-head.good .count { color: var(--low); }
+.ins-head.limit .count { color: var(--mod); }
+.insight { border-top: 1px solid var(--blue-line); }
+.insight .row, .insight summary {
+  display: flex; gap: .7rem; align-items: center; padding: .65rem 0; font-size: 12.5px; font-weight: 500; line-height: 1.45;
+}
+.insight summary { cursor: pointer; list-style: none; }
+.insight summary::-webkit-details-marker { display: none; }
+/* a small down arrow on everything that opens; it turns up when open */
+.insight summary::after, .gapx summary.gap::after, details.more > summary::after {
+  content: ""; flex: none; width: 7px; height: 7px; margin: 0 .3rem 0 .6rem;
+  border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy);
+  transform: rotate(45deg); transition: transform .15s ease; opacity: .55; align-self: center;
+}
+.insight summary::after { margin-left: auto; }
+.insight[open] summary::after, .gapx[open] summary.gap::after, details.more[open] > summary::after { transform: rotate(-135deg); }
+.insight summary:hover::after, .gapx summary.gap:hover::after, details.more > summary:hover::after { opacity: 1; }
+details.more > summary { display: flex; align-items: center; }
+.insight summary:hover .txt { color: var(--navy); text-decoration: underline; text-decoration-color: var(--blue-line); }
+.insight .dot { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; }
+.insight.good .dot { background: var(--low-bg); color: var(--low); }
+.insight.limit .dot { background: var(--mod-bg); color: var(--mod); }
+.insight .txt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.insight[open] .txt { display: block; overflow: visible; }
+.insight summary { align-items: flex-start; }
+.insight summary .dot { margin-top: 1px; }
+.gapx summary.gap { cursor: pointer; list-style: none; border-top: 1px solid var(--blue-line); }
+.gapx summary.gap::-webkit-details-marker { display: none; }
+.gapx:first-of-type summary.gap { border-top: 0; padding-top: .4rem; }
+.gapx summary.gap:hover .body b { text-decoration: underline; text-decoration-color: var(--blue-line); }
+.gapdetail { margin: 0 0 1.1rem 2.6rem; }
+.dl { margin-bottom: .8rem; }
+.dl small { display: block; font: 600 9.5px var(--head); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .2rem; }
+.dl p { font-size: 12.5px; line-height: 1.7; margin: 0 0 .5rem; }
+.ev { margin: 0; padding-left: 1.1rem; font-size: 12.5px; line-height: 1.7; }
+.ev li { margin-bottom: .25rem; }
+details.more > summary {
+  cursor: pointer; list-style: none; padding: .65rem 0 .2rem; font: 600 11.5px var(--head); color: var(--navy);
+  border-top: 1px solid var(--blue-line);
+}
+details.more > summary::-webkit-details-marker { display: none; }
+details.more .t-close { display: none; }
+details.more[open] .t-close { display: inline; }
+details.more[open] .t-open { display: none; }
+/* the whole card opens and closes from its header */
+.insbox > summary.ins-head { list-style: none; cursor: pointer; }
+.insbox > summary.ins-head::-webkit-details-marker { display: none; }
+.insbox > summary.ins-head::after {
+  content: ""; flex: none; width: 8px; height: 8px; margin: 0 .2rem 0 .3rem;
+  border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy);
+  transform: rotate(45deg); transition: transform .15s ease; opacity: .55; align-self: center;
+}
+.insbox[open] > summary.ins-head::after { transform: rotate(-135deg); }
+.insbox > summary.ins-head:hover::after { opacity: 1; }
+.insbox:not([open]) > summary.ins-head { margin-bottom: 0; }
+
 /* strategy progress */
 .tiers.three { grid-template-columns: repeat(3, 1fr); margin-bottom: .8rem; }
 .bar-row { display: flex; align-items: center; gap: .9rem; }

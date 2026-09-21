@@ -71,10 +71,22 @@ def context_runs(db, restaurant_id):
     return research, matching_qualification(db, research), job
 
 
+def saved_field(qualification, name):
+    """A field of the saved qualification, read from its full_result (the complete output of the agent).
+
+    The separate columns (marketing_gaps, strengths, data_limitations) hold copies; a row that has no full_result
+    (or lacks the field) falls back to its column.
+    """
+    if qualification is None:
+        return None
+    full = qualification.full_result if isinstance(qualification.full_result, dict) else {}
+    return full[name] if name in full else getattr(qualification, name, None)
+
+
 def gaps_response(restaurant, qualification):
     """Marketing gaps of the current qualification with a count per severity tier."""
     gaps = []
-    for item in (qualification.marketing_gaps if qualification else None) or []:
+    for item in saved_field(qualification, "marketing_gaps") or []:
         if isinstance(item, dict) and str(item.get("gap") or "").strip():
             gaps.append({
                 "gap": str(item["gap"]).strip(),
@@ -82,10 +94,13 @@ def gaps_response(restaurant, qualification):
                 "priority": item.get("priority") if isinstance(item.get("priority"), int) else None,
                 "evidence": [str(text) for text in item.get("evidence") or []],
                 "recommendation_focus": str(item.get("recommendation_focus") or ""),
+                "description": str(item.get("description") or "").strip(),
+                "rationale": str(item.get("rationale") or "").strip(),
+                "confidence": str(item.get("confidence") or "").strip(),
             })
     gaps.sort(key=lambda item: (item["priority"] is None, item["priority"] or 0))
-    limitations = [str(text) for text in (qualification.data_limitations if qualification else None) or []]
-    strengths = [str(text) for text in (qualification.strengths if qualification else None) or []]
+    limitations = [str(text) for text in saved_field(qualification, "data_limitations") or []]
+    strengths = [str(text) for text in saved_field(qualification, "strengths") or []]
     severities = [item["severity"] for item in gaps]
     return {
         "restaurant_id": restaurant.id,
