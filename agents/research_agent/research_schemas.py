@@ -53,6 +53,7 @@ class RestaurantInfo(BaseModel):
 class AnalysisMetadata(BaseModel):
     status: AnalysisStatus
     analyzed_at: str
+    scraped_at: str | None = None
     source: str = "instagram"
     analysis_version: str = "3.0"
 
@@ -151,10 +152,7 @@ class ReelDetails(BaseModel):
     shares: int | None = None
     plays: int | None = None
     views: int | None = None
-
-    audio_title: str | None = None
-    audio_artist: str | None = None
-
+    
     enrichment_success: bool = True
 
 
@@ -163,6 +161,27 @@ class ScrapedContent(BaseModel):
     short_code: str | None = None
     raw_data: ContentRawData
     reel_details: ReelDetails | None = None
+
+
+# =========================================================
+# PART 1 OUTPUT — SCRAPED INSTAGRAM DATA
+# =========================================================
+
+class ScrapedInstagramData(BaseModel):
+    """
+    Output of Part 1 (scrape): raw Instagram data exactly as collected.
+
+    Contains no LLM output and no interpretation. It is the only input
+    Part 2 (analyze) needs about the restaurant's Instagram account.
+    """
+
+    scraped_at: str
+    profile: InstagramProfile
+    content: list[ScrapedContent] = Field(default_factory=list)
+
+    # Scrape settings, kept so coverage can be reported against the request.
+    content_limit: int
+    lookback_days: int
 
 
 # =========================================================
@@ -227,7 +246,6 @@ class ContentAnalysis(BaseModel):
     spoken_topics: list[str] = Field(default_factory=list)
 
     evidence: list[EvidenceItem] = Field(default_factory=list)
-    confidence: float = Field(ge=0, le=1)
 
 
 class AnalyzedContent(ScrapedContent):
@@ -332,7 +350,7 @@ class ResearchSignal(BaseModel):
     value: Any | None = None
 
     evidence_content_ids: list[str] = Field(default_factory=list)
-    confidence: float = Field(ge=0, le=1)
+    
 
 
 # =========================================================
@@ -422,40 +440,7 @@ class QualificationRestaurantContext(BaseModel):
     followers: int | None = None
 
 
-# class QualificationInput(BaseModel):
-#     """
-#     Compact handoff from Research -> Qualification.
 
-#     Intentionally excludes the full content array, captions, image/video URLs,
-#     and Reel transcripts. The Qualification Agent receives aggregated metrics,
-#     research signals, coverage, and quality information.
-#     """
-
-#     restaurant: QualificationRestaurantContext
-#     profile_analysis: ProfileAnalysis
-#     metrics: ResearchMetrics
-#     research_signals: list[ResearchSignal] = Field(default_factory=list)
-#     analysis_coverage: AnalysisCoverage
-#     data_quality: DataQuality
-
-
-# def build_qualification_input(research: ResearchProfile) -> QualificationInput:
-#     """Create the compact payload passed from Research to Qualification."""
-
-#     return QualificationInput(
-#         restaurant=QualificationRestaurantContext(
-#             restaurant_id=research.restaurant.restaurant_id,
-#             name=research.restaurant.name,
-#             category=research.restaurant.category,
-#             location=research.restaurant.location,
-#             followers=research.profile.followers,
-#         ),
-#         profile_analysis=research.profile_analysis,
-#         metrics=research.metrics,
-#         research_signals=research.research_signals,
-#         analysis_coverage=research.analysis_coverage,
-#         data_quality=research.data_quality,
-#     )
 class QualificationInput(BaseModel):
     restaurant: RestaurantInfo
     profile: InstagramProfile
