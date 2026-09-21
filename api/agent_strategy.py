@@ -53,6 +53,9 @@ class PlanDay(BaseModel):
     action: str
     status: DayStatus = "Planned"
     format: str | None = None  # Post / Reel / Story for a template plan
+    ideas: bool = True  # False for a day with nothing to publish (a break, a profile update): no content ideas for it
+    ideas_note: str = ""
+    counts: bool = True  # False for a break: it is not a task, so the progress leaves it out
 
 
 class PrimaryGap(BaseModel):
@@ -152,6 +155,19 @@ def _start_date(strategy: Strategy) -> date:
     return started.replace(day=1)
 
 
+def _ideas_fields(focus: str) -> dict:
+    """Whether content ideas make sense for a day, and if not, why. A break has nothing to publish, and a profile
+    update (the monthly plan's "Profile refresh") is a task on the account itself, not a post, reel or story."""
+    name = focus.strip().lower()
+    if name == "break":
+        return {"ideas": False, "counts": False,
+                "ideas_note": "Break day: nothing is planned to publish, so there are no content ideas."}
+    if name.startswith("profile"):  # a profile update is still a task to do, so it counts in the progress
+        return {"ideas": False, "counts": True,
+                "ideas_note": "Profile update: this is a change to the account, not content, so there are no ideas for it."}
+    return {"ideas": True, "counts": True, "ideas_note": ""}
+
+
 def _agent_days(strategy: Strategy) -> list[dict]:
     """Valid, de-duplicated plan days in day order, with dates and completion status."""
     data, start = strategy.strategy_data, _start_date(strategy)
@@ -167,6 +183,7 @@ def _agent_days(strategy: Strategy) -> list[dict]:
             "focus": _text(item.get("focus")),
             "action": _text(item.get("action")),
             "status": "Completed" if done.get(str(number)) == "Completed" else "Planned",
+            **_ideas_fields(_text(item.get("focus"))),
         }
     return [days[number] for number in sorted(days)]
 
@@ -191,6 +208,7 @@ def _template_days(strategy: Strategy) -> list[dict]:
         {
             "day": position, "date": task["date"], "focus": _text(task.get("title")), "action": _text(task.get("objective")),
             "status": "Completed" if task.get("status") == "Completed" else "Planned", "format": _text(task.get("type")) or None,
+            **_ideas_fields(_text(task.get("title"))),
         }
         for position, task in enumerate(_template_tasks(strategy.strategy_data), 1)
     ]
@@ -322,6 +340,8 @@ def day_content_ideas(restaurant_id: RestaurantId, day: Annotated[int, Path(ge=1
     item = next((entry for entry in _plan_days(strategy) if entry["day"] == day), None)
     if item is None:
         raise HTTPException(404, "Day not found in this restaurant's strategy")
+    if not item["ideas"]:
+        raise HTTPException(422, item["ideas_note"])
 
     snapshot, _ = planning._context_snapshot(db, restaurant_id)
     overview = _response(db, strategy)

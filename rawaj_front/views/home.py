@@ -1,12 +1,14 @@
-from datetime import datetime
+import re
 from html import escape
 
 import streamlit as st
 
 from ui import api
-from ui.components import current_restaurant, footer, page_head, topbar
-from ui.data import BUSINESS
+from ui.components import current_restaurant, footer, forget_cached_data, page_head, topbar
 from ui.icons import icon
+
+# Every name, number and sentence on this page is read from the saved qualification (the latest completed run of this
+# restaurant) through the API. Only the labels of the page itself ("Strengths", "Refresh"...) are written here.
 
 TIERS = [
     ("total", "Total gaps", ""),
@@ -17,30 +19,105 @@ TIERS = [
     ("data_limitations", "Data limitations", ""),
 ]
 SEVERITY_CHIP = {"High": " sev-high", "Moderate": " sev-moderate", "Medium": " sev-moderate", "Low": " sev-low"}
+VISIBLE = 3  # points shown at first; the rest sit behind "Show more"
+ONE_LINE = 70  # a point shorter than this is shown as it is; a longer one is cut by the layout and opens on click
 
 
-def notes_card(key: str, title: str, subtitle: str, items: list[str], kind: str, symbol: str) -> None:
-    """A titled card listing short sentences in two columns (used for strengths and data limitations)."""
+def insight(text: str, kind: str, symbol: str) -> str:
+    """One saved sentence, word for word: two lines at first, the whole sentence when it is clicked."""
+    dot = f'<span class="dot">{icon(symbol, 13, 2.4)}</span>'
+    if len(text) <= ONE_LINE:
+        return f'<div class="insight {kind}"><div class="row">{dot}<span class="txt">{escape(text)}</span></div></div>'
+    return f'<details class="insight {kind}"><summary>{dot}<span class="txt">{escape(text)}</span></summary></details>'
+
+
+def insights_card(key: str, title: str, subtitle: str, items: list[str], kind: str, symbol: str) -> None:
+    """A card with the saved count and the saved points (strengths and data limitations).
+
+    The header opens and closes the whole list; inside, "Show more" / "Show less" reveals the points after the first few.
+    """
     with st.container(key=key):
-        rows = "".join(
-            f'<div class="note {kind}"><span class="dot">{icon(symbol, 13, 2.4)}</span><span>{escape(text)}</span></div>'
-            for text in items
-        )
+        rows = [insight(text, kind, symbol) for text in items]
+        more = ""
+        if len(rows) > VISIBLE:
+            more = (
+                f'<details class="more"><summary><span class="t-open">Show {len(rows) - VISIBLE} more</span>'
+                f'<span class="t-close">Show less</span></summary>{"".join(rows[VISIBLE:])}</details>'
+            )
         st.markdown(
             f"""
-            <div class="card-head"><h3 class="card-title">{title} · {len(items)}</h3></div>
-            <p class="card-sub">{subtitle}</p>
-            <div class="notes">{rows}</div>
+            <details class="insbox" open>
+              <summary class="ins-head {kind}"><span class="badge">{icon(symbol, 18, 2.2)}</span>
+                <div><b>{title}</b><small>{subtitle}</small></div><span class="count">{len(items)}</span></summary>
+              {"".join(rows[:VISIBLE])}{more}
+            </details>
             """,
             unsafe_allow_html=True,
         )
 
 
-def _updated(stamp: str | None) -> str:
-    try:
-        return f"Updated {datetime.fromisoformat(stamp).astimezone():%d %b %H:%M}"
-    except (TypeError, ValueError):
-        return ""
+# The saved evidence of a gap mixes sentences with machine lines ("content_per_week: 0.0", "Research signal: activity_01").
+# Only the sentences are shown; the machine lines stay in the database.
+_MACHINE_KEY = re.compile(r"^[a-z0-9_.]+$")  # content_last_30_days, metrics.format_mix
+_MACHINE_VALUE = re.compile(r"^(?:[a-z]+(?:_[a-z0-9]+)+|[a-z_]+(?:\.[a-z_]+)+)$")  # activity_01, metrics.format_mix
+_EMPTY_VALUE = {"0", "0.0", "false", "true", "none", "null", "n/a", "not available"}
+
+
+def readable(line: str) -> bool:
+    """A saved evidence line that reads as a sentence, not a metric name, an id, or a bare 0 / False."""
+    text = line.strip()
+    if not text:
+        return False
+    key, colon, value = text.partition(":")
+    if colon:
+        return not (_MACHINE_KEY.match(key.strip()) or _MACHINE_VALUE.match(value.strip()) or value.strip().lower() in _EMPTY_VALUE)
+    return not (_MACHINE_VALUE.match(text) or text.lower() in _EMPTY_VALUE)
+
+
+def paragraphs(text: str) -> str:
+    return "".join(f"<p>{escape(part.strip())}</p>" for part in re.split(r"\n\s*\n", text) if part.strip())
+
+
+def gap_details(gap: dict) -> str:
+    """What opens under a gap: its saved description, why it is a gap (rationale), the readable evidence, the confidence."""
+    parts = []
+    if gap.get("description"):
+        parts.append(f'<div class="dl"><small>Description</small>{paragraphs(gap["description"])}</div>')
+    if gap.get("rationale"):
+        parts.append(f'<div class="dl"><small>Why this is a gap</small>{paragraphs(gap["rationale"])}</div>')
+    evidence = [text for text in gap["evidence"] if readable(text)]
+    if evidence:
+        items = "".join(f"<li>{escape(text)}</li>" for text in evidence)
+        parts.append(f'<div class="dl"><small>Evidence</small><ul class="ev">{items}</ul></div>')
+    if gap.get("confidence"):
+        parts.append(f'<div class="dl"><small>Confidence</small><p>{escape(gap["confidence"])}</p></div>')
+    return "".join(parts)
+
+
+def gap_row(number: int, gap: dict) -> str:
+    """One saved gap; its saved details open when the row is clicked."""
+    head = (
+        f'<span class="num">{number:02d}</span>'
+        f'<div class="body"><b>{escape(gap["gap"])}</b><span>{escape(gap["recommendation_focus"])}</span></div>'
+        f'<span class="chip{SEVERITY_CHIP.get(gap["severity"], "")}">{escape(gap["severity"] or "Unrated")}</span>'
+    )
+    details = gap_details(gap)
+    if not details:
+        return f'<div class="gap">{head}</div>'
+    return f'<details class="gapx"><summary class="gap">{head}</summary><div class="gapdetail">{details}</div></details>'
+
+
+def refresh_now() -> None:
+    """The Refresh button: forget what is cached and read everything from the API again."""
+    forget_cached_data()
+    st.session_state.just_refreshed = True
+
+
+def source_line(data: dict) -> str:
+    """Which saved qualification is on screen (its row number in the table); no times."""
+    if data["qualification_id"] is None:
+        return "no saved qualification for this restaurant"
+    return f"read from qualification_runs.full_result · row {data['qualification_id']}"
 
 
 @st.fragment(run_every=5)
@@ -72,19 +149,11 @@ def live_gaps() -> None:
     with main:
         with st.container(key="card_gaps"):
             if gaps:
-                rows = "".join(
-                    f"""
-                    <div class="gap">
-                      <span class="num">{i:02d}</span>
-                      <div class="body"><b>{escape(g['gap'])}</b><span>{escape(g['recommendation_focus'])}</span></div>
-                      <span class="chip{SEVERITY_CHIP.get(g['severity'], '')}">{escape(g['severity'] or 'Unrated')}</span>
-                    </div>"""
-                    for i, g in enumerate(gaps, 1)
-                )
                 st.markdown(
                     f"""
                     <div class="card-head"><h3 class="card-title">Where {escape(data['restaurant_name'])} can grow</h3>
-                    <span class="muted">{counts['total']} gaps · {_updated(data['created_at'])}</span></div>{rows}
+                    <span class="muted">{counts['total']} gaps · click a gap to see why</span></div>
+                    {"".join(gap_row(i, g) for i, g in enumerate(gaps, 1))}
                     """,
                     unsafe_allow_html=True,
                 )
@@ -102,32 +171,39 @@ def live_gaps() -> None:
 
     with side:
         with st.container(key="card_next"):
+            top = gaps[0] if gaps else None  # the gap with the highest saved priority
+            direction = (
+                f'<p style="margin:.7rem 0 0;"><b>{escape(top["gap"])}</b></p>'
+                f'<p class="muted" style="margin:.3rem 0 0;">{escape(top["recommendation_focus"])}</p>'
+                if top
+                else '<p class="muted" style="margin:.7rem 0 0;">Nothing to act on until a qualification is saved.</p>'
+            )
             st.markdown(
                 f"""
                 <div class="eyebrow" style="letter-spacing:0; text-transform:none; font-size:11px; color:var(--navy);">
                   {icon('sparkles', 15)} <b>Your next direction</b>
                 </div>
-                <p class="muted" style="margin:.7rem 0 0;">Your audience is shaped around {escape(BUSINESS['audience'])}.</p>
+                {direction}
                 """,
                 unsafe_allow_html=True,
             )
-            if st.button("Refresh", type="primary", key="refresh_gaps"):
-                st.rerun(scope="fragment")
+            if st.button("Refresh", type="primary", key="refresh_gaps", icon=":material/refresh:"):
+                refresh_now()
+                st.rerun()  # the whole page, not only this block: the sidebar and every card read the API again
             st.markdown(
-                '<div class="status"><b>live</b><span>This page reads the latest results from the Rawaj API.</span></div>',
+                f'<div class="status"><b>live</b><span>{escape(source_line(data))} · updates every 5 seconds.</span></div>',
                 unsafe_allow_html=True,
             )
+            if st.session_state.pop("just_refreshed", False):
+                st.toast("Refreshed", icon=":material/check_circle:")
 
-    if data["strengths"]:
-        notes_card(
-            "card_strengths", "Strengths", "What already works well.",
-            data["strengths"], "good", "check",
-        )
-    if data["data_limitations"]:
-        notes_card(
-            "card_limits", "Data limitations", "What the analysis could not measure, so read these results with care.",
-            data["data_limitations"], "limit", "info",
-        )
+    left, right = st.columns(2, gap="medium")
+    with left:
+        if data["strengths"]:
+            insights_card("card_strengths", "Strengths", "What already works well", data["strengths"], "good", "check")
+    with right:
+        if data["data_limitations"]:
+            insights_card("card_limits", "Data limitations", "Read the results with care", data["data_limitations"], "limit", "info")
 
 
 topbar("Home")

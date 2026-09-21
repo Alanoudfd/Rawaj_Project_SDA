@@ -137,6 +137,9 @@ class GapItem(BaseModel):
     priority: int | None = None
     evidence: list[str] = Field(default_factory=list)
     recommendation_focus: str = ""
+    description: str = ""  # description, rationale and confidence exist in gaps saved by the current Qualification Agent
+    rationale: str = ""
+    confidence: str = ""
 
 
 class GapCounts(BaseModel):

@@ -530,6 +530,45 @@ class RestaurantApiTests(unittest.TestCase):
         result = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
         self.assertEqual(result["counts"]["total"], 1)
 
+    def test_gaps_endpoint_returns_the_saved_description_rationale_and_confidence(self):
+        restaurant_id = self.create_restaurant()["id"]
+        research_id = self.add_research(restaurant_id)
+        gap = {
+            "gap": "Extended Posting Inactivity", "severity": "High", "priority": 1, "status": "Confirmed", "confidence": "High",
+            "description": "The account shows a prolonged lack of recent publishing.",
+            "rationale": "No content for 60 days.\n\nThis limits visibility.",
+            "evidence": ["content_per_week: 0.0", "Images: 27 of 28 items, or 96.43%"], "recommendation_focus": "Publishing activity",
+        }
+        with Session(self.engine) as session:
+            session.add(QualificationRun(
+                restaurant_id=restaurant_id, research_run_id=research_id, status="completed", qualification="Qualified",
+                marketing_gaps=[gap], strengths=[], data_limitations=[], full_result={"marketing_gaps": [gap]},
+            ))
+            session.commit()
+        shown = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()["gaps"][0]
+        self.assertEqual(shown["description"], gap["description"])
+        self.assertEqual(shown["rationale"], gap["rationale"])  # paragraphs kept
+        self.assertEqual(shown["confidence"], "High")
+        self.assertEqual(shown["evidence"], gap["evidence"])  # the API sends what is saved; the page decides how to show it
+
+    def test_gaps_are_read_from_full_result_and_fall_back_to_the_columns(self):
+        restaurant_id = self.create_restaurant()["id"]
+        research_id = self.add_research(restaurant_id)
+        in_full = {"gap": "From full_result", "severity": "High", "priority": 1, "evidence": ["Images: 27 of 28 items"]}
+        in_column = {"gap": "From the column", "severity": "Low", "priority": 1, "evidence": []}
+        with Session(self.engine) as session:
+            session.add(QualificationRun(
+                restaurant_id=restaurant_id, research_run_id=research_id, status="completed", qualification="Qualified",
+                marketing_gaps=[in_column], strengths=["column strength"], data_limitations=["column limit"],
+                full_result={"marketing_gaps": [in_full], "strengths": ["full strength"]},  # no data_limitations here
+            ))
+            session.commit()
+        shown = self.client.get(f"/api/restaurants/{restaurant_id}/gaps").json()
+        self.assertEqual([g["gap"] for g in shown["gaps"]], ["From full_result"])
+        self.assertEqual(shown["gaps"][0]["evidence"], ["Images: 27 of 28 items"])
+        self.assertEqual(shown["strengths"], ["full strength"])
+        self.assertEqual(shown["data_limitations"], ["column limit"])  # missing in full_result -> its column
+
     def add_agent_strategy(self, restaurant_id, **extra):
         data = {
             "restaurant": "Agent Cafe",
@@ -690,6 +729,43 @@ class RestaurantApiTests(unittest.TestCase):
         other = self.create_restaurant(instagram_username="quiet_place")["id"]
         self.add_agent_strategy(other, strategy_start_date="2026-11-01")
         self.assertEqual(self.client.get(f"/api/restaurants/{other}/agent-strategy").json()["occasions"], [])
+
+    def test_break_and_profile_update_days_have_no_content_ideas(self):
+        restaurant_id = self.create_restaurant()["id"]
+        plan = [{"day": 1, "focus": "Post", "action": "Show the menu."}, {"day": 2, "focus": "Break", "action": "Let people respond."}]
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-01", thirty_day_plan=plan)
+        seen = []
+        self.client.app.state.content_ideas_runner = lambda context: seen.append(context) or self.three_ideas("Post")
+        url = f"/api/restaurants/{restaurant_id}/agent-strategy"
+        days = self.client.get(url).json()["days"]
+        self.assertEqual([(d["focus"], d["ideas"]) for d in days], [("Post", True), ("Break", False)])
+        self.assertIn("Break", days[1]["ideas_note"])
+        self.assertEqual([d["counts"] for d in days], [True, False])  # a break is left out of the progress
+        self.assertEqual(self.client.post(f"{url}/days/1/ideas", json={}).status_code, 200)
+        refused = self.client.post(f"{url}/days/2/ideas", json={})
+        self.assertEqual(refused.status_code, 422)
+        self.assertIn("Break day", refused.json()["detail"])
+        self.assertEqual(len(seen), 1)  # the model was never asked about the break
+
+        # The monthly plan's "Profile refresh" is a task on the account, not content.
+        other = self.create_restaurant(instagram_username="profile_place")["id"]
+        data = {
+            "id": 1, "restaurant_id": other, "month": "2026-09", "restaurant_name": "Place", "business_type": "cafe",
+            "goal": "More visits", "summary": "A plan.", "focus": "Menu.", "pillars": [],
+            "tasks": [
+                {"id": "t-01", "date": "2026-09-03", "type": "Post", "title": "Signature dish", "objective": "Show a dish.", "status": "Planned"},
+                {"id": "t-02", "date": "2026-09-30", "type": "Story", "title": "Profile refresh", "objective": "Review and update the profile.", "status": "Planned"},
+            ],
+            "occasions": [], "context_signature": "abc", "generation_method": "context_template",
+        }
+        with Session(self.engine) as session:
+            session.add(Strategy(restaurant_id=other, strategy_data=data))
+            session.commit()
+        monthly = self.client.get(f"/api/restaurants/{other}/agent-strategy").json()["days"]
+        self.assertEqual([(d["focus"], d["ideas"]) for d in monthly], [("Signature dish", True), ("Profile refresh", False)])
+        self.assertEqual([d["counts"] for d in monthly], [True, True])  # a profile update is a task, so it counts
+        self.client.app.state.content_ideas_runner = lambda context: self.three_ideas("Story")
+        self.assertEqual(self.client.post(f"/api/restaurants/{other}/agent-strategy/days/2/ideas", json={}).status_code, 422)
 
     def test_day_ideas_use_the_stored_business_type_and_report_problems(self):
         restaurant_id = self.create_restaurant(context={"business_type": "cafe"})["id"]

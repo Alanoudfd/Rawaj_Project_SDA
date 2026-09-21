@@ -6,7 +6,6 @@ from html import escape
 import streamlit as st
 
 from ui import api
-from ui.data import BUSINESS
 from ui.icons import icon, star
 
 
@@ -21,6 +20,11 @@ def _restaurants() -> list[dict] | None:
         return api.list_restaurants()
     except api.ApiError:
         return None
+
+
+def forget_cached_data() -> None:
+    """Drop what the pages remember (the restaurant list is kept for 5 seconds) so the next read comes from the API."""
+    _restaurants.clear()
 
 
 def current_restaurant() -> dict | None:
@@ -45,7 +49,7 @@ def current_restaurant() -> dict | None:
 
 def sidebar() -> None:
     workspace = current_restaurant()
-    name = workspace["name"] if workspace else BUSINESS["name"]
+    name = workspace["name"] if workspace else "Your workspace"
     with st.sidebar:
         st.markdown(
             f"""
