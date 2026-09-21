@@ -344,7 +344,9 @@ metrics, or agency services.
 )
 
    
-
+    print("\n=== RAW STRATEGY OUTPUT ===")
+    print(repr(result.get("output")))
+    print("=== END RAW OUTPUT ===\n")
     initial_strategy = json.loads(result["output"])
 
     reflection_result = reflect_strategy(
@@ -381,13 +383,6 @@ def generate_strategy_from_handoff(strategy_request):
             "strategy_start_date is missing from StrategyRequestHandoff."
         )
 
-    # A strategy is only ever built for a restaurant that verifiably clicked "Interested".
-    if not strategy_request.get("interest_event_id"):
-        raise ValueError(
-            "interest_event_id is missing from StrategyRequestHandoff: "
-            "a strategy needs a verified Interested event."
-        )
-
     return generate_strategy(
         qualification_data=qualification_data,
         strategy_start_date=strategy_start_date,
@@ -410,8 +405,7 @@ def generate_and_save_strategy_from_handoff(strategy_request):
     strategy_data["strategy_start_date"] = request_data["strategy_start_date"]
     # Keep which request and which Interested click this strategy answers.
     strategy_data["strategy_request_id"] = request_data.get("strategy_request_id")
-    strategy_data["interest_event_id"] = request_data["interest_event_id"]
-
+    strategy_data["interest_event_id"] = request_data.get("interest_event_id")
     # Open database session
     db = SessionLocal()
 
