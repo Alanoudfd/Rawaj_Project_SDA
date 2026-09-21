@@ -11,7 +11,6 @@ import re
 from openevals.llm import create_llm_as_judge
 
 from agents.strategy_agent.guardrails import check_strategy
-from agents.strategy_agent.llm import build_llm
 
 
 def _norm(text: str) -> str:
@@ -114,9 +113,9 @@ The reference lists the High and Moderate gaps the strategy is expected to addre
 """
 
 
-def judge_spec() -> str:
-    """EVAL_JUDGE_LLM, else the default model. Prefer a different model than the strategy one (set EVAL_JUDGE_LLM)."""
-    return os.getenv("EVAL_JUDGE_LLM") or "openai:gpt-5.6-luna"
+def judge_model() -> str:
+    """The same model as every agent (OPENAI_MODEL). Note: a judge that is also the author tends to grade kindly."""
+    return os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 
 
 def make_judge(key: str, judge_llm):
@@ -138,6 +137,8 @@ def make_judge(key: str, judge_llm):
 def build_evaluators(with_judges: bool = True) -> list:
     evaluators = [contract_valid, grounding, high_gap_coverage, reflection_effect]
     if with_judges:
-        judge_llm = build_llm(judge_spec())
+        from langchain_openai import ChatOpenAI
+
+        judge_llm = ChatOpenAI(model=judge_model(), use_responses_api=True)
         evaluators += [make_judge(key, judge_llm) for key in RUBRICS]
     return evaluators

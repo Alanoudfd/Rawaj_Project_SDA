@@ -3,20 +3,24 @@ from html import escape
 import streamlit as st
 
 from ui.components import current_restaurant, footer, topbar
-from ui.data import BUSINESS, generate_ideas
+from ui.data import BUSINESS
 from ui.icons import icon
+from ui.ideas import chosen_idea_card, fetch_ideas, has_ideas, idea_cards
 from ui.plan import load_or_stop, period_label
 
 restaurant = current_restaurant()
 plan = load_or_stop(restaurant)
 PERIOD = period_label(plan)
-BUSINESS = {**BUSINESS, "name": plan["restaurant_name"] or restaurant["name"], "city": restaurant.get("location") or BUSINESS["city"]}
+BUSINESS = {
+    **BUSINESS,
+    "name": plan["restaurant_name"] or restaurant["name"],
+    "city": restaurant.get("location") or BUSINESS["city"],
+    "type": str((restaurant.get("context") or {}).get("business_type") or BUSINESS["type"]).title(),
+}
 tasks = {t["id"]: t for t in plan["tasks"]}
 task_ids = list(tasks)
 if st.session_state.get("selected_task") not in tasks:
     st.session_state.selected_task = task_ids[0]
-st.session_state.setdefault("ideas", {})
-st.session_state.setdefault("saved_ideas", {})
 
 topbar("Content Creation")
 
@@ -91,6 +95,8 @@ with st.container(key="card_task"):
         unsafe_allow_html=True,
     )
 
+chosen_idea_card(restaurant, task)
+
 # Studio
 with st.container(key="card_studio"):
     st.markdown(
@@ -114,33 +120,18 @@ with st.container(key="card_studio"):
             unsafe_allow_html=True,
         )
         with action:
-            if st.button("Generate content ideas", icon=":material/auto_awesome:", type="primary", key="generate"):
-                st.session_state.ideas[picked] = generate_ideas(task, guidance)
+            cached = has_ideas(restaurant, task)
+            if st.button(
+                "None fit? Generate others" if cached else "Generate content ideas",
+                icon=":material/auto_awesome:", type="primary", key="generate",
+            ):
+                fetch_ideas(restaurant, task, cached, guidance)
                 st.rerun()
 
-    ideas = st.session_state.ideas.get(picked)
-    saved = st.session_state.saved_ideas.get(picked)
-    if ideas:
-        for i, idea in enumerate(ideas, 1):
-            with st.container(key=f"card_idea_{i}"):
-                body, act = st.columns([4, 1], vertical_alignment="center")
-                is_saved = saved == idea
-                body.markdown(
-                    f"""
-                    <div class="idea"><span class="n">{i}</span>
-                      <div><b>{escape(idea['title'])}</b><p>{escape(idea['text'])}</p></div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-                if act.button(
-                    "Saved" if is_saved else "Save to task",
-                    key=f"save_{i}",
-                    icon=":material/check:" if is_saved else None,
-                    disabled=is_saved,
-                ):
-                    st.session_state.saved_ideas[picked] = idea
-                    st.rerun()
+    if st.session_state.get("idea_error"):
+        st.error(st.session_state.pop("idea_error"))
+    if has_ideas(restaurant, task):
+        idea_cards(restaurant, task, "content")
     else:
         st.markdown(
             f"""

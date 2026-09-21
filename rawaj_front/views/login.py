@@ -37,7 +37,7 @@ with left:
           <div class="mid">
             <div class="eyebrow"><span class="dot"></span>Made for local favorites</div>
             <h1>Good food.<br>Great stories.<br><em>Room to grow.</em></h1>
-            <p class="lead">Your restaurant has something special. Turn it into a thoughtful monthly plan and content worth sharing.</p>
+            <p class="lead">You have something special to share. Turn it into a thoughtful monthly plan and content worth sharing.</p>
             <div class="orbit">
               <div class="ring" style="left:100px; top:0; width:150px; height:150px;"></div>
               <div class="ring" style="left:60px; top:20px; width:230px; height:110px; transform:rotate(-24deg);"></div>
@@ -97,7 +97,7 @@ with right:
             <div class="login-right"><div class="preview">
               <b>Preview access</b>
               Demo sign-in is on: any email with a password of 6+ characters works.
-              Restaurant accounts use the username and password from their Rawaj email.
+              Client accounts use the username and password from their Rawaj email.
             </div></div>
             """,
             unsafe_allow_html=True,

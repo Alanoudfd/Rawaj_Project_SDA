@@ -1,19 +1,15 @@
-"""Create/refresh the LangSmith dataset used to evaluate the Strategy Agent.
+"""Create/refresh the LangSmith datasets used to evaluate every agent.
 
-    python -m evals.upload_dataset --dry-run    # show the cases, upload nothing
+    python -m evals.upload_dataset --dry-run    # show what would be uploaded
     python -m evals.upload_dataset              # upload new cases to the LangSmith project in .env
 
-This sends the qualification reports (restaurant names, gaps and evidence) to LangSmith.
-Cases already uploaded (same qualification_run_id) are skipped, so it is safe to re-run.
+This sends saved research, qualification reports and generated text (restaurant names, gaps, evidence) to LangSmith.
+Cases already uploaded are skipped, so it is safe to re-run. (`python -m evals.run_all --upload-only` does the same.)
 """
 
 import argparse
 
 from dotenv import load_dotenv
-
-from evals.cases import build_cases
-
-DATASET = "rawaj-strategy-agent"
 
 
 def main() -> int:
@@ -22,41 +18,25 @@ def main() -> int:
     args = parser.parse_args()
 
     load_dotenv()
-    cases = build_cases()
-    if not cases:
-        print("No completed qualification runs found in the database.")
-        return 1
+    from evals.run_all import registry
 
+    agents = registry()
     if args.dry_run:
-        for case in cases:
-            ref = case["reference"]
-            print(f"{case['name']} (qualification run {case['qualification_run_id']}): "
-                  f"{len(ref['high_gaps'])} High, {len(ref['moderate_gaps'])} Moderate gaps")
+        for name, module in agents.items():
+            examples = module.build_examples()
+            print(f"{name}: {len(examples)} case(s) for dataset '{module.DATASET}'")
+            for example in examples[:6]:
+                print(f"   - {example['key']} {example.get('metadata', {}).get('restaurant', '')}")
         return 0
 
     from langsmith import Client
 
+    from evals.common import upsert_examples
+
     client = Client()
-    if client.has_dataset(dataset_name=DATASET):
-        dataset = client.read_dataset(dataset_name=DATASET)
-    else:
-        dataset = client.create_dataset(
-            DATASET, description="Qualification reports -> 30-day strategy. Reference = the High/Moderate gaps to address."
-        )
-    known = {(e.metadata or {}).get("qualification_run_id") for e in client.list_examples(dataset_id=dataset.id)}
-    new = [case for case in cases if case["qualification_run_id"] not in known]
-    if new:
-        client.create_examples(
-            dataset_id=dataset.id,
-            examples=[
-                {
-                    "inputs": case["inputs"], "outputs": case["reference"],
-                    "metadata": {"restaurant": case["name"], "qualification_run_id": case["qualification_run_id"]},
-                }
-                for case in new
-            ],
-        )
-    print(f"Dataset '{DATASET}': uploaded {len(new)} new case(s), {len(cases) - len(new)} already present.")
+    for name, module in agents.items():
+        new, existing = upsert_examples(client, module.DATASET, module.DESCRIPTION, module.build_examples())
+        print(f"{name}: '{module.DATASET}' uploaded {new} new case(s), {existing} already present.")
     return 0
 
 

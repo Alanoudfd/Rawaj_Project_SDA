@@ -5,6 +5,7 @@ Run with: python -m unittest tests.test_strategy_guardrails -v
 """
 
 import json
+import os
 import unittest
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -12,7 +13,6 @@ from unittest.mock import patch
 with patch("dotenv.load_dotenv", return_value=False):
     from agents.strategy_agent import strategy_agent
     from agents.strategy_agent.guardrails import allowed_services, check_strategy
-    from agents.strategy_agent.llm import build_llm, parse_spec
 
 QUALIFICATION = {
     "marketing_gaps": [
@@ -173,12 +173,19 @@ class ReflectionTests(unittest.TestCase):
 
 
 class ModelSelectionTests(unittest.TestCase):
-    def test_spec_parsing(self):
-        self.assertEqual(parse_spec(" OpenAI : gpt-5.6 "), ("openai", "gpt-5.6"))
-        with self.assertRaises(ValueError):
-            parse_spec("openai")
-        with self.assertRaises(ValueError):
-            build_llm("anthropic:claude-sonnet-5")  # only OpenAI is supported
+    def built_with(self, env):
+        strategy_agent.get_llm.cache_clear()
+        self.addCleanup(strategy_agent.get_llm.cache_clear)
+        with patch.dict("os.environ", env), patch.object(strategy_agent, "ChatOpenAI") as chat:
+            os.environ.pop("OPENAI_MODEL", None) if "OPENAI_MODEL" not in env else None
+            strategy_agent.get_llm()
+        return chat.call_args.kwargs
+
+    def test_the_default_model_is_the_one_the_qualification_agent_uses(self):
+        self.assertEqual(self.built_with({}), {"model": "gpt-5.6-luna", "use_responses_api": True})
+
+    def test_openai_model_in_env_changes_it(self):
+        self.assertEqual(self.built_with({"OPENAI_MODEL": "another-model"})["model"], "another-model")
 
 
 if __name__ == "__main__":

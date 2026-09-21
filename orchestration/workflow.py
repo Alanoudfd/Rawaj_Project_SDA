@@ -40,9 +40,10 @@ from typing import Any, Callable, Literal, TypedDict
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import END, START, StateGraph
 
+from agents.qualification_agent.prompt import QUALIFICATION_PROMPT_VERSION
 from agents.research_agent.research_models import RestaurantInfo
 from database.database import SessionLocal
-from database.models import ResearchRun, Restaurant, Strategy
+from database.models import OutboundMessage, QualificationRun, ResearchRun, Restaurant, Strategy
 from database.repository import (
     build_qualification_input,
     get_latest_research,
@@ -106,6 +107,18 @@ def _write_until_reviewed(call: Callable[[], dict[str, Any]], attempts: int = RE
         logger.info("The review model rejected the email; writing it again.")
         outcome = call()
     return outcome
+
+
+def _online(check: str, *args) -> None:
+    """Score what an agent just produced with the checks written in code, in LangSmith (evals/online.py).
+
+    Needs LangSmith tracing; costs nothing; never affects the pipeline."""
+    try:
+        from evals import online
+
+        getattr(online, check)(*args)
+    except Exception as error:
+        logger.debug("Online check %s skipped (%s)", check, type(error).__name__)
 
 
 def _default_application():
@@ -172,6 +185,8 @@ def research_node(state: PipelineState, config: RunnableConfig) -> dict[str, Any
                 "research_run_id": research_run.id,
                 "error": "Research failed. Please try again.",
             }
+        if research_run.full_result:
+            _online("check_research", research_run.full_result)
         return {"restaurant_id": restaurant_id, "research_run_id": research_run.id}
 
 
@@ -195,7 +210,10 @@ def qualification_node(state: PipelineState, config: RunnableConfig) -> dict[str
 
         existing = get_qualification_for_research(db, research_run.id)
         previous_context = existing.full_result.get("restaurant_context") or {} if existing is not None else {}
-        if existing and _context_compatible(previous_context, restaurant_context):
+        current_version = existing is not None and (
+            existing.full_result.get("prompt_version") == QUALIFICATION_PROMPT_VERSION
+        )
+        if existing and current_version and _context_compatible(previous_context, restaurant_context):
             return {"qualification_run_id": existing.id, "qualification_result": existing.full_result}
 
         try:
@@ -210,12 +228,14 @@ def qualification_node(state: PipelineState, config: RunnableConfig) -> dict[str
 
             qualification_result = run_qualification_agent(qualification_input)
             qualification_result["restaurant_context"] = deepcopy(restaurant_context)
+            qualification_result["prompt_version"] = QUALIFICATION_PROMPT_VERSION
             qualification_run = save_qualification_result(
                 db=db,
                 restaurant_id=restaurant_id,
                 research_run_id=research_run.id,
                 result=qualification_result,
             )
+            _online("check_qualification", qualification_result, qualification_input)
             return {"qualification_run_id": qualification_run.id, "qualification_result": qualification_result}
         except Exception:
             logger.error("Qualification failed for restaurant %s. Please try again.", restaurant_id)
@@ -255,6 +275,12 @@ def outreach_stage_node(state: PipelineState, config: RunnableConfig) -> dict[st
     if response.get("error"):
         logger.error("Outreach did not start for restaurant %s: %s", restaurant_id, response["error"])
         return {"outreach": {"status": "ERROR", "error": response["error"]}}
+    if response.get("outreach_action") == "SEND_INITIAL_OUTREACH" and response.get("outreach_message_id"):
+        with settings["session_factory"]() as db:
+            message = db.get(OutboundMessage, response["outreach_message_id"])
+            restaurant = db.get(Restaurant, restaurant_id)
+            if message and restaurant:
+                _online("check_first_email", message.plain_text_body, restaurant.name)
     return {
         "outreach": {
             "status": response.get("outreach_status"),
@@ -283,8 +309,28 @@ def strategy_node(state: PipelineState, config: RunnableConfig) -> dict[str, Any
         from agents.strategy_agent.strategy_worker import process_strategy_requests_once as process
 
     summary = process(limit=state.get("limit", 10))
+    _online("check_strategy_handoff", summary)
     saved = [item for item in summary.get("items", []) if item.get("status") == "STRATEGY_GENERATED_AND_SAVED"]
+    for item in saved:
+        _score_saved_strategy(item["strategy_id"])
     return {"strategy_summary": summary, "strategy_saved": saved}
+
+
+def _score_saved_strategy(strategy_id: int) -> None:
+    """Online evaluation of a strategy that was just saved (only when LangSmith tracing is on)."""
+    if os.getenv("LANGSMITH_TRACING", "").strip().lower() not in {"true", "1"}:
+        return
+    try:
+        with SessionLocal() as db:
+            strategy = db.get(Strategy, strategy_id)
+            if strategy is None:
+                return
+            data = dict(strategy.strategy_data or {})
+            run = db.get(QualificationRun, strategy.qualification_run_id) if strategy.qualification_run_id else None
+            qualification = run.full_result if run else None
+        _online("check_strategy", data, qualification, data.get("strategy_start_date"))
+    except Exception as error:
+        logger.debug("Online check of the strategy skipped (%s)", type(error).__name__)
 
 
 def dashboard_url() -> str:
@@ -462,7 +508,9 @@ def send_emails_node(state: PipelineState, config: RunnableConfig) -> dict[str, 
             except Exception as error:
                 logger.error("Automatic approval of %s failed (%s)", request["message_id"], type(error).__name__)
                 skipped.append({"message_id": request["message_id"], "reason": f"approval failed: {type(error).__name__}"})
-        return {"email_summary": {"enabled": True, "approved": approved, "skipped": skipped}}
+        summary = {"enabled": True, "approved": approved, "skipped": skipped}
+        _online("check_emails_sent", summary)
+        return {"email_summary": summary}
 
 
 # =========================================================

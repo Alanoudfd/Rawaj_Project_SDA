@@ -52,7 +52,7 @@ def _get_llm() -> ChatOpenAI:
     if not os.getenv("OPENAI_API_KEY"):
         raise ValueError("OPENAI_API_KEY is missing from .env")
     return ChatOpenAI(
-        model="gpt-5.6-luna",
+        model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
         timeout=120,
         max_retries=3,
         use_responses_api=True,

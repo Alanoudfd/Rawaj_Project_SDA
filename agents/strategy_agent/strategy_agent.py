@@ -4,9 +4,9 @@ from functools import lru_cache
 
 from dotenv import load_dotenv
 from langchain_classic.agents import create_react_agent, AgentExecutor
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 
-from .llm import build_llm
 from .reflection_prompt import SELF_REFLECTION_PROMPT
 from .prompt import STRATEGY_SYSTEM_PROMPT, AGENCY_SERVICES
 from .tools import web_search, get_upcoming_events
@@ -136,8 +136,9 @@ react_prompt = PromptTemplate.from_template(
 
 @lru_cache(maxsize=1)
 def get_llm():
-    """Chat model from STRATEGY_LLM (see llm.py); created on first use so importing needs no API key."""
-    return build_llm()
+    """The Strategy model: OPENAI_MODEL from .env, the same model every agent uses (default gpt-5.6-luna).
+    Created on first use, so importing this file needs no API key."""
+    return ChatOpenAI(model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"), use_responses_api=True)
 
 
 @lru_cache(maxsize=1)

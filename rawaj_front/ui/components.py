@@ -69,8 +69,8 @@ def sidebar() -> None:
                 f"""
                 <div class="rooted">
                   <div class="row"><b>Rooted in your story.</b>{icon('sparkles', 15)}</div>
-                  <p>Your restaurant's context connects every part of your workspace.</p>
-                  <div class="tag">{icon('utensils', 14)} Restaurant workspace</div>
+                  <p>Your business context connects every part of your workspace.</p>
+                  <div class="tag">{icon('utensils', 14)} Your workspace</div>
                 </div>
                 <div class="copyright">© 2026 Rawaj</div>
                 """,
@@ -108,6 +108,6 @@ def page_head(title: str, subtitle: str = "", badge: str = "", badge_icon: str =
 def footer() -> None:
     st.markdown(
         '<div class="footer"><span>Rawaj · Your strategy, made actionable.</span>'
-        "<span>Made for restaurants &amp; cafés</span></div>",
+        "<span>Made for local food &amp; drink businesses</span></div>",
         unsafe_allow_html=True,
     )

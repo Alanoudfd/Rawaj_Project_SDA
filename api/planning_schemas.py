@@ -5,6 +5,7 @@ from typing import Annotated, Literal
 
 from pydantic import AfterValidator, BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from agents.strategy_agent.content_ideas import ContentType, Idea, IdeaResponse, ShortText
 from api.schemas import InputModel
 
 
@@ -14,35 +15,7 @@ def valid_month(value: str) -> str:
 
 
 Month = Annotated[str, Field(pattern=r"^[0-9]{4}-(0[1-9]|1[0-2])$"), AfterValidator(valid_month)]
-ContentType = Literal["Reel", "Post", "Story"]
 TaskStatus = Literal["Planned", "Completed"]
-ShortText = Annotated[str, Field(min_length=1, max_length=500)]
-
-
-class Idea(BaseModel):
-    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
-
-    id: int
-    name: ShortText
-    label: ShortText
-    description: Annotated[str, Field(min_length=1, max_length=3000)]
-    angle: ShortText
-    effort: ShortText
-    hook: ShortText
-    content_format: ContentType
-    why_it_fits: Annotated[str, Field(min_length=1, max_length=2000)]
-
-
-class IdeaResponse(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-    ideas: list[Idea] = Field(min_length=3, max_length=3)
-
-    @field_validator("ideas")
-    @classmethod
-    def unique_ideas(cls, ideas):
-        if len({idea.id for idea in ideas}) != len(ideas):
-            raise ValueError("Idea IDs must be unique")
-        return ideas
 
 
 class StrategyRequest(InputModel):

@@ -17,7 +17,7 @@ from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session
 
 with patch("dotenv.load_dotenv", return_value=False):
-    from api import main as api_main
+    from api import main as api_main, planning
     from api.main import create_app
     from database.models import (
         AnalysisJob,
@@ -559,17 +559,18 @@ class RestaurantApiTests(unittest.TestCase):
         self.assertEqual(self.client.get("/api/restaurants/999/agent-strategy").status_code, 404)
         self.assertEqual(self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").status_code, 404)
 
-        # A template plan (no thirty_day_plan) is not an agent strategy.
+        # A row that is neither an agent strategy nor a monthly plan is ignored.
         with Session(self.engine) as session:
-            session.add(Strategy(restaurant_id=restaurant_id, strategy_data={"month": "2026-09", "tasks": []}))
+            session.add(Strategy(restaurant_id=restaurant_id, strategy_data={"unrelated": True}))
             session.commit()
         self.assertEqual(self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").status_code, 404)
 
         self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-25")
         result = self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
-        self.assertEqual((result["start_date"], result["end_date"]), ("2026-09-25", "2026-09-26"))
+        # The agent started on 25 Sep; the calendar counts its days from the 1st of that month.
+        self.assertEqual((result["start_date"], result["end_date"]), ("2026-09-01", "2026-09-02"))
         self.assertEqual([(d["day"], d["date"], d["focus"], d["status"]) for d in result["days"]],
-                         [(1, "2026-09-25", "Kickoff", "Planned"), (2, "2026-09-26", "Menu", "Planned")])
+                         [(1, "2026-09-01", "Kickoff", "Planned"), (2, "2026-09-02", "Menu", "Planned")])
         self.assertEqual(result["targets"], ["Post twice a week"])
         self.assertEqual(result["gaps"][0]["highlight"], "0.47")
         self.assertEqual(result["services"][0]["service"], "Content Calendar")
@@ -586,11 +587,144 @@ class RestaurantApiTests(unittest.TestCase):
         self.assertEqual(self.client.patch(url.replace("/2", "/9"), json={"status": "Completed"}).status_code, 404)
         self.assertEqual(self.client.patch(url, json={"status": "Done"}).status_code, 422)
 
+    def add_template_strategy(self, restaurant_id):
+        data = {
+            "id": 1, "restaurant_id": restaurant_id, "month": "2026-09", "restaurant_name": "Template Cafe", "business_type": "cafe",
+            "goal": "Encourage more visits", "summary": "A September plan.", "focus": "Introduce the menu.",
+            "pillars": [{"title": "Menu discovery", "description": "Show the menu.", "metric": "Saves"}],
+            "tasks": [
+                {"id": "strategy-1-task-02", "date": "2026-09-09", "type": "Post", "title": "Signature dish", "objective": "Show one dish.", "status": "Planned"},
+                {"id": "strategy-1-task-01", "date": "2026-09-03", "type": "Reel", "title": "Meet the cafe", "objective": "Introduce the cafe.", "status": "Completed"},
+                {"id": "strategy-1-task-bad", "date": "not-a-date", "type": "Story", "title": "Ignored", "objective": "x", "status": "Planned"},
+            ],
+            "occasions": [], "context_signature": "abc", "generation_method": "context_template",
+        }
+        with Session(self.engine) as session:
+            strategy = Strategy(restaurant_id=restaurant_id, strategy_data=data)
+            session.add(strategy)
+            session.commit()
+            return strategy.id
+
+    def test_a_monthly_content_plan_is_shown_in_the_same_shape_and_progress_is_saved(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.add_template_strategy(restaurant_id)
+        result = self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
+        self.assertEqual((result["source"], result["month"]), ("template", "2026-09"))
+        self.assertEqual((result["start_date"], result["end_date"]), ("2026-09-01", "2026-09-30"))
+        self.assertEqual(result["targets"], ["Encourage more visits"])
+        self.assertEqual(result["pillars"][0]["metric"], "Saves")
+        self.assertEqual((result["summary"], result["focus"]), ("A September plan.", "Introduce the menu."))
+        # days are the tasks in date order, numbered from 1; the task with a broken date is left out
+        self.assertEqual([(d["day"], d["date"], d["format"], d["focus"], d["status"]) for d in result["days"]],
+                         [(1, "2026-09-03", "Reel", "Meet the cafe", "Completed"), (2, "2026-09-09", "Post", "Signature dish", "Planned")])
+
+        result = self.client.patch(f"/api/restaurants/{restaurant_id}/agent-strategy/days/2", json={"status": "Completed"}).json()
+        self.assertEqual([d["status"] for d in result["days"]], ["Completed", "Completed"])
+        again = self.new_client().get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()  # saved in the database
+        self.assertEqual([d["status"] for d in again["days"]], ["Completed", "Completed"])
+        result = self.client.patch(f"/api/restaurants/{restaurant_id}/agent-strategy/days/1", json={"status": "Planned"}).json()
+        self.assertEqual([d["status"] for d in result["days"]], ["Planned", "Completed"])
+        self.assertEqual(self.client.patch(f"/api/restaurants/{restaurant_id}/agent-strategy/days/3", json={"status": "Completed"}).status_code, 404)
+
+    def test_the_latest_strategy_wins_whatever_its_format(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.add_template_strategy(restaurant_id)
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-25")
+        self.assertEqual(self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()["source"], "agent")
+        other = self.create_restaurant(instagram_username="other_cafe")["id"]
+        self.add_agent_strategy(other)
+        self.add_template_strategy(other)
+        self.assertEqual(self.client.get(f"/api/restaurants/{other}/agent-strategy").json()["source"], "template")
+
     def test_agent_strategy_without_start_date_uses_creation_date(self):
         restaurant_id = self.create_restaurant()["id"]
         self.add_agent_strategy(restaurant_id)
         result = self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
-        self.assertEqual(result["start_date"], datetime.utcnow().date().isoformat())
+        self.assertEqual(result["start_date"], datetime.utcnow().date().replace(day=1).isoformat())
+
+    def three_ideas(self, fmt="Reel", start=1):
+        return {"ideas": [
+            {"id": i, "name": f"Idea {start + i}", "label": "Quick", "description": "A short direction.",
+             "angle": "Behind the scenes", "effort": "Low", "hook": "Hungry?", "content_format": fmt,
+             "why_it_fits": "Fits the day."}
+            for i in (1, 2, 3)
+        ]}
+
+    def test_a_day_of_the_strategy_returns_three_ideas_from_the_restaurant_context(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-25")
+        seen = []
+        self.client.app.state.content_ideas_runner = lambda context: seen.append(context) or self.three_ideas()
+        url = f"/api/restaurants/{restaurant_id}/agent-strategy/days/2/ideas"
+
+        first = self.client.post(url, json={})
+        self.assertEqual(first.status_code, 200, first.text)
+        self.assertEqual(len(first.json()["ideas"]), 3)
+        context = seen[0]
+        self.assertEqual(context["business_type"], "unspecified")  # never guessed: the model reads the data instead
+        self.assertEqual((context["task"]["day"], context["task"]["focus"]), (2, "Menu"))
+        self.assertEqual(context["strategy"]["targets"], ["Post twice a week"])
+        self.assertEqual(context["previous_ideas"], [])
+
+        # "Generate another": the ideas already shown go back so the model avoids them.
+        self.client.post(url, json={"previous_ideas": first.json()["ideas"], "feedback": "more playful"})
+        self.assertEqual([idea["name"] for idea in seen[1]["previous_ideas"]], ["Idea 2", "Idea 3", "Idea 4"])
+        self.assertEqual(seen[1]["feedback"], "more playful")
+
+    def test_saudi_occasions_are_on_the_calendar_and_shape_the_ideas_of_their_day(self):
+        restaurant_id = self.create_restaurant()["id"]
+        thirty_days = [{"day": n, "focus": "Post", "action": f"Day {n} post."} for n in range(1, 31)]
+        # Started on 22 Sep: the 30 days fill September, so day 23 is 23 Sep, the National Day.
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-22", thirty_day_plan=thirty_days)
+        plan = self.client.get(f"/api/restaurants/{restaurant_id}/agent-strategy").json()
+        self.assertEqual((plan["start_date"], plan["end_date"]), ("2026-09-01", "2026-09-30"))
+        self.assertEqual(plan["days"][22]["date"], "2026-09-23")
+        self.assertEqual([(o["name"], o["start_date"], o["date_status"]) for o in plan["occasions"]],
+                         [("Saudi National Day", "2026-09-23", "confirmed")])
+        seen = []
+        self.client.app.state.content_ideas_runner = lambda context: seen.append(context) or self.three_ideas()
+        for day in (22, 23):
+            self.client.post(f"/api/restaurants/{restaurant_id}/agent-strategy/days/{day}/ideas", json={})
+        self.assertEqual([context["task"]["occasions"] for context in seen], [[], ["Saudi National Day"]])
+        # A plan far from any occasion lists none.
+        other = self.create_restaurant(instagram_username="quiet_place")["id"]
+        self.add_agent_strategy(other, strategy_start_date="2026-11-01")
+        self.assertEqual(self.client.get(f"/api/restaurants/{other}/agent-strategy").json()["occasions"], [])
+
+    def test_day_ideas_use_the_stored_business_type_and_report_problems(self):
+        restaurant_id = self.create_restaurant(context={"business_type": "cafe"})["id"]
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-25")
+        url = f"/api/restaurants/{restaurant_id}/agent-strategy/days"
+        seen = []
+        self.client.app.state.content_ideas_runner = lambda context: seen.append(context) or self.three_ideas()
+        self.assertEqual(self.client.post(f"{url}/1/ideas", json={}).status_code, 200)
+        self.assertEqual(seen[0]["business_type"], "cafe")
+        stated = self.create_restaurant(instagram_username="stated_place", context={"business_type": "restaurant"})["id"]
+        self.add_agent_strategy(stated, strategy_start_date="2026-09-25")
+        self.client.post(f"/api/restaurants/{stated}/agent-strategy/days/1/ideas", json={})
+        self.assertEqual(seen[1]["business_type"], "restaurant")
+        self.assertEqual(self.client.post(f"{url}/9/ideas", json={}).status_code, 404)
+        self.assertEqual(self.client.post(f"/api/restaurants/999/agent-strategy/days/1/ideas", json={}).status_code, 404)
+
+        def failing(context):
+            raise RuntimeError("model down")
+
+        self.client.app.state.content_ideas_runner = failing
+        self.assertEqual(self.client.post(f"{url}/1/ideas", json={}).status_code, 502)
+        self.client.app.state.content_ideas_runner = lambda context: (_ for _ in ()).throw(planning.ContentIdeasUnavailable())
+        self.assertEqual(self.client.post(f"{url}/1/ideas", json={}).status_code, 503)
+
+    def test_a_day_with_a_content_type_only_accepts_ideas_of_that_type(self):
+        restaurant_id = self.create_restaurant()["id"]
+        self.add_template_strategy(restaurant_id)
+        url = f"/api/restaurants/{restaurant_id}/agent-strategy"
+        day = self.client.get(url).json()["days"][0]
+        self.assertTrue(day["format"])
+        self.client.app.state.content_ideas_runner = lambda context: self.three_ideas(day["format"])
+        self.assertEqual(self.client.post(f"{url}/days/{day['day']}/ideas", json={}).status_code, 200)
+        other = "Story" if day["format"] != "Story" else "Post"
+        self.client.app.state.content_ideas_runner = lambda context: self.three_ideas(other)
+        self.assertEqual(self.client.post(f"{url}/days/{day['day']}/ideas", json={}).status_code, 502)
 
     def test_outreach_requires_email_and_completed_current_qualification(self):
         restaurant = self.create_restaurant(email=None)

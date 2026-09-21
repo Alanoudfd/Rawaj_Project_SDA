@@ -91,8 +91,8 @@ class RawajSettings:
 
     openai_api_key: str | None = field(default=None, repr=False)
     openai_generation_model: str = "gpt-5.6-luna"
-    openai_decision_model: str = "gpt-5.6-terra"
-    openai_review_model: str = "gpt-5.6-terra"
+    openai_decision_model: str = "gpt-5.6-luna"
+    openai_review_model: str = "gpt-5.6-luna"
 
     email_provider: str | None = None
     from_email: str | None = None
@@ -149,13 +149,13 @@ class RawajSettings:
             ),
             openai_api_key=_clean("OPENAI_API_KEY"),
             openai_generation_model=(
-                _clean("OPENAI_GENERATION_MODEL") or "gpt-5.6-luna"
+                _clean("OPENAI_GENERATION_MODEL") or _clean("OPENAI_MODEL") or "gpt-5.6-luna"
             ),
             openai_decision_model=(
-                _clean("OPENAI_DECISION_MODEL") or "gpt-5.6-terra"
+                _clean("OPENAI_DECISION_MODEL") or _clean("OPENAI_MODEL") or "gpt-5.6-luna"
             ),
             openai_review_model=(
-                _clean("OPENAI_REVIEW_MODEL") or "gpt-5.6-terra"
+                _clean("OPENAI_REVIEW_MODEL") or _clean("OPENAI_MODEL") or "gpt-5.6-luna"
             ),
             email_provider=provider,
             from_email=_clean("FROM_EMAIL"),

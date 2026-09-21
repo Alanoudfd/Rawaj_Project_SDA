@@ -52,7 +52,7 @@ stop all automatic sending.
 | Variable | Needed for | Default |
 |---|---|---|
 | `OPENAI_API_KEY`, `TAVILY_API_KEY`, `APIFY_API_TOKEN` | research, qualification, strategy | — |
-| `STRATEGY_LLM` | strategy model, `openai:<model>` | `openai:gpt-5.6-luna` |
+| `OPENAI_MODEL` | the one OpenAI model every agent uses (research, qualification, outreach, strategy, evals) | `gpt-5.6-luna` |
 | `ACCOUNT_SECRET` (32+ random chars) | creating client accounts / email #2 | **required** |
 | `DASHBOARD_URL` | the link in email #2 | `http://localhost:8501` |
 | `BUTTON_SIGNING_SECRET` (32+ chars), `PUBLIC_BASE_URL` | the Interested / Not interested links in email #1 | — |

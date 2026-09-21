@@ -376,7 +376,12 @@ class QualificationHandoff(ContractModel):
             raw_qualification=raw,
             status=normalize_qualification_status(raw),
             decision_rationale=result.get("decision_rationale"),
-            marketing_gaps=[MarketingGap.model_validate(item) for item in result.get("marketing_gaps", [])],
+            # The Qualification Agent may add fields (description, status, confidence...); this internal
+            # contract keeps only the ones it declares, so they never reach the email prompt.
+            marketing_gaps=[
+                MarketingGap.model_validate({key: value for key, value in item.items() if key in MarketingGap.model_fields})
+                for item in result.get("marketing_gaps", [])
+            ],
             strengths=[str(item) for item in result.get("strengths", []) if str(item).strip()],
             data_limitations=[str(item) for item in result.get("data_limitations", []) if str(item).strip()],
         )

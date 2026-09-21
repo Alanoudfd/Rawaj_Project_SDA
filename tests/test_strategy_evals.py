@@ -64,12 +64,12 @@ class CodeEvaluatorTests(unittest.TestCase):
         for placeholder in ("{inputs}", "{outputs}", "{reference_outputs}"):
             self.assertIn(placeholder, prompt)
 
-    def test_judge_model_defaults_and_can_be_overridden(self):
+    def test_the_judge_uses_the_one_shared_model(self):
         with patch.dict(os.environ, {}):
-            os.environ.pop("EVAL_JUDGE_LLM", None)
-            self.assertEqual(evaluators.judge_spec(), "openai:gpt-5.6-luna")
-        with patch.dict(os.environ, {"EVAL_JUDGE_LLM": "openai:custom"}):
-            self.assertEqual(evaluators.judge_spec(), "openai:custom")
+            os.environ.pop("OPENAI_MODEL", None)
+            self.assertEqual(evaluators.judge_model(), "gpt-5.6-luna")
+        with patch.dict(os.environ, {"OPENAI_MODEL": "custom-model"}):
+            self.assertEqual(evaluators.judge_model(), "custom-model")
 
 
 class CasesTests(unittest.TestCase):

@@ -2,6 +2,8 @@
 
     python scripts/e2e_flow.py                # the full run (about 5-8 minutes, uses OpenAI and Tavily)
     python scripts/e2e_flow.py --setup-only   # only checks the setup (free, a few seconds)
+    python scripts/e2e_flow.py --new-name "Cafe X" --new-instagram cafe.x --new-location Jeddah
+                                              # a brand-new restaurant: research + qualification run from scratch
 
 What it does, in order (each step prints PASS or FAIL):
   1. analyze      research -> qualification (reused from the database) -> outreach drafts email 1
@@ -56,7 +58,12 @@ SMTP_PORT, RESPONSE_PORT = free_port(), free_port()
 
 parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
 parser.add_argument("--setup-only", action="store_true", help="check the setup and stop before any paid call")
+parser.add_argument("--new-name", help="test a brand-new restaurant (added to the temporary copy of the database only)")
+parser.add_argument("--new-instagram", help="the new restaurant's Instagram username, without @")
+parser.add_argument("--new-location", help="the new restaurant's location, e.g. Jeddah")
 ARGS = parser.parse_args()
+if bool(ARGS.new_name) != bool(ARGS.new_instagram):
+    parser.error("--new-name and --new-instagram must be given together")
 
 os.environ["LANGSMITH_TRACING"] = "false"
 os.environ["LANGCHAIN_TRACING_V2"] = "false"
@@ -90,8 +97,33 @@ def banner(text):
     print(f"\n=== {text} ===", flush=True)
 
 
+def create_new_restaurant():
+    """Add the restaurant given on the command line to the temporary copy of the database."""
+    username = ARGS.new_instagram.strip().lstrip("@").lower()
+    with sqlite3.connect(RUN_DIR / "e2e.db") as db:
+        if db.execute("select 1 from restaurants where lower(instagram_username) = ?", (username,)).fetchone():
+            raise SystemExit(f"A restaurant with the Instagram username {username} already exists in the database.")
+    from database.database import Base, engine, ensure_legacy_database_schema
+    from database.models import Restaurant
+
+    Base.metadata.create_all(engine)
+    ensure_legacy_database_schema(engine)
+    from sqlalchemy.orm import Session
+
+    with Session(engine) as session:
+        restaurant = Restaurant(
+            name=ARGS.new_name, instagram_username=username,
+            instagram_url=f"https://www.instagram.com/{username}/", email=TEST_EMAIL, location=ARGS.new_location,
+        )
+        session.add(restaurant)
+        session.commit()
+        return restaurant.id, restaurant.name
+
+
 def pick_restaurant():
     """A restaurant whose saved research matches the default settings, so nothing is scraped again."""
+    if ARGS.new_name:
+        return create_new_restaurant()
     with sqlite3.connect(RUN_DIR / "e2e.db") as db:
         row = db.execute(
             """select r.id, r.name from restaurants r

@@ -350,8 +350,10 @@ Approve only when all applicable checks pass:
 - An initial email does not contain a strategy or promise a strategy.
 - A strategy-ready notification opens with a short congratulation, says that the
   complimentary Free Trial is ready and that the personalized strategy is available
-  in the dashboard, and says nothing else about the strategy. That congratulation
-  and Free Trial statement are required, not extra.
+  in the dashboard, and does not describe, summarize or promise anything about the
+  strategy's content. That congratulation and Free Trial statement are required,
+  not extra. A short, friendly invitation to open the dashboard (for example "Please
+  visit the dashboard when convenient") is allowed and must not be flagged.
 - A sensitive-issue response does not promise refund, compensation, legal
   conclusions, or liability outcomes.
 

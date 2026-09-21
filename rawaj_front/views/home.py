@@ -120,7 +120,7 @@ def live_gaps() -> None:
 
     if data["strengths"]:
         notes_card(
-            "card_strengths", "Strengths", "What already works well for this restaurant.",
+            "card_strengths", "Strengths", "What already works well.",
             data["strengths"], "good", "check",
         )
     if data["data_limitations"]:

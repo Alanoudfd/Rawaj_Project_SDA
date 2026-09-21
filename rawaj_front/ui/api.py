@@ -10,6 +10,7 @@ import requests
 
 API_URL = os.getenv("RAWAJ_API_URL", "http://127.0.0.1:8000").rstrip("/")
 TIMEOUT = 5
+IDEAS_TIMEOUT = 75  # the model writes the ideas, which takes longer than a database read
 
 
 class ApiError(Exception):
@@ -20,9 +21,9 @@ class ApiError(Exception):
         self.status = status
 
 
-def _request(method: str, path: str, body: dict | None = None):
+def _request(method: str, path: str, body: dict | None = None, timeout: int = TIMEOUT):
     try:
-        response = requests.request(method, f"{API_URL}/api{path}", json=body, timeout=TIMEOUT)
+        response = requests.request(method, f"{API_URL}/api{path}", json=body, timeout=timeout)
     except requests.RequestException as exc:
         raise ApiError(f"Could not reach the Rawaj API at {API_URL}: {exc}") from exc
     if not response.ok:
@@ -65,3 +66,9 @@ def set_day_status(restaurant_id: int, day: int, status: str) -> dict:
 def login(username: str, password: str) -> dict:
     """{"role": "owner" | "admin", "username", "restaurant_id"}; ApiError(status=401) if wrong."""
     return _request("POST", "/auth/login", {"username": username, "password": password})
+
+
+def get_day_ideas(restaurant_id: int, day: int, previous_ideas: list[dict] | None = None, feedback: str = "") -> list[dict]:
+    """Three content ideas for one day of the strategy. Send the ideas already shown to get different ones."""
+    body = {"previous_ideas": previous_ideas or [], "feedback": feedback}
+    return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/ideas", body, timeout=IDEAS_TIMEOUT)["ideas"]

@@ -8,7 +8,7 @@ from datetime import date
 
 BUSINESS = {
     "name": "3Brews",
-    "type": "Restaurant",
+    "type": "Food & beverage",
     "city": "Jeddah",
     "audience": "local guests",
     "around": "Your dining experience",
@@ -19,10 +19,10 @@ BUSINESS = {
 MONTH = date(2026, 9, 1)
 
 STRATEGY = {
-    "north_star": "Encourage more dining visits to 3Brews",
+    "north_star": "Encourage more visits to 3Brews",
     "summary": (
-        "A 2026-09 content plan for 3Brews, a restaurant in Jeddah. Focus on encourage "
-        "more dining visits to 3brews for local guests, using a Warm and authentic tone."
+        "A 2026-09 content plan for 3Brews in Jeddah. Focus on encourage "
+        "more visits to 3brews for local guests, using a Warm and authentic tone."
     ),
     "pillars": [
         {
@@ -39,14 +39,14 @@ STRATEGY = {
             "title": "Guest connections",
             "text": (
                 "Start a conversation with local guests in Jeddah to support: "
-                "Encourage more dining visits to 3Brews."
+                "Encourage more visits to 3Brews."
             ),
             "signal": "Story replies and visit enquiries",
         },
     ],
     "focus_title": "Let people experience 3Brews before they visit.",
     "focus_text": (
-        "Show the people, products, and experience that make your restaurant recognizable."
+        "Show the people, products, and experience that make your place recognizable."
     ),
     "focus_points": [
         "Your voice: Warm and authentic",
@@ -80,32 +80,3 @@ TASKS = [
     }
     for day, fmt, title, text in _TASKS
 ]
-
-_IDEA_ANGLES = {
-    "Reel": [
-        ("One dish, one story", "Film a single dish from prep to first bite in under 20 seconds, with the sound of the kitchen."),
-        ("The first thing you notice", "Open on the moment a plate lands on the table, then cut to a guest's reaction."),
-        ("Come hungry", "A quick tour of the room and the menu ending with a simple invitation to book a table."),
-    ],
-    "Post": [
-        ("The close-up", "A single bright, well-lit photo of the dish with a short caption on why guests love it."),
-        ("Three things to try", "A carousel of three favourites with a one-line description each and a save-for-later prompt."),
-        ("Table for two", "A warm lifestyle photo of the dining room with a gentle invitation to visit this week."),
-    ],
-    "Story": [
-        ("Ask us anything", "Use a question box so guests can ask what to order, then answer with short clips."),
-        ("This or that", "A two-option poll between favourite dishes that starts a conversation."),
-        ("Today at 3Brews", "A three-frame story: the room before service, the first plate out, and today's welcome."),
-    ],
-}
-
-
-def generate_ideas(task: dict, guidance: str = "") -> list[dict]:
-    """Return three content ideas for a calendar task (front-end sample logic)."""
-    angles = _IDEA_ANGLES.get(task["format"], _IDEA_ANGLES["Post"])
-    ideas = []
-    for title, text in angles:
-        if guidance.strip():
-            text = f"{text} Shaped by your note: {guidance.strip()}"
-        ideas.append({"title": title, "format": task["format"], "text": text})
-    return ideas

@@ -27,8 +27,18 @@ if TavilySearch is not None and api_key:
 @tool
 def search_instagram_benchmark(query: str) -> str:
     """
-    Search the web for current Instagram marketing benchmarks,
-    especially for restaurants and food & beverage businesses.
+    Search the web for relevant and current Instagram
+    marketing benchmarks.
+
+    Use this tool when an external benchmark is needed
+    to evaluate a restaurant's Instagram performance.
+
+    Do not use this tool to retrieve the restaurant's
+    own Instagram data.
+
+    The results may contain external sources, benchmarks,
+    and industry findings. Verify relevance before using
+    them in the qualification report.
     """
 
     if web_search is None:

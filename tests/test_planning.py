@@ -103,6 +103,25 @@ class PlanningApiTests(unittest.TestCase):
             self.assertEqual(task["status"], "Planned")
         self.assertEqual(plan["occasions"], [])
 
+    def test_tasks_are_spread_over_the_month_and_never_pile_up_on_one_day(self):
+        from collections import Counter
+
+        for month, most_on_one_day in (("2026-09", 1), ("2026-10", 1), ("2028-02", 2), ("2027-02", 2)):
+            with self.subTest(month=month):
+                per_day = Counter(task["date"] for task in self.create_plan(month=month)["tasks"])
+                self.assertLessEqual(max(per_day.values()), most_on_one_day, per_day)
+                self.assertGreaterEqual(len(per_day), 11)
+
+    def test_a_plan_does_not_name_a_business_type_that_was_not_stated(self):
+        place = self.add_restaurant("3Brews", "three_brews", {"target_audience": "local guests"})
+        plan = self.create_plan(place)
+        shown = [plan["summary"], plan["goal"], plan["focus"], plan["pillars"], plan["tasks"]]  # what the dashboard displays
+        text = str(shown).lower()
+        self.assertIn("3Brews", plan["summary"])
+        for word in ("restaurant", "cafe", "café", "dining", "coffee", "meal"):
+            self.assertNotIn(word, text, word)
+        self.assertEqual(plan["goal"], "Encourage more visits to 3Brews")
+
     def test_different_restaurants_and_months_have_separate_persisted_plans(self):
         restaurant_id = self.add_restaurant("Family Table", "family_table", {
             "business_type": "restaurant", "cuisine": "Saudi", "signature_items": ["Kabsa"],

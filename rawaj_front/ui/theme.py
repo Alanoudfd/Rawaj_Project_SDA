@@ -264,6 +264,26 @@ header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecor
 [class*="st-key-dayon"] button { border: 1.5px solid var(--navy); background: var(--blue-soft); }
 [class*="st-key-dayon"] button p:nth-of-type(2) { background: var(--white); }
 .blank { height: 60px; }
+/* Saudi occasions on the calendar */
+[class*="_occ_"] button { border-color: var(--mod-line); }
+[class*="_occ_"] button p:last-of-type {
+  font: 600 8.5px/1.4 var(--head); background: var(--mod-bg); color: var(--mod);
+  border-radius: 6px; padding: 0 .4rem; width: fit-content; margin-top: 3px;
+}
+[class*="st-key-dayon_occ_"] button { border: 1.5px solid var(--mod); background: var(--mod-bg); }
+.occ-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: 0 0 1rem; }
+.occ-label { font: 500 9px var(--head); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-right: .3rem; }
+.occ-chip {
+  font: 500 11px var(--head); background: var(--mod-bg); color: var(--mod); border: 1px solid var(--mod-line);
+  border-radius: 999px; padding: .25rem .7rem;
+}
+.occ-chip b { font-weight: 600; margin-left: .35rem; color: var(--navy); }
+.occasion {
+  display: flex; flex-direction: column; gap: .15rem; background: var(--mod-bg); border: 1px solid var(--mod-line);
+  border-radius: 14px; padding: .75rem 1rem; margin-bottom: .7rem;
+}
+.occasion b { font: 600 13px var(--head); color: var(--mod); }
+.occasion span { font-size: 11px; color: var(--muted); }
 .selected-head { display: flex; justify-content: space-between; margin-bottom: .8rem; }
 .selected-head b { font: 600 9.5px var(--head); color: var(--navy); }
 .task {
