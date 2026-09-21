@@ -292,6 +292,14 @@ details.more[open] .t-open { display: none; }
 .pillar .t { flex: 1; }
 .pillar .t b { font: 600 12.5px var(--head); display: block; margin-bottom: 3px; }
 .pillar .t span { font-size: 11.5px; color: var(--muted); line-height: 1.6; }
+.pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 0 2.5rem; }
+.pillars-grid .pillar { padding-bottom: .3rem; }  /* the targets card ends after its last line too */
+.focus.wide { min-height: 0; padding: 1rem 1.4rem .6rem; }  /* ends right after its last line */
+.focus.wide .pts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 2.5rem; }
+.focus.wide h3 { font-size: 19px !important; margin: .55rem 0 .3rem; max-width: 40rem; }
+.focus.wide p { margin: 0 0 .5rem; }
+.focus.wide .pt { padding: .55rem 0; }
+@media (max-width: 900px) { .focus.wide .pts { grid-template-columns: 1fr; } }
 .pillar .signal {
   font-size: 9.5px; color: var(--navy); background: var(--blue-soft); border: 1px solid var(--blue-line);
   border-radius: 12px; padding: .3rem .8rem; max-width: 9.5rem; text-align: center; line-height: 1.35;

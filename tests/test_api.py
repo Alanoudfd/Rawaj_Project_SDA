@@ -730,6 +730,43 @@ class RestaurantApiTests(unittest.TestCase):
         self.add_agent_strategy(other, strategy_start_date="2026-11-01")
         self.assertEqual(self.client.get(f"/api/restaurants/{other}/agent-strategy").json()["occasions"], [])
 
+    def test_break_and_profile_update_days_have_no_content_ideas(self):
+        restaurant_id = self.create_restaurant()["id"]
+        plan = [{"day": 1, "focus": "Post", "action": "Show the menu."}, {"day": 2, "focus": "Break", "action": "Let people respond."}]
+        self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-01", thirty_day_plan=plan)
+        seen = []
+        self.client.app.state.content_ideas_runner = lambda context: seen.append(context) or self.three_ideas("Post")
+        url = f"/api/restaurants/{restaurant_id}/agent-strategy"
+        days = self.client.get(url).json()["days"]
+        self.assertEqual([(d["focus"], d["ideas"]) for d in days], [("Post", True), ("Break", False)])
+        self.assertIn("Break", days[1]["ideas_note"])
+        self.assertEqual([d["counts"] for d in days], [True, False])  # a break is left out of the progress
+        self.assertEqual(self.client.post(f"{url}/days/1/ideas", json={}).status_code, 200)
+        refused = self.client.post(f"{url}/days/2/ideas", json={})
+        self.assertEqual(refused.status_code, 422)
+        self.assertIn("Break day", refused.json()["detail"])
+        self.assertEqual(len(seen), 1)  # the model was never asked about the break
+
+        # The monthly plan's "Profile refresh" is a task on the account, not content.
+        other = self.create_restaurant(instagram_username="profile_place")["id"]
+        data = {
+            "id": 1, "restaurant_id": other, "month": "2026-09", "restaurant_name": "Place", "business_type": "cafe",
+            "goal": "More visits", "summary": "A plan.", "focus": "Menu.", "pillars": [],
+            "tasks": [
+                {"id": "t-01", "date": "2026-09-03", "type": "Post", "title": "Signature dish", "objective": "Show a dish.", "status": "Planned"},
+                {"id": "t-02", "date": "2026-09-30", "type": "Story", "title": "Profile refresh", "objective": "Review and update the profile.", "status": "Planned"},
+            ],
+            "occasions": [], "context_signature": "abc", "generation_method": "context_template",
+        }
+        with Session(self.engine) as session:
+            session.add(Strategy(restaurant_id=other, strategy_data=data))
+            session.commit()
+        monthly = self.client.get(f"/api/restaurants/{other}/agent-strategy").json()["days"]
+        self.assertEqual([(d["focus"], d["ideas"]) for d in monthly], [("Signature dish", True), ("Profile refresh", False)])
+        self.assertEqual([d["counts"] for d in monthly], [True, True])  # a profile update is a task, so it counts
+        self.client.app.state.content_ideas_runner = lambda context: self.three_ideas("Story")
+        self.assertEqual(self.client.post(f"/api/restaurants/{other}/agent-strategy/days/2/ideas", json={}).status_code, 422)
+
     def test_day_ideas_use_the_stored_business_type_and_report_problems(self):
         restaurant_id = self.create_restaurant(context={"business_type": "cafe"})["id"]
         self.add_agent_strategy(restaurant_id, strategy_start_date="2026-09-25")

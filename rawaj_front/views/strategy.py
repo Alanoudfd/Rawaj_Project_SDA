@@ -9,7 +9,6 @@ from ui.icons import icon
 from ui.ideas import show_ideas
 from ui.plan import by_date, load_or_stop, occasion_dates, occasions_on, period_label, progress, toggle
 
-SEVERITY_CHIP = {"High": "sev-high", "Moderate": "sev-moderate", "Medium": "sev-moderate", "Low": "sev-low"}
 
 restaurant = current_restaurant()
 plan = load_or_stop(restaurant)
@@ -55,7 +54,10 @@ else:
         badge_icon=icon("utensils", 13),
     )
 
-main, side = st.columns([2.1, 1], gap="medium")
+if monthly:
+    main, side = st.columns([2.1, 1], gap="medium")
+else:  # the agent's plan has two cards (targets, services): stacked full width they leave no empty corner
+    main = side = st.container()
 
 with main:
     with st.container(key="card_north"):
@@ -91,46 +93,28 @@ with main:
                     <h3>What {escape(name)} is working toward</h3>
                   </div>
                 </div>
-                {targets or '<p class="muted">No targets were set for this plan.</p>'}
+                <div class="pillars-grid">{targets}</div>
+                {'' if targets else '<p class="muted">No targets were set for this plan.</p>'}
                 """,
                 unsafe_allow_html=True,
             )
 
-    with st.container(key="card_pillars"):
-        gaps = "".join(
-            f"""
-            <div class="pillar">
-              <span class="n">{i:02d}</span>
-              <div class="t"><b>{escape(g['gap'])}</b><span>{escape(g['key_point'])}</span></div>
-              <span class="chip {SEVERITY_CHIP.get(g['severity'], '')}">{escape(g['severity'] or 'Unrated')}</span>
-              {f'<span class="signal">{escape(g["highlight"])} {escape(g["highlight_label"] or "")}</span>' if g['highlight'] else ''}
-            </div>"""
-            for i, g in enumerate(plan["gaps"], 1)
-        )
-        pillars = "".join(
-            f"""
-            <div class="pillar">
-              <span class="n">{i:02d}</span>
-              <div class="t"><b>{escape(p['title'])}</b><span>{escape(p['description'])}</span></div>
-              {f'<span class="signal">{escape(p["metric"])}</span>' if p['metric'] else ''}
-            </div>"""
-            for i, p in enumerate(plan["pillars"], 1)
-        )
-        if monthly:
+    if monthly:  # the agent's plan does not repeat its priority gaps here: they are on the Home page
+        with st.container(key="card_pillars"):
+            pillars = "".join(
+                f"""
+                <div class="pillar">
+                  <span class="n">{i:02d}</span>
+                  <div class="t"><b>{escape(p['title'])}</b><span>{escape(p['description'])}</span></div>
+                  {f'<span class="signal">{escape(p["metric"])}</span>' if p['metric'] else ''}
+                </div>"""
+                for i, p in enumerate(plan["pillars"], 1)
+            )
             st.markdown(
                 f"""
                 <div class="card-head"><h3 class="card-title">Strategy pillars</h3>
                 <span class="muted" style="font-size:10.5px;">{len(plan['pillars'])} priorities</span></div>
                 {pillars or '<p class="muted">No pillars were set for this plan.</p>'}
-                """,
-                unsafe_allow_html=True,
-            )
-        else:
-            st.markdown(
-                f"""
-                <div class="card-head"><h3 class="card-title">Where the plan starts</h3>
-                <span class="muted" style="font-size:10.5px;">{len(plan['gaps'])} priority gaps</span></div>
-                {gaps or '<p class="muted">No priority gaps were recorded.</p>'}
                 """,
                 unsafe_allow_html=True,
             )
@@ -160,11 +144,11 @@ with side:
     else:
         st.markdown(
             f"""
-            <div class="focus">
+            <div class="focus wide">
               <div class="top">{icon('lightbulb', 15)} Recommended for you</div>
               <h3>How we can help {escape(name)} grow.</h3>
               <p>Services matched to the gaps found in your assessment.</p>
-              {points or '<p>No services were recommended.</p>'}
+              <div class="pts">{points or '<p>No services were recommended.</p>'}</div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -197,7 +181,7 @@ def progress_card() -> None:
     st.markdown(
         f"""
         <div class="card-head"><h3 class="card-title">Strategy progress · {period_label(plan)}</h3>
-        <span class="muted">{stats['done']} of {stats['total']} completed</span></div>
+        <span class="muted">{stats['done']} of {stats['total']} completed{f" · {stats['skipped']} break days not counted" if stats['skipped'] else ""}</span></div>
         <div class="tiers three">
           <div class="tier"><small>{"Items this month" if monthly else "Days in the plan"}</small><b>{stats['total']}</b></div>
           <div class="tier low{' zero' if not stats['done'] else ''}"><small>Completed</small><b>{stats['done']}</b></div>
@@ -293,10 +277,13 @@ with detail_col:
                 unsafe_allow_html=True,
             )
             a, b = st.columns([1.2, 1])
-            a.button(
-                "Get content ideas", icon=":material/auto_awesome:", type="primary", key=f"ideas_{task['id']}",
-                on_click=want_ideas, args=(task["id"],),
-            )
+            if task.get("ideas", True):  # a plan without the field (an older API) still offers ideas
+                a.button(
+                    "Get content ideas", icon=":material/auto_awesome:", type="primary", key=f"ideas_{task['id']}",
+                    on_click=want_ideas, args=(task["id"],),
+                )
+            else:  # a break or a profile update: nothing to publish, so no ideas
+                a.markdown(f'<p class="muted" style="font-size:11.5px;">{escape(task.get("ideas_note", ""))}</p>', unsafe_allow_html=True)
             b.button(
                 "Mark incomplete" if finished else "Mark complete", icon=":material/check:",
                 type="tertiary", key=f"mark_{task['id']}", on_click=toggle,

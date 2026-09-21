@@ -31,6 +31,8 @@ def load(restaurant: dict) -> dict | None:
             "id": f"day-{d['day']}", "day": d["day"], "date": date.fromisoformat(d["date"]),
             "format": d.get("format") or f"Day {d['day']}", "typed": bool(d.get("format")),
             "title": d["focus"] or f"Day {d['day']}", "text": d["action"], "status": d["status"],
+            "ideas": d.get("ideas", True), "ideas_note": d.get("ideas_note", ""),
+            "counts": d.get("counts", (d["focus"] or "").strip().lower() != "break"),
         }
         for d in plan["days"]
     ]
@@ -93,7 +95,11 @@ def progress(tasks: list[dict]) -> dict:
     """Counts for the plan: total, completed, remaining, percent, and completion per group.
 
     The groups are the content types (Reel, Post, Story) of a monthly plan, or the weeks of a 30-day plan.
+    Break days are left out (`skipped` says how many): only days with something to do are counted, that is a post,
+    a story, a reel or a profile update.
     """
+    skipped = sum(not t.get("counts", True) for t in tasks)
+    tasks = [t for t in tasks if t.get("counts", True)]
     done = sum(t["status"] == "Completed" for t in tasks)
     typed = any(t.get("typed") for t in tasks)
     groups: dict[str, list[int]] = {}
@@ -104,7 +110,7 @@ def progress(tasks: list[dict]) -> dict:
         counts[0] += task["status"] == "Completed"
     total = len(tasks)
     return {
-        "total": total, "done": done, "remaining": total - done,
+        "total": total, "done": done, "remaining": total - done, "skipped": skipped,
         "percent": round(100 * done / total) if total else 0,
         "groups": [(label, d, t) for label, (d, t) in (groups.items() if typed else sorted(groups.items(), key=lambda kv: int(kv[0].split()[1])))],
     }

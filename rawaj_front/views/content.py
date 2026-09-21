@@ -111,6 +111,11 @@ with st.container(key="card_task"):
         unsafe_allow_html=True,
     )
 
+if not task.get("ideas", True):  # a break or a profile update: there is nothing to create
+    st.info(task.get("ideas_note", ""))
+    footer()
+    st.stop()
+
 chosen_idea_card(restaurant, task)
 
 # Studio
