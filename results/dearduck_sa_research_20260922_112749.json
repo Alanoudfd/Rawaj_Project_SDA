@@ -1,0 +1,2350 @@
+{
+  "schema_version": "3.0",
+  "restaurant": {
+    "restaurant_id": 6,
+    "name": "Dear Duck",
+    "instagram_username": "dearduck.sa",
+    "instagram_url": null,
+    "email": "hello@dearduck.com",
+    "location": "Jeddah",
+    "category": null
+  },
+  "analysis_metadata": {
+    "status": "complete",
+    "analyzed_at": "2026-09-22T08:24:40.219054+00:00",
+    "scraped_at": "2026-09-22T08:23:12.583155+00:00",
+    "source": "instagram",
+    "analysis_version": "3.0"
+  },
+  "profile": {
+    "username": "dearduck.sa",
+    "full_name": "",
+    "bio": "All-Day Eatery🌞🌙\nEat Happy, Live Happy\nBreakfast from 8AM to 1:30PM\nLunch & Dinner from 2:30PM to 11PM\nReserve before you Waddle in! 👇",
+    "followers": 9350,
+    "following": 5,
+    "posts_count": 170,
+    "website": "http://dearduck.co",
+    "verified": false,
+    "business_category": "None",
+    "is_business": true,
+    "is_private": false
+  },
+  "profile_analysis": {
+    "bio": {
+      "cuisine_identified": false,
+      "cuisine": null,
+      "location_present": false,
+      "cta_present": true,
+      "value_proposition_present": true
+    },
+    "contact_accessibility": {
+      "website_available": true,
+      "email_available": true,
+      "phone_available": false,
+      "external_link_available": true
+    },
+    "profile_completeness": {
+      "has_clear_business_description": true,
+      "has_location": true,
+      "has_contact_method": true,
+      "has_external_link": true
+    }
+  },
+  "metrics": {
+    "activity": {
+      "content_last_30_days": 11,
+      "content_per_week": 2.57,
+      "days_since_last_content": 0
+    },
+    "engagement": {
+      "average_likes": 44.6,
+      "median_likes": 32.0,
+      "average_comments": 7.2,
+      "engagement_rate_pct": 0.554,
+      "sample_size": 20
+    },
+    "format_mix": {
+      "reel": {
+        "count": 9,
+        "pct": 45.0
+      },
+      "carousel": {
+        "count": 6,
+        "pct": 30.0
+      },
+      "image": {
+        "count": 5,
+        "pct": 25.0
+      }
+    },
+    "content_mix": {
+      "offers_campaigns": {
+        "count": 4,
+        "pct": 20.0
+      },
+      "dining_experience": {
+        "count": 2,
+        "pct": 10.0
+      },
+      "food_product": {
+        "count": 12,
+        "pct": 60.0
+      },
+      "entertainment_humor": {
+        "count": 2,
+        "pct": 10.0
+      }
+    },
+    "cta": {
+      "content_with_cta": 9,
+      "any_cta_pct": 45.0,
+      "cta_intents": {
+        "book a table": 1,
+        "name the character": 1,
+        "reserve a table": 1,
+        "visit with a friend": 1,
+        "choose the full brit": 1,
+        "visit restaurant": 1,
+        "reserve_table": 2,
+        "make a reservation": 1
+      }
+    },
+    "promotion": {
+      "promotional_content": 4,
+      "promotional_content_pct": 20.0,
+      "promotion_intents": {
+        "saudi national day combo offer": 1,
+        "new menu launch": 2,
+        "new item launch": 1
+      }
+    },
+    "branding": {
+      "logo_presence_pct": 25.0,
+      "branding_presence_pct": 40.0
+    },
+    "commerce_visibility": {
+      "menu_visible_pct": 10.0,
+      "price_visible_pct": 5.0,
+      "offer_visible_pct": 5.0
+    },
+    "reels": {
+      "reels_detected": 9,
+      "reels_enriched": 9,
+      "reel_content_pct": 45.0,
+      "average_views": 11409.56,
+      "median_views": 3619.0,
+      "average_duration_seconds": 11.09,
+      "transcript_available_pct": 100.0
+    }
+  },
+  "research_signals": [
+    {
+      "signal_id": "activity_01",
+      "dimension": "posting_activity",
+      "observation": "Observed 11 content items in the last 30 days (2.57 per week in the observed window); days since latest content: 0.",
+      "metric_path": "metrics.activity",
+      "value": {
+        "content_last_30_days": 11,
+        "content_per_week": 2.57,
+        "days_since_last_content": 0
+      },
+      "evidence_content_ids": []
+    },
+    {
+      "signal_id": "engagement_01",
+      "dimension": "engagement",
+      "observation": "Across 20 items with engagement data, average likes were 44.6, median likes 32.0, average comments 7.2, and follower-normalized engagement rate was 0.554%.",
+      "metric_path": "metrics.engagement",
+      "value": {
+        "average_likes": 44.6,
+        "median_likes": 32.0,
+        "average_comments": 7.2,
+        "engagement_rate_pct": 0.554,
+        "sample_size": 20
+      },
+      "evidence_content_ids": []
+    },
+    {
+      "signal_id": "cta_01",
+      "dimension": "cta_usage",
+      "observation": "CTA detected in 9 analyzed content items (45.0%). Observed intent labels: {'book a table': 1, 'name the character': 1, 'reserve a table': 1, 'visit with a friend': 1, 'choose the full brit': 1, 'visit restaurant': 1, 'reserve_table': 2, 'make a reservation': 1}.",
+      "metric_path": "metrics.cta",
+      "value": {
+        "content_with_cta": 9,
+        "any_cta_pct": 45.0,
+        "cta_intents": {
+          "book a table": 1,
+          "name the character": 1,
+          "reserve a table": 1,
+          "visit with a friend": 1,
+          "choose the full brit": 1,
+          "visit restaurant": 1,
+          "reserve_table": 2,
+          "make a reservation": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3991129199864779860",
+        "3989533028152373855",
+        "3986810326670125368",
+        "3972280971397133293",
+        "3970702584756402498",
+        "3962900373238397789",
+        "3953379219985743941",
+        "3950479806571244733",
+        "3949028043200684946"
+      ]
+    },
+    {
+      "signal_id": "promotion_01",
+      "dimension": "promotional_activity",
+      "observation": "Promotional intent detected in 4 analyzed content items (20.0%). Observed promotion intent labels: {'saudi national day combo offer': 1, 'new menu launch': 2, 'new item launch': 1}.",
+      "metric_path": "metrics.promotion",
+      "value": {
+        "promotional_content": 4,
+        "promotional_content_pct": 20.0,
+        "promotion_intents": {
+          "saudi national day combo offer": 1,
+          "new menu launch": 2,
+          "new item launch": 1
+        }
+      },
+      "evidence_content_ids": [
+        "3991129199864779860",
+        "3989533028152373855",
+        "3986810326670125368",
+        "3969271939858791651"
+      ]
+    },
+    {
+      "signal_id": "commerce_01",
+      "dimension": "commerce_visibility",
+      "observation": "Within analyzed visuals: menu visible in 10.0%, price visible in 5.0%, and offer messaging visible in 5.0% of items.",
+      "metric_path": "metrics.commerce_visibility",
+      "value": {
+        "menu_visible_pct": 10.0,
+        "price_visible_pct": 5.0,
+        "offer_visible_pct": 5.0
+      },
+      "evidence_content_ids": [
+        "3991129199864779860",
+        "3950479806571244733"
+      ]
+    },
+    {
+      "signal_id": "branding_01",
+      "dimension": "branding_presence",
+      "observation": "Logo was visually detected in 25.0% of analyzed items; recognizable branding was detected in 40.0%.",
+      "metric_path": "metrics.branding",
+      "value": {
+        "logo_presence_pct": 25.0,
+        "branding_presence_pct": 40.0
+      },
+      "evidence_content_ids": [
+        "3991129199864779860",
+        "3986810326670125368",
+        "3985199838120802368",
+        "3975902714447137137",
+        "3970702584756402498",
+        "3969271939858791651",
+        "3962900373238397789",
+        "3953379219985743941"
+      ]
+    },
+    {
+      "signal_id": "reels_01",
+      "dimension": "reel_activity",
+      "observation": "9 of the observed content items were matched as Reels (45.0% of the content window). 9 were enriched; average Reel views: 11409.56; transcript availability: 100.0%.",
+      "metric_path": "metrics.reels",
+      "value": {
+        "reels_detected": 9,
+        "reels_enriched": 9,
+        "reel_content_pct": 45.0,
+        "average_views": 11409.56,
+        "median_views": 3619.0,
+        "average_duration_seconds": 11.09,
+        "transcript_available_pct": 100.0
+      },
+      "evidence_content_ids": [
+        "3991129199864779860",
+        "3989533028152373855",
+        "3988226201470078731",
+        "3975902714447137137",
+        "3972280971397133293",
+        "3969271939858791651",
+        "3966482889807829390",
+        "3961409474084342351",
+        "3953379219985743941"
+      ]
+    }
+  ],
+  "content": [
+    {
+      "content_id": "3991129199864779860",
+      "short_code": "DdjVtyCoRRU",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DdjVtyCoRRU/",
+        "timestamp": "2026-09-21T14:11:04.000Z",
+        "caption": "Don’t miss out on our Saudi National Day offers!🇸🇦🐣\n\nNew Menu, New Exciting Combos! \nBook Your Spot Today ✨\n\nEveryday from 8AM-11PM💛\n\n#اليومالوطنيالسعودي #dearduck # jeddah #عروض #lunch",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fpoa5-1.fna.fbcdn.net/v/t51.71878-15/818492181_1468796638443071_8238676509362947128_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzk5MTEyOTE5OTg2NDc3OTg2MDEzNzE3NjA0MDQ5NDEyMzc%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fbmZyYW1lX2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=wq4C8FzSLH8Q7kNvwGEv3KX&_nc_oc=AdpO3QYLI7EEdoTUGvsJh_gtEwNjZGbyyyDq_kajCiNE7irXRvqml-5YIFoRfzGafhU&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fpoa5-1.fna&_nc_gid=iUWRUNQsRDF0myutWwA72Q&_nc_ss=7a22e&oh=00_AQIVv6iPM3NBkR7xJzTRi5rEyW6mVJMPG7VFuiua1QmOyA&oe=6AB802BF"
+        ],
+        "video_url": null,
+        "likes": 14,
+        "comments": 0,
+        "views": 214,
+        "hashtags": [
+          "اليومالوطنيالسعودي",
+          "dearduck",
+          "عروض",
+          "lunch"
+        ],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on September 21, 2026.",
+        "music_info": {
+          "artist_name": "Mike Block (Producer)",
+          "song_name": "Hijaz",
+          "uses_original_audio": false,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "450420425425724"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DdjVtyCoRRU/",
+        "transcript": "موسیقی",
+        "duration_seconds": 10.033334,
+        "shares": null,
+        "plays": 1136,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with cover image and transcript",
+        "content_categories": [
+          "national_day_campaign",
+          "food_combos",
+          "restaurant_offer"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "Saudi National Day",
+          "Signature shakshouka-ish",
+          "Chicken and Waffle",
+          "96 SAR combo"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "book a table",
+          "description": "The caption asks viewers to book their spot today."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "Saudi National Day combo offer",
+          "description": "The post promotes Saudi National Day combos featuring Signature shakshouka-ish and Chicken and Waffle for 96 SAR."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": true,
+          "price_visible": true,
+          "offer_visible": true,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "Dear Duck,\nSAUDI NATIONAL DAY COMBOS\nSignature shakshouka-ish\n+ Chicken and Waffle\n96 SAR",
+        "visual_summary": "The cover shows two food dishes presented in a Saudi National Day combo graphic, along with the Dear Duck branding and a price of 96 SAR.",
+        "caption_summary": "The caption promotes Saudi National Day offers and a new menu with new combos. It asks viewers to book their spot and states that the restaurant is open every day from 8AM to 11PM.",
+        "transcript_summary": "The supplied transcript contains the Arabic word \"موسیقی,\" meaning \"music.\"",
+        "spoken_topics": [
+          "music"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "promotion"
+            ],
+            "text": "The cover reads \"SAUDI NATIONAL DAY COMBOS,\" shows two dishes, and displays \"96 SAR.\""
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "promotion"
+            ],
+            "text": "\"Don’t miss out on our Saudi National Day offers!\" and \"New Menu, New Exciting Combos!\""
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "\"Book Your Spot Today ✨\""
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "The graphic names \"Signature shakshouka-ish\" and \"Chicken and Waffle.\""
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3989533028152373855",
+      "short_code": "DddqybStfJf",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DddqybStfJf/",
+        "timestamp": "2026-09-19T09:23:06.000Z",
+        "caption": "This Sunday is different. New Menu, New Character, Same you. \n\nWhat would you name our new Duck🤔\n\n#dearduck #newmenu #jeddah #lunch #dinner",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fyvr4-1.fna.fbcdn.net/v/t51.82787-15/816996406_18480475246129313_8034547020525314329_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ig_cache_key=Mzk4OTUzMzAyODE1MjM3Mzg1NTE4NDgwNDc1MjQzMTI5MzEz.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=dGbaq-2mzCoQ7kNvwG_WsZ0&_nc_oc=AdrVOJRDFSXP6ZPVQqHZnPd8G_pZzSGfwHXijO24uLoJwqpUFA55Oiq6k2V747EqILA_GHvqzOJdVwIO41OCreiX&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fyvr4-1.fna&_nc_gid=HTBbR_xXVPH2626ZAaT8yA&_nc_ss=7a22e&oh=00_AQIGm-GYSlvn1FtRSr0hJBJ_VjPUA6P71uODjzv47g9zFA&oe=6AB7FB76"
+        ],
+        "video_url": null,
+        "likes": -1,
+        "comments": 84,
+        "views": 17956,
+        "hashtags": [
+          "dearduck",
+          "newmenu",
+          "jeddah",
+          "lunch",
+          "dinner"
+        ],
+        "mentions": [],
+        "alt_text": "Video by Nihal Felemban - نهال فلمبان on September 19, 2026.",
+        "music_info": {
+          "artist_name": "dipsntrips",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "28753477010944452"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DddqybStfJf/",
+        "transcript": "Disculpe,",
+        "duration_seconds": 9.077551,
+        "shares": null,
+        "plays": 52053,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel",
+        "content_categories": [
+          "new_menu",
+          "character_content",
+          "audience_question"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "new menu",
+          "duck character",
+          "Jeddah",
+          "lunch and dinner"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "name the character",
+          "description": "The audience is asked what they would name the new duck."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "new menu launch",
+          "description": "The post announces a new menu coming tomorrow."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": "NEW MENU\nCOMING\nTOMORROW!",
+        "visual_summary": "Two people are seated in chairs on a palm-lined pedestrian road. One person is wearing a duck mask and holding a sign announcing a new menu coming tomorrow.",
+        "caption_summary": "The caption announces a new menu and a new character, then asks what the audience would name the new duck. It includes hashtags for Dear Duck, the new menu, Jeddah, lunch, and dinner.",
+        "transcript_summary": "The supplied transcript contains the utterance “Disculpe,”.",
+        "spoken_topics": [
+          "Spanish utterance: “Disculpe”"
+        ],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "promotion",
+              "content_themes"
+            ],
+            "text": "“New Menu, New Character” announces a new menu and new character."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "promotion",
+              "content_themes"
+            ],
+            "text": "The sign reads “NEW MENU COMING TOMORROW!”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "“What would you name our new Duck🤔” asks the audience to name the duck character."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "visual_signals",
+              "content_themes"
+            ],
+            "text": "Two people are visible, including one wearing a duck mask."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3988226201470078731",
+      "short_code": "DdZBpmGh48L",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DdZBpmGh48L/",
+        "timestamp": "2026-09-17T14:00:06.000Z",
+        "caption": "When it’s shared with the people you love 💛🐣\n\nMaking memories everyday, from 8AM-11PM✨\n\n#dearduck #jeddah #lunchanddinner #جدة",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.flas1-1.fna.fbcdn.net/v/t51.71878-15/813661168_1614268837090805_8180965588475919172_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ig_cache_key=Mzk4ODIyNjIwMTQ3MDA3ODczMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=TyjvLCShy74Q7kNvwF9P0Ty&_nc_oc=AdqhLfBC6miNllwUjvflxSwJDWwHOlI4SQwtqUb6yJyYSGfITJIgro0SpRoz9OegX4Bg0zL2cIkzKyrYgJsRGHgg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.flas1-1.fna&_nc_gid=y0-UrGVWWPVAqG_udS7Amg&_nc_ss=7a22e&oh=00_AQIwRZ09UcjCqBZ0MKvQ-t0LCeiZ9lESyJJ0DDkz760w7Q&oe=6AB80EFF"
+        ],
+        "video_url": null,
+        "likes": 50,
+        "comments": 0,
+        "views": 1007,
+        "hashtags": [
+          "dearduck",
+          "jeddah",
+          "lunchanddinner",
+          "جدة"
+        ],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on September 17, 2026.",
+        "music_info": {
+          "artist_name": "dearduck.sa",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "28343378941949961"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DdZBpmGh48L/",
+        "transcript": "लड़का।",
+        "duration_seconds": 7.034195,
+        "shares": null,
+        "plays": 3296,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with dining-scene footage and transcript",
+        "content_categories": [
+          "dining_experience",
+          "shared_meal",
+          "restaurant_ambiance"
+        ],
+        "content_pillar": "dining_experience",
+        "content_themes": [
+          "shared dining",
+          "making memories",
+          "restaurant interior",
+          "8AM-11PM dining hours"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": null,
+        "visual_summary": "Three people are seated together at a restaurant table with several dishes and drinks. The setting includes indoor seating, plants, decorative lighting, and red heart decorations on the ceiling.",
+        "caption_summary": "The caption describes sharing moments and making memories with loved ones. It states that the restaurant is open every day from 8AM to 11PM and includes the hashtags #dearduck, #jeddah, #lunchanddinner, and #جدة.",
+        "transcript_summary": "The supplied transcript contains the Hindi word “लड़का,” meaning “boy.”",
+        "spoken_topics": [
+          "boy"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories"
+            ],
+            "text": "People are shown sharing a meal together in a restaurant setting."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“When it’s shared with the people you love” and “Making memories everyday, from 8AM-11PM”."
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "spoken_topics"
+            ],
+            "text": "“लड़का।”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3986810326670125368",
+      "short_code": "DdT_t58CCk4",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DdT_t58CCk4/",
+        "timestamp": "2026-09-15T15:07:28.000Z",
+        "caption": "New Breakfast Items-> Available This Thursday!🍳🐣\n\nDon’t Miss Out, Reserve Thru the Link in Bio 🔗💛\nEveryday, from 8AM-11PM✨",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://scontent-iad6-1.cdninstagram.com/v/t51.82787-15/811830514_17949557964269275_6403649734400706180_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=107&ig_cache_key=Mzk4NjgwOTIyMjczOTMxMTEwNA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=e7n0x5-jpoQQ7kNvwHVxspt&_nc_oc=Adq99M86PL-UjRaH7t-av61j88Nq4uqBvkZ76ASPbnRn-6qUDAHGvQtdAjQGHRE39CQ&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-iad6-1.cdninstagram.com&_nc_gid=Af274cyLpiS8HGurgxXDrw&_nc_ss=7a22e&oh=00_AQKzuX349EjeifKYcBbpB9yb391W8DLzHasrv_KWYjSluA&oe=6AB80C30",
+          "https://scontent-iad3-1.cdninstagram.com/v/t51.82787-15/812611971_17949557976269275_3356127154776666024_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ig_cache_key=Mzk4NjgwOTIxNTI5ODU4MDg3OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=k5cWL3XA2I8Q7kNvwEPJtkT&_nc_oc=AdpjV30-5xQz6MGVHQPpPTiICukHBVZ3qDQiWLKF8QyUWdPLyFZD2s0T0XGkT_xtf8I&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-iad3-1.cdninstagram.com&_nc_gid=Af274cyLpiS8HGurgxXDrw&_nc_ss=7a22e&oh=00_AQIGOQZMRCfvBX6ObP6BulKuKj93h2W_5wvY7gsaUyxNNw&oe=6AB811F3"
+        ],
+        "video_url": null,
+        "likes": 37,
+        "comments": 1,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on September 15, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel",
+        "content_categories": [
+          "breakfast_items",
+          "new_item_launch",
+          "restaurant_branding"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "new breakfast items",
+          "Own Ottoman Delight",
+          "Breakfast of Champions",
+          "all-day dining"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "reserve a table",
+          "description": "The audience is asked to reserve through the link in bio."
+        },
+        "promotion": {
+          "present": true,
+          "intent": "new item launch",
+          "description": "New breakfast items are announced as available starting Thursday."
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "Own Ottoman Delight\nBreakfast of Champions\nDear Duck,\nALL-DAY EATERY",
+        "visual_summary": "The carousel shows close-up photographs of breakfast dishes, including eggs, bread, garnishes and other plated ingredients. The images include the text “Own Ottoman Delight,” “Breakfast of Champions,” and the Dear Duck, All-Day Eatery branding.",
+        "caption_summary": "The caption announces new breakfast items available Thursday and asks viewers to reserve through the link in bio. It states that the restaurant operates every day from 8AM to 11PM.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "promotion",
+              "cta",
+              "content_themes"
+            ],
+            "text": "“New Breakfast Items -> Available This Thursday!” and “Don’t Miss Out, Reserve Thru the Link in Bio”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes",
+              "visual_signals"
+            ],
+            "text": "The carousel displays breakfast dishes with the overlaid phrases “Own Ottoman Delight” and “Breakfast of Champions.”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "visual_signals",
+              "content_categories"
+            ],
+            "text": "Dear Duck branding and the words “ALL-DAY EATERY” are visible in the second image."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3985199838120802368",
+      "short_code": "DdORiNmInhA",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DdORiNmInhA/",
+        "timestamp": "2026-09-13T14:00:07.000Z",
+        "caption": "The colors we all want to see on our table 🍔🐣\n\nEveryday, From 8AM-11PM💛✨",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-dus1-1.cdninstagram.com/v/t51.82787-15/808553596_17949213255269275_4677021283376601893_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=Mzk4NTE5OTgzODEyMDgwMjM2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMzk4Ny5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=wQgCCZp4ZqcQ7kNvwFW6SOu&_nc_oc=Adp8vuXE7gS2Frf3c98pIGBBPC-zMzO-eBsmegmMWsIu4SUBU0yc_J4xD6uFkOBiRnE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-dus1-1.cdninstagram.com&_nc_gid=3XB0sscHBs3oS2fJR7Y3kA&_nc_ss=7a22e&oh=00_AQKy0LbEZ7f7K_4jeG_vem6qyUmrBtPtEvZgZUje502c4w&oe=6AB820C2"
+        ],
+        "video_url": null,
+        "likes": 25,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on September 13, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "single photo",
+        "content_categories": [
+          "burger",
+          "fries",
+          "beverage"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "burger",
+          "French fries",
+          "purple beverage",
+          "restaurant table"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "Dear Duck",
+        "visual_summary": "A table setting shows a burger being held, another burger on a branded plate, French fries, a purple beverage garnished with lime and mint, dipping sauce, and part of another plated dish. Hands and arms of diners are visible.",
+        "caption_summary": "The caption describes the table colors and states: “Everyday, From 8AM-11PM💛✨”.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "Burgers, French fries, a purple beverage, sauce, and other plated food are visible on the table."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "visual_signals.logo_visible",
+              "visual_signals.branding_visible"
+            ],
+            "text": "The words “Dear Duck” are visible on the plate."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“The colors we all want to see on our table 🍔🐣”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“Everyday, From 8AM-11PM💛✨”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3980253423001410785",
+      "short_code": "Dc8s2ZiCBzh",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Dc8s2ZiCBzh/",
+        "timestamp": "2026-09-06T14:00:02.000Z",
+        "caption": "You can always count on her💛\n\nServing you daily, from 8AM-11PM☕️🐣",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/798432362_17948223273269275_8439025079117949408_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzk4MDE5MDg5OTU5Mzg1MzQyMA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=0ioiWl_pbTUQ7kNvwGLGeNI&_nc_oc=AdoI65VZZBRg5Yy8J1J1HpYNRbb9h0KhiubCb3T8x3-Zhmmkb_Ks9hseE-MyAhZJ6QdSpvt1n1DkKiIzqGyBFqYj&_nc_ad=z-m&_nc_cid=1698&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=UN2mgXMzgzcAkAmRJDaEPQ&_nc_ss=7a22e&oh=00_AQKcr0v74JDPXoKHZUehyjxUBwRpODq7BmvUyAa3ZnKpIA&oe=6AB80187",
+          "https://scontent-nrt6-1.cdninstagram.com/v/t51.82787-15/798104802_17948223258269275_7211989325226993421_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzk4MDE5MDg5OTY5NDUxNDkwOQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vjg3IkbiX0cQ7kNvwHy0juP&_nc_oc=Ado0EPHjNgBC6RIQtePUMqx7YKgbADnCmLkUf2rTyWlv0AVjIS77BAHEkOPyGF-kwLOpMnq6f_7iOHhDw1H9G78r&_nc_ad=z-m&_nc_cid=1698&_nc_zt=23&_nc_ht=scontent-nrt6-1.cdninstagram.com&_nc_gid=UN2mgXMzgzcAkAmRJDaEPQ&_nc_ss=7a22e&oh=00_AQLFO6WE7kFWB6yF4F669ENep6NZ92O0XTENFbc6ATWbwg&oe=6AB80BF5"
+        ],
+        "video_url": null,
+        "likes": 62,
+        "comments": 3,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on September 06, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel of coffee and espresso preparation",
+        "content_categories": [
+          "coffee",
+          "espresso",
+          "coffee_preparation"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "espresso",
+          "coffee service",
+          "daily operating hours"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": false
+        },
+        "text_in_visual": "She was like a shot of espresso\ncoffee starts here\nM23 UP",
+        "visual_summary": "The carousel shows a cup of espresso on a saucer with a spoon, followed by an espresso machine dispensing coffee into cups. The images include text overlays and visible coffee equipment.",
+        "caption_summary": "The caption says, “You can always count on her💛” and states that the restaurant serves daily from 8AM-11PM, with coffee and chick emojis.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes",
+              "food_visible"
+            ],
+            "text": "The images show espresso in a cup and an espresso machine preparing coffee."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_categories"
+            ],
+            "text": "The overlay reads “She was like a shot of espresso,” and the second image shows espresso preparation."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“Serving you daily, from 8AM-11PM☕️🐣”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "cta"
+            ],
+            "text": "The images contain descriptive text but no request for the audience to take an action."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3977354436418224025",
+      "short_code": "DcyZsl4iD-Z",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcyZsl4iD-Z/",
+        "timestamp": "2026-09-02T14:00:01.000Z",
+        "caption": "Looking for a sweet treat? Look no further 🥐🧐\nHot, buttery, crispy creamy goodness- all in one bite.\n\nOne of one, only at Dear Duck. Anytime from 8AM-11PM🐣💛\n\n#dearduck #croissant #dessert #jeddah",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://scontent-cdg6-1.cdninstagram.com/v/t51.82787-15/793000416_17947653633269275_5220799511663351481_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=Mzk3NzMwMjAxNjEzMjY0NzAwMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=UbKSxMRLVRYQ7kNvwEAT56A&_nc_oc=Adphved2dAYLX3uBqJ00MOA9qyWWeyPj4r6PlzaF6MjOZ3KC--MhKj5-1B1eIQ60n7obN1taOX5SIoTJ3PYKZXUz&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cdg6-1.cdninstagram.com&_nc_gid=MKnkwHTwckPAdf8OJL2zXg&_nc_ss=7a22e&oh=00_AQI21uSQby0KiuPwlfUItC7vBHtcP7WoGokS-IxQTv0wug&oe=6AB81EB1",
+          "https://scontent-cdg4-3.cdninstagram.com/v/t51.82787-15/792705234_17947653636269275_4984857667487901147_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzk3NzMwMjAxNjE3NDYwNjgxNg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=zlJLBEPhoZcQ7kNvwEWMnZ2&_nc_oc=Adqh5FyJwH1FNHwX9RXDfgwTmKfapRD3nfK69LvGEJZZAdHgGTB0bOHjumY-BYxsGKlORd3fUc7Y3m_LJaPJ2NDM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-cdg4-3.cdninstagram.com&_nc_gid=MKnkwHTwckPAdf8OJL2zXg&_nc_ss=7a22e&oh=00_AQJRTNwg12RNLN6CkaeDTLfvhP5-HosLf7d9N-C5vcDTmg&oe=6AB82793"
+        ],
+        "video_url": null,
+        "likes": 62,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "dearduck",
+          "croissant",
+          "dessert",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on September 02, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel",
+        "content_categories": [
+          "dessert",
+          "croissant_pudding",
+          "baked_goods"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "croissant pudding",
+          "sweet treat",
+          "Dear Duck"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": false
+        },
+        "text_in_visual": "THE PROOF IS IN THE PUDDING.\nFAMOUS CROISSANT PUDDING.",
+        "visual_summary": "The carousel shows close-up images of croissant pudding topped with whipped cream and garnishes, served in a black dish. The images include the text “THE PROOF IS IN THE PUDDING.” and “FAMOUS CROISSANT PUDDING.”",
+        "caption_summary": "The caption presents a sweet treat described as hot, buttery, crispy, and creamy, identified as croissant pudding. It states that it is available at Dear Duck from 8AM to 11PM.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "The images show croissant pudding with whipped cream and the text “FAMOUS CROISSANT PUDDING.”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "“Hot, buttery, crispy creamy goodness- all in one bite.” and “#croissant #dessert”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“One of one, only at Dear Duck. Anytime from 8AM-11PM”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3975902714447137137",
+      "short_code": "DctPnQcIglx",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DctPnQcIglx/",
+        "timestamp": "2026-08-31T14:00:07.000Z",
+        "caption": "It’s too hot outside. We’ve got your coolers covered!😎🧊\n\nAll day from 8AM-11PM🐣💛\n#dearduck #matcha #jeddah #mocktails",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fmad6-1.fna.fbcdn.net/v/t51.71878-15/790945602_2151668472395840_5954992906169094086_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=108&_nc_map=urlgen_bucketless&ig_cache_key=Mzk3NTkwMjcxNDQ0NzEzNzEzNzE0NDYxMTE4NDc1NzYwMTg%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fbmZyYW1lX2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=3p1zXUhwKpUQ7kNvwGjMT_E&_nc_oc=AdpwNKiMEDh-7rxjZ9RTnup2TVzeHzaeOwaiDIw3PhcQpuqldUNtZEQffl9XeEexcv8&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fmad6-1.fna&_nc_gid=dNYQkYW1XPCUkQy4AbMqAQ&_nc_ss=7a22e&oh=00_AQL-I-cKL7IdjA8agDeWPvm0DXEtwTtf5pT9npaGcbIN7A&oe=6AB81149"
+        ],
+        "video_url": null,
+        "likes": 17,
+        "comments": 0,
+        "views": 98,
+        "hashtags": [
+          "dearduck",
+          "matcha",
+          "jeddah",
+          "mocktails"
+        ],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on August 31, 2026.",
+        "music_info": {
+          "artist_name": "Sleeping Lion",
+          "song_name": "Wake Up Remix (Ella Joy Meir) (Instrumental)",
+          "uses_original_audio": false,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "668312372271798"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DctPnQcIglx/",
+        "transcript": "\n",
+        "duration_seconds": 9.63483,
+        "shares": null,
+        "plays": 662,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with cover image",
+        "content_categories": [
+          "summer_drinks",
+          "mocktails",
+          "beverages"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "summer drinks",
+          "mocktails",
+          "matcha",
+          "Dear Duck"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "SUMMER CALLS FOR FUN Drinks.\nPROCESSED BY DEAR DUCK\nSUMMER 2025 FUN DRINKS\nPROCESSED BY DEAR DUCK",
+        "visual_summary": "The cover shows two chilled beverages presented in a graphic summer-themed layout. The drinks are displayed in branded cups, with text referring to summer fun drinks and Dear Duck.",
+        "caption_summary": "The caption says it is hot outside and that Dear Duck has coolers covered. It states availability from 8AM to 11PM and includes hashtags for Dear Duck, matcha, Jeddah and mocktails.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes",
+              "visual_signals",
+              "text_in_visual"
+            ],
+            "text": "Two beverages are shown with the text “SUMMER CALLS FOR FUN Drinks.” and “SUMMER 2025 FUN DRINKS”; the cups and layout include Dear Duck branding."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "The caption refers to “coolers” and includes #matcha and #mocktails."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "The caption states availability “All day from 8AM-11PM.”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3972280971397133293",
+      "short_code": "DcgYH9YK3Pt",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcgYH9YK3Pt/",
+        "timestamp": "2026-08-26T14:00:26.000Z",
+        "caption": "Stop by & Bring a friend 💛\n\n Open Everyday, from 8AM-11PM🐣✨",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fyvr4-1.fna.fbcdn.net/v/t51.82787-15/787596788_17946618822269275_275258818906545347_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ig_cache_key=Mzk3MjI4MDk3MTM5NzEzMzI5MzE3OTQ2NjE4ODE5MjY5Mjc1.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjEyMTYuc2RyLnZpZGVvX2RlZmF1bHRfY292ZXJfZnJhbWUuQzMifQ%3D%3D&_nc_ohc=b8cdk8vwIk4Q7kNvwGLskeJ&_nc_oc=AdqzxRrdcRLHS3Utr2eT3Qq2Qq3sYkJqocIY4hbOYfDEMu4rbyMRgRpVu30hiWTqkc5OZqtwixmbgLZFJ4LOqLxf&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fyvr4-1.fna&_nc_gid=X0TOxi7ecJSGUTN4Jpuy2w&_nc_ss=7a22e&oh=00_AQISAnTW1ppa1Wtia45SXf796-koBvL8fGV58vCpTBSnvg&oe=6AB810D9"
+        ],
+        "video_url": null,
+        "likes": 71,
+        "comments": 4,
+        "views": 1689,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on August 26, 2026.",
+        "music_info": {
+          "artist_name": "Company Money",
+          "song_name": "Feels So Good (Instrumental)",
+          "uses_original_audio": false,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "592919120281804"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DcgYH9YK3Pt/",
+        "transcript": "Faltava ainda o aquário.",
+        "duration_seconds": 14.069841,
+        "shares": null,
+        "plays": 4973,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with cover image and voice-over transcript",
+        "content_categories": [
+          "drink_showcase",
+          "restaurant_visit"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "green drink",
+          "visiting with a friend",
+          "daily opening hours"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit with a friend",
+          "description": "The audience is asked to stop by and bring a friend."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": null,
+        "visual_summary": "The cover image shows a close-up of a bearded person holding a glass containing a green drink with a straw. A partially visible label appears on the glass.",
+        "caption_summary": "The caption asks viewers to stop by and bring a friend. It states that the venue is open every day from 8 AM to 11 PM.",
+        "transcript_summary": "The supplied transcript is in Portuguese and says, “Faltava ainda o aquário,” meaning “The aquarium was still missing.”",
+        "spoken_topics": [
+          "aquarium"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "A person is shown holding a green drink in a glass with a straw."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "content_themes"
+            ],
+            "text": "“Stop by & Bring a friend 💛”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“Open Everyday, from 8AM-11PM🐣✨”"
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "spoken_topics"
+            ],
+            "text": "“Faltava ainda o aquário.”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3970702584756402498",
+      "short_code": "DcaxPaRIXlC",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcaxPaRIXlC/",
+        "timestamp": "2026-08-24T14:00:08.000Z",
+        "caption": "When you don’t know where to go, go Full Brit 🍳\n\nServed With Love, Everyday from 8AM-11PM💛🐣",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fctt1-1.fna.fbcdn.net/v/t51.82787-15/786069789_17946319560269275_4585359627720896892_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ig_cache_key=Mzk3MDcwMjU4NDc1NjQwMjQ5OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=_-nFk5D6vsIQ7kNvwHnKGsL&_nc_oc=AdrnPACACQvroCYwlnPSeCN70ANPSR_hD4UxX8RlvcqbHhmVmfx4LVNo2_kTzxSR4JM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fctt1-1.fna&_nc_gid=YgjznysMPOWpy2RW7cyrPQ&_nc_ss=7a22e&oh=00_AQLif1Fn2XLuKwdQBJohRh04yB3dzXiWIsSu0WBwFgaboA&oe=6AB7F5B5"
+        ],
+        "video_url": null,
+        "likes": 25,
+        "comments": 0,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on August 24, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "single photo",
+        "content_categories": [
+          "food_product",
+          "breakfast",
+          "dish_showcase"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "Full Brit",
+          "eggs",
+          "turkey sausage",
+          "mushrooms",
+          "white beans",
+          "roasted cherry tomatoes",
+          "country loaf bread"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "choose the Full Brit",
+          "description": "The audience is encouraged to choose the “Full Brit” dish."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "SOME MORNINGS YOU HAVE TO GO \"FULL BRIT\"\n\nAT Dear Duck, \"Full Brit\" means a plate of eggs your way, premium turkey sausage, mushroom, white beans, roasted cherry tomatoes, and country loaf bread.",
+        "visual_summary": "The image shows a plated breakfast with two eggs, turkey sausage, mushrooms, roasted cherry tomatoes, and a cup of white beans. Dear Duck branding and text describing the “Full Brit” dish appear on a brown background.",
+        "caption_summary": "The caption encourages going “Full Brit” and states that it is served every day from 8AM–11PM.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes",
+              "visual_signals",
+              "text_in_visual"
+            ],
+            "text": "The image prominently shows the Full Brit breakfast plate and describes its ingredients, with Dear Duck branding visible."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta",
+              "content_themes"
+            ],
+            "text": "“When you don’t know where to go, go Full Brit” encourages the audience to choose the Full Brit dish."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“Served With Love, Everyday from 8AM-11PM” states the dish's serving hours."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3969271939858791651",
+      "short_code": "DcVr8yYNXzj",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcVr8yYNXzj/",
+        "timestamp": "2026-08-22T10:33:18.000Z",
+        "caption": "New Ducks just landed and a new menu is coming sooooooon!! 🐣🥓🍳🍆🥫",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-ord5-1.cdninstagram.com/v/t51.82787-15/781137024_18475197505129313_2829989521926680740_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=108&ig_cache_key=Mzk2OTI3MTkzOTg1ODc5MTY1MTE4NDc1MTk3NTAyMTI5MzEz.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjcyMC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=AYJi6ZgHbAEQ7kNvwFNMYDM&_nc_oc=Adq1ug-PxK1ciReqgYvaErIiHAyz2C2qtF9ppZIGZ1K_BKdBbSlGf9dwBQQeyBVdAI16qiRqVnUqMfPhYdR9Csvc&_nc_ad=z-m&_nc_cid=3&_nc_zt=23&_nc_ht=scontent-ord5-1.cdninstagram.com&_nc_gid=bhJXm1o006CIUdIfQeqoWQ&_nc_ss=7a22e&oh=00_AQJDj9wETwRjg1XsZWuJek0ywnmVpOlcOr5VDzTZeVzhkg&oe=6AB824D1"
+        ],
+        "video_url": null,
+        "likes": -1,
+        "comments": 31,
+        "views": 12286,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Video by Nihal Felemban - نهال فلمبان on August 22, 2026.",
+        "music_info": {
+          "artist_name": "Maison Parisienne",
+          "song_name": "Bonjour Soleil",
+          "uses_original_audio": false,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "2008598203387055"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DcVr8yYNXzj/",
+        "transcript": "Bonjour soleil, bonjour la vie, le café coule, tout est joli, les croissants chantent sur le comptoir, chaque matin est un nouveau départ. Bonjour, bonjour, bonjour soleil, le monde brille, c'est une merveille, oublie tes soucis, prends un café, la journée commence, il faut danser.",
+        "duration_seconds": 25.586939,
+        "shares": null,
+        "plays": 29920,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with cover image and French transcript",
+        "content_categories": [
+          "new_menu",
+          "new_item_launch",
+          "restaurant_branding"
+        ],
+        "content_pillar": "offers_campaigns",
+        "content_themes": [
+          "new ducks",
+          "upcoming menu",
+          "café and croissants",
+          "morning routine"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": true,
+          "intent": "new menu launch",
+          "description": "The caption announces that new Ducks have arrived and that a new menu is coming soon."
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": null,
+        "visual_summary": "A smiling woman stands inside a restaurant or café area, holding colorful duck figurines and a small white object. A red-and-white patterned shopping bag and display shelves with decorative items are visible.",
+        "caption_summary": "The caption announces that new Ducks have arrived and that a new menu is coming soon, accompanied by food-related emojis.",
+        "transcript_summary": "The French transcript is a cheerful song about sunshine, life, coffee, croissants, the morning, and dancing.",
+        "spoken_topics": [
+          "sunshine and life",
+          "coffee",
+          "croissants",
+          "morning",
+          "dancing"
+        ],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_themes",
+              "promotion"
+            ],
+            "text": "“New Ducks just landed and a new menu is coming sooooooon!!”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "people_visible",
+              "branding_visible"
+            ],
+            "text": "A person is shown holding duck figurines; a printed red-and-white shopping bag is visible."
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "transcript_summary",
+              "spoken_topics"
+            ],
+            "text": "The transcript mentions coffee, croissants, the morning, sunshine, and dancing."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3967932697204519965",
+      "short_code": "DcQ7cPdiHQd",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcQ7cPdiHQd/",
+        "timestamp": "2026-08-20T14:00:02.000Z",
+        "caption": "Pretty in pink, even prettier on your table 🍽️\n\nAt your service everyday, from 8AM-11PM💛🐣\n#pasta #dearduck #جدة",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://scontent-dus1-1.cdninstagram.com/v/t51.82787-15/780551067_17945750301269275_4184285367323774697_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=106&ig_cache_key=Mzk2Nzc4MTAxMjg3NjI5NzAzOA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=gbcVLkIJZP4Q7kNvwGA1EJz&_nc_oc=Adp-D6UAz8eCT6sA00vYu7ZW2gvOYtSjpUtCgY0Aaly7QauxcxiCO29SXrin1fm9f5k&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-dus1-1.cdninstagram.com&_nc_gid=_vUHUz5R2AAp2xkA0gC82g&_nc_ss=7a22e&oh=00_AQKioNpqhH6RMtrxjZMKq7459wtr0AglOXx2URypV04dqg&oe=6AB8278A",
+          "https://scontent-dus1-1.cdninstagram.com/v/t51.82787-15/780949604_17945750313269275_324600130055711120_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ig_cache_key=Mzk2Nzc4MTAxMzE3ODMxMTk1OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=HNJKVi6JgY4Q7kNvwHK4wHs&_nc_oc=AdqGZl-f4h7Y65XUh00N-2HN5T3QtziAF2qYMli3j5z57CvKiJfmQji3ae_ILy3MvF4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-dus1-1.cdninstagram.com&_nc_gid=_vUHUz5R2AAp2xkA0gC82g&_nc_ss=7a22e&oh=00_AQIMZ6YKJe6VO7U0DYk-P8Jo9kuTrtcJWSh32j_yu5k0WA&oe=6AB7F293"
+        ],
+        "video_url": null,
+        "likes": 31,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "pasta",
+          "dearduck",
+          "جدة"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on August 20, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel",
+        "content_categories": [
+          "pasta",
+          "dish_showcase",
+          "food_preparation"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "creamy pink fusilli",
+          "pasta",
+          "Jeddah"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": "Creamy Pink Fusilli",
+        "visual_summary": "The carousel shows fusilli pasta coated in a creamy orange-pink sauce, including one image of the pasta being handled in a pan and another close-up of the plated dish topped with grated cheese and green herbs. A person wearing black gloves and a striped apron is visible.",
+        "caption_summary": "The caption describes the pasta as “Pretty in pink” and states that the restaurant is available every day from 8AM to 11PM. It includes hashtags for pasta, Dear Duck, and Jeddah.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "Images show a pasta dish labeled “Creamy Pink Fusilli,” including preparation in a pan and a plated serving."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "Caption says “Pretty in pink” and includes #pasta, #dearduck, and #جدة."
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_categories"
+            ],
+            "text": "One image shows a person handling the pasta in a pan while wearing black gloves and a striped apron."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3966482889807829390",
+      "short_code": "DcLxyxGqRmO",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DcLxyxGqRmO/",
+        "timestamp": "2026-08-18T14:00:10.000Z",
+        "caption": "Adult problems require adult solutions 😎\n\n#dearduck #coffee #jeddah",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.ftij2-1.fna.fbcdn.net/v/t51.82787-15/775740406_17945363661269275_8907327007979817095_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ig_cache_key=Mzk2NjQ4Mjg4OTgwNzgyOTM5MDE3OTQ1MzYzNjU1MjY5Mjc1.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjEyMTYuc2RyLnZpZGVvX2RlZmF1bHRfY292ZXJfZnJhbWUuQzMifQ%3D%3D&_nc_ohc=kaIVskpuEkcQ7kNvwFTcKwl&_nc_oc=AdpT6YaQy2OKABiSITfnOzpZFNMK8zcvH0y2W8JuWuAcU6dhqcslZJXx9puzvJpt8ofPVjIhiq-rjeM9Vot8ymnZ&_nc_ad=z-m&_nc_cid=3640&_nc_zt=23&_nc_ht=instagram.ftij2-1.fna&_nc_gid=yJHlR5sjgjsB9WIEtD_qdg&_nc_ss=7a22e&oh=00_AQKT1x1TqwSarHbIWmZN80rxeQC07T1vEePdxYtPaf8gRg&oe=6AB8236A"
+        ],
+        "video_url": null,
+        "likes": 33,
+        "comments": 0,
+        "views": 1337,
+        "hashtags": [
+          "dearduck",
+          "coffee",
+          "jeddah"
+        ],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on August 18, 2026.",
+        "music_info": null
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DcLxyxGqRmO/",
+        "transcript": "Who took the bomb?",
+        "duration_seconds": 10.066667,
+        "shares": null,
+        "plays": 3619,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with spoken line",
+        "content_categories": [
+          "humor",
+          "beverages",
+          "social_scene"
+        ],
+        "content_pillar": "entertainment_humor",
+        "content_themes": [
+          "adult problems",
+          "iced drinks",
+          "coffee"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": null,
+        "visual_summary": "The image shows several people holding glasses of iced beverages, including a dark drink and a green drink, with hands and partial clothing visible.",
+        "caption_summary": "The caption says, “Adult problems require adult solutions 😎” and includes hashtags for Dear Duck, coffee, and Jeddah.",
+        "transcript_summary": "The supplied transcript contains the question, “Who took the bomb?”",
+        "spoken_topics": [
+          "a question about who took the bomb"
+        ],
+        "evidence": [
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "“Adult problems require adult solutions 😎”"
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "content_pillar"
+            ],
+            "text": "“Who took the bomb?”"
+          },
+          {
+            "source": "visual",
+            "supports": [
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "Several people are shown holding iced beverages."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3962900373238397789",
+      "short_code": "Db_DOSjIztd",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Db_DOSjIztd/",
+        "timestamp": "2026-08-13T15:26:11.000Z",
+        "caption": "Good things come in golden & crispy. \n\nDon’t forget to stop by!🐣\n#dearduck #alldayeatery #jeddah #fries",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://scontent-waw2-2.cdninstagram.com/v/t51.82787-15/772205258_17944501233269275_698005006402504189_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ig_cache_key=Mzk2MjkwMDM3MzIzODM5Nzc4OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=LxrJAaqXgPcQ7kNvwFqzYoU&_nc_oc=AdoE7JmNEqoqXssmiayPKi9mEjW1CuUVihqa9mjyOwojqEsMu0pQ3MIef5LJjIQL-RzMDk3KphsB8O2Hj7IOVyw_&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-waw2-2.cdninstagram.com&_nc_gid=PKvpZkrZ7TJaPXfh_fxGtw&_nc_ss=7a22e&oh=00_AQInN4tPGZbuevo5tSrxecmzMOmnNK7QRHbHU1KwT61Utw&oe=6AB7FCD8"
+        ],
+        "video_url": null,
+        "likes": 76,
+        "comments": 2,
+        "views": null,
+        "hashtags": [
+          "dearduck",
+          "alldayeatery",
+          "jeddah",
+          "fries"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on August 13, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "single photo",
+        "content_categories": [
+          "fries",
+          "food_product"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "curly fries",
+          "Dear Duck"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "visit restaurant",
+          "description": "The caption asks the audience not to forget to stop by."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": true,
+          "people_visible": false
+        },
+        "text_in_visual": "Dear Duck",
+        "visual_summary": "Curly fries are arranged to spell “Dear Duck” on white paper inside a metal serving basket against a blue background.",
+        "caption_summary": "The caption describes the fries as golden and crispy and asks people to stop by. It includes hashtags for Dear Duck, All Day Eatery, Jeddah, and fries.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes",
+              "branding_visible"
+            ],
+            "text": "Curly fries are shown and arranged to spell “Dear Duck”."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "“Don’t forget to stop by!🐣”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "“Good things come in golden & crispy.” with the hashtag “#fries”."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3961409474084342351",
+      "short_code": "Db5wO2gqgpP",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Db5wO2gqgpP/",
+        "timestamp": "2026-08-11T14:00:11.000Z",
+        "caption": "Good company looks good on the table 🐣✨\n\nOpen Everyday from 8AM-11PM\n\n#dearduck #jeddah #alldayeatery #brunch",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://instagram.fcgh15-1.fna.fbcdn.net/v/t51.82787-15/770183365_17944148865269275_5685092496079253332_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=100&ig_cache_key=Mzk2MTQwOTQ3NDA4NDM0MjM1MTE3OTQ0MTQ4ODU5MjY5Mjc1.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjEyMTYuc2RyLnZpZGVvX2RlZmF1bHRfY292ZXJfZnJhbWUuQzMifQ%3D%3D&_nc_ohc=eTr-o3qGCvsQ7kNvwEM0ZmR&_nc_oc=Adretrh8knCvbRauRt4Ft3etelHudBHBUVKt5LhDujKOJcsBN6zX2Xotk50yzGLUCqs&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcgh15-1.fna&_nc_gid=Ob5pj1ErmICc0tG9BsipCw&_nc_ss=7a22e&oh=00_AQI_nyMAJfi6Ju7nPdcMKY5rUwye96UPblbNiN9eNzJ3bQ&oe=6AB7F66C"
+        ],
+        "video_url": null,
+        "likes": 51,
+        "comments": 4,
+        "views": 1430,
+        "hashtags": [
+          "dearduck",
+          "jeddah",
+          "alldayeatery",
+          "brunch"
+        ],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on August 11, 2026.",
+        "music_info": {
+          "artist_name": "dearduck.sa",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "27877746728533742"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/Db5wO2gqgpP/",
+        "transcript": "The shore.",
+        "duration_seconds": 9.100771,
+        "shares": null,
+        "plays": 4136,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with transcript and cover image",
+        "content_categories": [
+          "beverages",
+          "brunch",
+          "all_day_dining"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "colorful drinks",
+          "brunch",
+          "all-day dining",
+          "restaurant opening hours"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": null,
+        "visual_summary": "A close-up shows several colorful drinks in glasses, including orange, red, and yellow beverages, with ice and a black straw. A hand is visible holding one of the glasses, and a white creamy item with green garnish appears in the background.",
+        "caption_summary": "The caption says, “Good company looks good on the table 🐣✨” and states that the restaurant is open every day from 8AM to 11PM. It includes hashtags for Dear Duck, Jeddah, all-day eatery, and brunch.",
+        "transcript_summary": "The supplied transcript consists of the phrase, “The shore.”",
+        "spoken_topics": [
+          "the shore"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "Several colorful drinks are shown in glasses on a table."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "“Good company looks good on the table 🐣✨” and hashtags including #alldayeatery and #brunch."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "“Open Everyday from 8AM-11PM.”"
+          },
+          {
+            "source": "transcript",
+            "supports": [
+              "spoken_topics"
+            ],
+            "text": "“The shore.”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3959870626694557873",
+      "short_code": "Db0SVrMofCx",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/Db0SVrMofCx/",
+        "timestamp": "2026-08-09T14:00:10.000Z",
+        "caption": "When it’s love, it’s gotta be Labna! 💛\n\nOpen Everyday from 8AM-11PM🐣\nAll-Day Eatery Serving Brunch, Lunch, Dinner & Drinks\n\n#dearduck #brunch #jeddah #AllDayEatery",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fflr2-1.fna.fbcdn.net/v/t51.82787-15/770678221_17943823620269275_4860981744110905646_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ig_cache_key=Mzk1OTg3MDYyNjY5NDU1Nzg3Mw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=oRD8SVzTZQoQ7kNvwH_GLlO&_nc_oc=AdoSvKFhx3MPR0hl8lDOGEydfeMDebqZXKiS1TRF4Pmcjs3MDq-90fc9-WB359eZW0w&_nc_ad=z-m&_nc_cid=1007&_nc_zt=23&_nc_ht=instagram.fflr2-1.fna&_nc_gid=B-y2PxiOD1A0KVV239GZkw&_nc_ss=7a22e&oh=00_AQJioE76CQF3LNnar2godcMET5_9rPMBteHGK6_UAK0D3Q&oe=6AB802FF"
+        ],
+        "video_url": null,
+        "likes": 21,
+        "comments": 1,
+        "views": null,
+        "hashtags": [
+          "dearduck",
+          "brunch",
+          "jeddah",
+          "AllDayEatery"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on August 09, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "single photo",
+        "content_categories": [
+          "dish_showcase",
+          "brunch",
+          "restaurant_hours"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "labna",
+          "spoonfull of love",
+          "all-day dining"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": false
+        },
+        "text_in_visual": "SPOONFULL of LOVE",
+        "visual_summary": "A plated dish featuring a white labna-like base, roasted orange and red vegetables, herbs, and microgreens. The image includes the text “SPOONFULL of LOVE” over a blurred restaurant interior background.",
+        "caption_summary": "The caption describes labna as an expression of love and states that the eatery is open every day from 8AM–11PM. It describes the restaurant as an all-day eatery serving brunch, lunch, dinner, and drinks.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "A plated food dish is shown with the on-image phrase “SPOONFULL of LOVE”."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "“When it’s love, it’s gotta be Labna!”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories"
+            ],
+            "text": "“All-Day Eatery Serving Brunch, Lunch, Dinner & Drinks”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories"
+            ],
+            "text": "“Open Everyday from 8AM-11PM”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3953379219985743941",
+      "short_code": "DbdOXRlqUBF",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbdOXRlqUBF/",
+        "timestamp": "2026-07-31T12:05:10.000Z",
+        "caption": "If it doesn’t sound like ice melting in a cup, we don’t want to hear it. 🙅‍♂️🍹\n\nOpen everyday from 8AM to 11PM\n\nReserve your spot through the link in our Bio! 🍽\n\nAll Day Eatery, Serving Brunch, Lunch, Dinner & Drinks\n\n#DearDuck #Dinner #Jeddah #AllDayEatery",
+        "content_type": "Video",
+        "product_type": "clips",
+        "image_urls": [
+          "https://scontent-icn2-1.cdninstagram.com/v/t51.71878-15/750184902_1351346339726101_6901004267897128936_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=110&ig_cache_key=Mzk1MzM3OTIxOTk4NTc0Mzk0MTg3ODgxMzc1MTk2ODEwNQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fZGVmYXVsdF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=8CV3FWZMaogQ7kNvwGCAWwh&_nc_oc=Adpvm939AWNZXcLQqUaaDoU7v85auEmEhL0TwEzizVVstExtE4Ee77EvxDaQSrUzwwI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-icn2-1.cdninstagram.com&_nc_gid=vuv2XP9kPtUd0P87mYRTMg&_nc_ss=7a22e&oh=00_AQLUL3onlJbs7mywOXZaMjGACnXWOVAsy9MJHwbZp-j5EQ&oe=6AB823A0"
+        ],
+        "video_url": null,
+        "likes": 42,
+        "comments": 1,
+        "views": 819,
+        "hashtags": [
+          "DearDuck",
+          "Dinner",
+          "Jeddah",
+          "AllDayEatery"
+        ],
+        "mentions": [],
+        "alt_text": "Video by @dearduck.sa on July 31, 2026.",
+        "music_info": {
+          "artist_name": "dearduck.sa",
+          "song_name": "Original audio",
+          "uses_original_audio": true,
+          "should_mute_audio": false,
+          "should_mute_audio_reason": "",
+          "audio_id": "28641748735414408"
+        }
+      },
+      "reel_details": {
+        "matched": true,
+        "reel_url": "https://www.instagram.com/p/DbdOXRlqUBF/",
+        "transcript": "Tulu.",
+        "duration_seconds": 5.248,
+        "shares": null,
+        "plays": 2891,
+        "views": null,
+        "enrichment_success": true
+      },
+      "analysis": {
+        "content_type": "Reel with on-screen text and transcript",
+        "content_categories": [
+          "restaurant_ambiance",
+          "drinks",
+          "summer_theme"
+        ],
+        "content_pillar": "dining_experience",
+        "content_themes": [
+          "summer",
+          "Dear Duck restaurant exterior",
+          "drinks",
+          "outdoor seating"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "reserve_table",
+          "description": "The audience is asked to reserve a spot through the link in the restaurant's bio."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": true,
+          "branding_visible": true,
+          "people_visible": true
+        },
+        "text_in_visual": "POV: The sound of summer is here\nDear Duck",
+        "visual_summary": "The image shows the yellow Dear Duck entrance, outdoor seating, and two people seated outside holding cups. The overlay reads “POV: The sound of summer is here.”",
+        "caption_summary": "The caption refers to the sound of ice melting in a cup, states that the restaurant is open daily from 8AM to 11PM, and asks viewers to reserve through the link in the bio. It describes Dear Duck as an all-day eatery serving brunch, lunch, dinner, and drinks.",
+        "transcript_summary": "The supplied transcript contains the word “Tulu.”",
+        "spoken_topics": [
+          "Tulu"
+        ],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes",
+              "visual_signals"
+            ],
+            "text": "Dear Duck exterior with outdoor seating, two people holding cups, and the overlay “POV: The sound of summer is here.”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "“If it doesn’t sound like ice melting in a cup...” and “All Day Eatery, Serving Brunch, Lunch, Dinner & Drinks”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "“Reserve your spot through the link in our Bio!”"
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3951174862556408856",
+      "short_code": "DbVZJpwIKwY",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbVZJpwIKwY/",
+        "timestamp": "2026-07-28T11:06:16.000Z",
+        "caption": "",
+        "content_type": "Image",
+        "product_type": "feed",
+        "image_urls": [
+          "https://instagram.fvcp2-1.fna.fbcdn.net/v/t51.82787-15/755868010_17941966134269275_3593100045056014154_n.webp?_nc_cat=101&_nc_map=urlgen_bucketless&ig_cache_key=Mzk1MTE3NDg2MjU1NjQwODg1Ng%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkZFRUQueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=ulpdn-2ig8UQ7kNvwFLBV0w&_nc_oc=Adq9jPy09SjzRVH5Csex_djSQvJIU0Cq8-d-euoUC0jgsqbM6RUb2Z_3Bu4HCxpnhN4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fvcp2-1.fna&_nc_gid=nLdmacFdtbwUn-YU1bHCUg&_nc_ss=7a22e&oh=00_AQKKe1-Y5Lbqi5HGZ_iXdi0bhh2xto0LCUEg_P5stlAfZw&oe=6AB801C4"
+        ],
+        "video_url": null,
+        "likes": 224,
+        "comments": 13,
+        "views": null,
+        "hashtags": [],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on July 28, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "single photo",
+        "content_categories": [
+          "mascot",
+          "outdoor_scene",
+          "playful_content"
+        ],
+        "content_pillar": "entertainment_humor",
+        "content_themes": [
+          "duck-like character",
+          "red beret",
+          "outdoor seating area"
+        ],
+        "cta": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": false,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": false
+        },
+        "text_in_visual": null,
+        "visual_summary": "A blurry close-up photo shows a yellow duck-like character wearing a red beret. Yellow chairs, plants, a glass railing, and a building are visible in the background.",
+        "caption_summary": "No caption is provided.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "The image centers on a duck-like character in a red beret in an outdoor seating area."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3950479806571244733",
+      "short_code": "DbS7HQbCGy9",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbS7HQbCGy9/",
+        "timestamp": "2026-07-27T12:05:02.000Z",
+        "caption": "A visual guide on how to survive the afternoon heat. 🧊🕶️\n\nOpen everyday from 8AM to 11PM\n\nReserve your spot through the link in our Bio! 🍽\n\nAll Day Eatery, Serving Brunch, Lunch, Dinner & Drinks\n\n#DearDuck #Dinner #Jeddah #SummerHeat #AllDayEatery",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://instagram.fplu17-1.fna.fbcdn.net/v/t51.82787-15/751220343_17940564405269275_6673734775998767797_n.webp?_nc_cat=109&ig_cache_key=Mzk0NDY3MDQwNzU4Mzg2MzQwMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Bpqbff2K6KAQ7kNvwHRK88Q&_nc_oc=AdoG_EWcpTQuFtstm8N4WQB3GFTAwn1SFQ1mdeloO2jI43jEiqi38yIr5YBVCLPoeOE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fplu17-1.fna&_nc_gid=kG5ooPOmVNRoWlQ_Mmd7dA&_nc_ss=7a22e&oh=00_AQLPJrPrZqtjm77GcIxw6iGS6wF6b0cl5rgvXAMyMFqLbg&oe=6AB816F5",
+          "https://instagram.fplu17-1.fna.fbcdn.net/v/t51.82787-15/749846139_17940564414269275_1671787821491996479_n.webp?_nc_cat=111&ig_cache_key=Mzk0NDY3MDQwNzU3NTQ4ODk4OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=5WoymQu1lCkQ7kNvwER4u8A&_nc_oc=AdrjeCd4EAMVR7MXOp9XN6MzzPJCXl13Pqt4MntsOsxs6Ge6YN5Y1sqyIqR4jiQCsGE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fplu17-1.fna&_nc_gid=kG5ooPOmVNRoWlQ_Mmd7dA&_nc_ss=7a22e&oh=00_AQKq9VLe5yieXa_OrL4mnqw8CqAjnov9i6wB1dmsp8Eq8w&oe=6AB823A5",
+          "https://instagram.fplu17-1.fna.fbcdn.net/v/t51.82787-15/750645034_17940564423269275_4279695232231061828_n.webp?_nc_cat=109&ig_cache_key=Mzk0NDY3MDQwNzI4MTkyNDI5Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=vJEfxTnftvIQ7kNvwEfXbzq&_nc_oc=AdosqvBxMHCbR9B8RAyjVFwzfxnAVLJ3j4VG8EgDmX8dzKzKCDMMsjxDft_Ru6KgVXo&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fplu17-1.fna&_nc_gid=kG5ooPOmVNRoWlQ_Mmd7dA&_nc_ss=7a22e&oh=00_AQKCm50k2dExmuA3qCijoYB2lWG_dA9Jry7kri5iFfZn1w&oe=6AB814E2",
+          "https://instagram.fplu17-1.fna.fbcdn.net/v/t51.82787-15/749420260_17940564432269275_7427091385536170153_n.webp?_nc_cat=102&ig_cache_key=Mzk0NDY3MDQwODA5NTYxNzczMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=IuUeayNtRFsQ7kNvwFPTwol&_nc_oc=Adq_jukI6SV2YIUoAGL7nsW19GbSoEzs8r2rU30uPO1VMuVzFdZXW60zl5rcFF4ZoyI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fplu17-1.fna&_nc_gid=kG5ooPOmVNRoWlQ_Mmd7dA&_nc_ss=7a22e&oh=00_AQKpyUjbcpiQwS7vMm2cnB8QvlX48CMNgvGqOg8JnlnVsw&oe=6AB81E38"
+        ],
+        "video_url": null,
+        "likes": 26,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "DearDuck",
+          "Dinner",
+          "Jeddah",
+          "SummerHeat",
+          "AllDayEatery"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on July 27, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel",
+        "content_categories": [
+          "beverage_showcase",
+          "summer_refreshments"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "Coca Cola",
+          "Passionfruit Sparkler",
+          "Coconut Hibiscus",
+          "afternoon heat",
+          "Ways to Chill"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "reserve_table",
+          "description": "The audience is asked to reserve a spot through the link in the restaurant's bio."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": true,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": true
+        },
+        "text_in_visual": "(1) Coca Cola\n(2) Passionfruit Sparkler\n(3) Coconut Hibiscus\nWays to Chill",
+        "visual_summary": "The carousel shows three chilled drinks: Coca Cola, Passionfruit Sparkler, and Coconut Hibiscus. The drinks are held in glasses against a light-colored background, with text presenting them as ways to chill.",
+        "caption_summary": "The caption describes the post as a visual guide for surviving the afternoon heat. It states that the restaurant is open every day from 8AM to 11PM, invites viewers to reserve through the link in the bio, and identifies it as an all-day eatery serving brunch, lunch, dinner, and drinks.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_categories",
+              "content_themes"
+            ],
+            "text": "The carousel displays three drinks labeled “Coca Cola,” “Passionfruit Sparkler,” and “Coconut Hibiscus,” under the heading “Ways to Chill.”"
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "“Reserve your spot through the link in our Bio!”"
+          },
+          {
+            "source": "combined",
+            "supports": [
+              "content_themes"
+            ],
+            "text": "The caption refers to surviving the “afternoon heat,” while the visuals show chilled beverages."
+          }
+        ]
+      },
+      "analysis_error": null
+    },
+    {
+      "content_id": "3949028043200684946",
+      "short_code": "DbNxBUbCGOS",
+      "raw_data": {
+        "content_url": "https://www.instagram.com/p/DbNxBUbCGOS/",
+        "timestamp": "2026-07-25T12:00:04.000Z",
+        "caption": "From morning comfort to late-night cravings. 🥐🍝Your table is officially booked. ✨\n\nOpen everyday from 8AM to 11PM\n\nReserve your spot through the link in our Bio! 🍽\n\nAll Day Eatery, Serving Brunch, Lunch, Dinner & Drinks\n\n#DearDuck #Dinner #Jeddah #AllDayEatery",
+        "content_type": "Sidecar",
+        "product_type": "carousel_container",
+        "image_urls": [
+          "https://scontent-syd2-1.cdninstagram.com/v/t51.82787-15/750184904_17940563817269275_8126089798846703510_n.webp?_nc_cat=108&ig_cache_key=Mzk0NDY3MDIxMjEyOTMxMzk2OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=3wp9kgTSS0AQ7kNvwEF42iL&_nc_oc=AdpfJKDVAdSLxPkrprSYYQZtyvVROAHxMrhwtzEOefixDaNwz6vskhdZh-8Sw2OYptw&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-syd2-1.cdninstagram.com&_nc_gid=8aDPFkypgqjgCZ-Dk6nl8g&_nc_ss=7a22e&oh=00_AQJfjPzp3POhgFnoeeB2yLJ0KB0-93t9QkXN-pzENO9nxw&oe=6AB7FFE4",
+          "https://scontent-syd2-1.cdninstagram.com/v/t51.82787-15/751738194_17940564189269275_1242555681118815048_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=106&ig_cache_key=Mzk0NDY3MDIxMjQyMjkzNjkzMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuNzIwLnNkci52aWRlb19kZWZhdWx0X2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=lfNmr6wYY74Q7kNvwGpQhXf&_nc_oc=Adq_PjYXBQx5cw4gqG245maMRk7FeQAaKZakk7k0oLg9OgVRiGEA6JIDveIBAqEGJpY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-syd2-1.cdninstagram.com&_nc_gid=8aDPFkypgqjgCZ-Dk6nl8g&_nc_ss=7a22e&oh=00_AQLdfxMpXARg6m-4pk3pGCK3hiFKz1zwnHyDrNeC5Pj7pQ&oe=6AB80CB5",
+          "https://scontent-syd2-1.cdninstagram.com/v/t51.82787-15/752597190_17940563997269275_2492913699084148022_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=109&ig_cache_key=Mzk0NDY3MDIxMjQyMjkxMzU2MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuNzIwLnNkci52aWRlb19kZWZhdWx0X2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=XbPb9E_ZTjgQ7kNvwEYw-B1&_nc_oc=AdpTJTnCEKwVuDow161r80pgucJRILww-u101bM1Fi7yOZzQtoqEGAKBjQPknzWraHM&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-syd2-1.cdninstagram.com&_nc_gid=8aDPFkypgqjgCZ-Dk6nl8g&_nc_ss=7a22e&oh=00_AQLJwrf4KfBgyane7jzt_o6lCqYtF3T6y8gMYmwZoTh9cQ&oe=6AB80AA6",
+          "https://scontent-syd2-1.cdninstagram.com/v/t51.82787-15/748343455_17940564078269275_2522929272101526710_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=109&ig_cache_key=Mzk0NDY3MDIxMjQzMTMwODgwNg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuNzIwLnNkci52aWRlb19kZWZhdWx0X2NvdmVyX2ZyYW1lLkMzIn0%3D&_nc_ohc=-PEwvxfzflAQ7kNvwEbsGEv&_nc_oc=AdqVXc-HlEAlpyL6NvsUdgIDuvnPtswE4-aV-MQl1BvrnLV3byIsPCUVUxFJydbJfeE&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-syd2-1.cdninstagram.com&_nc_gid=8aDPFkypgqjgCZ-Dk6nl8g&_nc_ss=7a22e&oh=00_AQK74YtDCS9HRzHVgAMuDoRBPz08TqymUeakYbVK2388LQ&oe=6AB7F654"
+        ],
+        "video_url": null,
+        "likes": 27,
+        "comments": 0,
+        "views": null,
+        "hashtags": [
+          "DearDuck",
+          "Dinner",
+          "Jeddah",
+          "AllDayEatery"
+        ],
+        "mentions": [],
+        "alt_text": "Photo by @dearduck.sa on July 25, 2026.",
+        "music_info": null
+      },
+      "reel_details": null,
+      "analysis": {
+        "content_type": "carousel",
+        "content_categories": [
+          "food_product",
+          "dish_showcase",
+          "beverage_showcase"
+        ],
+        "content_pillar": "food_product",
+        "content_themes": [
+          "cozy croissant with scrambled eggs, smoked turkey and green salad",
+          "Grandma's Bolognese",
+          "strawberry haze drink",
+          "brunch, lunch, dinner and drinks"
+        ],
+        "cta": {
+          "present": true,
+          "intent": "make a reservation",
+          "description": "The audience is asked to reserve a spot through the link in the bio."
+        },
+        "promotion": {
+          "present": false,
+          "intent": null,
+          "description": null
+        },
+        "visual_signals": {
+          "food_visible": true,
+          "menu_visible": false,
+          "price_visible": false,
+          "offer_visible": false,
+          "logo_visible": false,
+          "branding_visible": false,
+          "people_visible": false
+        },
+        "text_in_visual": "COZY CROISSANT\nSCRAMBLED EGGS\nSMOKED TURKEY\nGREEN SALAD\n\nGRANDMA'S BOLOGNESE\n6 HRS SLOW COOKED BOLOGNESE SAUCE\nCHILI OIL\n\nSTRAWBERRY HAZE\nSTRAWBERRY MINT\nLIME JUICE\nSODA WATER",
+        "visual_summary": "The carousel shows a croissant dish served with scrambled eggs, smoked turkey and green salad; a bowl of spaghetti Bolognese; and a pink strawberry-based drink. The food images include ingredient and preparation labels overlaid on the images.",
+        "caption_summary": "The caption describes the restaurant as an all-day eatery serving brunch, lunch, dinner and drinks, open every day from 8AM to 11PM. It asks viewers to reserve a spot through the link in the bio.",
+        "transcript_summary": null,
+        "spoken_topics": [],
+        "evidence": [
+          {
+            "source": "visual",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "Images show a croissant dish, Grandma's Bolognese, and a Strawberry Haze drink with labels naming their components."
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "content_pillar",
+              "content_themes"
+            ],
+            "text": "\"All Day Eatery, Serving Brunch, Lunch, Dinner & Drinks\""
+          },
+          {
+            "source": "caption",
+            "supports": [
+              "cta"
+            ],
+            "text": "\"Reserve your spot through the link in our Bio!\""
+          }
+        ]
+      },
+      "analysis_error": null
+    }
+  ],
+  "analysis_coverage": {
+    "content_requested": 20,
+    "content_scraped": 20,
+    "content_analyzed": 20,
+    "content_failed": 0,
+    "analysis_success_pct": 100.0,
+    "date_range": {
+      "oldest_content": "2026-07-25T12:00:04+00:00",
+      "newest_content": "2026-09-21T14:11:04+00:00"
+    },
+    "multimodal_analysis": true,
+    "reels_detected": 9,
+    "reels_enriched": 9,
+    "reel_transcripts_available": 9
+  },
+  "data_quality": {
+    "status": "complete",
+    "profile_scrape_success": true,
+    "content_scrape_success": true,
+    "multimodal_analysis_completed": true,
+    "reel_enrichment_attempted": true,
+    "reel_enrichment_completed": true,
+    "warnings": [
+      "Reel/video visual analysis uses supplied cover/images plus transcript when available; full raw video frames are not analyzed."
+    ],
+    "failed_analyses": []
+  }
+}
