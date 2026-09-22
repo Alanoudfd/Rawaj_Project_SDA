@@ -1,13 +1,13 @@
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Literal
 
 
 class Gap(BaseModel):
     gap: str
     description: str = ""
-    status: str = ""
-    severity: str = ""
-    priority: int = 0
+    status: Literal["Confirmed"]
+    severity: Literal["High", "Moderate", "Low"]
+    priority: int = Field(ge=1)
     confidence: str = ""
 
     evidence: List[str] = Field(default_factory=list)
@@ -23,7 +23,7 @@ class Gap(BaseModel):
 
 class Report(BaseModel):
     restaurant: str
-    qualification: str
+    qualification: Literal["Qualified", "Needs More Evidence", "Not Qualified"]
     decision_rationale: str
     qualification_confidence: str = ""
 

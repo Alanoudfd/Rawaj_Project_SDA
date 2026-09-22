@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
 
-from agents.qualification_agent.tools import search_instagram_benchmark
+from agents.qualification_agent.guardrails import guarded_benchmark_tool
 from agents.qualification_agent.schemas import Report
 from agents.qualification_agent.prompt import (
     QUALIFICATION_PROMPT,
@@ -15,7 +15,7 @@ from agents.qualification_agent.prompt import (
 load_dotenv()
 
 
-def _get_llm() -> ChatOpenAI:
+def get_llm() -> ChatOpenAI:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise ValueError("OPENAI_API_KEY is missing from the environment.")
@@ -29,14 +29,16 @@ def _get_llm() -> ChatOpenAI:
 
 def run_qualification_agent(
     evidence: dict,
+    *, audit: dict | None = None,
 ) -> dict:
-
-    # Same tool
+    run_audit = audit if audit is not None else {}
+    run_audit.update({"tool_calls": []})
+    # The benchmark search tool, wrapped with a per-run call limit
     tools = [
-        search_instagram_benchmark
+        guarded_benchmark_tool(audit=run_audit["tool_calls"])
     ]
 
-    llm = _get_llm()
+    llm = get_llm()
 
     # Same agent structure
     agent = create_agent(
@@ -53,10 +55,13 @@ def run_qualification_agent(
                 "content": build_qualification_message(evidence)
             }
         ]
-    })
+    }, config={"recursion_limit": 16})
 
     # Get the final plain-text qualification report
     final_report = result["messages"][-1].text
+    run_audit["model_calls"] = sum(getattr(message, "type", None) == "ai" for message in result["messages"])
+    run_audit["usage"] = [message.usage_metadata for message in result["messages"]
+                          if getattr(message, "usage_metadata", None)]
 
     # Same structured-output conversion from notebook
     structured_llm = llm.with_structured_output(
@@ -97,6 +102,9 @@ IMPORTANT:
   from the gap description in the report. Do not write a solution or strategy.
   If the report gives no focus, use the gap name.
 - Preserve all evidence and limitations.
+- Preserve exact research metric paths or signal ids alongside numerical evidence.
+- Keep external numerical comparisons in benchmark_evidence, with the retrieved source URL.
+- If no benchmark was used, return an empty benchmark_evidence list.
 - If any other field is genuinely missing from the report,
   write "Not Available" instead of inventing information.
 
@@ -117,4 +125,6 @@ Qualification Report:
         "Qualification & Marketing Gap Analysis Agent"
     )
 
+    run_audit["model_calls"] += 1
+    run_audit["usage_scope"] = "agent messages only; excludes structured extraction"
     return output

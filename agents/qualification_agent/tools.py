@@ -54,7 +54,7 @@ def search_instagram_benchmark(query: str) -> str:
     except Exception as exc:  # pragma: no cover - defensive fallback
         return (
             "No external benchmark could be fetched because Tavily is unavailable: "
-            f"{exc}. Use the restaurant's own evidence only."
+            f"{type(exc).__name__}. Use the restaurant's own evidence only."
         )
 
     return str(results)
