@@ -9,7 +9,9 @@ A row of ``strategies.strategy_data`` is in one of two formats and both are read
 
 The latest row of either kind is the restaurant's current strategy. Its "days" are numbered 1..N (agent: the plan's day
 numbers; template: the tasks in date order). Completing a day is saved in the row itself (``day_status`` for an agent
-strategy, the task's own ``status`` for a template). Nothing here calls a model.
+strategy, the task's own ``status`` for a template), together with the post link and the "How did it go?" answer the
+owner may add (``day_posts`` for an agent strategy, the task's own ``post_url`` / ``outcome`` for a template).
+Nothing here calls a model except the content ideas of a day.
 """
 
 import calendar
@@ -35,6 +37,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/restaurants", tags=["Strategy"])
 RestaurantId = Annotated[int, Path(gt=0)]
 DayStatus = Literal["Planned", "Completed"]
+Outcome = Literal["better", "same", "worse", "too_early"]  # the owner's own answer to "How did it go?"
 _MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 
 
@@ -56,6 +59,8 @@ class PlanDay(BaseModel):
     ideas: bool = True  # False for a day with nothing to publish (a break, a profile update): no content ideas for it
     ideas_note: str = ""
     counts: bool = True  # False for a break: it is not a task, so the progress leaves it out
+    post_url: str = ""  # the link the owner pasted after posting (optional)
+    outcome: str = ""  # the owner's one-tap answer to "How did it go?" (optional): better, same, worse, too_early
 
 
 class PrimaryGap(BaseModel):
@@ -113,7 +118,12 @@ class AgentStrategyResponse(BaseModel):
 
 
 class DayUpdate(InputModel):
+    """Mark a day Completed or Planned. `post_url` and `outcome` are optional extras the owner adds after posting:
+    they are kept only while the day is Completed, and an empty `post_url` removes the link."""
+
     status: DayStatus
+    post_url: Annotated[str, Field(max_length=500, pattern=r"^(https?://\S+)?$")] | None = None
+    outcome: Outcome | None = None
 
 
 def _text(value: Any) -> str:
@@ -172,17 +182,20 @@ def _agent_days(strategy: Strategy) -> list[dict]:
     """Valid, de-duplicated plan days in day order, with dates and completion status."""
     data, start = strategy.strategy_data, _start_date(strategy)
     done = data.get("day_status") if isinstance(data.get("day_status"), dict) else {}
+    posts = data.get("day_posts") if isinstance(data.get("day_posts"), dict) else {}
     days: dict[int, dict] = {}
     for item in _items(data, "thirty_day_plan"):
         number = item.get("day")
         if isinstance(number, bool) or not isinstance(number, int) or number < 1 or number in days:
             continue
+        extras = posts.get(str(number)) if isinstance(posts.get(str(number)), dict) else {}
         days[number] = {
             "day": number,
             "date": (start + timedelta(days=number - 1)).isoformat(),
             "focus": _text(item.get("focus")),
             "action": _text(item.get("action")),
             "status": "Completed" if done.get(str(number)) == "Completed" else "Planned",
+            "post_url": _text(extras.get("post_url")), "outcome": _text(extras.get("outcome")),
             **_ideas_fields(_text(item.get("focus"))),
         }
     return [days[number] for number in sorted(days)]
@@ -208,6 +221,7 @@ def _template_days(strategy: Strategy) -> list[dict]:
         {
             "day": position, "date": task["date"], "focus": _text(task.get("title")), "action": _text(task.get("objective")),
             "status": "Completed" if task.get("status") == "Completed" else "Planned", "format": _text(task.get("type")) or None,
+            "post_url": _text(task.get("post_url")), "outcome": _text(task.get("outcome")),
             **_ideas_fields(_text(task.get("title"))),
         }
         for position, task in enumerate(_template_tasks(strategy.strategy_data), 1)
@@ -296,6 +310,21 @@ def get_agent_strategy(restaurant_id: RestaurantId, db: Database):
     return _response(db, strategy)
 
 
+def _set_extras(holder: dict, payload: DayUpdate) -> None:
+    """Keep the owner's post link and answer in `holder` only while the day is Completed (Undo removes them)."""
+    if payload.status == "Planned":
+        holder.pop("post_url", None)
+        holder.pop("outcome", None)
+        return
+    for name in ("post_url", "outcome"):
+        if name in payload.model_fields_set:
+            value = getattr(payload, name)
+            if value:
+                holder[name] = value
+            else:
+                holder.pop(name, None)
+
+
 @router.patch("/{restaurant_id}/agent-strategy/days/{day}", response_model=AgentStrategyResponse)
 def update_day(restaurant_id: RestaurantId, day: Annotated[int, Path(ge=1)], payload: DayUpdate,
                request: Request, db: Database):
@@ -311,11 +340,18 @@ def update_day(restaurant_id: RestaurantId, day: Annotated[int, Path(ge=1)], pay
             statuses = data["day_status"] if isinstance(data.get("day_status"), dict) else {}
             statuses[str(day)] = payload.status
             data["day_status"] = statuses
+            posts = data["day_posts"] if isinstance(data.get("day_posts"), dict) else {}
+            holder = posts.setdefault(str(day), {})
+            _set_extras(holder, payload)
+            if not holder:
+                posts.pop(str(day))
+            data["day_posts"] = posts
         else:
             wanted = _template_tasks(data)[day - 1]["id"]
             for task in data["tasks"]:
                 if isinstance(task, dict) and task.get("id") == wanted:
                     task["status"] = payload.status
+                    _set_extras(task, payload)
         strategy.strategy_data = data
         db.commit()
         return _response(db, strategy)
@@ -366,6 +402,6 @@ def day_content_ideas(restaurant_id: RestaurantId, day: Annotated[int, Path(ge=1
     except ContentIdeasUnavailable:
         raise HTTPException(503, "Content ideas are unavailable. Configure OPENAI_API_KEY in the project's .env file.") from None
     except Exception as exc:
-        logger.error("Content generation failed (%s)", type(exc).__name__)
+        logger.error("Content generation failed (%s): %s", type(exc).__name__, exc)
         raise HTTPException(502, "Could not generate content ideas. Check the server configuration and retry.") from None
     return ideas

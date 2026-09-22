@@ -2,6 +2,7 @@ from html import escape
 
 import streamlit as st
 
+from ui import workspace
 from ui.components import current_restaurant, footer, topbar
 from ui.icons import icon
 from ui.ideas import chosen_idea_card, fetch_ideas, has_ideas, idea_cards
@@ -56,26 +57,26 @@ with month:
     picker.selectbox("Planning period", [PERIOD], label_visibility="collapsed")
 
 # Hero
-st.markdown(
-    f"""
-    <div class="hero-card">
-      <div>
-        <div class="eyebrow"><span class="dot"></span>Content creation &nbsp;·&nbsp; {PERIOD}</div>
-        <h1>Bring your brand <em>to life.</em></h1>
-        <p>Content that sounds like you, looks like your business, and gives people a reason to stop scrolling.</p>
-      </div>
-      <div class="brand-chip">{icon('utensils', 22)}
-        <div><b>{escape(BUSINESS['name'])}</b><span>{escape(WHERE)}</span></div>
-      </div>
-    </div>
-    <div class="strip" style="margin-top:1rem;">
-      <div><small>CREATED AROUND</small><span>{escape(BUSINESS['around'])}</span></div>
-      <div><small>YOUR VOICE</small><span>{escape(BUSINESS['voice'])}</span></div>
-      <div><small>CONTENT LANGUAGE</small><span>{escape(BUSINESS['language'])}</span></div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+# st.markdown(
+#     f"""
+#     <div class="hero-card">
+#       <div>
+#         <div class="eyebrow"><span class="dot"></span>Content creation &nbsp;·&nbsp; {PERIOD}</div>
+#         <h1>Bring your brand <em>to life.</em></h1>
+#         <p>Content that sounds like you, looks like your business, and gives people a reason to stop scrolling.</p>
+#       </div>
+#       <div class="brand-chip">{icon('utensils', 22)}
+#         <div><b>{escape(BUSINESS['name'])}</b><span>{escape(WHERE)}</span></div>
+#       </div>
+#     </div>
+#     <div class="strip" style="margin-top:1rem;">
+#       <div><small>CREATED AROUND</small><span>{escape(BUSINESS['around'])}</span></div>
+#       <div><small>YOUR VOICE</small><span>{escape(BUSINESS['voice'])}</span></div>
+#       <div><small>CONTENT LANGUAGE</small><span>{escape(BUSINESS['language'])}</span></div>
+#     </div>
+#     """,
+#     unsafe_allow_html=True,
+# )
 
 # Task picker
 title_col, pick_col = st.columns([2, 1.3], vertical_alignment="bottom")
@@ -116,16 +117,16 @@ if not task.get("ideas", True):  # a break or a profile update: there is nothing
     footer()
     st.stop()
 
-chosen_idea_card(restaurant, task)
 
-# Studio
-with st.container(key="card_studio"):
+def studio() -> None:
+    """Ask for ideas and choose one (the chosen idea is then turned into a post below it)."""
+    with st.container(key="card_studio"):
+        studio_body()
+
+
+def studio_body() -> None:
     st.markdown(
-        f"""
-        <div class="eyebrow" style="color:var(--blue);">{icon('sparkles', 14)} Content studio</div>
-        <h2>Find your next creative direction.</h2>
-        <p class="muted" style="margin:0;">Ideas are shaped by <b>{escape(BUSINESS['name'])}</b>'s profile, monthly strategy, and this calendar task.</p>
-        """,
+        f'<p class="muted" style="margin:0;">Ideas are shaped by <b>{escape(BUSINESS["name"])}</b>\'s profile, monthly strategy, and this calendar task.</p>',
         unsafe_allow_html=True,
     )
     with st.container(key="panel_guide"):
@@ -165,5 +166,14 @@ with st.container(key="card_studio"):
             """,
             unsafe_allow_html=True,
         )
+
+
+chosen = chosen_idea_card(restaurant, task)
+if chosen:
+    with st.expander("Not the right idea? Choose another"):
+        studio()
+    workspace.render(restaurant, plan, task, chosen)  # the chosen idea becomes a post, on this same page
+else:
+    studio()
 
 footer()

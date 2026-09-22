@@ -19,7 +19,8 @@ from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
 
-from api import agent_strategy, approvals, auth, planning, services
+from agents.strategy_agent import post_kit as post_kit_agent
+from api import agent_strategy, approvals, auth, planning, post_kit, services
 from api.schemas import (
     AnalyzeRequest, ContextResponse, JobResponse, OutreachDraft,
     GapsResponse, QualificationResponse, ResearchResponse, RestaurantCreate,
@@ -88,8 +89,12 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
     application.state.session_factory = session_factory
     application.state.restaurant_write_lock = restaurant_write_lock
     application.state.content_ideas_runner = planning.generate_content_ideas
+    application.state.post_kit_runner = post_kit_agent.make_post_kit
+    application.state.caption_rewrite_runner = post_kit_agent.make_rewrite
+    application.state.facts_plan_runner = post_kit_agent.make_facts_plan
     application.include_router(planning.router)
     application.include_router(agent_strategy.router)
+    application.include_router(post_kit.router)
     application.include_router(approvals.router)
     application.include_router(auth.router)
     application.state.outreach_lock = Lock()

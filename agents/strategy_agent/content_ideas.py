@@ -80,7 +80,7 @@ def generate_content_ideas(context: dict) -> IdeaResponse:
         raise ContentIdeasUnavailable()
     from openai import OpenAI
 
-    with OpenAI(timeout=45.0, max_retries=1) as client:
+    with OpenAI(timeout=60.0, max_retries=3) as client:  # dropped connections are common here; match the Post Kit agent's retry budget
         response = client.responses.create(
             model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
             instructions=CONTENT_IDEAS_INSTRUCTIONS,
