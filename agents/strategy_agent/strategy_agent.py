@@ -7,11 +7,12 @@ from langchain_classic.agents import create_react_agent, AgentExecutor
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 
+from database.database import SessionLocal
+from database.repository import save_strategy_result
 from .reflection_prompt import SELF_REFLECTION_PROMPT
 from .prompt import STRATEGY_SYSTEM_PROMPT, AGENCY_SERVICES
 from .tools import web_search, get_upcoming_events
-from database.database import SessionLocal
-from database.repository import save_strategy_result
+from .guardrails import check_strategy
 
 load_dotenv()
 
@@ -401,11 +402,35 @@ def generate_and_save_strategy_from_handoff(strategy_request):
 
     # Generate strategy
     strategy_data = generate_strategy_from_handoff(request_data)
+
+    # Run guardrails on the actual Strategy Agent output
+    # BEFORE adding workflow/database metadata.
+    guardrail_result = check_strategy(
+        data=strategy_data,
+        qualification=request_data["qualification_context"],
+        start_date=request_data["strategy_start_date"],
+    )
+
+    if guardrail_result["errors"]:
+        raise ValueError(
+            "Strategy failed guardrails: "
+            + "; ".join(guardrail_result["errors"])
+        )
+
+    if guardrail_result["warnings"]:
+        print("\n=== STRATEGY GUARDRAIL WARNINGS ===")
+        for warning in guardrail_result["warnings"]:
+            print(f"- {warning}")
+        print("=== END GUARDRAIL WARNINGS ===\n")
+
+    # Add workflow/database metadata AFTER guardrail validation.
     # Day numbers count from this date; the UI needs it to place each day on the calendar.
     strategy_data["strategy_start_date"] = request_data["strategy_start_date"]
+
     # Keep which request and which Interested click this strategy answers.
     strategy_data["strategy_request_id"] = request_data.get("strategy_request_id")
     strategy_data["interest_event_id"] = request_data.get("interest_event_id")
+
     # Open database session
     db = SessionLocal()
 

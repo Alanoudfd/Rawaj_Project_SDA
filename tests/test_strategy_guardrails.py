@@ -171,7 +171,35 @@ class ReflectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):  # json.JSONDecodeError is a ValueError
             self.run_generate(valid_strategy(), reflection_reply="I could not review it.")
 
+class GuardrailSaveTests(unittest.TestCase):
+    def test_invalid_strategy_is_not_saved(self):
+        invalid_strategy = valid_strategy()
+        invalid_strategy["thirty_day_plan"].pop()
 
+        request = {
+            "restaurant_id": 1,
+            "qualification_run_id": 5,
+            "qualification_context": QUALIFICATION,
+            "strategy_start_date": START,
+            "strategy_request_id": 1,
+            "interest_event_id": 1,
+        }
+
+        with patch.object(
+            strategy_agent,
+            "generate_strategy_from_handoff",
+            return_value=invalid_strategy,
+        ), patch.object(
+            strategy_agent,
+            "save_strategy_result",
+        ) as mock_save:
+
+            with self.assertRaises(ValueError):
+                strategy_agent.generate_and_save_strategy_from_handoff(request)
+
+            mock_save.assert_not_called()
+
+            
 class ModelSelectionTests(unittest.TestCase):
     def built_with(self, env):
         strategy_agent.get_llm.cache_clear()

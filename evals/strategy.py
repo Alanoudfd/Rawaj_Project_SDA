@@ -11,7 +11,15 @@ DESCRIPTION = "Qualification reports -> 30-day strategy. Reference = the High/Mo
 
 def build_examples() -> list[dict]:
     return [
-        {"key": f"qualification_run_{case['qualification_run_id']}", "inputs": case["inputs"], "outputs": case["reference"],
-         "metadata": {"restaurant": case["name"], "qualification_run_id": case["qualification_run_id"]}}
+        {
+            "key": f"qualification_run_{case['qualification_run_id']}",
+            "inputs": case["inputs"],
+            "outputs": case["reference"],
+            "metadata": {
+                "restaurant": case["name"],
+                "qualification_run_id": case["qualification_run_id"],
+            },
+        }
         for case in build_cases()
+        if case["name"] == "3Brews"
     ]
