@@ -1,10 +1,15 @@
 import json
+import logging
 
 from agents.research_agent.research_agent import (
     run_research_agent,
     save_research_profile,
 )
 from agents.research_agent.research_schemas import RestaurantInfo
+
+# Print every Apify guardrail check ("[guardrail] ...") while the agent runs.
+logging.basicConfig(level=logging.WARNING, format="%(message)s")
+logging.getLogger("agents.research_agent.research_guardrails").setLevel(logging.INFO)
 
 
 # Temporary manual restaurant data for standalone testing

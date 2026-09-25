@@ -183,6 +183,9 @@ class ScrapedInstagramData(BaseModel):
     content_limit: int
     lookback_days: int
 
+    # Non-fatal guardrail findings from the scrape (e.g. private account).
+    scrape_warnings: list[str] = Field(default_factory=list)
+
 
 # =========================================================
 # ANALYSIS OF ONE CONTENT ITEM

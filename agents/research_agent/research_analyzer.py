@@ -9,10 +9,6 @@ research evidence:
 3. research metrics   (deterministic)
 4. research signals   (deterministic)
 5. coverage + data quality
-
-Analysis only DESCRIBES the data. It never labels anything a marketing gap,
-strength or weakness, and never qualifies the restaurant. That belongs to the
-Qualification Agent.
 """
 
 import json
@@ -46,6 +42,7 @@ from .research_prompt import (
     CONTENT_ANALYSIS_SYSTEM_PROMPT,
     PROFILE_ANALYSIS_SYSTEM_PROMPT,
 )
+from .research_guardrails import find_judgement_terms, report
 from .research_scraper import parse_timestamp
 
 load_dotenv()
@@ -154,13 +151,36 @@ def analyze_instagram_profile(
 # =========================================================
 
 
+MIN_TRANSCRIPT_WORDS = 5
+
+
+def usable_transcript(content: ScrapedContent) -> str | None:
+    """
+    The Reel transcript, or None when it is song lyrics or too short to be
+    real speech. The transcript stays in the saved data either way; this only
+    decides whether the LLM sees it.
+    """
+
+    if not content.reel_details or not content.reel_details.transcript:
+        return None
+
+    # A track from Instagram's music library: the transcript is its lyrics.
+    music = content.raw_data.music_info or {}
+    if music.get("uses_original_audio") is False:
+        return None
+
+    # A few words are almost always a misheard sound, not speech.
+    if len(content.reel_details.transcript.split()) < MIN_TRANSCRIPT_WORDS:
+        return None
+
+    return content.reel_details.transcript
+
+
 def _analyze_single_content(item: dict) -> dict:
     content = ScrapedContent.model_validate(item)
     structured_llm = _get_llm().with_structured_output(ContentAnalysis, method="json_schema")
 
-    transcript = None
-    if content.reel_details:
-        transcript = content.reel_details.transcript
+    transcript = usable_transcript(content)
 
     text_payload = {
         "content_id": content.content_id,
@@ -207,6 +227,61 @@ def _analyze_single_content(item: dict) -> dict:
         analysis=analysis,
         analysis_error=None,
     ).model_dump()
+
+
+def check_neutrality(analyzed_content: list[AnalyzedContent]) -> list[str]:
+    """
+    Warn when the LLM's description of a post judges it instead of describing it.
+
+    Evidence quotes are not checked, and words the restaurant itself wrote
+    (caption, transcript, alt text, text in the image) are allowed.
+    """
+
+    warnings: list[str] = []
+    checked = 0
+
+    for item in analyzed_content:
+        analysis = item.analysis
+        if analysis is None:
+            continue
+        checked += 1
+
+        source_text = " ".join(
+            filter(None, [
+                item.raw_data.caption,
+                item.raw_data.alt_text,
+                " ".join(item.raw_data.hashtags),
+                item.reel_details.transcript if item.reel_details else None,
+                analysis.text_in_visual,
+            ])
+        )
+        written_by_llm = " ".join(
+            filter(None, [
+                analysis.content_type,
+                analysis.visual_summary,
+                analysis.caption_summary,
+                analysis.transcript_summary,
+                analysis.cta.intent,
+                analysis.cta.description,
+                analysis.promotion.intent,
+                analysis.promotion.description,
+                *analysis.content_categories,
+                *analysis.content_themes,
+                *analysis.spoken_topics,
+            ])
+        )
+
+        terms = find_judgement_terms(written_by_llm, source_text)
+        if terms:
+            report("neutrality: content %s analysis uses judgement words %s", item.content_id, terms)
+            warnings.append(
+                f"Content {item.content_id}: analysis uses judgement words "
+                f"({', '.join(terms)}); Research should only describe."
+            )
+
+    if not warnings:
+        report("neutrality: %s analysis/analyses checked, no judgement words", checked)
+    return warnings
 
 
 def analyze_instagram_content(recent_content: list[dict]) -> list[dict]:
@@ -798,6 +873,23 @@ def analyze_instagram_data(
         analyzed_content=analyzed_content,
         reel_enrichment_called=True,
     )
+    skipped_transcripts = sum(
+        1
+        for item in scraped.content
+        if item.reel_details and item.reel_details.transcript and usable_transcript(item) is None
+    )
+    transcript_warnings = (
+        [f"{skipped_transcripts} Reel transcript(s) not sent to the analysis (song lyrics or too short)."]
+        if skipped_transcripts
+        else []
+    )
+
+    data_quality.warnings = [
+        *scraped.scrape_warnings,
+        *transcript_warnings,
+        *check_neutrality(analyzed_content),
+        *data_quality.warnings,
+    ]
 
     return ResearchProfile(
         restaurant=restaurant,

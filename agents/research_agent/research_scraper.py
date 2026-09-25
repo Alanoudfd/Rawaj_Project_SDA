@@ -20,6 +20,21 @@ from typing import Any
 from apify_client import ApifyClient
 from dotenv import load_dotenv
 
+from .research_guardrails import (
+    MAX_BIO_CHARS,
+    MAX_CAPTION_CHARS,
+    MAX_TRANSCRIPT_CHARS,
+    actor_call_options,
+    belongs_to,
+    check_actor_run,
+    check_profile_owner,
+    normalize_instagram_username,
+    safe_media_urls,
+    split_error_rows,
+    clamp_scrape_limits,
+    report,
+    truncate,
+)
 from .research_schemas import (
     ContentRawData,
     InstagramProfile,
@@ -54,21 +69,32 @@ def _get_apify_client() -> ApifyClient:
     return ApifyClient(token)
 
 
-def _run_apify_actor(actor_id: str, run_input: dict) -> list[dict[str, Any]]:
+def _run_apify_actor(
+    actor_id: str,
+    run_input: dict,
+    max_items: int,
+    warnings: list[str] | None = None,
+) -> list[dict[str, Any]]:
+    """Run one actor within the guardrail limits and return its valid rows."""
+
     client = _get_apify_client()
-    run = client.actor(actor_id).call(run_input=run_input)
+    options = actor_call_options(max_items)
+    report(
+        "%s: limits max_items=%s, $%s cap, %s MB, %s min timeout",
+        actor_id, max_items, options["max_total_charge_usd"], options["memory_mbytes"],
+        int(options["run_timeout"].total_seconds() // 60),
+    )
+    run = client.actor(actor_id).call(run_input=run_input, **options)
+    dataset_id = check_actor_run(actor_id, run)
 
-    if run is None:
-        raise RuntimeError(f"Apify actor failed: {actor_id}")
-
-    dataset_id = getattr(run, "default_dataset_id", None)
-    if dataset_id is None and isinstance(run, dict):
-        dataset_id = run.get("defaultDatasetId")
-
-    if not dataset_id:
-        raise RuntimeError(f"No dataset returned by actor: {actor_id}")
-
-    return list(client.dataset(dataset_id).iterate_items())
+    rows = list(client.dataset(dataset_id).iterate_items(limit=max_items))
+    valid, errors = split_error_rows(rows)
+    report("%s: %s row(s) received, %s error row(s) dropped", actor_id, len(rows), len(errors))
+    if errors:
+        logger.warning("Apify actor %s reported %s error row(s)", actor_id, len(errors))
+        if warnings is not None:
+            warnings.append(f"{actor_id} reported {len(errors)} error row(s): {errors[0]}")
+    return valid
 
 
 def parse_timestamp(value: str | None) -> datetime | None:
@@ -112,14 +138,14 @@ def _extract_images(item: dict) -> list[str]:
             if isinstance(url, str) and url:
                 urls.append(url)
 
-    return list(dict.fromkeys(urls))
+    return safe_media_urls(list(dict.fromkeys(urls)))
 
 
 def _normalize_profile(raw: dict) -> dict:
     return {
         "username": raw.get("username"),
         "full_name": raw.get("fullName"),
-        "bio": raw.get("biography"),
+        "bio": truncate(raw.get("biography"), MAX_BIO_CHARS),
         "followers": raw.get("followersCount"),
         "following": raw.get("followsCount"),
         "posts_count": raw.get("postsCount"),
@@ -141,7 +167,7 @@ def _normalize_content_item(raw: dict) -> dict:
         raw_data=ContentRawData(
             content_url=url,
             timestamp=raw.get("timestamp"),
-            caption=raw.get("caption") or "",
+            caption=truncate(raw.get("caption") or "", MAX_CAPTION_CHARS),
             content_type=raw.get("type"),
             product_type=raw.get("productType") or raw.get("product_type"),
             image_urls=_extract_images(raw),
@@ -176,7 +202,9 @@ def _normalize_reel_details(raw: dict) -> ReelDetails:
     return ReelDetails(
         matched=True,
         reel_url=raw.get("url"),
-        transcript=raw.get("transcript") or raw.get("videoTranscript"),
+        transcript=truncate(
+            raw.get("transcript") or raw.get("videoTranscript"), MAX_TRANSCRIPT_CHARS
+        ),
         duration_seconds=duration,
         shares=raw.get("sharesCount") or raw.get("reshareCount"),
         plays=raw.get("videoPlayCount") or raw.get("playCount"),
@@ -190,7 +218,7 @@ def _normalize_reel_details(raw: dict) -> ReelDetails:
 # =========================================================
 
 
-def scrape_instagram_profile(username: str) -> dict:
+def scrape_instagram_profile(username: str, warnings: list[str] | None = None) -> dict:
     """
     Scrape the public Instagram profile for one restaurant.
 
@@ -199,6 +227,7 @@ def scrape_instagram_profile(username: str) -> dict:
 
     Args:
         username: Instagram username without the @ symbol.
+        warnings: Optional list that collects non-fatal scrape warnings.
     """
 
     results = _run_apify_actor(
@@ -207,12 +236,16 @@ def scrape_instagram_profile(username: str) -> dict:
             "usernames": [username],
             "includeAboutSection": False,
         },
+        max_items=1,
+        warnings=warnings,
     )
 
     if not results:
         raise ValueError(f"No Instagram profile found for @{username}")
 
-    return _normalize_profile(results[0])
+    profile = _normalize_profile(results[0])
+    check_profile_owner(username, profile)
+    return profile
 
 
 # =========================================================
@@ -224,6 +257,7 @@ def scrape_recent_instagram_content(
     username: str,
     limit: int = 30,
     lookback_days: int = 90,
+    warnings: list[str] | None = None,
 ) -> list[dict]:
     """
     Scrape the restaurant's recent Instagram content.
@@ -250,10 +284,20 @@ def scrape_recent_instagram_content(
             "dataDetailLevel": "detailedData",
             "skipPinnedPosts": True,
         },
+        max_items=limit,
+        warnings=warnings,
     )
     logger.info("Content scrape: requested %s items, Apify returned %s", limit, len(results))
 
-    normalized = [_normalize_content_item(item) for item in results]
+    owned = [item for item in results if belongs_to(username, item)]
+    report("content owner check: %s kept, %s from other accounts dropped",
+           len(owned), len(results) - len(owned))
+    if len(owned) < len(results) and warnings is not None:
+        warnings.append(
+            f"Dropped {len(results) - len(owned)} content item(s) owned by another account."
+        )
+
+    normalized = [_normalize_content_item(item) for item in owned]
 
     normalized.sort(
         key=lambda item: item.get("raw_data", {}).get("timestamp") or "",
@@ -270,6 +314,8 @@ def scrape_recent_instagram_content(
         if timestamp >= cutoff:
             recent_content.append(item)
 
+    report("date window: %s of %s post(s) are within the last %s days (keeping up to %s)",
+           len(recent_content), len(normalized), lookback_days, limit)
     return recent_content[:limit]
 
 
@@ -278,7 +324,10 @@ def scrape_recent_instagram_content(
 # =========================================================
 
 
-def enrich_reels_for_recent_content(recent_content: list[dict]) -> list[dict]:
+def enrich_reels_for_recent_content(
+    recent_content: list[dict],
+    warnings: list[str] | None = None,
+) -> list[dict]:
     """
     Enrich ONLY Reel items already present in recent_content.
 
@@ -288,7 +337,8 @@ def enrich_reels_for_recent_content(recent_content: list[dict]) -> list[dict]:
     3. Sends only those Reel URLs to the Apify Reel scraper.
     4. Matches the returned Reel data back to the original content items.
 
-    Non-Reel posts remain unchanged.
+    Non-Reel posts remain unchanged. If the Reel scrape fails, the content is
+    returned without Reel details and a warning is recorded.
     """
 
     if not recent_content:
@@ -335,17 +385,25 @@ def enrich_reels_for_recent_content(recent_content: list[dict]) -> list[dict]:
     )
 
     # 3. Scrape ONLY those exact Reels.
-    reel_rows = _run_apify_actor(
-        REEL_ACTOR,
-        {
-            "username": reel_urls,
-            "skipPinnedPosts": False,
-            "skipTrialReels": False,
-            "includeSharesCount": False,
-            "includeTranscript": True,
-            "includeDownloadedVideo": False,
-        },
-    )
+    try:
+        reel_rows = _run_apify_actor(
+            REEL_ACTOR,
+            {
+                "username": reel_urls,
+                "skipPinnedPosts": False,
+                "skipTrialReels": False,
+                "includeSharesCount": False,
+                "includeTranscript": True,
+                "includeDownloadedVideo": False,
+            },
+            max_items=len(reel_urls),
+            warnings=warnings,
+        )
+    except Exception as exc:
+        report("Reel enrichment failed, continuing without Reel details: %s", exc)
+        if warnings is not None:
+            warnings.append(f"Reel enrichment failed; Reels analyzed without Reel details ({exc}).")
+        return [item_model.model_dump() for item_model in content_models]
 
     reel_by_id: dict[str, dict] = {}
     reel_by_shortcode: dict[str, dict] = {}
@@ -408,19 +466,32 @@ def scrape_instagram_data(
     Run the whole scrape for one restaurant and return the raw data.
 
     Profile first (required), then one recent-content window, then Reel
-    details for the Reels inside that window.
+    details for the Reels inside that window. Guardrails validate the input
+    before any paid Apify call and skip content scraping for private accounts.
     """
 
+    username = normalize_instagram_username(username)
+    content_limit, lookback_days = clamp_scrape_limits(content_limit, lookback_days)
+
     scraped_at = datetime.now(timezone.utc).isoformat()
+    warnings: list[str] = []
 
-    profile = InstagramProfile.model_validate(scrape_instagram_profile(username))
+    profile = InstagramProfile.model_validate(scrape_instagram_profile(username, warnings))
 
-    recent_content = scrape_recent_instagram_content(
-        username=username,
-        limit=content_limit,
-        lookback_days=lookback_days,
-    )
-    content = enrich_reels_for_recent_content(recent_content)
+    report("limits: up to %s posts from the last %s days", content_limit, lookback_days)
+
+    content: list[dict] = []
+    if profile.is_private:
+        report("@%s is private: content scrape skipped (no Apify cost)", username)
+        warnings.append(f"@{username} is private; recent content was not scraped.")
+    else:
+        recent_content = scrape_recent_instagram_content(
+            username=username,
+            limit=content_limit,
+            lookback_days=lookback_days,
+            warnings=warnings,
+        )
+        content = enrich_reels_for_recent_content(recent_content, warnings)
 
     return ScrapedInstagramData(
         scraped_at=scraped_at,
@@ -428,4 +499,5 @@ def scrape_instagram_data(
         content=[ScrapedContent.model_validate(item) for item in content],
         content_limit=content_limit,
         lookback_days=lookback_days,
+        scrape_warnings=warnings,
     )
