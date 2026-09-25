@@ -1,25 +1,13 @@
-"""Streamlit Post Workspace for turning a chosen Rawaj idea into an executable Instagram post.
-
-The page has four responsibilities only:
-1. Ask for the minimum facts the chosen idea needs.
-2. Generate an actionable Post Kit (format + execution guide + copy).
-3. Let the owner preview/upload the required assets.
-4. Hand the finished kit to Instagram and record completion.
-
-All reusable logic lives in ``ui.post_kit``; all database/model work stays behind
-``ui.api``.  Keeping those boundaries prevents this page from becoming another
-business-logic module.
-"""
+"""Streamlit workspace: confirm facts, generate/edit a kit, preview assets, and mark posting complete."""
 
 from __future__ import annotations
 
 import zlib
 from dataclasses import dataclass
-from datetime import date
+from datetime import datetime, timedelta, timezone
 from html import escape
 
 import streamlit as st
-
 from ui import api
 from ui import post_kit as kitlib
 from ui.icons import icon
@@ -39,9 +27,12 @@ class WorkspaceContext:
     when: str
 
 
-# ---------------------------------------------------------------------------
 # Session helpers
-# ---------------------------------------------------------------------------
+
+
+def html(markup: str) -> None:
+    """Display trusted templates; escape dynamic text at the call site."""
+    st.html(markup)
 
 
 def keep(key: str, value) -> None:
@@ -81,17 +72,10 @@ def _new_workspace(restaurant: dict) -> dict:
 
 
 def _get_workspace(ctx: WorkspaceContext) -> dict:
-    ws = st.session_state.setdefault("post_workspaces", {}).setdefault(
-        ctx.wid, _new_workspace(ctx.restaurant)
-    )
-    for key, value in _new_workspace(ctx.restaurant).items():
-        ws.setdefault(key, value)
-
-    # Smooth migration from the previous one-file upload state.
-    legacy_media = ws.pop("media", None)
-    if legacy_media and not ws["assets"]:
-        ws["assets"]["final"] = legacy_media
-    return ws
+    workspaces = st.session_state.setdefault("post_workspaces", {})
+    if ctx.wid not in workspaces:
+        workspaces[ctx.wid] = _new_workspace(ctx.restaurant)
+    return workspaces[ctx.wid]
 
 
 def _fact_key(ctx: WorkspaceContext, field: str) -> str:
@@ -106,9 +90,7 @@ def _kit_is_stale(ws: dict) -> bool:
     return bool(ws.get("resp") and ws.get("generated_for") != _current_signature(ws))
 
 
-# ---------------------------------------------------------------------------
 # API actions
-# ---------------------------------------------------------------------------
 
 
 def _ensure_facts_plan(ctx: WorkspaceContext, ws: dict) -> dict:
@@ -117,9 +99,7 @@ def _ensure_facts_plan(ctx: WorkspaceContext, ws: dict) -> dict:
 
     try:
         with st.spinner("Reading the idea to see what needs to be confirmed..."):
-            ws["facts_plan"] = api.facts_plan(
-                ctx.restaurant["id"], ctx.task["day"], ctx.idea
-            )
+            ws["facts_plan"] = api.facts_plan(ctx.restaurant["id"], ctx.task["day"], ctx.idea)
     except api.ApiError:
         ws["facts_plan"] = kitlib.generic_plan()
 
@@ -151,7 +131,6 @@ def _generate_kit(ctx: WorkspaceContext, ws: dict) -> bool:
     ws["caption"] = fresh["caption"]["text"]
     ws["overlay"] = fresh["visual"].get("text_overlay") or ""
     st.session_state[f"cap_{ctx.wid}"] = ws["caption"]
-    st.session_state[f"overlay_{ctx.wid}"] = ws["overlay"]
 
     for key in list(st.session_state):
         if str(key).startswith(f"chk_{ctx.wid}_"):
@@ -180,51 +159,32 @@ def _rewrite_caption(ctx: WorkspaceContext, ws: dict, change: str) -> bool:
     return True
 
 
-# ---------------------------------------------------------------------------
 # Header cards
-# ---------------------------------------------------------------------------
 
 
-def _assets_ready(ws: dict) -> bool:
-    resp = ws.get("resp")
-    if not resp:
-        return False
-    shoot = resp["kit"]["shoot"]
-    fmt = shoot["format"]
-    if fmt in {"carousel", "story"}:
-        required = len(shoot.get("shots") or [])
-        return required > 0 and all(str(i) in ws["assets"] for i in range(required))
-    return "final" in ws["assets"]
-
-
-def _render_progress(ctx: WorkspaceContext, ws: dict, stats: dict, posted: bool) -> None:
+def _show_post_progress(ctx: WorkspaceContext, ws: dict, posted: bool) -> None:
     done = [
         True,
         ws.get("resp") is not None and not _kit_is_stale(ws),
-        _assets_ready(ws),
         ws.get("scheduled", False) or posted,
-        posted,
-        False,
     ]
     with st.container(key="card_steps"):
-        st.markdown(
-            f"""
+        html(f"""
             <div class="card-head"><h3 class="card-title">Your post, step by step</h3>
-            <span class="muted">{escape(ctx.idea['name'])}</span></div>
+            <span class="muted">{escape(ctx.idea["name"])}</span></div>
             {kitlib.steps_html(done, confirmed=posted)}
             <p class="steps-note">Rawaj prepares the content and guide; you still publish it in Instagram.
             When the post is live, “Mark as posted” completes the calendar day.</p>
-            """,
-            unsafe_allow_html=True,
-        )
+            """)
 
 
-def _render_why(ctx: WorkspaceContext) -> None:
+def _show_post_reason(ctx: WorkspaceContext) -> None:
     gap = kitlib.pick_gap(ctx.plan, ctx.task, ctx.idea)
     if gap:
         detail = (
             f" · {escape(gap['highlight_label'] or 'Evidence')}: {escape(gap['highlight'])}"
-            if gap.get("highlight") else ""
+            if gap.get("highlight")
+            else ""
         )
         reason = (
             f"This post answers a gap Rawaj found: <b>{escape(gap['gap'])}</b> "
@@ -237,43 +197,35 @@ def _render_why(ctx: WorkspaceContext) -> None:
         reason = f"This post supports your plan: <b>{escape(str(goal))}</b>."
 
     with st.container(key="card_why"):
-        st.markdown(
-            f"""
-            <div class="why"><div class="badge">{icon('target', 20)}</div>
+        html(f"""
+            <div class="why"><div class="badge">{icon("target", 20)}</div>
               <div><div class="eyebrow">Why this post</div><p>{reason}</p></div></div>
-            """,
-            unsafe_allow_html=True,
-        )
+            """)
 
 
-# ---------------------------------------------------------------------------
 # Facts form
-# ---------------------------------------------------------------------------
 
 
-def _render_item_rows(ctx: WorkspaceContext, ws: dict, plan_facts: dict, language: str) -> list[dict]:
+def _show_item_rows(ctx: WorkspaceContext, ws: dict, plan_facts: dict, language: str) -> list[dict]:
     if not plan_facts.get("items_max"):
         return []
 
-    st.markdown(
-        f'<div class="dl"><small>{escape(plan_facts["items_label"])}</small></div>',
-        unsafe_allow_html=True,
-    )
+    html(f'<div class="dl"><small>{escape(plan_facts["items_label"])}</small></div>')
 
     items: list[dict] = []
     groups = list(plan_facts.get("suggested_groups") or [])
 
     for i in range(ws["row_count"]):
-        seed = ws["seed_rows"][i] if i < len(ws["seed_rows"]) else {}
+        saved_items = ws["facts"].get("items") or ws["seed_rows"]
+        seed = saved_items[i] if i < len(saved_items) else {}
         for field in ("name_en", "name_ar", "price", "group"):
             keep(_fact_key(ctx, f"{field}{i}"), seed.get(field, ""))
 
         group = str(st.session_state[_fact_key(ctx, f"group{i}")] or "").strip()
         if plan_facts.get("wants_groups"):
             if group:
-                st.markdown(
-                    f'<div class="hook-card" style="margin:.65rem 0 .35rem;"><small>Moment {i + 1}</small><b>{escape(group)}</b></div>',
-                    unsafe_allow_html=True,
+                html(
+                    f'<div class="hook-card" style="margin:.65rem 0 .35rem;"><small>Moment {i + 1}</small><b>{escape(group)}</b></div>'
                 )
             elif groups:
                 group = st.selectbox(
@@ -320,12 +272,14 @@ def _render_item_rows(ctx: WorkspaceContext, ws: dict, plan_facts: dict, languag
                 placeholder="e.g. 24 SAR",
             )
 
-        items.append({
-            "name_en": name_en.strip(),
-            "name_ar": name_ar.strip(),
-            "price": price.strip(),
-            "group": group,
-        })
+        items.append(
+            {
+                "name_en": name_en.strip(),
+                "name_ar": name_ar.strip(),
+                "price": price.strip(),
+                "group": group,
+            }
+        )
 
     add_col, drop_col, _ = st.columns([1, 1, 2.4])
     if add_col.button(
@@ -352,20 +306,17 @@ def _render_item_rows(ctx: WorkspaceContext, ws: dict, plan_facts: dict, languag
     return items
 
 
-def _render_facts(ctx: WorkspaceContext, ws: dict) -> None:
+def _show_facts(ctx: WorkspaceContext, ws: dict) -> None:
     plan_facts = _ensure_facts_plan(ctx, ws)
     facts = ws["facts"]
 
     with st.container(key="card_facts"):
-        st.markdown(
-            f"""
+        html(f"""
             <div class="eyebrow" style="color:var(--blue);">Confirm only what Rawaj cannot safely know</div>
             <h2 style="font:600 22px var(--head); margin:.4rem 0 .3rem;">Make this idea real.</h2>
-            <p class="muted" style="margin:0 0 .8rem;">{escape(plan_facts['summary'])}
+            <p class="muted" style="margin:0 0 .8rem;">{escape(plan_facts["summary"])}
             Rawaj will create the hook, slide order, visual direction, caption and CTA.</p>
-            """,
-            unsafe_allow_html=True,
-        )
+            """)
 
         keep(_fact_key(ctx, "language"), facts["language"])
         language = st.radio(
@@ -375,15 +326,14 @@ def _render_facts(ctx: WorkspaceContext, ws: dict) -> None:
             key=_fact_key(ctx, "language"),
         )
 
-        items = _render_item_rows(ctx, ws, plan_facts, language)
+        items = _show_item_rows(ctx, ws, plan_facts, language)
 
         channels: list[str] = []
         if plan_facts.get("wants_channels"):
             initial_channels = facts["channels"] or plan_facts.get("suggested_channels") or []
             keep(_fact_key(ctx, "channels"), initial_channels)
             options = kitlib.DELIVERY_CHOICES + [
-                c for c in plan_facts.get("suggested_channels") or []
-                if c not in kitlib.DELIVERY_CHOICES
+                c for c in plan_facts.get("suggested_channels") or [] if c not in kitlib.DELIVERY_CHOICES
             ]
             channels = st.multiselect(
                 "How can guests get it?",
@@ -434,23 +384,22 @@ def _render_facts(ctx: WorkspaceContext, ws: dict) -> None:
 
         missing = kitlib.missing_item_count(plan_facts, items)
         if language == "Bilingual":
-            incomplete = [i for i in items if (i.get("name_en") or i.get("name_ar")) and not (i.get("name_en") and i.get("name_ar"))]
+            incomplete = [
+                i
+                for i in items
+                if (i.get("name_en") or i.get("name_ar")) and not (i.get("name_en") and i.get("name_ar"))
+            ]
             if incomplete:
-                st.markdown(
-                    '<p class="hint">For a bilingual caption, add both Arabic and English names when you need the item named in both languages.</p>',
-                    unsafe_allow_html=True,
+                html(
+                    '<p class="hint">For a bilingual caption, add both Arabic and English names when you need the item named in both languages.</p>'
                 )
         if missing:
-            st.markdown(
-                f'<p class="hint">Add {missing} more confirmed item{"s" if missing != 1 else ""} to complete this idea.</p>',
-                unsafe_allow_html=True,
+            html(
+                f'<p class="hint">Add {missing} more confirmed item{"s" if missing != 1 else ""} to complete this idea.</p>'
             )
 
         if plan_facts.get("fallback"):
-            st.markdown(
-                '<p class="hint">Rawaj could not make an idea-specific form, so this is the safe fallback.</p>',
-                unsafe_allow_html=True,
-            )
+            html('<p class="hint">Rawaj could not make an idea-specific form, so this is the safe fallback.</p>')
             if st.button("Read the idea again", type="tertiary", key=f"replan_{ctx.wid}", icon=":material/refresh:"):
                 ws["facts_plan"] = None
                 ws["seed_rows"] = []
@@ -459,7 +408,9 @@ def _render_facts(ctx: WorkspaceContext, ws: dict) -> None:
 
         stale = _kit_is_stale(ws)
         if stale:
-            st.warning("You changed the confirmed facts. Update the posting guide before using the old caption or instructions.")
+            st.warning(
+                "You changed the confirmed facts. Update the posting guide before using the old caption or instructions."
+            )
 
         action, note = st.columns([1.25, 2.1], vertical_alignment="center")
         label = "Update posting guide" if ws.get("resp") else "Create posting guide"
@@ -481,83 +432,82 @@ def _render_facts(ctx: WorkspaceContext, ws: dict) -> None:
             st.error(ws["error"])
 
 
-# ---------------------------------------------------------------------------
 # Generated kit
-# ---------------------------------------------------------------------------
 
 
-def _render_kit_notes(resp: dict) -> None:
+def _show_kit_notes(resp: dict) -> None:
     notes = [
         f"Check this before you post: “{claim['text']}”. {claim['reason']}"
         for claim in resp.get("unsupported_claims") or []
     ]
     notes += [check["message"] for check in resp.get("checks") or [] if not check.get("ok")]
     if not resp.get("claims_checked", False):
-        notes.append("The claim checker was unavailable. Read the public copy against your confirmed facts before posting.")
+        notes.append(
+            "The claim checker was unavailable. Read the public copy against your confirmed facts before posting."
+        )
 
     for text in notes:
-        st.markdown(
-            f'<div class="flag">{icon("alert", 15)}<span>{escape(text)}</span></div>',
-            unsafe_allow_html=True,
-        )
+        html(f'<div class="flag">{icon("alert", 15)}<span>{escape(text)}</span></div>')
     if not notes:
-        st.markdown(
-            f'<div class="flag good">{icon("check", 15, 2.4)}<span>Checked against the facts you confirmed.</span></div>',
-            unsafe_allow_html=True,
+        html(
+            f'<div class="flag good">{icon("check", 15, 2.4)}<span>Checked against the facts you confirmed.</span></div>'
         )
 
 
-def _render_execution_summary(resp: dict) -> None:
+def _show_execution_summary(resp: dict) -> None:
     kit = resp["kit"]
     execution = kit.get("execution") or {}
     shoot = kit["shoot"]
-    st.markdown(
-        f"""
+    html(f"""
         <div class="readout">
-          <small>Recommended execution · {escape(kitlib.format_name(shoot['format']))}</small>
-          <b>{escape(execution.get('what_to_make') or '')}</b>
-          <span>{escape(shoot.get('format_reason') or '')}</span>
+          <small>Recommended execution · {escape(kitlib.format_name(shoot["format"]))}</small>
+          <b>{escape(execution.get("what_to_make") or "")}</b>
+          <span>{escape(shoot.get("format_reason") or "")}</span>
         </div>
         <div class="readout" style="margin-top:.55rem;">
           <small>Start here</small>
-          {escape(execution.get('owner_action') or '')}
+          {escape(execution.get("owner_action") or "")}
         </div>
-        """,
-        unsafe_allow_html=True,
-    )
+        """)
 
 
-def _render_caption_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
+def _change_tone(ctx: WorkspaceContext, ws: dict) -> None:
+    key = f"tone_{ctx.wid}"
+    selected = st.session_state.get(key)
+    if selected and kitlib.TONES[selected] != ws["tone"]:
+        if _rewrite_caption(ctx, ws, kitlib.TONES[selected]):
+            ws["tone"] = kitlib.TONES[selected]
+        else:
+            st.session_state[key] = TONE_LABELS[ws["tone"]]
+
+
+def _change_caption(ctx: WorkspaceContext, ws: dict) -> None:
+    key = f"rw_{ctx.wid}"
+    selected = st.session_state.get(key)
+    st.session_state[key] = None
+    if selected:
+        _rewrite_caption(ctx, ws, kitlib.CHIPS[selected])
+
+
+def _show_caption_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
     kit = resp["kit"]
     cutoff = resp.get("more_cutoff", kitlib.MORE_CUTOFF)
 
     keep(f"tone_{ctx.wid}", TONE_LABELS[ws["tone"]])
-    st.markdown('<div class="dl"><small>Choose a tone</small></div>', unsafe_allow_html=True)
-    selected = st.segmented_control(
+    html('<div class="dl"><small>Choose a tone</small></div>')
+    st.segmented_control(
         "Tone",
         list(kitlib.TONES),
         key=f"tone_{ctx.wid}",
         label_visibility="collapsed",
+        on_change=_change_tone,
+        args=(ctx, ws),
     )
-    if selected and kitlib.TONES[selected] != ws["tone"]:
-        old_label = TONE_LABELS[ws["tone"]]
-        new_tone = kitlib.TONES[selected]
-        if _rewrite_caption(ctx, ws, new_tone):
-            ws["tone"] = new_tone
-            st.rerun()
-        st.session_state[f"tone_{ctx.wid}"] = old_label
-
-    st.markdown(
-        f'<p class="hint" style="margin-top:.2rem;">{escape(kitlib.TONE_NOTES[ws["tone"]])}</p>',
-        unsafe_allow_html=True,
-    )
+    html(f'<p class="hint" style="margin-top:.2rem;">{escape(kitlib.TONE_NOTES[ws["tone"]])}</p>')
 
     keep(f"cap_{ctx.wid}", ws["caption"])
     length = len(st.session_state[f"cap_{ctx.wid}"])
-    st.markdown(
-        f'<div class="cap-head"><b>Edit caption</b><span>{length} characters</span></div>',
-        unsafe_allow_html=True,
-    )
+    html(f'<div class="cap-head"><b>Edit caption</b><span>{length} characters</span></div>')
     text = st.text_area(
         "Edit caption",
         key=f"cap_{ctx.wid}",
@@ -571,123 +521,61 @@ def _render_caption_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
         cutoff,
         ctx.idea["content_format"] == "Story",
     )
-    st.markdown(chip(state, message), unsafe_allow_html=True)
+    html(chip(state, message))
 
-    choice = st.pills(
+    st.pills(
         "Change one thing",
         list(kitlib.CHIPS),
         selection_mode="single",
         key=f"rw_{ctx.wid}",
+        on_change=_change_caption,
+        args=(ctx, ws),
     )
-    if choice:
-        st.session_state[f"rw_{ctx.wid}"] = None
-        if _rewrite_caption(ctx, ws, kitlib.CHIPS[choice]):
-            st.rerun()
-
-    st.markdown('<div class="dl" style="margin-top:.8rem;"><small>Hashtags</small></div>', unsafe_allow_html=True)
-    st.markdown(
-        '<div class="tags">' + "".join(
-            f'<span class="tag" dir="auto">{escape(tag)}</span>' for tag in kit["hashtags"]
-        ) + "</div>",
-        unsafe_allow_html=True,
+    html('<div class="dl" style="margin-top:.8rem;"><small>Hashtags</small></div>')
+    html(
+        '<div class="tags">'
+        + "".join(f'<span class="tag" dir="auto">{escape(tag)}</span>' for tag in kit["hashtags"])
+        + "</div>"
     )
     st.code(kitlib.hashtag_text(kit["hashtags"]), language=None)
 
 
-def _render_execution_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
+def _show_execution_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
     guide = resp["kit"]["shoot"]
     duration = f" · {guide['duration_seconds']} seconds" if guide.get("duration_seconds") else ""
-    st.markdown(
+    html(
         f'<span class="chip">{icon("video" if guide["format"] in ("reel", "story") else "camera", 13)}'
-        f'{escape(kitlib.format_name(guide["format"]))}{duration}</span>',
-        unsafe_allow_html=True,
+        f"{escape(kitlib.format_name(guide['format']))}{duration}</span>"
     )
-    st.markdown(
-        f'<p class="hint" style="margin-top:.5rem;"><b>Why this format:</b> {escape(guide.get("format_reason") or "")}</p>',
-        unsafe_allow_html=True,
+    html(
+        f'<p class="hint" style="margin-top:.5rem;"><b>Why this format:</b> {escape(guide.get("format_reason") or "")}</p>'
     )
     if guide.get("hook"):
-        st.markdown(
-            f'<div class="hook-card" style="margin-top:.8rem;"><small>Hook · first two seconds</small><b>{escape(guide["hook"])}</b></div>',
-            unsafe_allow_html=True,
+        html(
+            f'<div class="hook-card" style="margin-top:.8rem;"><small>Hook · first two seconds</small><b>{escape(guide["hook"])}</b></div>'
         )
 
-    cards = "".join(
-        kitlib.shot_card(number, shot)
-        for number, shot in enumerate(guide.get("shots") or [], 1)
-    )
-    st.markdown(f'<div style="margin-top:.8rem;">{cards}</div>', unsafe_allow_html=True)
+    cards = "".join(kitlib.shot_card(number, shot) for number, shot in enumerate(guide.get("shots") or [], 1))
+    html(f'<div style="margin-top:.8rem;">{cards}</div>')
 
-    st.markdown('<div class="dl"><small>Before you shoot</small></div>', unsafe_allow_html=True)
+    html('<div class="dl"><small>Before you shoot</small></div>')
     for i, item in enumerate(guide.get("checklist") or []):
         keep(f"chk_{ctx.wid}_{i}", ws["checked"].get(i, False))
         ws["checked"][i] = st.checkbox(item, key=f"chk_{ctx.wid}_{i}")
 
 
-def _render_look_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
-    visual = resp["kit"]["visual"]
-    st.markdown(
-        f"""
-        <div class="dl"><small>Cover frame</small><p>{escape(visual['cover_frame'])}</p></div>
-        <div class="dl"><small>The look</small><p>{escape(visual['look_notes'])}</p></div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    keep(f"overlay_{ctx.wid}", ws["overlay"])
-    ws["overlay"] = st.text_input(
-        "Cover text (optional)",
-        key=f"overlay_{ctx.wid}",
-        max_chars=60,
-        help="Only the cover/first frame. Per-slide text is in the execution guide.",
-    )
-    if visual.get("overlay_placement") and ws["overlay"].strip():
-        st.markdown(
-            f'<p class="hint">{escape(visual["overlay_placement"])}</p>',
-            unsafe_allow_html=True,
-        )
-
-    st.markdown('<div class="dl" style="margin-top:.9rem;"><small>Brand colours</small></div>', unsafe_allow_html=True)
-    facts = ws["facts"]
-    keep(f"colours_{ctx.wid}", bool(facts.get("brand_colors")))
-    if st.toggle("Add my brand colours to the brief", key=f"colours_{ctx.wid}"):
-        saved = list(facts.get("brand_colors") or []) + ["#1F2937", "#E5E7EB"]
-        first, second = st.columns(2)
-        keep(f"colour1_{ctx.wid}", saved[0])
-        keep(f"colour2_{ctx.wid}", saved[1])
-        facts["brand_colors"] = [
-            first.color_picker("Main colour", key=f"colour1_{ctx.wid}"),
-            second.color_picker("Accent colour", key=f"colour2_{ctx.wid}"),
-        ]
-    else:
-        facts["brand_colors"] = []
-        st.markdown(
-            '<p class="hint">Rawaj does not guess brand colours.</p>',
-            unsafe_allow_html=True,
-        )
-
-    rules = "".join(f"<li>{escape(rule)}</li>" for rule in resp.get("crop_rules") or [])
-    st.markdown(
-        f'<div class="dl" style="margin-top:.9rem;"><small>Crop rules</small><ul class="ev">{rules}</ul></div>',
-        unsafe_allow_html=True,
-    )
-
-
-def _render_publish_tab(ctx: WorkspaceContext, resp: dict) -> None:
+def _show_publish_tab(ctx: WorkspaceContext, resp: dict) -> None:
     kit = resp["kit"]
     headline, detail, text = kitlib.best_time_summary(
         resp["best_time"],
         ctx.when,
-        passed=ctx.task["date"] < date.today(),
+        passed=ctx.task["date"] < datetime.now(timezone(timedelta(hours=3))).date(),
     )
-    st.markdown(
-        f"""
-        <div class="time">{icon('clock', 26)}<div>
+    html(f"""
+        <div class="time">{icon("clock", 26)}<div>
           <div class="big">{escape(headline)}</div><p><b>{escape(detail)}</b></p><p>{escape(text)}</p></div></div>
-        """,
-        unsafe_allow_html=True,
-    )
-    st.markdown('<div class="dl" style="margin-top:1rem;"><small>Location tag</small></div>', unsafe_allow_html=True)
+        """)
+    html('<div class="dl" style="margin-top:1rem;"><small>Location tag</small></div>')
     st.code(kit["location_tag"], language=None)
 
     if kit.get("mentions"):
@@ -696,61 +584,51 @@ def _render_publish_tab(ctx: WorkspaceContext, resp: dict) -> None:
             f"{'' if m['handle'] else ' (add their handle)'}</li>"
             for m in kit["mentions"]
         )
-        st.markdown(
-            f'<div class="dl" style="margin-top:.6rem;"><small>Suggested mentions</small><ul class="ev">{rows}</ul></div>',
-            unsafe_allow_html=True,
+        html(
+            f'<div class="dl" style="margin-top:.6rem;"><small>Suggested mentions</small><ul class="ev">{rows}</ul></div>'
         )
 
-    st.markdown('<div class="dl" style="margin-top:.6rem;"><small>Follow-up ideas</small></div>', unsafe_allow_html=True)
+    html('<div class="dl" style="margin-top:.6rem;"><small>Follow-up ideas</small></div>')
     for item in kit.get("follow_ups") or []:
-        options = "".join(
-            f'<div class="opt" dir="auto">{escape(option)}</div>' for option in item.get("options") or []
-        ) or '<div class="opt">Type something…</div>'
+        options = (
+            "".join(f'<div class="opt" dir="auto">{escape(option)}</div>' for option in item.get("options") or [])
+            or '<div class="opt">Type something…</div>'
+        )
         sticker = (
             f'<div class="poll"><div class="q" dir="auto">{escape(item.get("sticker_text") or "")}</div>{options}</div>'
             if item.get("sticker") in {"poll", "quiz", "question"} and item.get("sticker_text")
             else ""
         )
-        st.markdown(
+        html(
             f'<div class="fu"><div><b>{escape(item["format"])} · {escape(item["title"])}</b>'
             f'<p>{escape(item["description"])}</p><p><b style="font-size:11px;">{escape(item["timing"])}</b></p>'
-            f'</div><div>{sticker}</div></div>',
-            unsafe_allow_html=True,
+            f"</div><div>{sticker}</div></div>"
         )
 
 
-def _render_kit(ctx: WorkspaceContext, ws: dict) -> None:
+def _show_kit(ctx: WorkspaceContext, ws: dict) -> None:
     resp = ws["resp"]
     if not resp:
         return
 
     with st.container(key="card_kit"):
-        st.markdown(
-            """
+        html("""
             <div class="eyebrow" style="color:var(--blue);">Your posting guide</div>
             <h2 style="font:600 22px var(--head); margin:.4rem 0 .6rem;">What to post, and exactly how to make it.</h2>
-            """,
-            unsafe_allow_html=True,
-        )
-        _render_kit_notes(resp)
-        _render_execution_summary(resp)
+            """)
+        _show_kit_notes(resp)
+        _show_execution_summary(resp)
 
-        tab_caption, tab_execute, tab_look, tab_publish = st.tabs(
-            ["Caption", "Create it", "Look", "Publish"]
-        )
+        tab_caption, tab_execute, tab_publish = st.tabs(["Caption", "Create it", "Publish"])
         with tab_caption:
-            _render_caption_tab(ctx, ws, resp)
+            _show_caption_tab(ctx, ws, resp)
         with tab_execute:
-            _render_execution_tab(ctx, ws, resp)
-        with tab_look:
-            _render_look_tab(ctx, ws, resp)
+            _show_execution_tab(ctx, ws, resp)
         with tab_publish:
-            _render_publish_tab(ctx, resp)
+            _show_publish_tab(ctx, resp)
 
 
-# ---------------------------------------------------------------------------
 # Preview and media uploads
-# ---------------------------------------------------------------------------
 
 
 def _asset_slots(resp: dict | None) -> list[tuple[str, str, str]]:
@@ -786,7 +664,7 @@ def _read_upload(upload, content_format: str) -> dict:
     }
 
 
-def _render_preview(ctx: WorkspaceContext, ws: dict) -> None:
+def _show_preview(ctx: WorkspaceContext, ws: dict) -> None:
     resp = ws.get("resp")
     kit = resp["kit"] if resp else None
     actual_format = kitlib.execution_format(resp, ctx.idea["content_format"])
@@ -809,50 +687,48 @@ def _render_preview(ctx: WorkspaceContext, ws: dict) -> None:
     if kit and preview_index > 0 and preview_index < len(kit["shoot"].get("shots") or []):
         overlay = kit["shoot"]["shots"][preview_index].get("overlay_text") or ""
 
-    st.markdown(
-        kitlib.preview_html(
-            handle=ctx.restaurant.get("instagram_username") or ctx.restaurant_name,
-            place=ctx.restaurant.get("location") or "",
-            name=ctx.restaurant_name,
-            caption=ws["caption"],
-            hashtags=kit.get("hashtags", []) if kit else [],
-            overlay=overlay,
-            image=media.get("preview") if media and media["kind"] == "image" else None,
-            video=bool(media and media["kind"] == "video"),
-            content_format=actual_format,
-            colors=ws["facts"].get("brand_colors") or [],
-            cutoff=cutoff,
-            position=preview_index + 1 if len(slots) > 1 else None,
-            total=len(slots) if len(slots) > 1 else None,
-        ),
-        unsafe_allow_html=True,
+    preview = kitlib.preview_html(
+        handle=ctx.restaurant.get("instagram_username") or ctx.restaurant_name,
+        place=ctx.restaurant.get("location") or "",
+        name=ctx.restaurant_name,
+        caption=ws["caption"],
+        hashtags=kit.get("hashtags", []) if kit else [],
+        overlay=overlay,
+        image=media.get("preview") if media and media["kind"] == "image" else None,
+        video=bool(media and media["kind"] == "video"),
+        content_format=actual_format,
+        colors=ws["facts"].get("brand_colors") or [],
+        cutoff=cutoff,
+        position=preview_index + 1 if len(slots) > 1 else None,
+        total=len(slots) if len(slots) > 1 else None,
     )
+    st.html(preview)
 
 
-def _render_uploads(ctx: WorkspaceContext, ws: dict) -> None:
+def _show_uploads(ctx: WorkspaceContext, ws: dict) -> None:
     resp = ws.get("resp")
     actual_format = kitlib.execution_format(resp, ctx.idea["content_format"])
     slots = _asset_slots(resp)
 
     if not resp:
-        st.markdown(
-            '<p class="hint">Create the posting guide first. Rawaj will then tell you how many images or videos the idea needs.</p>',
-            unsafe_allow_html=True,
+        html(
+            '<p class="hint">Create the posting guide first. Rawaj will then tell you how many images or videos the idea needs.</p>'
         )
         return
 
-    st.markdown(
-        f'<p class="hint">{len(slots)} asset{"s" if len(slots) != 1 else ""} for this {escape(kitlib.format_name(actual_format).lower())}. Uploading here is optional; it helps you preview/check the final content.</p>',
-        unsafe_allow_html=True,
+    html(
+        f'<p class="hint">{len(slots)} asset{"s" if len(slots) != 1 else ""} for this {escape(kitlib.format_name(actual_format).lower())}. Uploading here is optional; it helps you preview/check the final content.</p>'
     )
 
-    for index, (storage_key, label, accepted_kind) in enumerate(slots):
-        st.markdown(f'<div class="dl"><small>{escape(label)}</small></div>', unsafe_allow_html=True)
+    for storage_key, label, accepted_kind in slots:
+        html(f'<div class="dl"><small>{escape(label)}</small></div>')
         media = ws["assets"].get(storage_key)
         if media is None:
-            types = ["png", "jpg", "jpeg", "webp"]
-            if accepted_kind in {"video", "image_or_video"}:
-                types += ["mp4", "mov"]
+            types = {
+                "image": ["png", "jpg", "jpeg", "webp"],
+                "video": ["mp4", "mov"],
+                "image_or_video": ["png", "jpg", "jpeg", "webp", "mp4", "mov"],
+            }[accepted_kind]
             upload = st.file_uploader(
                 label,
                 type=types,
@@ -868,23 +744,17 @@ def _render_uploads(ctx: WorkspaceContext, ws: dict) -> None:
                     st.rerun()
             continue
 
-        st.markdown(
-            f'<p class="hint" style="margin:.1rem 0 .35rem;"><b>{escape(media["name"])}</b></p>',
-            unsafe_allow_html=True,
-        )
+        html(f'<p class="hint" style="margin:.1rem 0 .35rem;"><b>{escape(media["name"])}</b></p>')
         if media["kind"] == "video":
             st.video(media["bytes"])
-            st.markdown(
-                '<p class="hint">Video is previewed but not visually evaluated.</p>',
-                unsafe_allow_html=True,
-            )
+            html('<p class="hint">Video is previewed but not visually evaluated.</p>')
         else:
             levels = {"ok": ("good", "check"), "warn": ("limit", "alert"), "bad": ("bad", "alert")}
             rows = "".join(
                 f'<div class="note {levels[level][0]}"><span class="dot">{icon(levels[level][1], 13, 2.4)}</span><span>{escape(text)}</span></div>'
                 for level, text in media["check"]["items"]
             )
-            st.markdown(f'<div class="notes one">{rows}</div>', unsafe_allow_html=True)
+            html(f'<div class="notes one">{rows}</div>')
 
         if st.button(
             "Remove",
@@ -897,200 +767,133 @@ def _render_uploads(ctx: WorkspaceContext, ws: dict) -> None:
             st.rerun()
 
 
-def _render_side(ctx: WorkspaceContext, ws: dict) -> None:
+def _show_side(ctx: WorkspaceContext, ws: dict) -> None:
     with st.container(key="side_sticky"):
-        with st.container(key="card_preview"):
-            st.markdown(
-                '<div class="card-head"><h3 class="card-title">Live preview</h3><span class="muted">Updates as you edit</span></div>',
-                unsafe_allow_html=True,
-            )
-            _render_preview(ctx, ws)
+        if str(ctx.idea.get("content_format") or "").strip().casefold() not in {"story", "stories"}:
+            with st.container(key="card_preview"):
+                html(
+                    '<div class="card-head"><h3 class="card-title">Live preview</h3><span class="muted">Updates as you edit</span></div>'
+                )
+                _show_preview(ctx, ws)
 
         with st.container(key="card_upload"):
-            st.markdown(
-                '<div class="card-head"><h3 class="card-title">Your content assets</h3><span class="muted">Stays in this session</span></div>',
-                unsafe_allow_html=True,
+            html(
+                '<div class="card-head"><h3 class="card-title">Your content assets</h3><span class="muted">Stays in this session</span></div>'
             )
-            _render_uploads(ctx, ws)
+            _show_uploads(ctx, ws)
 
 
-# ---------------------------------------------------------------------------
 # Final hand-off and completion
-# ---------------------------------------------------------------------------
 
 
-def _mark_posted(ctx: WorkspaceContext, ws: dict, stats: dict) -> None:
-    ws["before"] = stats["done"]
+def _set_posted(ctx: WorkspaceContext, ws: dict, completed: bool, before=None) -> None:
     try:
-        api.set_day_status(ctx.restaurant["id"], ctx.task["day"], "Completed")
+        api.set_day_status(ctx.restaurant["id"], ctx.task["day"], "Completed" if completed else "Planned")
     except api.ApiError as exc:
         st.session_state.plan_error = exc.detail or str(exc)
+    else:
+        ws["before"] = before if completed else None
 
 
-def _undo_posted(ctx: WorkspaceContext, ws: dict) -> None:
-    ws["before"] = None
-    try:
-        api.set_day_status(ctx.restaurant["id"], ctx.task["day"], "Planned")
-    except api.ApiError as exc:
-        st.session_state.plan_error = exc.detail or str(exc)
-
-
-def _save_extras(ctx: WorkspaceContext) -> None:
-    link = (st.session_state.get(f"link_{ctx.wid}") or "").strip()
-    if link and not link.lower().startswith(("http://", "https://")):
-        st.session_state.plan_error = "Paste the full link, starting with https://"
-        return
-
-    how = st.session_state.get(f"how_{ctx.wid}")
-    outcome = next((code for code, label in kitlib.OUTCOMES.items() if label == how), None)
-    try:
-        api.set_day_status(
-            ctx.restaurant["id"],
-            ctx.task["day"],
-            "Completed",
-            post_url=link,
-            outcome=outcome,
-        )
-    except api.ApiError as exc:
-        st.session_state.plan_error = exc.detail or str(exc)
-
-
-def _render_take_to_instagram(ctx: WorkspaceContext, ws: dict, stats: dict) -> None:
+def _show_posting_section(ctx: WorkspaceContext, ws: dict, stats: dict) -> None:
     resp = ws["resp"]
     if _kit_is_stale(ws):
         st.warning("Update the posting guide first. The current guide was generated from older facts.")
         return
 
     kit = resp["kit"]
-    st.markdown(
-        """
+    html("""
         <div class="eyebrow" style="color:var(--blue);">Take it to Instagram</div>
         <h2 style="font:600 22px var(--head); margin:.4rem 0 .3rem;">Everything you need is ready.</h2>
         <p class="muted" style="margin:0 0 .8rem;">Copy the caption or the full execution guide, create the post in Instagram, then mark it as posted.</p>
-        """,
-        unsafe_allow_html=True,
-    )
+        """)
 
     keep(f"copy_{ctx.wid}", "Caption")
-    what = st.segmented_control(
-        "Copy",
-        ["Caption", "Hashtags", "Execution guide", "Whole kit"],
-        key=f"copy_{ctx.wid}",
-        label_visibility="collapsed",
-    ) or "Caption"
+    what = (
+        st.segmented_control(
+            "Copy",
+            ["Caption", "Hashtags"],
+            key=f"copy_{ctx.wid}",
+            label_visibility="collapsed",
+        )
+        or "Caption"
+    )
     copy_text = {
-        "Caption": ws["caption"],
-        "Hashtags": kitlib.hashtag_text(kit["hashtags"]),
-        "Execution guide": kitlib.shot_list_text(kit["shoot"]),
-        "Whole kit": kitlib.whole_kit_text(
-            resp,
-            ws["caption"],
-            ws["overlay"],
-            ctx.when,
-            f"POST KIT · {ctx.restaurant_name} · {ctx.when} · {kitlib.format_name(kit['shoot']['format'])}",
-        ),
-    }[what]
+        "Caption": lambda: ws["caption"],
+        "Hashtags": lambda: kitlib.hashtag_text(kit["hashtags"]),
+        
+    }[what]()
     st.code(copy_text, language=None, wrap_lines=True)
 
     keep(f"sch_{ctx.wid}", ws["scheduled"])
     ws["scheduled"] = st.checkbox(
         "I've scheduled it in Instagram",
         key=f"sch_{ctx.wid}",
+        on_change=lambda: ws.update(scheduled=st.session_state[f"sch_{ctx.wid}"]),
     )
 
-    st.markdown(
-        f'<div class="flag good">{icon("info", 15)}<span><b>You publish it yourself.</b> Rawaj prepares and checks the guide; it does not publish to Instagram yet.</span></div>',
-        unsafe_allow_html=True,
+    html(
+        f'<div class="flag good">{icon("info", 15)}<span><b>You publish it yourself.</b> Rawaj prepares and checks the guide; it does not publish to Instagram yet.</span></div>'
     )
-    one = st.columns([1, 1.4])
-    
+    one, _ = st.columns([1, 1.4])
+
     if one.button(
         "Mark as posted",
         icon=":material/check_circle:",
         type="primary",
         key=f"post_{ctx.wid}",
     ):
-        _mark_posted(ctx, ws, stats)
+        _set_posted(ctx, ws, True, stats["done"])
         st.rerun()
 
 
-def _render_after_posting(ctx: WorkspaceContext, ws: dict, stats: dict) -> None:
-    st.markdown(
-        f"""
-        <div class="done-head"><span class="badge">{icon('check', 20, 2.6)}</span>
-          <div><b>Posted.</b><span>“{escape(ctx.idea['name'])}” is marked complete on your calendar.</span></div></div>
-        """,
-        unsafe_allow_html=True,
-    )
+def _show_post_completion(ctx: WorkspaceContext, ws: dict, stats: dict) -> None:
+    html(f"""
+        <div class="done-head"><span class="badge">{icon("check", 20, 2.6)}</span>
+          <div><b>Posted.</b><span>“{escape(ctx.idea["name"])}” is marked complete on your calendar.</span></div></div>
+        """)
 
     moved = ws["before"] is not None and ws["before"] != stats["done"]
     counted = (
         f"{ws['before']} → {stats['done']} of {stats['total']} actions"
-        if moved else f"{stats['done']} of {stats['total']} actions completed"
+        if moved
+        else f"{stats['done']} of {stats['total']} actions completed"
     )
-    st.markdown(
-        f"""
+    html(f"""
         <div style="margin:1rem 0 .3rem;"><div class="card-head" style="margin-bottom:.4rem;"><h3 class="card-title">Strategy progress</h3>
         <span class="muted"><b>{counted}</b></span></div>
-        <div class="bar-row"><div class="bar"><i style="width:{stats['percent']}%"></i></div><b>{stats['percent']}%</b></div></div>
-        """,
-        unsafe_allow_html=True,
-    )
+        <div class="bar-row"><div class="bar"><i style="width:{stats["percent"]}%"></i></div><b>{stats["percent"]}%</b></div></div>
+        """)
 
     following = kitlib.next_task(ctx.plan, ctx.task)
     if following:
         label = " · ".join(
-            part for part in (
+            part
+            for part in (
                 f"{following['date']:%a %d %b}",
                 following["format"] if following.get("typed") else "",
                 following["title"],
-            ) if part
+            )
+            if part
         )
-        st.markdown(
-            f'<div class="readout" style="margin-top:.8rem;"><small>Next on your calendar</small><b>{escape(label)}</b></div>',
-            unsafe_allow_html=True,
+        html(
+            f'<div class="readout" style="margin-top:.8rem;"><small>Next on your calendar</small><b>{escape(label)}</b></div>'
         )
-        if st.button("Plan the next post", icon=":material/arrow_forward:", type="primary", key=f"next_{ctx.wid}"):
+    if st.button("Plan the next post", icon=":material/arrow_forward:", type="primary", key=f"next_{ctx.wid}"):
+        if following:
             st.session_state.selected_task = following["id"]
-            st.rerun()
-
-    st.markdown('<div class="dl" style="margin-top:1rem;"><small>Optional</small></div>', unsafe_allow_html=True)
-    keep(f"link_{ctx.wid}", ctx.task.get("post_url", ""))
-    keep(f"how_{ctx.wid}", kitlib.OUTCOMES.get(ctx.task.get("outcome", "")))
-    st.text_input(
-        "Link to your post",
-        key=f"link_{ctx.wid}",
-        placeholder="https://www.instagram.com/p/...",
-        on_change=_save_extras,
-        args=(ctx,),
-    )
-    how = st.pills(
-        "How did it go?",
-        list(kitlib.OUTCOMES.values()),
-        selection_mode="single",
-        key=f"how_{ctx.wid}",
-        on_change=_save_extras,
-        args=(ctx,),
-    )
-    code = next((c for c, label in kitlib.OUTCOMES.items() if label == how), None)
-    if code:
-        st.markdown(
-            f'<div class="readout"><small>Your read</small>{escape(kitlib.outcome_readout(code, ctx.idea["name"], ctx.idea["content_format"]))}</div>',
-            unsafe_allow_html=True,
-        )
+        st.switch_page("views/strategy.py")
 
     if st.button("Undo", icon=":material/undo:", type="tertiary", key=f"undo_{ctx.wid}"):
-        _undo_posted(ctx, ws)
+        _set_posted(ctx, ws, False)
         st.rerun()
 
 
-# ---------------------------------------------------------------------------
 # Public entry point
-# ---------------------------------------------------------------------------
 
 
-def render(restaurant: dict, plan: dict, task: dict, idea: dict) -> None:
-    """Render the complete idea → executable post workflow."""
+def show_workspace(restaurant: dict, plan: dict, task: dict, idea: dict) -> None:
+    """Display the complete idea: executable post workflow."""
     ctx = WorkspaceContext(
         restaurant=restaurant,
         plan=plan,
@@ -1104,17 +907,17 @@ def render(restaurant: dict, plan: dict, task: dict, idea: dict) -> None:
     stats = progress(plan["tasks"])
     posted = task.get("status") == "Completed"
 
-    _render_progress(ctx, ws, stats, posted)
-    _render_why(ctx)
+    _show_post_progress(ctx, ws, posted)
+    _show_post_reason(ctx)
 
     left, right = st.columns([1.55, 1], gap="medium")
     with left:
-        _render_facts(ctx, ws)
+        _show_facts(ctx, ws)
         if ws.get("resp"):
-            _render_kit(ctx, ws)
+            _show_kit(ctx, ws)
 
     with right:
-        _render_side(ctx, ws)
+        _show_side(ctx, ws)
 
     if ws.get("resp") or posted:
         with left:
@@ -1122,6 +925,6 @@ def render(restaurant: dict, plan: dict, task: dict, idea: dict) -> None:
                 if st.session_state.get("plan_error"):
                     st.error(st.session_state.pop("plan_error"))
                 if posted:
-                    _render_after_posting(ctx, ws, stats)
+                    _show_post_completion(ctx, ws, stats)
                 else:
-                    _render_take_to_instagram(ctx, ws, stats)
+                    _show_posting_section(ctx, ws, stats)

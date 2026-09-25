@@ -1,9 +1,4 @@
-"""Pure UI/domain helpers for Rawaj's Post Workspace.
-
-This module deliberately contains no Streamlit state and no API calls.  It turns
-API dictionaries into small, testable values used by ``workspace.py``: defaults,
-validation hints, copyable kit text, preview HTML, photo checks, and progress UI.
-"""
+"""Pure helpers for facts, captions, media checks, preview HTML, and progress. No API or UI state."""
 
 from __future__ import annotations
 
@@ -35,32 +30,31 @@ TONE_NOTES = {
     "direct": "Short: what it is and what to do, first.",
 }
 CHIPS = {"Shorter": "shorter", "Stronger hook": "hook"}
-OUTCOMES = {
-    "better": "Better than usual",
-    "same": "About the same",
-    "worse": "Not as good",
-    "too_early": "Too early to tell",
-}
-STEPS = [
-    ("Idea selected", False),
-    ("Kit ready", False),
-    ("Scheduled", False),
-    
-]
+STEPS = ["Idea selected", "Kit ready", "Scheduled"]
 DELIVERY_CHOICES = ["Visit us", "Pickup", "Jahez", "HungerStation", "Keeta"]
 
 _HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 _ARABIC = re.compile(r"[\u0621-\u063A\u0641-\u064A]")
 _STOP = {
-    "this", "that", "with", "from", "have", "your", "their", "them", "than", "into",
-    "after", "before", "which", "about", "more", "less",
+    "this",
+    "that",
+    "with",
+    "from",
+    "have",
+    "your",
+    "their",
+    "them",
+    "than",
+    "into",
+    "after",
+    "before",
+    "which",
+    "about",
+    "more",
+    "less",
 }
 
-
-# ---------------------------------------------------------------------------
 # Workspace defaults and facts-plan helpers
-# ---------------------------------------------------------------------------
-
 
 def default_facts(restaurant: dict) -> dict:
     """Return the smallest safe facts object accepted by the API."""
@@ -79,7 +73,6 @@ def default_facts(restaurant: dict) -> dict:
         "notes": "",
         "language": language,
         "has_photo": False,
-        "brand_colors": [],
     }
 
 
@@ -136,7 +129,7 @@ def starting_rows(plan: dict, restaurant: dict) -> list[dict]:
     if plan.get("kind") == "menu_groups" and groups:
         for i, group in enumerate(groups[:top]):
             rows.append(_blank_row(names[i] if i < len(names) else "", group))
-        for name in names[len(rows):top]:
+        for name in names[len(rows) : top]:
             rows.append(_blank_row(name, ""))
     else:
         rows = [_blank_row(name) for name in names[:top]]
@@ -157,8 +150,7 @@ def missing_item_count(plan: dict, items: list[dict]) -> int:
 def facts_signature(facts: dict) -> str:
     """Fingerprint only facts that can change generated public copy/instructions.
 
-    ``brand_colors`` and ``has_photo`` are workspace preferences; changing either
-    should not invalidate a kit that was already grounded in the same business facts.
+    Media availability affects the execution instructions; colours are only a preview preference.
     """
     relevant = {
         "items": facts.get("items") or [],
@@ -166,6 +158,7 @@ def facts_signature(facts: dict) -> str:
         "offer": facts.get("offer") or "",
         "notes": facts.get("notes") or "",
         "language": facts.get("language") or "English",
+        "has_photo": bool(facts.get("has_photo")),
     }
     canonical = json.dumps(relevant, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()[:16]
@@ -177,7 +170,9 @@ def execution_format(resp: dict | None, idea_format: str) -> str:
         value = ((resp.get("kit") or {}).get("shoot") or {}).get("format")
         if value:
             return value
-    return {"Post": "single_image", "Reel": "reel", "Story": "story"}.get(idea_format, "single_image")
+    return {"post": "single_image", "reel": "reel", "story": "story"}.get(
+        str(idea_format).strip().casefold(), "single_image"
+    )
 
 
 def format_name(value: str) -> str:
@@ -200,34 +195,21 @@ def pick_gap(plan: dict, task: dict, idea: dict) -> dict | None:
     return max(
         gaps,
         key=lambda gap: len(
-            own
-            & words(
-                f"{gap.get('gap', '')} {gap.get('key_point', '')} {gap.get('highlight_label') or ''}"
-            )
+            own & words(f"{gap.get('gap', '')} {gap.get('key_point', '')} {gap.get('highlight_label') or ''}")
         ),
     )
 
 
 def next_task(plan: dict, task: dict) -> dict | None:
     later = [
-        t for t in plan.get("tasks", [])
+        t
+        for t in plan.get("tasks", [])
         if t["date"] > task["date"] and t.get("status") != "Completed" and t.get("ideas", True)
     ]
     return min(later, key=lambda t: (t["date"], t["day"]), default=None)
 
 
-def outcome_readout(outcome: str, idea_name: str, content_format: str) -> str:
-    return {
-        "better": f"“{idea_name}” did better than usual. Keep the angle, but test it again before treating it as a pattern.",
-        "same": "About the same as usual. Keep one element stable and change one thing next time, such as the opening or cover.",
-        "worse": "It underperformed your usual posts. Check the opening visual, clarity of the subject, and whether the CTA matched the post.",
-        "too_early": "Give the post more time, then return and record how it performed.",
-    }[outcome]
-
-
-# ---------------------------------------------------------------------------
 # Caption and copy helpers
-# ---------------------------------------------------------------------------
 
 
 def direction(text: str) -> str:
@@ -244,12 +226,7 @@ def cut_at_more(text: str, cutoff: int = MORE_CUTOFF) -> tuple[str, bool]:
 
 
 def subjects(facts: dict) -> list[str]:
-    names = [
-        name
-        for item in facts.get("items") or []
-        for name in (item.get("name_en"), item.get("name_ar"))
-        if name
-    ]
+    names = [name for item in facts.get("items") or [] for name in (item.get("name_en"), item.get("name_ar")) if name]
     return names + [channel for channel in facts.get("channels") or [] if channel]
 
 
@@ -274,15 +251,14 @@ def hashtag_text(hashtags: list[str]) -> str:
 
 
 def shot_card(number: int, shot: dict) -> str:
-    seconds = f'<i>{shot["seconds"]} s</i>' if shot.get("seconds") is not None else ""
+    seconds = f"<i>{shot['seconds']} s</i>" if shot.get("seconds") is not None else ""
     overlay = (
-        f'<p class="tip"><b>On-screen text:</b> {escape(shot["overlay_text"])}</p>'
-        if shot.get("overlay_text") else ""
+        f'<p class="tip"><b>On-screen text:</b> {escape(shot["overlay_text"])}</p>' if shot.get("overlay_text") else ""
     )
     return (
         f'<div class="shot"><span class="n">{number}</span><div class="body">'
-        f'<b>{escape(shot["title"])}{seconds}</b>'
-        f'<p>{escape(shot["instruction"])}</p>'
+        f"<b>{escape(shot['title'])}{seconds}</b>"
+        f"<p>{escape(shot['instruction'])}</p>"
         f'<p class="tip">{escape(shot["phone_tip"])}</p>{overlay}</div></div>'
     )
 
@@ -304,9 +280,6 @@ def shot_list_text(shoot: dict) -> str:
     if checklist:
         lines.extend(["", "Before you shoot:", *[f"- {item}" for item in checklist]])
     return "\n".join(lines)
-
-
-
 
 
 def best_time_summary(best_time: dict, when: str, passed: bool = False) -> tuple[str, str, str]:
@@ -356,7 +329,11 @@ def whole_kit_text(resp: dict, caption: str, overlay: str, when: str, title: str
         kit.get("location_tag", ""),
     ]
     if kit.get("mentions"):
-        parts += ["", "MENTIONS", *[f"- {m.get('handle') or m.get('who')}: {m.get('why', '')}" for m in kit["mentions"]]]
+        parts += [
+            "",
+            "MENTIONS",
+            *[f"- {m.get('handle') or m.get('who')}: {m.get('why', '')}" for m in kit["mentions"]],
+        ]
     parts += ["", "COVER", kit["visual"]["cover_frame"]]
     if overlay:
         parts.append(f"Cover text: {overlay}")
@@ -369,11 +346,7 @@ def whole_kit_text(resp: dict, caption: str, overlay: str, when: str, title: str
     return "\n".join(part for part in parts if part is not None)
 
 
-# ---------------------------------------------------------------------------
-# Media checks and Instagram-like preview
-# ---------------------------------------------------------------------------
-
-
+# Media checks 
 def _vertical_format(content_format: str) -> bool:
     return content_format in {"Reel", "Story", "reel", "story"}
 
@@ -435,8 +408,40 @@ def photo_check(data: bytes, content_format: str) -> dict:
 
 
 def _is_dark(colour: str) -> bool:
-    red, green, blue = (int(colour[i:i + 2], 16) for i in (1, 3, 5))
+    red, green, blue = (int(colour[i : i + 2], 16) for i in (1, 3, 5))
     return 0.299 * red + 0.587 * green + 0.114 * blue < 150
+
+
+def caption_html(handle: str, text: str, cutoff: int = MORE_CUTOFF) -> str:
+    """One caption with native more/less expansion and per-paragraph direction."""
+
+    def paragraphs(value: str) -> str:
+        return "".join(
+            f'<div dir="{direction(part)}" style="text-align:start;unicode-bidi:plaintext;">'
+            f"{escape(part).replace(chr(10), '<br>')}</div>"
+            for part in re.split(r"\n\s*\n", value.strip())
+            if part.strip()
+        )
+
+    if not text.strip():
+        return '<span class="ig-hint">Your caption appears here.</span>'
+    name = f'<div class="ig-name" dir="ltr">{escape(handle)}</div>'
+    shown, cut = cut_at_more(text, cutoff)
+    if not cut:
+        return name + paragraphs(text)
+    return (
+        "<style>.rawaj-caption summary{cursor:pointer;list-style:none;}"
+        ".rawaj-caption summary::-webkit-details-marker{display:none;}"
+        ".rawaj-caption .caption-less{display:none;}"
+        ".rawaj-caption[open] .caption-short{display:none;}"
+        ".rawaj-caption[open] .caption-less{display:inline;}"
+        ".rawaj-caption{overflow-wrap:anywhere;}</style>"
+        '<details class="rawaj-caption"><summary>'
+        f'<span class="caption-short">{name}{paragraphs(shown)}'
+        '<span class="ig-more">… more</span></span>'
+        '<span class="caption-less ig-more">less</span></summary>'
+        f'<div class="caption-full">{name}{paragraphs(text)}</div></details>'
+    )
 
 
 def preview_html(
@@ -455,12 +460,11 @@ def preview_html(
     position: int | None = None,
     total: int | None = None,
 ) -> str:
-    """Render a lightweight Instagram-style preview for the selected asset/slide."""
+    """Display a lightweight Instagram-style preview for the selected asset/slide."""
     vertical = _vertical_format(content_format)
     text = caption.strip()
     if hashtags:
         text += ("\n\n" if text else "") + hashtag_text(hashtags)
-    shown, cut = cut_at_more(text, cutoff)
 
     first, second = ([c for c in colors if _HEX.match(c)] + ["#EAF3FC", "#D3E4F6"])[:2]
     background = (
@@ -481,51 +485,26 @@ def preview_html(
         noun = "video" if vertical else "photo"
         inside += f'<div class="ig-empty">{icon("camera", 22)}<span>Your {noun} goes here</span></div>'
 
-    more = '<span class="ig-more">… more</span>' if cut else ""
-
-    # Do not force one direction on a bilingual caption. Render each paragraph/line
-    # with its own direction so Arabic and English stay visually separated.
-    if shown:
-        paragraphs = [part.strip() for part in re.split(r"\n\s*\n", shown) if part.strip()]
-        rendered = []
-        for part in paragraphs:
-            safe = escape(part).replace("\n", "<br>")
-            rendered.append(
-                f'<div dir="{direction(part)}" style="text-align:start; unicode-bidi:plaintext; margin:.18rem 0;">{safe}</div>'
-            )
-        body = (
-            f'<div class="ig-name" dir="ltr">{escape(handle)}</div>'
-            + "".join(rendered)
-            + more
-        )
-    else:
-        body = '<span class="ig-hint">Your caption appears here.</span>'
+    body = caption_html(handle, text, cutoff)
 
     return f"""
-    <div class="ig{' tall' if vertical else ''}">
+    <div class="ig{" tall" if vertical else ""}">
       <div class="ig-head"><span class="ig-av">{escape(name[:1])}</span>
         <div><b>{escape(handle)}</b><small>{escape(place)}</small></div><span class="ig-dots">···</span></div>
       <div class="ig-media" style="{background}">{inside}</div>
-      <div class="ig-actions">{icon('heart', 22)}{icon('message', 22)}{icon('send', 22)}<span class="sp"></span>{icon('bookmark', 22)}</div>
+      <div class="ig-actions">{icon("heart", 22)}{icon("message", 22)}{icon("send", 22)}<span class="sp"></span>{icon("bookmark", 22)}</div>
       <div class="ig-cap">{body}</div>
     </div>
     """
 
-
-# ---------------------------------------------------------------------------
 # Progress bar
-# ---------------------------------------------------------------------------
-
-
 def steps_html(done: list[bool], confirmed: bool = False) -> str:
-    now = next((i for i, finished in enumerate(done) if not finished and not STEPS[i][1]), None)
+    """Display the three visible steps; a posted item has completed all three."""
+    states = [confirmed or bool(done[i]) if i < len(done) else confirmed for i in range(len(STEPS))]
+    current = next((i for i, finished in enumerate(states) if not finished), None)
     cells = []
-    for i, ((label, automatic), finished) in enumerate(zip(STEPS, done)):
-        state = "done" if finished else "now" if i == now else ""
+    for i, (label, finished) in enumerate(zip(STEPS, states)):
+        state = "done" if finished else "now" if i == current else ""
         mark = icon("check", 14, 2.8) if finished else str(i + 1)
-        sub = ("You confirmed" if confirmed and label == "Published" else "Automatic") if automatic else ""
-        cells.append(
-            f'<div class="step {state}{" auto" if automatic else ""}"><span class="dotc">{mark}</span><b>{label}</b>'
-            f'{f"<small>{sub}</small>" if sub else ""}</div>'
-        )
+        cells.append(f'<div class="step {state}"><span class="dotc">{mark}</span><b>{label}</b></div>')
     return f'<div class="steps">{"".join(cells)}</div>'
