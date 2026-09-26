@@ -16,7 +16,6 @@ TIERS = [
     ("moderate", "Moderate", "moderate"),
     ("low", "Low", "low"),
     ("strengths", "Strengths", ""),
-    ("data_limitations", "Data limitations", ""),
 ]
 SEVERITY_CHIP = {"High": " sev-high", "Moderate": " sev-moderate", "Medium": " sev-moderate", "Low": " sev-low"}
 VISIBLE = 3  # points shown at first; the rest sit behind "Show more"
@@ -32,7 +31,7 @@ def insight(text: str, kind: str, symbol: str) -> str:
 
 
 def insights_card(key: str, title: str, subtitle: str, items: list[str], kind: str, symbol: str) -> None:
-    """A card with the saved count and the saved points (strengths and data limitations).
+    """A card with the saved count and the saved points (strengths).
 
     The header opens and closes the whole list; inside, "Show more" / "Show less" reveals the points after the first few.
     """
@@ -197,13 +196,8 @@ def live_gaps() -> None:
             if st.session_state.pop("just_refreshed", False):
                 st.toast("Refreshed", icon=":material/check_circle:")
 
-    left, right = st.columns(2, gap="medium")
-    with left:
-        if data["strengths"]:
-            insights_card("card_strengths", "Strengths", "What already works well", data["strengths"], "good", "check")
-    with right:
-        if data["data_limitations"]:
-            insights_card("card_limits", "Data limitations", "Read the results with care", data["data_limitations"], "limit", "info")
+    if data["strengths"]:
+        insights_card("card_strengths", "Strengths", "What already works well", data["strengths"], "good", "check")
 
 
 topbar("Home")

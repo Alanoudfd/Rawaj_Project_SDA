@@ -179,7 +179,7 @@ header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecor
 .chip.sev-moderate { background: var(--mod-bg); border-color: var(--mod-line); color: var(--mod); font-weight: 600; }
 .chip.sev-low { background: var(--low-bg); border-color: var(--low-line); color: var(--low); font-weight: 600; }
 
-.tiers { display: grid; grid-template-columns: repeat(6, 1fr); gap: .8rem; margin: 1rem 0; }
+.tiers { display: grid; grid-template-columns: repeat(5, 1fr); gap: .8rem; margin: 1rem 0; }
 .tier {
   background: var(--white); border: 1px solid var(--blue-line); border-radius: 16px; padding: .9rem 1.1rem;
   --c: var(--navy);

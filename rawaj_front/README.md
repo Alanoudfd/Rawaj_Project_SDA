@@ -24,5 +24,5 @@ Set `RAWAJ_API_URL` if the backend is not on `http://127.0.0.1:8000`.
 ## Home page
 The workspace belongs to one restaurant (no picker): `RAWAJ_RESTAURANT_ID` if set, else the restaurant
 whose email matches the sign-in email, else the first one. `GET /api/restaurants/{id}/gaps` returns the
-latest marketing gaps with counts per severity (High / Moderate / Low) and data limitations.
+latest marketing gaps with counts per severity (High / Moderate / Low). Data limitations are saved but not shown on the page.
 The page re-reads the API every 5 seconds.
