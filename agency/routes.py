@@ -331,7 +331,3 @@ def mount_agency(application):
     @application.get('/agency/',include_in_schema=False)
     def agency_page():
         return FileResponse(ROOT/'index.html',headers={'Cache-Control':'no-cache'})
-
-    @application.get('/agency/',include_in_schema=False)
-    def agency_page():
-        return FileResponse(ROOT/'index.html',headers={'Cache-Control':'no-cache'})

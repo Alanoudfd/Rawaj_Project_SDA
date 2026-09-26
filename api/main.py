@@ -147,7 +147,8 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
         )
 
     @application.post("/api/restaurants", response_model=RestaurantResponse, status_code=201, tags=["Restaurants"])
-    def create_restaurant(payload: RestaurantCreate, db: Database):
+    def create_restaurant(payload: RestaurantCreate, db: Database, background_tasks: BackgroundTasks,
+                          request: Request, autostart: bool = False):
         existing = db.scalar(select(Restaurant.id).where(func.lower(Restaurant.instagram_username) == payload.instagram_username))
         if existing:
             raise HTTPException(409, "A restaurant with this Instagram username already exists")
@@ -159,10 +160,18 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
             db.add(restaurant)
             db.flush()
             db.add(RestaurantContext(restaurant_id=restaurant.id, data=payload.context))
+            job = None
+            if autostart and restaurant.is_active:
+                job = AnalysisJob(id=str(uuid4()), restaurant_id=restaurant.id,
+                    active_restaurant_id=restaurant.id, context=payload.context)
+                db.add(job)
             db.commit()
         except IntegrityError:
             db.rollback()
             raise HTTPException(409, "A restaurant with this Instagram username already exists") from None
+        if job is not None:
+            background_tasks.add_task(services.execute_analysis, job.id, session_factory,
+                                      request.app.state.workflow_runner)
         return services.restaurant_response(db, restaurant)
 
     @application.get("/api/restaurants/{restaurant_id}", response_model=RestaurantResponse, tags=["Restaurants"])
@@ -170,7 +179,8 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
         return services.restaurant_response(db, require_restaurant(db, restaurant_id))
 
     @application.patch("/api/restaurants/{restaurant_id}", response_model=RestaurantResponse, tags=["Restaurants"])
-    def update_restaurant(restaurant_id: RestaurantId, payload: RestaurantUpdate, db: Database):
+    def update_restaurant(restaurant_id: RestaurantId, payload: RestaurantUpdate, db: Database,
+                          background_tasks: BackgroundTasks, request: Request, autostart: bool = False):
         with restaurant_write_lock:
             restaurant = require_restaurant(db, restaurant_id)
             require_idle(db, restaurant_id)
@@ -184,7 +194,20 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
             for key, value in values.items():
                 setattr(restaurant, key, value)
             restaurant.updated_at = datetime.utcnow()
+            job = None
+            if autostart and restaurant.is_active and restaurant.email and 'email' in values:
+                from database.models import OutboundMessage, OutreachRelationship
+                relationship = db.scalar(select(OutreachRelationship).where(OutreachRelationship.restaurant_id == restaurant_id))
+                contacted = db.scalar(select(OutboundMessage.id).where(OutboundMessage.restaurant_id == restaurant_id).limit(1))
+                if not contacted and (not relationship or (relationship.status in {'READY_TO_CONTACT', 'WAIT'} and not relationship.do_not_contact_at)):
+                    saved_context = db.get(RestaurantContext, restaurant_id)
+                    job = AnalysisJob(id=str(uuid4()), restaurant_id=restaurant_id,
+                        active_restaurant_id=restaurant_id, context=saved_context.data if saved_context else {})
+                    db.add(job)
             db.commit()
+            if job is not None:
+                background_tasks.add_task(services.execute_analysis, job.id, session_factory,
+                                          request.app.state.workflow_runner)
             return services.restaurant_response(db, restaurant)
 
     @application.get("/api/restaurants/{restaurant_id}/context", response_model=ContextResponse, tags=["Restaurants"])

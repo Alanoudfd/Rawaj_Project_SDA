@@ -294,6 +294,66 @@ class OutreachFollowUpWorkflow(OutreachGuardrails):
             ),
         )
 
+    def initial_draft_review_state(self, *, restaurant_id, research_run_id, qualification_run_id,
+                                   message_id, revision, content_sha256):
+        """Inspect the exact saved draft, not a leftover approval from an older revision."""
+        thread_id = _stable_id("outreach_start", restaurant_id, research_run_id, qualification_run_id)
+        saved = self.graph.get_state(self._graph_config(thread_id))
+        state = saved.values
+        draft, record = state.get("email_draft") or {}, state.get("message_record") or {}
+        matches = (draft.get("message_id") == message_id and draft.get("revision") == revision
+                   and record.get("content_sha256") == content_sha256
+                   and draft.get("message_type") == "INITIAL_OUTREACH")
+        request = state.get("approval_request") or {}
+        expiry = _as_utc(request.get("expires_at"))
+        expired = bool(matches and request.get("message_id") == message_id and expiry and self._now() > expiry)
+        review_failed = bool(matches and state.get("workflow_phase") == WorkflowPhase.FAILED.value
+                             and state.get("next_node") == "finish" and state.get("errors"))
+        return {"thread_id": thread_id, "expired": expired,
+                "recoverable": bool(matches and (expired or review_failed)
+                    and state.get("customer_safe_context") and not (state.get("execution") or {}).get("success"))}
+
+    def retry_initial_draft_review(self, **binding):
+        """Review the saved content again, then pause for a NEW human decision; never send."""
+        info = self.initial_draft_review_state(**binding)
+        if not info["recoverable"]:
+            raise WorkflowSafetyError("This draft is no longer eligible for review recovery. Refresh.")
+        config = self._graph_config(info["thread_id"])
+        self._bind_tools()
+        memory = self._memory_from_payload(self.repository.read_relationship_memory(restaurant_id=binding["restaurant_id"]))
+        if not memory.promotional_contact_allowed or memory.outreach_attempts or memory.status not in {
+            RelationshipStatus.WAIT, RelationshipStatus.READY_TO_CONTACT, RelationshipStatus.PENDING_OUTBOUND_APPROVAL,
+        }:
+            raise WorkflowSafetyError("The relationship is not waiting for an initial email.")
+        self.graph.update_state(config, {"errors": Overwrite([]), "approval": None,
+            "approval_request": None, "execution": None, "review": None,
+            "relationship_memory": memory.model_dump(mode="json"),
+            "workflow_phase": WorkflowPhase.DRAFT.value, "next_node": "review_email"}, as_node="prepare_and_persist_email")
+        result = self._guarded_graph_invoke(None, config)
+        return self._result_from_state(info["thread_id"], result)
+
+    def revise_recipient(self, *, restaurant_id, research_run_id, qualification_run_id, message_id):
+        """Replace an unsent initial draft; never reuse its approval or send here."""
+        thread_id = _stable_id("outreach_start", restaurant_id, research_run_id, qualification_run_id)
+        config = self._graph_config(thread_id)
+        saved = self.graph.get_state(config)
+        state = saved.values
+        draft = state.get("email_draft") or {}
+        if draft.get("message_id") != message_id or (state.get("execution") or {}).get("success"):
+            raise WorkflowSafetyError("The draft changed or was already sent. Refresh before retrying.")
+        if draft.get("message_type") != "INITIAL_OUTREACH":
+            raise WorkflowSafetyError("Only an initial draft can be replaced here.")
+        self._bind_tools()
+        self.graph.update_state(config, {
+            "errors": Overwrite([]), "execution": None, "approval": None,
+            "approval_request": None, "rejected_draft": draft, "rejected_message_id": message_id,
+            "revision_feedback": "The contact email changed. Prepare a new initial draft for human review.",
+            "draft_attempt": int(state.get("draft_attempt") or 0) + 1,
+            "next_node": "generate_email",
+        }, as_node="build_customer_safe_context")
+        result = self._guarded_graph_invoke(None, config)
+        return self._result_from_state(thread_id, result)
+
     def run_follow_up_due(
         self,
         *,
@@ -1117,6 +1177,14 @@ class OutreachFollowUpWorkflow(OutreachGuardrails):
             memory = self._memory_from_payload(state["relationship_memory"])
             restaurant = RestaurantContext.model_validate(state["restaurant"])
             safe_context = CustomerSafeContext.model_validate(state["customer_safe_context"])
+            # A paused checkpoint can predate a contact edit. Bind each NEW draft
+            # to the current persisted address; existing approved drafts stay immutable.
+            if hasattr(self.repository, "load_research_handoff"):
+                current = self.repository.load_research_handoff(
+                    restaurant_id=restaurant.restaurant_id,
+                    research_run_id=state["provenance"]["research_run_id"],
+                )
+                restaurant = restaurant.model_copy(update={"email": current["restaurant"].get("email")})
             if not restaurant.email:
                 raise WorkflowSafetyError("Restaurant has no usable email address for outbound contact.")
             message_type = self._message_type_for_action(decision.action)

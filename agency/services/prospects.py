@@ -107,8 +107,8 @@ def project(r, rows, now):
                    'Check strategy issue' if request and request.status in {'FAILED', 'ERROR'} else
                    'Strategy in progress' if interested or request else
                    'Automatic follow-up due' if followup_due else 'Waiting for response' if sent else
-                   'Analysis in progress' if job else 'Retry analysis' if failed_job else
-                   'Add contact email' if qual == 'QUALIFIED' and not r.email else 'Generate outreach draft' if qual == 'QUALIFIED' else 'Not qualified' if qual == 'NOT_QUALIFIED' else 'Run analysis')
+                   ('Queued for automatic processing' if job.status == 'queued' else 'Preparing initial draft' if qualification else 'Qualifying restaurant' if research else 'Researching restaurant') if job else 'Retry analysis' if failed_job else
+                   'Add contact email' if qual == 'QUALIFIED' and not r.email else 'Outreach preparation needed' if qual == 'QUALIFIED' else 'Not qualified' if qual == 'NOT_QUALIFIED' else 'Run analysis')
     completed = [bool(research), bool(qualification), bool(sent), interested,
                  strategy_ready, bool(trial), bool(trial and not active_trial), bool(rows['feedback'])]
     labels = ['Research', 'Qualification', 'Outreach', 'Interested', 'Strategy', 'Onboarding', 'Free Trial', 'Feedback']

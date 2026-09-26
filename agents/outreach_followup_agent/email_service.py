@@ -12,6 +12,7 @@ import hashlib
 import hmac
 import html
 import json
+import re
 import secrets
 import smtplib
 import ssl
@@ -210,6 +211,7 @@ class EmailService:
         data["html_body"] = self._render_html(
             plain_text_body=source_plain_text,
             buttons=buttons,
+            message_type=message_type,
         )
         data["plain_text_body"] = self._render_plain_text(
             plain_text_body=source_plain_text,
@@ -425,8 +427,18 @@ class EmailService:
         *,
         plain_text_body: str,
         buttons: list[EmailButton],
+        message_type: str = "",
     ) -> str:
         escaped_body = html.escape(plain_text_body.strip()).replace("\n", "<br>\n")
+        if message_type == OutboundMessageType.STRATEGY_READY_NOTIFICATION.value:
+            # Add only trusted emphasis after escaping the model's body.
+            # Keep the reviewed text and all surrounding words unchanged.
+            escaped_body = re.sub(
+                r"\b30-day free trial\b",
+                lambda match: f"<strong>{match.group(0)}</strong>",
+                escaped_body,
+                flags=re.IGNORECASE,
+            )
         button_html = ""
 
         if buttons:

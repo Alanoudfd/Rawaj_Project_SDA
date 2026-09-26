@@ -4,4 +4,3 @@
 @media(prefers-reduced-motion:reduce){.spinner{animation:none}}
 
 .panel{min-width:0}.mini-lifecycle{display:flex;gap:4px;margin-top:9px}.mini-lifecycle i{width:6px;height:6px;background:#edf2f8;border:1px solid var(--line);border-radius:50%}.mini-lifecycle i.completed{background:var(--navy);border-color:var(--navy)}.mini-lifecycle i.current{background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 2px var(--soft)}
-

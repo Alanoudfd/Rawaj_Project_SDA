@@ -32,4 +32,3 @@ render();
 
 // Keep lifecycle progress current without replacing an active review or form.
 setInterval(()=>{if(!document.hidden&&!window.agencyBusy&&!document.querySelector("#dialog").open&&!document.querySelector("#approve")&&!/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName||""))render(true);},10000);
-
