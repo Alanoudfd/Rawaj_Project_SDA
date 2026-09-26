@@ -19,7 +19,7 @@ from .research_guardrails import clamp_scrape_limits
 from .research_schemas import ResearchProfile, RestaurantInfo
 from .research_scraper import scrape_instagram_data
 
-DEFAULT_CONTENT_LIMIT = 30
+DEFAULT_CONTENT_LIMIT = 20
 DEFAULT_LOOKBACK_DAYS = 90
 
 
@@ -28,7 +28,7 @@ def run_research_agent(
     content_limit: int = DEFAULT_CONTENT_LIMIT,
     lookback_days: int = DEFAULT_LOOKBACK_DAYS,
 ) -> ResearchProfile:
-    # Checked before any paid Apify call: at most 30 posts from the last 90 days.
+    # Checked before any paid Apify call: at most 20 posts from the last 90 days.
     content_limit, lookback_days = clamp_scrape_limits(content_limit, lookback_days)
 
     # Part 1 — scrape the profile and recent content.

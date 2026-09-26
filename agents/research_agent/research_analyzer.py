@@ -12,7 +12,9 @@ research evidence:
 """
 
 import json
+import logging
 import os
+import threading
 from collections import Counter
 from datetime import datetime, timezone
 from statistics import median
@@ -20,6 +22,7 @@ from statistics import median
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
+from langsmith.utils import ContextThreadPoolExecutor
 
 from .research_schemas import (
     AnalysisCoverage,
@@ -46,6 +49,8 @@ from .research_guardrails import find_judgement_terms, report
 from .research_scraper import parse_timestamp
 
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 
 # =========================================================
@@ -152,6 +157,8 @@ def analyze_instagram_profile(
 
 
 MIN_TRANSCRIPT_WORDS = 5
+# How many posts are sent to OpenAI at the same time.
+CONTENT_ANALYSIS_WORKERS = 5
 
 
 def usable_transcript(content: ScrapedContent) -> str | None:
@@ -296,22 +303,30 @@ def analyze_instagram_content(recent_content: list[dict]) -> list[dict]:
     One failed item does not stop analysis of the remaining items.
     """
 
-    analyzed: list[dict] = []
+    total = len(recent_content)
+    done = 0
+    lock = threading.Lock()
 
-    for item in recent_content:
+    def analyze(item: dict) -> dict:
+        nonlocal done
         try:
-            analyzed.append(_analyze_single_content(item))
+            result = _analyze_single_content(item)
         except Exception as exc:
             content = ScrapedContent.model_validate(item)
-            analyzed.append(
-                AnalyzedContent(
-                    **content.model_dump(),
-                    analysis=None,
-                    analysis_error=str(exc),
-                ).model_dump()
-            )
+            result = AnalyzedContent(
+                **content.model_dump(),
+                analysis=None,
+                analysis_error=str(exc),
+            ).model_dump()
+        with lock:
+            done += 1
+            logger.info("analyzed post %s/%s", done, total)
+        return result
 
-    return analyzed
+    # Posts are independent, so several go to OpenAI at once. The LangSmith
+    # pool keeps each call inside the current trace. map() keeps the order.
+    with ContextThreadPoolExecutor(max_workers=CONTENT_ANALYSIS_WORKERS) as pool:
+        return list(pool.map(analyze, recent_content))
 
 
 # =========================================================

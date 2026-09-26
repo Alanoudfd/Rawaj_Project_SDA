@@ -10,6 +10,8 @@ from agents.research_agent.research_schemas import RestaurantInfo
 # Print every Apify guardrail check ("[guardrail] ...") while the agent runs.
 logging.basicConfig(level=logging.WARNING, format="%(message)s")
 logging.getLogger("agents.research_agent.research_guardrails").setLevel(logging.INFO)
+# Print "analyzing post N/M..." during the silent OpenAI step.
+logging.getLogger("agents.research_agent.research_analyzer").setLevel(logging.INFO)
 
 
 # Temporary manual restaurant data for standalone testing

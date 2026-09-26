@@ -33,6 +33,7 @@ def load(restaurant: dict) -> dict | None:
             "title": d["focus"] or f"Day {d['day']}", "text": d["action"], "status": d["status"],
             "ideas": d.get("ideas", True), "ideas_note": d.get("ideas_note", ""),
             "counts": d.get("counts", (d["focus"] or "").strip().lower() != "break"),
+            "post_url": d.get("post_url", ""), "outcome": d.get("outcome", ""),  # what the owner added after posting
         }
         for d in plan["days"]
     ]

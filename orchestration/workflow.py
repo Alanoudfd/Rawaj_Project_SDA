@@ -522,7 +522,7 @@ graph = workflow.compile()
 
 def run_restaurant_workflow(
     restaurant_id: int,
-    content_limit: int = 30,
+    content_limit: int = 20,
     lookback_days: int = 90,
     *,
     context: dict[str, Any] | None = None,

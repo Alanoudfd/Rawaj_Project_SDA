@@ -75,12 +75,12 @@ def idea_cards(restaurant: dict, task: dict, where: str) -> None:
                 st.rerun()
 
 
-def chosen_idea_card(restaurant: dict, task: dict) -> None:
-    """The idea the user chose for this day, with the details the cards leave out."""
+def chosen_idea_card(restaurant: dict, task: dict) -> dict | None:
+    """The idea the user chose for this day, with the details the cards leave out. Returns that idea, if any."""
     _init()
     idea = st.session_state.saved_ideas.get(idea_key(restaurant, task))
     if not idea:
-        return
+        return None
     with st.container(key="card_chosen_idea"):
         st.markdown(
             f"""
@@ -96,6 +96,7 @@ def chosen_idea_card(restaurant: dict, task: dict) -> None:
             """,
             unsafe_allow_html=True,
         )
+    return idea
 
 
 def show_ideas(restaurant: dict, task: dict, where: str) -> None:

@@ -19,8 +19,8 @@ from urllib.parse import urlparse
 
 # ---------- Input ----------
 USERNAME_RE = re.compile(r"^(?!.*\.\.)(?!\.)(?!.*\.$)[A-Za-z0-9._]{1,30}$")
-# Scrape at most the 30 most recent posts from the last 90 days.
-MAX_CONTENT_LIMIT = 30
+# Scrape at most the 20 most recent posts from the last 90 days.
+MAX_CONTENT_LIMIT = 20
 MAX_LOOKBACK_DAYS = 90
 
 # ---------- Apify run limits (per actor call) ----------

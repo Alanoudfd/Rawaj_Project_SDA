@@ -20,7 +20,7 @@ from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session, sessionmaker
 
-from api import agent_strategy, approvals, auth, planning, services
+from api import agent_strategy, approvals, auth, planning, post_kit, services
 from api.schemas import (
     AnalyzeRequest, ContextResponse, JobResponse, OutreachDraft,
     GapsResponse, QualificationResponse, ResearchResponse, RestaurantCreate,
@@ -106,6 +106,7 @@ def create_app(database_engine=engine, workflow_runner=None, outreach_runner=Non
     application.state.content_ideas_runner = planning.generate_content_ideas
     application.include_router(planning.router)
     application.include_router(agent_strategy.router)
+    application.include_router(post_kit.router)
     application.include_router(approvals.router)
     application.include_router(auth.router)
     from api.client_lifecycle import router as client_router

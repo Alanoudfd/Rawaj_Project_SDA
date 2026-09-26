@@ -11,14 +11,18 @@ import requests
 API_URL = os.getenv("RAWAJ_API_URL", "http://127.0.0.1:8000").rstrip("/")
 TIMEOUT = 5
 IDEAS_TIMEOUT = 75  # the model writes the ideas, which takes longer than a database read
+KIT_TIMEOUT = 240  # a Post Kit is two or more model calls in a row (write, then check the claims), and one repair
+REWRITE_TIMEOUT = 120
+FACTS_TIMEOUT = 150  # one model call, retried when the connection drops; the API falls back to the generic form after that
 
 
 class ApiError(Exception):
     """The backend could not be reached or answered with an error."""
 
-    def __init__(self, message: str, status: int | None = None):
+    def __init__(self, message: str, status: int | None = None, detail: str | None = None):
         super().__init__(message)
         self.status = status
+        self.detail = detail  # the API's own sentence, without the request line: the one to show an owner
 
 
 def _request(method: str, path: str, body: dict | None = None, timeout: int = TIMEOUT):
@@ -31,7 +35,10 @@ def _request(method: str, path: str, body: dict | None = None, timeout: int = TI
             detail = response.json().get("detail")
         except ValueError:
             detail = None
-        raise ApiError(f"{method} {path} failed (HTTP {response.status_code}): {detail or response.reason}", response.status_code)
+        raise ApiError(
+            f"{method} {path} failed (HTTP {response.status_code}): {detail or response.reason}", response.status_code,
+            detail if isinstance(detail, str) else None,
+        )
     if response.status_code == 204 or not response.content:
         return {}
     try:
@@ -59,8 +66,9 @@ def get_agent_strategy(restaurant_id: int) -> dict | None:
         raise
 
 
-def set_day_status(restaurant_id: int, day: int, status: str) -> dict:
-    return _request("PATCH", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}", {"status": status})
+def set_day_status(restaurant_id: int, day: int, status: str, **extras) -> dict:
+    """Mark a day Completed or Planned. After posting, `post_url` and `outcome` may be sent as well (Planned removes them)."""
+    return _request("PATCH", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}", {"status": status, **extras})
 
 
 def login(username: str, password: str) -> dict:
@@ -72,3 +80,20 @@ def get_day_ideas(restaurant_id: int, day: int, previous_ideas: list[dict] | Non
     """Three content ideas for one day of the strategy. Send the ideas already shown to get different ones."""
     body = {"previous_ideas": previous_ideas or [], "feedback": feedback}
     return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/ideas", body, timeout=IDEAS_TIMEOUT)["ideas"]
+
+
+def facts_plan(restaurant_id: int, day: int, idea: dict) -> dict:
+    """What the owner must confirm for this idea: the item rows, prices, ways to order, offer and notes (plus suggestions)."""
+    return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit/facts-plan", {"idea": idea}, timeout=FACTS_TIMEOUT)
+
+
+def create_post_kit(restaurant_id: int, day: int, idea: dict, facts: dict, tone: str = "warm") -> dict:
+    """The Post Kit for the chosen idea: the kit (one caption in `tone`), its checks, the best time to post, the crop rules and the owner's colours."""
+    body = {"idea": idea, "facts": facts, "tone": tone}
+    return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit", body, timeout=KIT_TIMEOUT)
+
+
+def rewrite_caption(restaurant_id: int, day: int, caption: str, change: str, facts: dict, content_format: str) -> dict:
+    """One caption rewritten with one change ("shorter", "playful", "warm", "premium", "hook"): {text, interaction_prompt}."""
+    body = {"caption": caption, "change": change, "facts": facts, "content_format": content_format}
+    return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit/rewrite", body, timeout=REWRITE_TIMEOUT)
