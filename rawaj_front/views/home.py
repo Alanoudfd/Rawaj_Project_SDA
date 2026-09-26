@@ -6,6 +6,8 @@ import streamlit as st
 from ui import api
 from ui.components import current_restaurant, footer, forget_cached_data, page_head, topbar
 from ui.icons import icon
+from ui.plan import load as load_plan
+from ui.reviews import dashboard_progress
 
 # Every name, number and sentence on this page is read from the saved qualification (the latest completed run of this
 # restaurant) through the API. Only the labels of the page itself ("Strengths", "Refresh"...) are written here.
@@ -202,5 +204,13 @@ def live_gaps() -> None:
 
 topbar("Home")
 page_head("Marketing gaps", badge="Marketing assessment")
+restaurant = current_restaurant()
+if restaurant:
+    try:
+        plan = load_plan(restaurant)
+    except api.ApiError:
+        plan = None
+    if plan:
+        dashboard_progress(restaurant, plan)
 live_gaps()
 footer()

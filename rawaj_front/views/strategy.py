@@ -8,6 +8,7 @@ from ui.components import current_restaurant, footer, page_head, topbar
 from ui.icons import icon
 from ui.ideas import show_ideas
 from ui.plan import by_date, load_or_stop, occasion_dates, occasions_on, period_label, progress, toggle
+from ui.reviews import completion_review
 
 
 restaurant = current_restaurant()
@@ -180,7 +181,7 @@ def progress_card() -> None:
     )
     st.markdown(
         f"""
-        <div class="card-head"><h3 class="card-title">Strategy progress · {period_label(plan)}</h3>
+        <div class="card-head"><h3 class="card-title">Task progress · {period_label(plan)}</h3>
         <span class="muted">{stats['done']} of {stats['total']} completed{f" · {stats['skipped']} break days not counted" if stats['skipped'] else ""}</span></div>
         <div class="tiers three">
           <div class="tier"><small>{"Items this month" if monthly else "Days in the plan"}</small><b>{stats['total']}</b></div>
@@ -196,6 +197,8 @@ def progress_card() -> None:
 
 with st.container(key="card_progress"):
     progress_card()
+
+completion_review(restaurant, plan)
 
 page_head("Content calendar", "Choose a day to see what to publish and when, and track your progress.")
 
