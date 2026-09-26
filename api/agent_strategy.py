@@ -152,7 +152,7 @@ def _start_date(strategy: Strategy) -> date:
         started = date.fromisoformat(str(strategy.strategy_data.get("strategy_start_date")))
     except ValueError:
         started = strategy.created_at.date() if strategy.created_at else date.today()
-    return started.replace(day=1)
+    return started
 
 
 def _ideas_fields(focus: str) -> dict:
