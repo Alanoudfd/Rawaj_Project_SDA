@@ -110,24 +110,60 @@ def detail(restaurant_id: int, db: Database):
     return item
 
 
+def draft_review_binding(msg):
+    return dict(restaurant_id=msg.restaurant_id, research_run_id=msg.research_run_id,
+        qualification_run_id=msg.qualification_run_id, message_id=msg.id,
+        revision=msg.content_version, content_sha256=msg.content_sha256)
+
+
+def initial_review_eligibility(db, msg):
+    """A historical, sent, superseded or opted-out draft must never regain send controls."""
+    if msg.message_type != 'INITIAL_OUTREACH' or msg.status not in {'GENERATED','PENDING_APPROVAL'} or msg.provider_message_id:
+        return False
+    restaurant = db.get(m.Restaurant, msg.restaurant_id)
+    rel = db.scalar(select(m.OutreachRelationship).where(m.OutreachRelationship.restaurant_id == msg.restaurant_id))
+    if not restaurant or not restaurant.is_active or not restaurant.email or not rel or rel.do_not_contact_at or rel.status not in {'WAIT','READY_TO_CONTACT','PENDING_OUTBOUND_APPROVAL'} or rel.outreach_attempts:
+        return False
+    sent = db.scalar(select(m.OutboundMessage.id).where(m.OutboundMessage.restaurant_id == msg.restaurant_id, m.OutboundMessage.provider_message_id.is_not(None)).limit(1))
+    superseded = db.scalar(select(m.OutboundMessage.id).where(m.OutboundMessage.supersedes_message_id == msg.id).limit(1))
+    return not sent and not superseded
+
+
 @router.get('/outreach')
 def outreach(request: Request, db: Database):
     # History remains readable if the model/runtime is temporarily unavailable.
-    pending, runtime_error = {}, None
+    pending, runtime_error, application = {}, None, None
     try:
         application = approvals.get_outreach_application(request)
         pending = {p['message_id']:p for p in approvals._paused_email_requests(application)}
     except Exception:
         runtime_error = 'Approval service unavailable. Check the Outreach configuration and refresh.'
-    restaurants = {x.id:x.name for x in db.scalars(select(m.Restaurant))}
+    restaurant_rows = {x.id:x for x in db.scalars(select(m.Restaurant))}
+    restaurants = {key:value.name for key,value in restaurant_rows.items()}
     result = []
-    for msg in db.scalars(select(m.OutboundMessage).order_by(m.OutboundMessage.created_at.desc())):
+    messages = db.scalars(select(m.OutboundMessage).order_by(m.OutboundMessage.created_at.desc())).all()
+    superseded = {msg.supersedes_message_id for msg in messages if msg.supersedes_message_id}
+    for msg in messages:
         approval = pending.get(msg.id)
+        restaurant = restaurant_rows.get(msg.restaurant_id)
+        changed = bool(restaurant and restaurant.email and restaurant.email.casefold() != msg.recipient_email.casefold())
+        eligible = initial_review_eligibility(db, msg)
+        info = application.workflow.initial_draft_review_state(**draft_review_binding(msg)) if eligible and application else {}
+        recoverable = bool(eligible and info.get('recoverable'))
+        reviewable = bool(eligible and approval and not info.get('expired'))
+        reason = ('This draft was replaced by a newer message.' if msg.id in superseded else
+                  'This message has already been sent.' if msg.provider_message_id else
+                  'The approval window expired. Renew the content review to enable approval.' if info.get('expired') else
+                  'Content review did not finish. Retry review to enable approval and regeneration.' if recoverable else
+                  'Historical message: an initial email has already been sent, or this relationship cannot be contacted.' if not eligible else
+                  'This draft has no active approval. Check its saved workflow before sending.')
+        recipient_revision = msg.id not in superseded and msg.message_type == 'INITIAL_OUTREACH' and not msg.provider_message_id and ((changed and (approval is not None or recoverable)) or (msg.status == 'FAILED' and msg.provider_status == 'RECIPIENT_MISMATCH'))
         result.append(dict(id=msg.id, restaurant_id=msg.restaurant_id, restaurant=restaurants.get(msg.restaurant_id,'Restaurant'),
             recipient=msg.recipient_email, subject=public_text(msg.subject), body=public_text(msg.plain_text_body),
-            type=msg.message_type, status=msg.status if msg.status not in {'SENT','DELIVERED'} or msg.provider_message_id else 'UNCONFIRMED',
+            type=msg.message_type, status='SUPERSEDED' if msg.id in superseded and msg.status == 'GENERATED' else msg.status if msg.status not in {'SENT','DELIVERED'} or msg.provider_message_id else 'UNCONFIRMED',
             created_at=iso(msg.created_at), sent_at=iso(msg.sent_at), revision=msg.content_version,
-            reviewable=bool(approval and msg.message_type=='INITIAL_OUTREACH' and msg.status not in {'SENT','DELIVERED','REJECTED','FAILED'}),
+            reviewable=reviewable, review_recovery=recoverable, read_only_reason=reason,
+            recipient_revision=recipient_revision, current_recipient=restaurant.email if recipient_revision else None,
             expires_at=approval.get('expires_at') if approval else None))
     return {'items':result,'runtime_error':runtime_error}
 
@@ -138,22 +174,83 @@ class ReviewDecision(BaseModel):
     revision: int = Field(ge=1)
 
 
+class ReviewRevision(BaseModel):
+    revision: int = Field(ge=1)
+
+
+@router.post('/outreach/{message_id}/retry-review')
+def retry_review(message_id: str, payload: ReviewRevision, request: Request, db: Database):
+    same_origin(request)
+    application = approvals.get_outreach_application(request)
+    with request.app.state.outreach_lock:
+        msg = db.get(m.OutboundMessage, message_id)
+        if not msg or msg.content_version != payload.revision or not initial_review_eligibility(db, msg):
+            raise HTTPException(409, 'This draft cannot be reopened. Refresh and select the latest unsent draft.')
+        restaurant = db.get(m.Restaurant, msg.restaurant_id)
+        if restaurant.email.casefold() != msg.recipient_email.casefold():
+            raise HTTPException(409, 'The recipient changed. Prepare a replacement for the current email first.')
+        try:
+            result = application.workflow.retry_initial_draft_review(**draft_review_binding(msg))
+        except Exception:
+            raise HTTPException(409, 'The saved draft changed or cannot be reviewed. Refresh and retry.') from None
+        if result.errors:
+            raise HTTPException(502, draft_failure_message(result.errors))
+        if not any(p['message_id'] == msg.id for p in approvals._paused_email_requests(application)):
+            raise HTTPException(409, 'The content review has not reached human approval yet.')
+        return {'message_id': msg.id, 'sent': False, 'status': 'AWAITING_REVIEW'}
+
+
+@router.post('/outreach/{message_id}/recipient-revision')
+def revise_recipient(message_id: str, request: Request, db: Database):
+    same_origin(request)
+    application = approvals.get_outreach_application(request)
+    with request.app.state.outreach_lock:
+        msg = db.get(m.OutboundMessage, message_id)
+        if not msg or msg.message_type != 'INITIAL_OUTREACH':
+            raise HTTPException(404, 'Initial draft not found.')
+        restaurant = db.get(m.Restaurant, msg.restaurant_id)
+        relationship = db.scalar(select(m.OutreachRelationship).where(m.OutreachRelationship.restaurant_id == msg.restaurant_id))
+        sent = db.scalar(select(m.OutboundMessage.id).where(m.OutboundMessage.restaurant_id == msg.restaurant_id, m.OutboundMessage.provider_message_id.is_not(None)).limit(1))
+        if sent or not restaurant or not restaurant.is_active or not restaurant.email or (relationship and (relationship.do_not_contact_at or relationship.status in {'DO_NOT_CONTACT','CLOSED_LOST','NOT_INTERESTED'})):
+            raise HTTPException(409, 'This relationship cannot restart initial outreach.')
+        pending = any(p['message_id'] == message_id for p in approvals._paused_email_requests(application))
+        changed = restaurant.email.casefold() != msg.recipient_email.casefold()
+        info = application.workflow.initial_draft_review_state(**draft_review_binding(msg)) if initial_review_eligibility(db, msg) else {}
+        if not (((pending or info.get('recoverable')) and changed) or (msg.status == 'FAILED' and msg.provider_status == 'RECIPIENT_MISMATCH')):
+            raise HTTPException(409, 'This message does not need a recipient revision. Refresh.')
+        try:
+            result = application.workflow.revise_recipient(restaurant_id=msg.restaurant_id,
+                research_run_id=msg.research_run_id, qualification_run_id=msg.qualification_run_id, message_id=msg.id)
+        except Exception:
+            raise HTTPException(409, 'The saved draft could not be replaced. Refresh and check its workflow.') from None
+        if result.errors or not result.email_draft:
+            raise HTTPException(502, draft_failure_message(result.errors))
+        return {'message_id': result.email_draft.message_id, 'sent': False}
+
+
 @router.post('/outreach/{message_id}/decision')
 def review(message_id: str, payload: ReviewDecision, request: Request, db: Database):
     same_origin(request)
     msg = db.get(m.OutboundMessage,message_id)
     if not msg or msg.message_type != 'INITIAL_OUTREACH':
         raise HTTPException(404,'Initial outreach draft not found')
+    if payload.decision == 'APPROVED' and not initial_review_eligibility(db, msg):
+        raise HTTPException(404 if msg.status in {'SENT','DELIVERED','REJECTED'} else 409, 'This historical draft cannot be sent. Refresh and select the latest pending draft.')
     if msg.content_version != payload.revision:
         raise HTTPException(409,'The draft changed. Refresh and review the latest version.')
     if payload.decision=='REJECTED' and not (payload.note or '').strip():
         raise HTTPException(422,'Tell the agent what to change before regenerating.')
+    restaurant = db.get(m.Restaurant, msg.restaurant_id)
+    if payload.decision == 'APPROVED' and (not restaurant or not restaurant.email or restaurant.email.casefold() != msg.recipient_email.casefold()):
+        raise HTTPException(409, 'The contact email changed. Refresh and prepare a draft for the current email, then review it again. No email was sent.')
     application = approvals.get_outreach_application(request)
     result = approvals.decide(message_id, approvals.DecisionRequest(decision=payload.decision,
         reviewer_id='agency-reviewer', note=payload.note), request, application)
+    db.refresh(msg)
     # Do not return raw provider exceptions or checkpoint state.
+    failure = 'The contact email changed. Prepare a draft for the current email and review it again. No email was sent.' if msg.provider_status == 'RECIPIENT_MISMATCH' else 'The agent could not finish this action. Check its configuration and refresh.'
     return {'sent':result.sent,'decision':result.decision,
-            'errors':['The agent could not finish this action. Check its configuration and refresh.'] if result.errors else []}
+            'errors':[failure] if result.errors else []}
 
 
 DRAFT_FAILURE_MESSAGES = {
@@ -231,6 +328,10 @@ def mount_agency(application):
     def agency_api_script():
         return FileResponse(ROOT/'services'/'api.js', media_type='text/javascript')
     @application.get('/agency',include_in_schema=False)
+    @application.get('/agency/',include_in_schema=False)
+    def agency_page():
+        return FileResponse(ROOT/'index.html',headers={'Cache-Control':'no-cache'})
+
     @application.get('/agency/',include_in_schema=False)
     def agency_page():
         return FileResponse(ROOT/'index.html',headers={'Cache-Control':'no-cache'})
