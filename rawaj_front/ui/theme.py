@@ -316,6 +316,24 @@ details.more[open] .t-open { display: none; }
   padding: .8rem 0; font-size: 10.5px;
 }
 
+/* task completion and plan review */
+.st-key-card_task_completion { background: var(--blue-soft); }
+.review-finish { display: flex; align-items: center; gap: .9rem; color: var(--navy); margin-bottom: .8rem; }
+.review-finish h3 { font: 600 19px var(--head); margin: 0; }
+.review-finish p { font-size: 12px; color: var(--muted); margin-top: .3rem; }
+.review-celebration { display: flex; align-items: center; gap: 1.3rem; background: var(--navy); color: var(--white); border-radius: 20px; padding: 1.8rem; }
+.review-seal { display: grid; place-items: center; flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--blue); }
+.review-celebration .eyebrow { color: #c4dff8; }
+.review-celebration h2 { font: 600 32px var(--head); color: var(--white) !important; margin: .3rem 0 !important; }
+.review-celebration p { font-size: 13px; color: #d8e9f9; }
+.review-intro { color: var(--muted); line-height: 1.7; padding: .8rem 0; }
+.review-readout { border-top: 1px solid var(--blue-line); margin-top: .7rem; padding-top: 1rem; }
+.review-meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--navy); }
+.review-meta span { letter-spacing: .15em; }
+.review-copy { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.7; padding: .6rem 0; unicode-bidi: plaintext; }
+.review-readout small { color: var(--muted); }
+@media (max-width: 600px) { .review-celebration { padding: 1.1rem; gap: .8rem; } .review-celebration h2 { font-size: 25px; } .review-seal { width: 46px; height: 46px; } }
+
 /* calendar */
 .dow { display: grid; grid-template-columns: repeat(7, 1fr); gap: .5rem; margin: .8rem 0 .2rem; }
 .dow span { font: 500 8.5px var(--head); letter-spacing: .1em; color: var(--muted); text-align: center; }

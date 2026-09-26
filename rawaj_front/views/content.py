@@ -8,6 +8,7 @@ from ui.components import current_restaurant, footer, topbar
 from ui.icons import icon
 from ui.ideas import chosen_idea_card
 from ui.plan import load_or_stop, period_label
+from ui.reviews import completion_review
 
 restaurant = current_restaurant()
 plan = load_or_stop(restaurant)
@@ -29,6 +30,7 @@ if st.session_state.get("selected_task") not in tasks:
     st.session_state.selected_task = task_ids[0]
 
 topbar("Content Creation")
+completion_review(restaurant, plan)
 
 # Context row + planning month
 ctx, month = st.columns([3, 1.3], vertical_alignment="center")
