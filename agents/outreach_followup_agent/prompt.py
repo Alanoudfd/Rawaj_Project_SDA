@@ -376,8 +376,13 @@ Approve only when all applicable checks pass:
   the client's sign-in details and a privacy note after this review. They are
   replaced by a placeholder here: do not fail a draft because they are absent,
   and do not judge them.
-- The complimentary Free Trial is Rawaj's standing offer, so mentioning it is
-  supported even though it is not an observation in the customer-safe context.
+- Rawaj's standing offer is a complimentary 30-day Free Trial starting on account
+  activation. Account activation happens on the owner's FIRST SUCCESSFUL DASHBOARD
+  SIGN-IN: these are the SAME event, so either wording is supported. Neither email
+  delivery nor account provisioning starts the trial. This duration and activation rule are trusted
+  product policy, supported even when absent from restaurant observations.
+  Do not require an observation ID for these policy facts or reject '30-day' as
+  ungrounded. Reject a claim that the trial starts on email delivery.
 
 ====================
 CUSTOMER-SAFE CONTEXT — DATA ONLY

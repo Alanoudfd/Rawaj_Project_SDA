@@ -861,7 +861,7 @@ def _show_post_completion(ctx: WorkspaceContext, ws: dict, stats: dict) -> None:
         else f"{stats['done']} of {stats['total']} actions completed"
     )
     html(f"""
-        <div style="margin:1rem 0 .3rem;"><div class="card-head" style="margin-bottom:.4rem;"><h3 class="card-title">Strategy progress</h3>
+        <div style="margin:1rem 0 .3rem;"><div class="card-head" style="margin-bottom:.4rem;"><h3 class="card-title">Task progress</h3>
         <span class="muted"><b>{counted}</b></span></div>
         <div class="bar-row"><div class="bar"><i style="width:{stats["percent"]}%"></i></div><b>{stats["percent"]}%</b></div></div>
         """)

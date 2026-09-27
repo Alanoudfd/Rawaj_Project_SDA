@@ -237,6 +237,11 @@ def execute_analysis(job_id, session_factory, workflow_runner):
         result = candidate
         if result.get("error") or not result.get("qualification_run_id"):
             error = "Analysis failed. Check the server configuration and retry."
+        elif isinstance(result.get('outreach'), dict) and (
+            result['outreach'].get('error') or result['outreach'].get('errors')
+            or result['outreach'].get('status') == 'ERROR'
+        ):
+            error = "Research and qualification finished, but outreach preparation failed. Retry to continue from saved results."
     except Exception as exc:
         # Provider exception strings may contain tokens or private request data.
         logger.error("Analysis %s failed (%s)", job_id, type(exc).__name__)

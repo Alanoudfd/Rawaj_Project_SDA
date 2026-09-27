@@ -30,6 +30,7 @@ def main():
         os.environ['PIPELINE_AUTORUN']='false'
     else:
         os.environ['PIPELINE_AUTORUN']='true'
+    os.environ['OUTREACH_AUTOSTART']='true'
     # Validate account provisioning before any live Strategy notification runs.
     # Existing account passwords depend on this stable secret; never rotate it implicitly.
     if len(os.getenv('ACCOUNT_SECRET', '')) < 32:
