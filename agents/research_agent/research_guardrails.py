@@ -222,8 +222,3 @@ def safe_media_urls(urls: list[str]) -> list[str]:
     if unsafe:
         report("unsafe image URL(s) removed: %s", unsafe)
     return kept
-
-            break
-    if unsafe:
-        report("unsafe image URL(s) removed: %s", unsafe)
-    return kept
