@@ -366,6 +366,6 @@ def day_content_ideas(restaurant_id: RestaurantId, day: Annotated[int, Path(ge=1
     except ContentIdeasUnavailable:
         raise HTTPException(503, "Content ideas are unavailable. Configure OPENAI_API_KEY in the project's .env file.") from None
     except Exception as exc:
-        logger.error("Content generation failed (%s)", type(exc).__name__)
+        logger.error("Content generation failed (%s): %s", type(exc).__name__, exc)
         raise HTTPException(502, "Could not generate content ideas. Check the server configuration and retry.") from None
     return ideas

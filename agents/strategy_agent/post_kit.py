@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import time
 from datetime import datetime, timedelta, timezone
 from statistics import median
 from typing import Annotated, Callable, Literal
@@ -367,30 +368,67 @@ Return only Rewrite with text and interaction_prompt; the latter exactly matches
 # the model calls
 
 
+RETRY_PAUSES = (2, 5, 10)  # seconds to wait before each new attempt after a dropped connection
+
+
+def _streamed_text(stream) -> str:
+    """The final JSON text of a streamed response."""
+    for event in stream:
+        if event.type == "response.completed":
+            return event.response.output_text
+        if event.type in ("response.failed", "response.incomplete", "error"):
+            raise RuntimeError(f"Model response ended with {event.type}")
+    raise RuntimeError("Model stream ended before the response was complete")
+
+
 def _ask(instructions: str, payload: dict, model: type[BaseModel], name: str, timeout: float, retries: int = 3):
-    """One strict-JSON model call. Called lazily: never import a client or expose credentials on startup."""
+    """One strict-JSON model call. Called lazily: never import a client or expose credentials on startup.
+
+    The answer is streamed: a long call that sends nothing until the end gets its connection cut on some networks
+    ("Server disconnected without sending a response"), while a stream keeps sending. `timeout` is the longest wait
+    between two pieces. Dropped connections come in bursts of a few seconds, so a call that fails to start or is cut
+    halfway is tried again after a growing pause (RETRY_PAUSES) rather than immediately.
+    """
     if not os.getenv("OPENAI_API_KEY", "").strip():
         raise PostKitUnavailable()
-    from openai import OpenAI
+    from openai import APIConnectionError, OpenAI
 
-    with OpenAI(
-        timeout=timeout, max_retries=retries
-    ) as client:  # a kit takes two or more calls in a row: retry dropped connections
-        response = client.responses.create(
-            model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
-            instructions=instructions,
-            input=json.dumps(payload, ensure_ascii=False),
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": name,
-                    "strict": True,
-                    "schema": model.model_json_schema(),
-                }
-            },
-            store=False,
-        )
-    return model.model_validate_json(response.output_text)
+    pauses = RETRY_PAUSES[:retries]
+    with OpenAI(timeout=timeout, max_retries=1) as client:  # a kit takes two or more calls in a row
+        for attempt in range(len(pauses) + 1):
+            try:
+                stream = client.responses.create(
+                    model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
+                    instructions=instructions,
+                    input=json.dumps(payload, ensure_ascii=False),
+                    text={
+                        "format": {
+                            "type": "json_schema",
+                            "name": name,
+                            "strict": True,
+                            "schema": model.model_json_schema(),
+                        }
+                    },
+                    store=False,
+                    stream=True,
+                )
+            except APIConnectionError as exc:  # no connection at all; other API errors are not retried here
+                failure = exc
+            else:
+                try:
+                    with stream:
+                        text = _streamed_text(stream)
+                    break
+                except Exception as exc:
+                    failure = exc
+            if attempt == len(pauses):
+                raise failure
+            logger.warning(
+                "%s: connection dropped (%s), retrying in %ss (%s/%s)",
+                name, type(failure).__name__, pauses[attempt], attempt + 1, len(pauses),
+            )
+            time.sleep(pauses[attempt])
+    return model.model_validate_json(text)
 
 
 def generate_post_kit(context: dict, problems: list[str] | None = None, previous: PostKit | None = None) -> PostKit:
@@ -624,12 +662,17 @@ def caption_problems(text: str, prompt: str, context: dict) -> list[tuple[str, s
                 )
             )
     elif _subjects(context):
-        end = dish_position(text, _subjects(context))
+        subjects = _subjects(context)
+        end = dish_position(text, subjects)
         if end is None or end > MORE_CUTOFF:
+            # Name the exact spellings and where the caption stands, so the repair knows what to change.
+            where = "none of them is in the caption" if end is None else f"the first one now ends at character {end}"
             problems.append(
                 (
                     "subject_before_more",
-                    f"An item or a way to order from the facts must be named inside the first {MORE_CUTOFF} characters, before 'more'.",
+                    f"An item or a way to order from the facts must be named inside the first {MORE_CUTOFF} characters, "
+                    f"before 'more'. Write one of these exactly as spelled in the opening sentence: "
+                    f"{', '.join(repr(s) for s in subjects)} ({where}).",
                 )
             )
     return problems
@@ -647,7 +690,7 @@ def _shoot_problem(guide: ShootGuide, content_format: str) -> str | None:
         if (
             not 3 <= len(shots) <= 6
             or any(value is None or value <= 0 for value in seconds)
-            or abs(sum(seconds) - guide.duration_seconds) > 2
+            or sum(seconds) != guide.duration_seconds
         ):
             return "A reel needs 3 to 6 scenes whose seconds add up to the duration."
     elif fmt == "single_image":
@@ -763,6 +806,147 @@ def check_kit(kit: PostKit, context: dict) -> list[Check]:
     return checks
 
 
+STORY_FRAME_SECONDS = 5  # how long Instagram shows a photo Story frame
+
+
+def _tidy_story_guide(guide: ShootGuide) -> None:
+    """Make a Story's timings add up: every frame gets positive seconds and the total is their sum, within 5–30.
+
+    Missing seconds come from the stated total (shared evenly) or Instagram's 5-second photo frame. A Story with more
+    than three frames is left alone: which frame to drop is a content choice, so the check and repair handle it.
+    """
+    guide.hook = None
+    shots = guide.shots
+    if not 1 <= len(shots) <= 3:
+        return
+    seconds = [shot.seconds if shot.seconds and shot.seconds > 0 else None for shot in shots]
+    if all(value is None for value in seconds) and guide.duration_seconds and 5 <= guide.duration_seconds <= 30:
+        share, extra = divmod(guide.duration_seconds, len(shots))
+        seconds = [share] * len(shots)
+        seconds[-1] += extra
+    seconds = [value or STORY_FRAME_SECONDS for value in seconds]
+    if sum(seconds) > 30:
+        total = sum(seconds)
+        seconds = [max(1, value * 30 // total) for value in seconds]
+    if sum(seconds) < 5:
+        seconds[-1] += 5 - sum(seconds)
+    for shot, value in zip(shots, seconds):
+        shot.seconds = value
+    guide.duration_seconds = sum(seconds)
+
+
+def _prompt_last(text: str, prompt: str) -> str:
+    """`text` ending with `prompt` as its own last line (moved there when something follows it, added when missing)."""
+    text, prompt = text.rstrip(), prompt.strip()
+    if not prompt or text.endswith(prompt):
+        return text
+    at = text.rfind(prompt)
+    if at != -1:
+        text = (text[:at] + text[at + len(prompt):]).rstrip()
+    return f"{text}\n\n{prompt}"
+
+
+def _short_story_text(text: str, prompt: str) -> str:
+    """Story text within STORY_TEXT_MAX: the first sentence and the question, or only the question.
+
+    `text` already ends with `prompt`. Only text is removed, never added; when even the question alone is too long,
+    the text is returned unchanged for the check and repair to handle.
+    """
+    prompt = prompt.strip()
+    if len(text) <= STORY_TEXT_MAX or not prompt:
+        return text
+    body = text[: len(text) - len(prompt)].strip()
+    first = next((part.strip() for part in re.split(r"(?<=[.!?؟…])\s+|\n+", body) if part.strip()), "")
+    if first and len(first) + 1 + len(prompt) <= STORY_TEXT_MAX:
+        return f"{first}\n{prompt}"
+    return prompt if len(prompt) <= STORY_TEXT_MAX else text
+
+
+def _tidy_kit(kit: PostKit) -> PostKit:
+    """Fix formatting slips before the kit is checked; nothing here adds content.
+
+    Photos (single image, carousel) have no hook or durations, so a value there is cleared, and the step count decides
+    the format: one step is a single image, two to six are a carousel (both valid for a Post).
+
+    Story and Reel timings are normalized so their scene durations add up correctly.
+
+    The caption's interaction prompt is made its exact last line, and a Story's text too long for the
+    screen is cut to its first sentence and the question.
+    """
+    guide = kit.shoot
+
+    if guide.format in ("single_image", "carousel"):
+        guide.hook = None
+        guide.duration_seconds = None
+
+        for shot in guide.shots:
+            shot.seconds = None
+
+        guide.format = "single_image" if len(guide.shots) == 1 else "carousel"
+
+    elif guide.format == "story":
+        _tidy_story_guide(guide)
+
+    elif guide.format == "reel":
+        shots = guide.shots or []
+
+        if 3 <= len(shots) <= 6:
+            duration = guide.duration_seconds or 15
+            duration = max(7, min(30, int(duration)))
+            guide.duration_seconds = duration
+
+            seconds = [
+                max(1, int(shot.seconds))
+                if shot.seconds is not None
+                else 1
+                for shot in shots
+            ]
+
+            difference = duration - sum(seconds)
+
+            if difference > 0:
+                i = 0
+
+                while difference > 0:
+                    seconds[i % len(seconds)] += 1
+                    difference -= 1
+                    i += 1
+
+            elif difference < 0:
+                difference = abs(difference)
+
+                while difference > 0:
+                    changed = False
+
+                    for i in range(len(seconds) - 1, -1, -1):
+                        if seconds[i] > 1:
+                            seconds[i] -= 1
+                            difference -= 1
+                            changed = True
+
+                            if difference == 0:
+                                break
+
+                    if not changed:
+                        break
+
+            for shot, seconds_value in zip(shots, seconds):
+                shot.seconds = seconds_value
+
+    kit.caption.text = _prompt_last(
+        kit.caption.text,
+        kit.caption.interaction_prompt,
+    )
+
+    if guide.format == "story":
+        kit.caption.text = _short_story_text(
+            kit.caption.text,
+            kit.caption.interaction_prompt,
+        )
+
+    return kit
+
+
 def _problems(checks: list[Check], claims: list[UnsupportedClaim]) -> list[str]:
     return [check.message for check in checks if not check.ok] + [
         f"Unsupported claim '{c.text}': {c.reason}" for c in claims
@@ -788,12 +972,12 @@ def make_post_kit(
             logger.warning("Claim verification unavailable", exc_info=True)
             return [], False
 
-    kit = generate(context)
+    kit = _tidy_kit(generate(context))
     checks = check_kit(kit, context)
     claims, checked = ([], True) if blocked(checks) else claims_of(kit)
     problems = _problems(checks, claims)
     if blocked(checks) or claims:
-        kit = generate(context, problems, kit)
+        kit = _tidy_kit(generate(context, problems, kit))
         checks = check_kit(kit, context)
         if blocked(checks):
             raise PostKitInvalid("; ".join(check.message for check in checks if not check.ok and check.blocking))
@@ -806,6 +990,9 @@ def make_rewrite(context: dict, rewrite: Callable[[dict], Rewrite] = rewrite_cap
     if context.get("change") not in CAPTION_CHANGES:
         raise PostKitInvalid("Unknown caption change.")
     result = rewrite(context)
+    result.text = _prompt_last(result.text, result.interaction_prompt)
+    if context["task"]["content_format"] == "Story":
+        result.text = _short_story_text(result.text, result.interaction_prompt)
     problems = caption_problems(result.text, result.interaction_prompt, context)
     if problems:
         raise PostKitInvalid("; ".join(message for _, message in problems))

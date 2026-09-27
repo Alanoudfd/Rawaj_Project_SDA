@@ -7,13 +7,16 @@ and calls `generate_content_ideas`; nothing here touches the database.
 """
 
 import json
+import logging
 import os
+import time
 from typing import Annotated, Literal
 
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 load_dotenv()  # like the other agents: the API itself does not read .env, so the key would be missing on a fresh start
+logger = logging.getLogger(__name__)
 
 ContentType = Literal["Reel", "Post", "Story"]
 ShortText = Annotated[str, Field(min_length=1, max_length=500)]
@@ -74,21 +77,58 @@ CONTENT_IDEAS_INSTRUCTIONS = (
 )
 
 
+RETRY_PAUSES = (2, 5, 10)  # seconds to wait before each new attempt after a dropped connection
+
+
+def _streamed_text(stream) -> str:
+    """The final JSON text of a streamed response."""
+    for event in stream:
+        if event.type == "response.completed":
+            return event.response.output_text
+        if event.type in ("response.failed", "response.incomplete", "error"):
+            raise RuntimeError(f"Model response ended with {event.type}")
+    raise RuntimeError("Model stream ended before the response was complete")
+
+
 def generate_content_ideas(context: dict) -> IdeaResponse:
-    """Called lazily. Never import a model client or expose credentials on startup."""
+    """Called lazily. Never import a model client or expose credentials on startup.
+
+    The answer is streamed so a slow call keeps its connection alive (a silent one gets cut on some networks).
+    Dropped connections come in bursts of a few seconds, so a call that fails to start or is cut halfway is tried
+    again after a growing pause (RETRY_PAUSES). Timeout: longest wait between two pieces.
+    """
     if not os.getenv("OPENAI_API_KEY", "").strip():
         raise ContentIdeasUnavailable()
-    from openai import OpenAI
+    from openai import APIConnectionError, OpenAI
 
     with OpenAI(timeout=45.0, max_retries=1) as client:
-        response = client.responses.create(
-            model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
-            instructions=CONTENT_IDEAS_INSTRUCTIONS,
-            input=json.dumps(context, ensure_ascii=False),
-            text={"format": {
-                "type": "json_schema", "name": "rawaj_content_ideas", "strict": True,
-                "schema": IdeaResponse.model_json_schema(),
-            }},
-            store=False,
-        )
-    return IdeaResponse.model_validate_json(response.output_text)
+        for attempt in range(len(RETRY_PAUSES) + 1):
+            try:
+                stream = client.responses.create(
+                    model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
+                    instructions=CONTENT_IDEAS_INSTRUCTIONS,
+                    input=json.dumps(context, ensure_ascii=False),
+                    text={"format": {
+                        "type": "json_schema", "name": "rawaj_content_ideas", "strict": True,
+                        "schema": IdeaResponse.model_json_schema(),
+                    }},
+                    store=False,
+                    stream=True,
+                )
+            except APIConnectionError as exc:  # no connection at all; other API errors are not retried here
+                failure = exc
+            else:
+                try:
+                    with stream:
+                        text = _streamed_text(stream)
+                    break
+                except Exception as exc:
+                    failure = exc
+            if attempt == len(RETRY_PAUSES):
+                raise failure
+            logger.warning(
+                "Content ideas: connection dropped (%s), retrying in %ss (%s/%s)",
+                type(failure).__name__, RETRY_PAUSES[attempt], attempt + 1, len(RETRY_PAUSES),
+            )
+            time.sleep(RETRY_PAUSES[attempt])
+    return IdeaResponse.model_validate_json(text)

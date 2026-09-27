@@ -1,5 +1,7 @@
 """Inline SVG icons (Lucide-style strokes) so the pages need no icon font."""
 
+import base64
+
 _PATHS = {
     "target": '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
     "calendar": '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
@@ -34,6 +36,20 @@ def icon(name: str, size: int = 18, stroke: float = 1.8) -> str:
         f'<svg class="ic" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" '
         f'stroke="currentColor" stroke-width="{stroke}" stroke-linecap="round" '
         f'stroke-linejoin="round" aria-hidden="true">{_PATHS[name]}</svg>'
+    )
+
+
+def html_icon(name: str, size: int = 18, stroke: float = 1.8) -> str:
+    """The same icon for st.html, which removes <svg> tags: the SVG becomes a mask painted in the text colour."""
+    svg = (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" '
+        f'stroke-width="{stroke}" stroke-linecap="round" stroke-linejoin="round">{_PATHS[name]}</svg>'
+    )
+    url = "url(data:image/svg+xml;base64," + base64.b64encode(svg.encode()).decode() + ")"
+    return (
+        f'<span class="ic" aria-hidden="true" style="display:inline-block; width:{size}px; height:{size}px; '
+        f"background-color:currentColor; -webkit-mask:{url} center/contain no-repeat; "
+        f'mask:{url} center/contain no-repeat;"></span>'
     )
 
 

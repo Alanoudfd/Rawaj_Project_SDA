@@ -10,7 +10,8 @@ from html import escape
 import streamlit as st
 from ui import api
 from ui import post_kit as kitlib
-from ui.icons import icon
+# The workspace is drawn with st.html, which removes <svg> tags: use the mask version of the icons.
+from ui.icons import html_icon as icon
 from ui.plan import progress
 
 TONE_LABELS = {code: label for label, code in kitlib.TONES.items()}

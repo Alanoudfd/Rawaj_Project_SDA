@@ -10,7 +10,7 @@ import requests
 
 API_URL = os.getenv("RAWAJ_API_URL", "http://127.0.0.1:8000").rstrip("/")
 TIMEOUT = 5
-IDEAS_TIMEOUT = 75  # the model writes the ideas, which takes longer than a database read
+IDEAS_TIMEOUT = 150  # the model writes the ideas, and the API retries a dropped connection
 KIT_TIMEOUT = 240  # a Post Kit is two or more model calls in a row (write, then check the claims), and one repair
 REWRITE_TIMEOUT = 120
 FACTS_TIMEOUT = 150  # one model call, retried when the connection drops; the API falls back to the generic form after that
