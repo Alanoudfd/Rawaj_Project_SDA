@@ -70,7 +70,7 @@ def normalize_instagram_username(value: str | None) -> str:
 
 
 def clamp_scrape_limits(content_limit: int, lookback_days: int) -> tuple[int, int]:
-    """Reject non-positive limits; reduce larger ones to the 30-post / 90-day cap."""
+    """Reject non-positive limits; reduce larger ones to the 20-post / 90-day cap."""
 
     if content_limit < 1:
         raise ValueError("content_limit must be greater than 0")
