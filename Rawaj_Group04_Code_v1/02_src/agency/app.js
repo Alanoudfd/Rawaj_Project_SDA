@@ -17,7 +17,11 @@ async function render(quiet=false){
  const result=page==='prospects'&&/^\d+$/.test(parts[1])?await detail(parts[1]):await (pages[page]||dashboard)(new URLSearchParams(query));
  if(turn!==revision)return;
  if(quiet&&(window.agencyBusy||document.querySelector("#dialog").open||document.querySelector("#approve")||/INPUT|SELECT|TEXTAREA/.test(document.activeElement?.tagName||"")))return;
+ // A quiet refresh rebuilds the page, so keep expanded sections open and scrolled lists where they were.
+ const open=quiet?[...main.querySelectorAll('details')].map(d=>d.open):[],scrolls=quiet?[...main.querySelectorAll('.gap-list')].map(e=>e.scrollTop):[];
  main.innerHTML=result.html;result.bind?.();
+ main.querySelectorAll('details').forEach((d,i)=>{if(open[i])d.open=true;});
+ main.querySelectorAll('.gap-list').forEach((e,i)=>{if(scrolls[i])e.scrollTop=scrolls[i];});
  for(const [id,value] of Object.entries(saved)){const el=document.getElementById(id);if(el){el.value=value;el.dispatchEvent(new Event(id==='search'?'input':'change'));}}
  document.querySelector('#sync-label').textContent='Updated '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
  }catch(e){if(turn!==revision)return;if(quiet){document.querySelector('#sync-label').textContent='Update failed — use Refresh to retry';return;}main.innerHTML=`<div class="notice error" role="alert"><strong>We couldn’t load this view.</strong><p>${esc(e.message)}</p><button class="button secondary" id="retry" style="margin-top:15px">Try again</button></div>`;document.querySelector('#retry').onclick=()=>render();}

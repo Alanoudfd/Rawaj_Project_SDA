@@ -19,7 +19,8 @@ name = plan["restaurant_name"] or restaurant["name"]
 monthly = plan["source"] == "template"  # a monthly content plan (Reels, Posts, Stories) rather than the agent's 30-day plan
 
 chosen = st.session_state.get("selected_date")
-if not (isinstance(chosen, date) and plan["start"] <= chosen <= plan["end"]):  # any day of the plan can be opened
+calendar_months = sorted({(d.year, d.month) for d in tasks})
+if not (isinstance(chosen, date) and (chosen.year, chosen.month) in calendar_months):
     today = date.today()
     st.session_state.selected_date = today if today in tasks else min(tasks)
 
@@ -207,7 +208,7 @@ if plan["occasions"]:
         f'<span class="occ-chip">&#9733; {escape(item["name"])} <b>{escape(occasion_dates(item))}</b></span>'
         for item in plan["occasions"]
     )
-    st.markdown(f'<div class="occ-row"><span class="occ-label">Occasions in this plan</span>{chips}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="occ-row"><span class="occ-label">Occasions in this calendar</span>{chips}</div>', unsafe_allow_html=True)
 
 cal_col, detail_col = st.columns([1.75, 1], gap="medium")
 
@@ -218,7 +219,7 @@ with cal_col:
             unsafe_allow_html=True,
         )
         # The 30 days usually straddle two calendar months: draw each month that the plan touches.
-        for year, month in sorted({(d.year, d.month) for d in tasks}):
+        for year, month in calendar_months:
             st.markdown(f'<h3 class="cal-title">{date(year, month, 1):%B %Y}</h3>', unsafe_allow_html=True)
             for week in calendar.Calendar(firstweekday=0).monthdatescalendar(year, month):
                 cols = st.columns(7, gap="xsmall")

@@ -221,9 +221,14 @@ def _plan_days(strategy: Strategy) -> list[dict]:
 # ---------------------------------------------------------------- response
 
 def _response(db: Session, strategy: Strategy) -> dict:
-    """The strategy in one shape, with the Saudi occasions that fall inside its period."""
+    """The strategy with Saudi occasions across the full months shown in its calendar."""
     result = _plan_response(db, strategy)
-    result["occasions"] = occasions_between(date.fromisoformat(result["start_date"]), date.fromisoformat(result["end_date"]))
+    start = date.fromisoformat(result["start_date"])
+    end = date.fromisoformat(result["end_date"])
+    result["occasions"] = occasions_between(
+        start.replace(day=1),
+        end.replace(day=calendar.monthrange(end.year, end.month)[1]),
+    )
     return result
 
 
