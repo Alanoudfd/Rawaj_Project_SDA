@@ -22,10 +22,10 @@ Research ─► Qualification ─► Outreach (human approves first email) ─�
 
 | Agent | Folder | Role |
 | --- | --- | --- |
-| Research | `agents/research_agent/` | Scrapes and analyses the restaurant's online presence (Apify, Tavily) |
-| Qualification | `agents/qualification_agent/` | Decides whether the prospect is a good fit and finds marketing gaps |
+| Research | `agents/research_agent/` | Scrapes and analyses the restaurant's online presence (Apify) |
+| Qualification | `agents/qualification_agent/` | Decides whether the prospect is a good fit and finds marketing gaps (Taviy) |
 | Outreach & Follow-up | `agents/outreach_followup_agent/` | Drafts emails, sends them after approval, sends reminders, handles responses |
-| Strategy | `agents/strategy_agent/` | Builds the marketing strategy, content ideas and post kits |
+| Strategy | `agents/strategy_agent/` | Builds the marketing strategy, content ideas and post kits (Taviy) |
 
 LangGraph ties the agents together in `orchestration/`. The API lives in `api/` and the database layer (SQLAlchemy) in `database/`. For the full state machine, see [WORKFLOW.md](WORKFLOW.md).
 
