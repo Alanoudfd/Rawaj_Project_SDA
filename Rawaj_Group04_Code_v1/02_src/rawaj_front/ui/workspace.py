@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import zlib
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -83,6 +84,10 @@ def _fact_key(ctx: WorkspaceContext, field: str) -> str:
     return f"fact_{ctx.wid}_{field}"
 
 
+def _gap(ctx: WorkspaceContext) -> dict | None:
+    return kitlib.pick_gap(ctx.plan, ctx.task, ctx.idea)
+
+
 def _current_signature(ws: dict) -> str:
     return kitlib.facts_signature(ws["facts"])
 
@@ -100,7 +105,9 @@ def _ensure_facts_plan(ctx: WorkspaceContext, ws: dict) -> dict:
 
     try:
         with st.spinner("Reading the idea to see what needs to be confirmed..."):
-            ws["facts_plan"] = api.facts_plan(ctx.restaurant["id"], ctx.task["day"], ctx.idea)
+            ws["facts_plan"] = api.facts_plan(
+                ctx.restaurant["id"], ctx.task["day"], ctx.idea, kitlib.gap_text(_gap(ctx))
+            )
     except api.ApiError:
         ws["facts_plan"] = kitlib.generic_plan()
 
@@ -118,6 +125,7 @@ def _generate_kit(ctx: WorkspaceContext, ws: dict) -> bool:
                 ctx.idea,
                 ws["facts"],
                 ws["tone"],
+                kitlib.gap_text(_gap(ctx)),
             )
     except api.ApiError as exc:
         ws["error"] = exc.detail or str(exc)
@@ -125,6 +133,7 @@ def _generate_kit(ctx: WorkspaceContext, ws: dict) -> bool:
 
     ws["resp"] = response
     ws["generated_for"] = _current_signature(ws)
+    ws["kit_has_photo"] = bool(ws["facts"].get("has_photo"))  # the guide's labels follow the answer it was made for
     ws["error"] = ""
     ws["checked"] = {}
 
@@ -139,7 +148,7 @@ def _generate_kit(ctx: WorkspaceContext, ws: dict) -> bool:
     return True
 
 
-def _rewrite_caption(ctx: WorkspaceContext, ws: dict, change: str) -> bool:
+def _rewrite_caption(ctx: WorkspaceContext, ws: dict, change: str, claims: list[str] | None = None) -> bool:
     current = st.session_state.get(f"cap_{ctx.wid}", ws["caption"])
     try:
         with st.spinner("Rewriting your caption..."):
@@ -150,6 +159,7 @@ def _rewrite_caption(ctx: WorkspaceContext, ws: dict, change: str) -> bool:
                 change,
                 ws["facts"],
                 ctx.idea["content_format"],
+                claims,
             )
     except api.ApiError as exc:
         st.error(exc.detail or str(exc))
@@ -179,8 +189,8 @@ def _show_post_progress(ctx: WorkspaceContext, ws: dict, posted: bool) -> None:
             """)
 
 
-def _show_post_reason(ctx: WorkspaceContext) -> None:
-    gap = kitlib.pick_gap(ctx.plan, ctx.task, ctx.idea)
+def _show_post_reason(ctx: WorkspaceContext, ws: dict) -> None:
+    gap = _gap(ctx)
     if gap:
         detail = (
             f" · {escape(gap['highlight_label'] or 'Evidence')}: {escape(gap['highlight'])}"
@@ -197,10 +207,23 @@ def _show_post_reason(ctx: WorkspaceContext) -> None:
         goal = targets[0] if targets else ctx.plan.get("focus", "your content plan")
         reason = f"This post supports your plan: <b>{escape(str(goal))}</b>."
 
+    answers = ""
+    resp = ws.get("resp")
+    if resp and not _kit_is_stale(ws):
+        caption = st.session_state.get(f"cap_{ctx.wid}", ws["caption"])
+        fixes = kitlib.gap_fixes(gap, resp, caption, ws["facts"], resp.get("more_cutoff", kitlib.MORE_CUTOFF))
+        if fixes:
+            answers = (
+                '<div class="eyebrow" style="margin-top:.7rem;">How this post answers it</div>'
+                '<div class="fixes">' + "".join(chip(state, text) for state, text in fixes) + "</div>"
+            )
+    elif gap:
+        answers = '<p class="hint" style="margin:.4rem 0 0;">Create the posting guide to see how this post answers it.</p>'
+
     with st.container(key="card_why"):
         html(f"""
             <div class="why"><div class="badge">{icon("target", 20)}</div>
-              <div><div class="eyebrow">Why this post</div><p>{reason}</p></div></div>
+              <div><div class="eyebrow">Why this post</div><p>{reason}</p>{answers}</div></div>
             """)
 
 
@@ -362,7 +385,7 @@ def _show_facts(ctx: WorkspaceContext, ws: dict) -> None:
                 key=_fact_key(ctx, "notes"),
                 max_chars=400,
                 height=80,
-                placeholder="Only confirmed information. Leave empty if there is nothing else.",
+                placeholder="e.g. slow-cooked lamb on saffron rice, serves four. Only what is true; leave empty if unsure.",
             )
 
         keep(_fact_key(ctx, "photo"), "Yes" if facts["has_photo"] else "No")
@@ -436,23 +459,47 @@ def _show_facts(ctx: WorkspaceContext, ws: dict) -> None:
 # Generated kit
 
 
-def _show_kit_notes(resp: dict) -> None:
-    notes = [
-        f"Check this before you post: “{claim['text']}”. {claim['reason']}"
-        for claim in resp.get("unsupported_claims") or []
-    ]
-    notes += [check["message"] for check in resp.get("checks") or [] if not check.get("ok")]
-    if not resp.get("claims_checked", False):
-        notes.append(
-            "The claim checker was unavailable. Read the public copy against your confirmed facts before posting."
-        )
+def _show_kit_notes(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
+    """Rawaj's own fact-check, shown as what it is: every rule and claim checked, and what still needs the owner."""
+    caption = st.session_state.get(f"cap_{ctx.wid}", ws["caption"])
+    checks = resp.get("checks") or []
+    passed = sum(1 for check in checks if check.get("ok"))
+    flagged = resp.get("unsupported_claims") or []
+    still = kitlib.open_claims(resp, caption)
+    failing = [check["message"] for check in checks if not check.get("ok")]
+    look = len(still) + len(failing)
 
-    for text in notes:
-        html(f'<div class="flag">{icon("alert", 15)}<span>{escape(text)}</span></div>')
-    if not notes:
+    if resp.get("claims_checked", False):
+        summary = f"Rawaj checked {passed} of {len(checks)} rules and every public claim against your confirmed facts"
+    else:
+        summary = f"Rawaj checked {passed} of {len(checks)} rules. The claim checker was unavailable: read the copy against your facts"
+    summary += f" · {look} need{'s' if look == 1 else ''} your look." if look else " · all clear."
+    html(
+        f'<div class="flag {"good" if not look else "note"}">{icon("shield" if not look else "info", 15)}'
+        f"<span><b>{escape(summary)}</b></span></div>"
+    )
+
+    for claim in still:
         html(
-            f'<div class="flag good">{icon("check", 15, 2.4)}<span>Checked against the facts you confirmed.</span></div>'
+            f'<div class="flag">{icon("alert", 15)}<span><b>Needs your confirmation:</b> “{escape(claim["text"])}”. '
+            f"{escape(claim['reason'])}</span></div>"
         )
+    in_caption = [claim["text"] for claim in still if claim["text"].strip().casefold() in caption.casefold()]
+    if in_caption and st.button(
+        "Rewrite the caption without " + ("it" if len(in_caption) == 1 else "them"),
+        icon=":material/auto_fix_high:",
+        type="secondary",
+        key=f"fixclaims_{ctx.wid}",
+    ):
+        if _rewrite_caption(ctx, ws, "claims", in_caption):
+            st.rerun()
+    for claim in flagged:
+        if claim not in still:
+            html(
+                f'<div class="flag good">{icon("check", 15, 2.4)}<span>Removed from the caption: “{escape(claim["text"])}”.</span></div>'
+            )
+    for text in failing:
+        html(f'<div class="flag">{icon("alert", 15)}<span>{escape(text)}</span></div>')
 
 
 def _show_execution_summary(resp: dict) -> None:
@@ -523,6 +570,9 @@ def _show_caption_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
         ctx.idea["content_format"] == "Story",
     )
     html(chip(state, message))
+    detail = kitlib.details_check(text, resp.get("detail_words") or [])
+    if detail:
+        html(chip(*detail))
 
     st.pills(
         "Change one thing",
@@ -543,10 +593,12 @@ def _show_caption_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
 
 def _show_execution_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
     guide = resp["kit"]["shoot"]
+    existing = ws.get("kit_has_photo", False)
     duration = f" · {guide['duration_seconds']} seconds" if guide.get("duration_seconds") else ""
+    source = "Using your photos" if existing else "New shoot"
     html(
         f'<span class="chip">{icon("video" if guide["format"] in ("reel", "story") else "camera", 13)}'
-        f"{escape(kitlib.format_name(guide['format']))}{duration}</span>"
+        f"{escape(kitlib.format_name(guide['format']))}{duration} · {source}</span>"
     )
     html(
         f'<p class="hint" style="margin-top:.5rem;"><b>Why this format:</b> {escape(guide.get("format_reason") or "")}</p>'
@@ -556,10 +608,12 @@ def _show_execution_tab(ctx: WorkspaceContext, ws: dict, resp: dict) -> None:
             f'<div class="hook-card" style="margin-top:.8rem;"><small>Hook · first two seconds</small><b>{escape(guide["hook"])}</b></div>'
         )
 
-    cards = "".join(kitlib.shot_card(number, shot) for number, shot in enumerate(guide.get("shots") or [], 1))
+    cards = "".join(
+        kitlib.shot_card(number, shot, existing) for number, shot in enumerate(guide.get("shots") or [], 1)
+    )
     html(f'<div style="margin-top:.8rem;">{cards}</div>')
 
-    html('<div class="dl"><small>Before you shoot</small></div>')
+    html(f'<div class="dl"><small>{"Before you post" if existing else "Before you shoot"}</small></div>')
     for i, item in enumerate(guide.get("checklist") or []):
         keep(f"chk_{ctx.wid}_{i}", ws["checked"].get(i, False))
         ws["checked"][i] = st.checkbox(item, key=f"chk_{ctx.wid}_{i}")
@@ -617,7 +671,7 @@ def _show_kit(ctx: WorkspaceContext, ws: dict) -> None:
             <div class="eyebrow" style="color:var(--blue);">Your posting guide</div>
             <h2 style="font:600 22px var(--head); margin:.4rem 0 .6rem;">What to post, and exactly how to make it.</h2>
             """)
-        _show_kit_notes(resp)
+        _show_kit_notes(ctx, ws, resp)
         _show_execution_summary(resp)
 
         tab_caption, tab_execute, tab_publish = st.tabs(["Caption", "Create it", "Publish"])
@@ -672,6 +726,32 @@ def _show_preview(ctx: WorkspaceContext, ws: dict) -> None:
     cutoff = resp.get("more_cutoff", kitlib.MORE_CUTOFF) if resp else kitlib.MORE_CUTOFF
     slots = _asset_slots(resp)
 
+    if actual_format == "carousel":
+        # Every slide in one Instagram-style frame: arrows and dots, each slide with its photo and on-screen text.
+        shots = kit["shoot"].get("shots") or []
+        slides = []
+        for i, (storage_key, _, _) in enumerate(slots):
+            media = ws["assets"].get(storage_key)
+            overlay = (shots[i].get("overlay_text") or "") if i < len(shots) else ""
+            if i == 0 and ws["overlay"]:
+                overlay = ws["overlay"]
+            slides.append({"image": media.get("preview") if media else None, "overlay": overlay})
+        st.html(
+            kitlib.carousel_html(
+                uid=ctx.wid,
+                handle=ctx.restaurant.get("instagram_username") or ctx.restaurant_name,
+                place=ctx.restaurant.get("location") or "",
+                name=ctx.restaurant_name,
+                caption=ws["caption"],
+                hashtags=kit.get("hashtags", []),
+                slides=slides,
+                colors=ws["facts"].get("brand_colors") or [],
+                cutoff=cutoff,
+            )
+        )
+        html('<p class="hint" style="text-align:center;">Use the arrows or dots to swipe through the slides.</p>')
+        return
+
     preview_index = 0
     if len(slots) > 1:
         preview_index = st.selectbox(
@@ -684,9 +764,16 @@ def _show_preview(ctx: WorkspaceContext, ws: dict) -> None:
 
     storage_key = slots[preview_index][0]
     media = ws["assets"].get(storage_key)
+    video = None
+    if media and media["kind"] == "video":
+        if "data_uri" not in media:
+            # .mov files are usually H.264 too; labelling them mp4 lets Chrome play them.
+            media["data_uri"] = "data:video/mp4;base64," + base64.b64encode(media["bytes"]).decode("ascii")
+        video = media["data_uri"]
     overlay = ws["overlay"]
-    if kit and preview_index > 0 and preview_index < len(kit["shoot"].get("shots") or []):
-        overlay = kit["shoot"]["shots"][preview_index].get("overlay_text") or ""
+    shots = kit["shoot"].get("shots") or [] if kit else []
+    if preview_index < len(shots) and (preview_index > 0 or not overlay):
+        overlay = shots[preview_index].get("overlay_text") or overlay
 
     preview = kitlib.preview_html(
         handle=ctx.restaurant.get("instagram_username") or ctx.restaurant_name,
@@ -696,7 +783,7 @@ def _show_preview(ctx: WorkspaceContext, ws: dict) -> None:
         hashtags=kit.get("hashtags", []) if kit else [],
         overlay=overlay,
         image=media.get("preview") if media and media["kind"] == "image" else None,
-        video=bool(media and media["kind"] == "video"),
+        video=video,
         content_format=actual_format,
         colors=ws["facts"].get("brand_colors") or [],
         cutoff=cutoff,
@@ -706,7 +793,17 @@ def _show_preview(ctx: WorkspaceContext, ws: dict) -> None:
     st.html(preview)
 
 
+def _read_cached(ws: dict, upload, content_format: str) -> dict:
+    """Read each uploaded file once; Streamlit hands the same files back on every rerun."""
+    cache = ws.setdefault("upload_cache", {})
+    key = f"{upload.file_id}:{content_format}"
+    if key not in cache:
+        cache[key] = _read_upload(upload, content_format)
+    return cache[key]
+
+
 def _show_uploads(ctx: WorkspaceContext, ws: dict) -> None:
+    """One upload box for every asset the post needs; files go to slides in the order they were added."""
     resp = ws.get("resp")
     actual_format = kitlib.execution_format(resp, ctx.idea["content_format"])
     slots = _asset_slots(resp)
@@ -717,35 +814,51 @@ def _show_uploads(ctx: WorkspaceContext, ws: dict) -> None:
         )
         return
 
+    many = len(slots) > 1
     html(
-        f'<p class="hint">{len(slots)} asset{"s" if len(slots) != 1 else ""} for this {escape(kitlib.format_name(actual_format).lower())}. Uploading here is optional; it helps you preview/check the final content.</p>'
+        f'<p class="hint">{len(slots)} asset{"s" if many else ""} for this {escape(kitlib.format_name(actual_format).lower())}. '
+        f'{"Add them all here, in slide order. " if many else ""}Uploading is optional; it fills the preview and checks each photo.</p>'
     )
+    extensions = {
+        "image": ["png", "jpg", "jpeg", "webp"],
+        "video": ["mp4", "mov"],
+        "image_or_video": ["png", "jpg", "jpeg", "webp", "mp4", "mov"],
+    }
+    types = sorted({ext for _, _, kind in slots for ext in extensions[kind]})
+    uploaded = st.file_uploader(
+        "Your photos" if many else slots[0][1],
+        type=types,
+        accept_multiple_files=many,
+        key=f"asset_up_{ctx.wid}_{ws['upload_generation']}",
+        label_visibility="collapsed",
+    )
+    files = [f for f in (uploaded if many else [uploaded]) if f is not None]
+    names = [f.name for f in files]
 
-    for storage_key, label, accepted_kind in slots:
-        html(f'<div class="dl"><small>{escape(label)}</small></div>')
-        media = ws["assets"].get(storage_key)
-        if media is None:
-            types = {
-                "image": ["png", "jpg", "jpeg", "webp"],
-                "video": ["mp4", "mov"],
-                "image_or_video": ["png", "jpg", "jpeg", "webp", "mp4", "mov"],
-            }[accepted_kind]
-            upload = st.file_uploader(
-                label,
-                type=types,
-                key=f"asset_up_{ctx.wid}_{storage_key}_{ws['upload_generation']}",
-                label_visibility="collapsed",
+    assets: dict[str, dict] = {}
+    for i, (storage_key, label, _) in enumerate(slots):
+        choice = i
+        if many and len(files) > 1 and i < len(files):
+            # A slide's picker swaps files when they were added in another order.
+            choice = st.selectbox(
+                f"Slide {i + 1} · {label}",
+                list(range(len(files))),
+                index=i,
+                format_func=lambda j: names[j],
+                key=f"asset_pick_{ctx.wid}_{ws['upload_generation']}_{i}_{len(files)}",
             )
-            if upload is not None:
-                try:
-                    ws["assets"][storage_key] = _read_upload(upload, actual_format)
-                except ValueError as exc:
-                    st.error(str(exc))
-                else:
-                    st.rerun()
-            continue
+        else:
+            html(f'<div class="dl"><small>{f"Slide {i + 1} · " if many else ""}{escape(label)}</small></div>')
 
-        html(f'<p class="hint" style="margin:.1rem 0 .35rem;"><b>{escape(media["name"])}</b></p>')
+        if choice >= len(files):
+            html('<p class="hint" style="margin:.1rem 0 .35rem;">Not added yet.</p>')
+            continue
+        try:
+            media = _read_cached(ws, files[choice], actual_format)
+        except ValueError as exc:
+            st.error(f"{files[choice].name}: {exc}")
+            continue
+        assets[storage_key] = media
         if media["kind"] == "video":
             st.video(media["bytes"])
             html('<p class="hint">Video is previewed but not visually evaluated.</p>')
@@ -757,31 +870,35 @@ def _show_uploads(ctx: WorkspaceContext, ws: dict) -> None:
             )
             html(f'<div class="notes one">{rows}</div>')
 
-        if st.button(
-            "Remove",
-            key=f"asset_rm_{ctx.wid}_{storage_key}",
-            type="tertiary",
-            icon=":material/close:",
-        ):
-            del ws["assets"][storage_key]
-            ws["upload_generation"] += 1
-            st.rerun()
+    if len(files) > len(slots):
+        html(f'<p class="hint">Only the first {len(slots)} files are used: this post has {len(slots)} slides.</p>')
+    ws["assets"] = assets
+    if files and st.button("Remove all", key=f"asset_clear_{ctx.wid}", type="tertiary", icon=":material/close:"):
+        ws["assets"] = {}
+        ws["upload_cache"] = {}
+        ws["upload_generation"] += 1
+        st.rerun()
 
 
 def _show_side(ctx: WorkspaceContext, ws: dict) -> None:
     with st.container(key="side_sticky"):
+        preview = None
         if str(ctx.idea.get("content_format") or "").strip().casefold() not in {"story", "stories"}:
-            with st.container(key="card_preview"):
-                html(
-                    '<div class="card-head"><h3 class="card-title">Live preview</h3><span class="muted">Updates as you edit</span></div>'
-                )
-                _show_preview(ctx, ws)
+            preview = st.container(key="card_preview")
 
+        # Read the uploads before drawing the preview above them, so a new photo shows at once.
         with st.container(key="card_upload"):
             html(
                 '<div class="card-head"><h3 class="card-title">Your content assets</h3><span class="muted">Stays in this session</span></div>'
             )
             _show_uploads(ctx, ws)
+
+        if preview is not None:
+            with preview:
+                html(
+                    '<div class="card-head"><h3 class="card-title">Live preview</h3><span class="muted">Updates as you edit</span></div>'
+                )
+                _show_preview(ctx, ws)
 
 
 # Final hand-off and completion
@@ -909,7 +1026,7 @@ def show_workspace(restaurant: dict, plan: dict, task: dict, idea: dict) -> None
     posted = task.get("status") == "Completed"
 
     _show_post_progress(ctx, ws, posted)
-    _show_post_reason(ctx)
+    _show_post_reason(ctx, ws)
 
     left, right = st.columns([1.55, 1], gap="medium")
     with left:

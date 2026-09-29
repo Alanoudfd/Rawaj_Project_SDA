@@ -246,20 +246,107 @@ def subject_check(text: str, facts: dict, cutoff: int = MORE_CUTOFF, story: bool
     return "ok", f"“{name}” appears before ‘more’."
 
 
+def _stem(word: str) -> str:
+    return word.casefold()[: max(4, len(word) - 2)]
+
+
+def details_check(text: str, words: list[str]) -> tuple[str, str] | None:
+    """Whether the caption uses the owner's confirmed details (the API's ``detail_words``); None when there are none."""
+    if not words:
+        return None
+    lowered = text.casefold()
+    used = [word for word in words if _stem(word) in lowered]
+    if not used:
+        return "missing", f"The caption uses none of your details. Add one, e.g. “{words[0]}”."
+    return "ok", "Uses your details: " + ", ".join(used[:3]) + "."
+
+
+def gap_text(gap: dict | None) -> str:
+    """The gap as one line for the API, so the form and the kit are built to fix what the owner is shown."""
+    if not gap:
+        return ""
+    parts = [gap.get("gap") or "", gap.get("highlight_label") or "", gap.get("key_point") or ""]
+    return " · ".join(part.strip() for part in parts if part and part.strip())[:600]
+
+
+def open_claims(resp: dict, caption: str) -> list[dict]:
+    """Flagged claims still in the public copy: one the owner removed from the caption no longer needs a look."""
+    kit = resp["kit"]
+    other = " ".join(
+        [
+            kit["visual"].get("text_overlay") or "",
+            *(shot.get("overlay_text") or "" for shot in kit["shoot"].get("shots") or []),
+            *(kit.get("hashtags") or []),
+        ]
+    ).casefold()
+    lowered = caption.casefold()
+    return [
+        claim
+        for claim in resp.get("unsupported_claims") or []
+        if claim["text"].strip().casefold() in lowered or claim["text"].strip().casefold() in other
+    ]
+
+
+_NUMBER = re.compile(r"\d+(?:[.,]\d+)?")
+
+
+def gap_fixes(gap: dict | None, resp: dict, caption: str, facts: dict, cutoff: int = MORE_CUTOFF) -> list[tuple[str, str]]:
+    """(state, text) for each way this post answers the gap, recomputed as the owner edits the caption."""
+    kit = resp["kit"]
+    about = f"{(gap or {}).get('gap', '')} {(gap or {}).get('highlight_label') or ''}".casefold()
+    fixes: list[tuple[str, str]] = []
+    story = kit["shoot"]["format"] == "story"
+
+    if subjects(facts) and not story:
+        state, _ = subject_check(caption, facts, cutoff)
+        fixes.append(("ok", "Item named before ‘more’") if state == "ok" else ("missing", "Name the item before ‘more’"))
+    if "pric" in about or "commerce" in about or "سعر" in about:
+        prices = [item["price"] for item in facts.get("items") or [] if item.get("price")]
+        public = " ".join([caption, *(shot.get("overlay_text") or "" for shot in kit["shoot"].get("shots") or [])])
+        wanted = {n for price in prices for n in _NUMBER.findall(price)}
+        if not prices:
+            fixes.append(("missing", "Add the price in the form to fix this gap"))
+        elif wanted & set(_NUMBER.findall(public)):
+            fixes.append(("ok", "Price visible"))
+        else:
+            fixes.append(("missing", "Show the price in the caption"))
+    if any(word in about for word in ("engag", "interact", "comment", "conversation", "audience")):
+        last = caption.strip().splitlines()[-1] if caption.strip() else ""
+        fixes.append(
+            ("ok", "Ends with a question followers can answer")
+            if "?" in last or "؟" in last
+            else ("missing", "End with a question")
+        )
+        if any(f.get("format") == "Story" and f.get("sticker") in {"poll", "quiz", "question"} for f in kit.get("follow_ups") or []):
+            fixes.append(("ok", "Story poll keeps the conversation going"))
+    detail = details_check(caption, resp.get("detail_words") or [])
+    if detail:
+        fixes.append(("ok", "Uses your confirmed details") if detail[0] == "ok" else ("missing", "Use a detail you confirmed"))
+    if resp.get("claims_checked"):
+        count = len(open_claims(resp, caption))
+        fixes.append(
+            ("ok", "Every claim checked against your facts")
+            if not count
+            else ("missing", f"{count} claim{'s' if count != 1 else ''} need{'' if count != 1 else 's'} your confirmation")
+        )
+    return fixes
+
+
 def hashtag_text(hashtags: list[str]) -> str:
     return "\n".join(hashtags)
 
 
-def shot_card(number: int, shot: dict) -> str:
+def shot_card(number: int, shot: dict, existing: bool = False) -> str:
+    """One step of the guide; with ``existing`` media the tip is an editing tip, not a camera tip."""
     seconds = f"<i>{shot['seconds']} s</i>" if shot.get("seconds") is not None else ""
     overlay = (
-        f'<p class="tip"><b>On-screen text:</b> {escape(shot["overlay_text"])}</p>' if shot.get("overlay_text") else ""
+        f'<p class="overlay"><b>On-screen text:</b> {escape(shot["overlay_text"])}</p>' if shot.get("overlay_text") else ""
     )
     return (
         f'<div class="shot"><span class="n">{number}</span><div class="body">'
         f"<b>{escape(shot['title'])}{seconds}</b>"
         f"<p>{escape(shot['instruction'])}</p>"
-        f'<p class="tip">{escape(shot["phone_tip"])}</p>{overlay}</div></div>'
+        f'<p class="tip{" edit" if existing else ""}">{escape(shot["phone_tip"])}</p>{overlay}</div></div>'
     )
 
 
@@ -453,14 +540,17 @@ def preview_html(
     hashtags: list[str],
     overlay: str,
     image: str | None,
-    video: bool,
+    video: str | None,
     content_format: str,
     colors: list[str],
     cutoff: int = MORE_CUTOFF,
     position: int | None = None,
     total: int | None = None,
 ) -> str:
-    """Display a lightweight Instagram-style preview for the selected asset/slide."""
+    """Display a lightweight Instagram-style preview for the selected asset/slide.
+
+    ``video`` is a data URI for an uploaded video; it plays inside the media frame.
+    """
     vertical = _vertical_format(content_format)
     text = caption.strip()
     if hashtags:
@@ -474,13 +564,13 @@ def preview_html(
     )
 
     inside = ""
+    if video:
+        inside += f'<video class="ig-video" src="{escape(video)}" autoplay muted loop playsinline controls></video>'
     if position and total and total > 1:
         inside += f'<div class="ig-count">{position}/{total}</div>'
     if overlay.strip():
-        dark = image is not None or _is_dark(first)
+        dark = image is not None or video is not None or _is_dark(first)
         inside += f'<div class="ig-ov{"" if dark else " on-light"}" dir="auto">{escape(overlay.strip())}</div>'
-    if video:
-        inside += f'<div class="ig-play">{icon("play", 26, 2)}</div>'
     if not image and not video:
         noun = "video" if vertical else "photo"
         inside += f'<div class="ig-empty">{icon("camera", 22)}<span>Your {noun} goes here</span></div>'
@@ -496,6 +586,74 @@ def preview_html(
       <div class="ig-cap">{body}</div>
     </div>
     """
+
+def carousel_html(
+    *,
+    uid: str,
+    handle: str,
+    place: str,
+    name: str,
+    caption: str,
+    hashtags: list[str],
+    slides: list[dict],
+    colors: list[str],
+    cutoff: int = MORE_CUTOFF,
+) -> str:
+    """An Instagram-style carousel: arrows and dots move between slides, as on Instagram.
+
+    ``slides`` holds ``{"image": base64 JPEG or None, "overlay": str}`` per slide. It is pure CSS (hidden radio
+    buttons and labels), because st.html runs no scripts. A rerun of the page starts again at the first slide.
+    """
+    uid = re.sub(r"\W", "", uid) or "c"
+    count = len(slides)
+    text = caption.strip()
+    if hashtags:
+        text += ("\n\n" if text else "") + hashtag_text(hashtags)
+    first, second = ([c for c in colors if _HEX.match(c)] + ["#EAF3FC", "#D3E4F6"])[:2]
+
+    radios, cells, dots, rules = [], [], [], []
+    for i, slide in enumerate(slides):
+        rid = f"car{uid}_{i}"
+        radios.append(
+            f'<input class="ig-r" type="radio" name="car{uid}" id="{rid}"{" checked" if i == 0 else ""}>'
+        )
+        rules.append(
+            f"#{rid}:checked ~ .ig-media .ig-track {{ transform: translateX(-{i * 100}%); }}"
+            f"#{rid}:checked ~ .ig-actions label[for={rid}] {{ background: #3897f0; }}"
+        )
+        image = slide.get("image")
+        style = (
+            f"background-image:url(data:image/jpeg;base64,{image})"
+            if image
+            else f"background:linear-gradient(160deg,{first},{second})"
+        )
+        inside = f'<div class="ig-count">{i + 1}/{count}</div>'
+        overlay = (slide.get("overlay") or "").strip()
+        if overlay:
+            dark = image is not None or _is_dark(first)
+            inside += f'<div class="ig-ov{"" if dark else " on-light"}" dir="auto">{escape(overlay)}</div>'
+        if not image:
+            inside += f'<div class="ig-empty">{icon("camera", 22)}<span>Photo {i + 1} goes here</span></div>'
+        if i > 0:
+            inside += f'<label class="ig-arrow prev" for="car{uid}_{i - 1}" title="Previous">‹</label>'
+        if i < count - 1:
+            inside += f'<label class="ig-arrow next" for="car{uid}_{i + 1}" title="Next">›</label>'
+        cells.append(f'<div class="ig-slide" style="{style}">{inside}</div>')
+        dots.append(f'<label class="ig-dot" for="{rid}"></label>')
+
+    return f"""
+    <style>{"".join(rules)}</style>
+    <div class="ig carousel">
+      {"".join(radios)}
+      <div class="ig-head"><span class="ig-av">{escape(name[:1])}</span>
+        <div><b>{escape(handle)}</b><small>{escape(place)}</small></div><span class="ig-dots">···</span></div>
+      <div class="ig-media"><div class="ig-track">{"".join(cells)}</div></div>
+      <div class="ig-actions">{icon("heart", 22)}{icon("message", 22)}{icon("send", 22)}
+        <span class="sp ig-dotrow">{"".join(dots)}</span>{icon("bookmark", 22)}</div>
+      <div class="ig-cap">{caption_html(handle, text, cutoff)}</div>
+    </div>
+    """
+
 
 # Progress bar
 def steps_html(done: list[bool], confirmed: bool = False) -> str:
