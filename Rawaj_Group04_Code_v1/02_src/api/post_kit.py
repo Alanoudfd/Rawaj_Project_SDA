@@ -13,6 +13,8 @@ from agents.strategy_agent.post_kit import (
     Tone,
     best_posting_time,
     crop_rules,
+    detail_words,
+    gap_needs_prices,
     make_facts_plan,
     make_post_kit,
     make_rewrite,
@@ -29,7 +31,7 @@ router = APIRouter(prefix="/api/restaurants", tags=["Post Kit"])
 RestaurantId = Annotated[int, Path(gt=0)]
 Day = Annotated[int, Path(ge=1)]
 ContentFormat = Literal["Post", "Reel", "Story"]
-CaptionChange = Literal["shorter", "hook", "warm", "playful", "premium", "direct"]
+CaptionChange = Literal["shorter", "hook", "warm", "playful", "premium", "direct", "claims"]
 
 
 def get_db(request: Request):
@@ -42,6 +44,8 @@ Database = Annotated[Session, Depends(get_db)]
 
 class FactsPlanRequest(InputModel):
     idea: Idea
+    # The gap shown to the owner as "Why this post"; the form and the kit are built to fix it.
+    gap: Annotated[str, Field(max_length=600)] = ""
 
 
 class CreatePostKitRequest(FactsPlanRequest):
@@ -54,10 +58,11 @@ class RewriteRequest(InputModel):
     change: CaptionChange
     facts: PostFacts
     content_format: ContentFormat
+    claims: list[Annotated[str, Field(min_length=1, max_length=400)]] = Field(default_factory=list, max_length=6)
 
 
 def _restaurant_context(restaurant: Restaurant) -> dict:
-    return {"name": restaurant.name, "location": restaurant.location or ""}
+    return {"name": restaurant.name, "location": restaurant.location or "", "handle": restaurant.instagram_username or ""}
 
 
 def _find_day(db: Session, restaurant_id: int, day: int) -> tuple[dict, dict]:
@@ -88,12 +93,17 @@ def _task_context(item: dict, occasions: list[dict], idea: Idea) -> dict:
     }
 
 
-def _idea_context(db: Session, restaurant_id: int, day: int, idea: Idea) -> tuple[dict, dict, Restaurant]:
+def _idea_context(
+    db: Session, restaurant_id: int, day: int, idea: Idea, gap: str = ""
+) -> tuple[dict, dict, Restaurant]:
     overview, item = _find_day(db, restaurant_id, day)
     restaurant = db.get(Restaurant, restaurant_id)
+    task = _task_context(item, overview.get("occasions") or [], idea)
+    if gap:
+        task["gap"] = gap
     context = {
         "restaurant": _restaurant_context(restaurant),
-        "task": _task_context(item, overview.get("occasions") or [], idea),
+        "task": task,
         "idea": idea.model_dump(),
     }
     return context, overview, restaurant
@@ -115,13 +125,13 @@ def _run(request: Request, runner_name: str, default, context: dict):
 
 @router.post("/{restaurant_id}/agent-strategy/days/{day}/post-kit/facts-plan")
 def post_facts_plan(restaurant_id: RestaurantId, day: Day, payload: FactsPlanRequest, request: Request, db: Database):
-    context, _, _ = _idea_context(db, restaurant_id, day, payload.idea)
+    context, _, _ = _idea_context(db, restaurant_id, day, payload.idea, payload.gap)
     return _run(request, "facts_plan_runner", make_facts_plan, context).model_dump()
 
 
 @router.post("/{restaurant_id}/agent-strategy/days/{day}/post-kit")
 def post_post_kit(restaurant_id: RestaurantId, day: Day, payload: CreatePostKitRequest, request: Request, db: Database):
-    context, overview, restaurant = _idea_context(db, restaurant_id, day, payload.idea)
+    context, overview, restaurant = _idea_context(db, restaurant_id, day, payload.idea, payload.gap)
     context.update(
         {
             "facts": payload.facts.model_dump(),
@@ -139,6 +149,8 @@ def post_post_kit(restaurant_id: RestaurantId, day: Day, payload: CreatePostKitR
         "more_cutoff": MORE_CUTOFF,
         "crop_rules": crop_rules(result.kit.shoot.format),
         "best_time": best_posting_time([]),  # No source-post metrics wired here yet; reports insufficient data.
+        "detail_words": detail_words(context),  # for the live "uses your details" check while the owner edits
+        "price_gap": gap_needs_prices(context),
     }
 
 
@@ -156,5 +168,6 @@ def post_rewrite(
         "facts": payload.facts.model_dump(),
         "caption": payload.caption,
         "change": payload.change,
+        "claims": payload.claims,
     }
     return _run(request, "caption_rewrite_runner", make_rewrite, context)

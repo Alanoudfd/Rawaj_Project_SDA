@@ -481,6 +481,11 @@ details.more[open] .t-open { display: none; }
 .cap-head span { font-size: 10.5px; color: var(--muted); }
 .flag { display: flex; gap: .6rem; align-items: flex-start; font-size: 12px; line-height: 1.6; background: var(--mod-bg); border: 1px solid var(--mod-line); border-radius: 12px; padding: .7rem .9rem; margin-bottom: .8rem; }
 .flag.good { background: var(--low-bg); border-color: var(--low-line); }
+.flag.note { background: var(--blue-soft); border-color: var(--blue-line); }
+.fixes { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .35rem; }
+.fixes .chk { margin: 0; }
+.shot p.overlay { color: var(--muted); }
+.shot p.tip.edit::before { content: "Editing tip · "; }
 .flag .ic { margin-top: 2px; flex: none; }
 textarea { unicode-bidi: plaintext; text-align: start; }
 
@@ -525,7 +530,9 @@ textarea { unicode-bidi: plaintext; text-align: start; }
 .ig-dots { margin-left: auto; color: #666; letter-spacing: 1px; }
 .ig-media { position: relative; aspect-ratio: 4 / 5; background-size: cover; background-position: center; }
 .ig.tall .ig-media { aspect-ratio: 9 / 16; }
+.ig-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
 .ig-ov {
+  pointer-events: none;
   position: absolute; left: 8%; right: 8%; top: 12%; text-align: center; color: #fff; font: 700 19px/1.25 var(--head);
   text-shadow: 0 1px 8px rgba(0, 0, 0, .55);
 }
@@ -537,6 +544,24 @@ textarea { unicode-bidi: plaintext; text-align: start; }
 .ig-cap { padding: .2rem .7rem .8rem; font-size: 12px; line-height: 1.55; white-space: pre-line; }
 .ig-name { font-weight: 600; }
 .ig-more, .ig-hint { color: #8a8a8a; }
+/* carousel preview: hidden radios pick the slide, labels are the arrows and dots */
+.ig.carousel .ig-r { position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0; }
+.ig.carousel .ig-media { overflow: hidden; background: none; }
+.ig-track { display: flex; height: 100%; transition: transform .35s ease; }
+.ig-slide { flex: 0 0 100%; position: relative; background-size: cover; background-position: center; }
+.ig-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(255, 255, 255, .9); color: #262626; display: grid; place-items: center; cursor: pointer;
+  font: 700 18px/1 sans-serif; box-shadow: 0 1px 4px rgba(0, 0, 0, .2); z-index: 2; user-select: none;
+}
+.ig-arrow.prev { left: 8px; }
+.ig-arrow.next { right: 8px; }
+.ig-dotrow { display: flex; justify-content: center; align-items: center; gap: 4px; }
+.ig-dot { width: 6px; height: 6px; border-radius: 50%; background: #c7c7c7; cursor: pointer; }
+.ig-count {
+  position: absolute; top: 10px; right: 10px; z-index: 2; background: rgba(18, 18, 18, .7); color: #fff;
+  font: 600 10.5px/1 var(--head); padding: .3rem .5rem; border-radius: 999px;
+}
 [data-testid="stColumn"]:has(.st-key-side_sticky) { display: flex; flex-direction: column; }
 [data-testid="stColumn"]:has(.st-key-side_sticky) > [data-testid="stVerticalBlock"] { flex: 1; }
 [data-testid="stLayoutWrapper"]:has(> .st-key-side_sticky) { position: sticky; top: 1rem; }

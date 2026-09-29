@@ -82,18 +82,24 @@ def get_day_ideas(restaurant_id: int, day: int, previous_ideas: list[dict] | Non
     return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/ideas", body, timeout=IDEAS_TIMEOUT)["ideas"]
 
 
-def facts_plan(restaurant_id: int, day: int, idea: dict) -> dict:
-    """What the owner must confirm for this idea: the item rows, prices, ways to order, offer and notes (plus suggestions)."""
-    return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit/facts-plan", {"idea": idea}, timeout=FACTS_TIMEOUT)
+def facts_plan(restaurant_id: int, day: int, idea: dict, gap: str = "") -> dict:
+    """What the owner must confirm for this idea: the item rows, prices, ways to order, offer and notes (plus suggestions).
+
+    `gap` is the weakness shown as "Why this post"; a price gap makes the form ask for prices."""
+    body = {"idea": idea, "gap": gap}
+    return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit/facts-plan", body, timeout=FACTS_TIMEOUT)
 
 
-def create_post_kit(restaurant_id: int, day: int, idea: dict, facts: dict, tone: str = "warm") -> dict:
+def create_post_kit(restaurant_id: int, day: int, idea: dict, facts: dict, tone: str = "warm", gap: str = "") -> dict:
     """The Post Kit for the chosen idea: the kit (one caption in `tone`), its checks, the best time to post, the crop rules and the owner's colours."""
-    body = {"idea": idea, "facts": facts, "tone": tone}
+    body = {"idea": idea, "facts": facts, "tone": tone, "gap": gap}
     return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit", body, timeout=KIT_TIMEOUT)
 
 
-def rewrite_caption(restaurant_id: int, day: int, caption: str, change: str, facts: dict, content_format: str) -> dict:
-    """One caption rewritten with one change ("shorter", "playful", "warm", "premium", "hook"): {text, interaction_prompt}."""
-    body = {"caption": caption, "change": change, "facts": facts, "content_format": content_format}
+def rewrite_caption(
+    restaurant_id: int, day: int, caption: str, change: str, facts: dict, content_format: str, claims: list[str] | None = None
+) -> dict:
+    """One caption rewritten with one change ("shorter", "playful", "warm", "premium", "hook", or "claims" to remove the
+    flagged `claims`): {text, interaction_prompt}."""
+    body = {"caption": caption, "change": change, "facts": facts, "content_format": content_format, "claims": claims or []}
     return _request("POST", f"/restaurants/{restaurant_id}/agent-strategy/days/{day}/post-kit/rewrite", body, timeout=REWRITE_TIMEOUT)
